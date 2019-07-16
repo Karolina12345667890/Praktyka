@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class SIMSApplication {
+public class SIMSApplicationStarter {
 
     public static void main(String[] args) {
-        SpringApplication.run(SIMSApplication.class, args);
+        SpringApplication.run(SIMSApplicationStarter.class, args);
     }
 
 }

@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// TODO: Complete refactor - create FileSendingFacade, move all the logic from the controller etc.
 @RestController
 public class FileSendingController {
     
@@ -25,7 +26,6 @@ public class FileSendingController {
             .collect(Collectors.toList());
         
     }
-    
     @GetMapping(
         value = "file/{filename}",
         produces = {MediaType.IMAGE_JPEG_VALUE}
