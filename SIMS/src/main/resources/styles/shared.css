@@ -19,6 +19,7 @@ br {
     float: left;
 }
 
+
 .toSignRight {
     margin-left: 70%;
 }
@@ -33,7 +34,15 @@ br {
 
 .toSignLeft div:nth-child(2), .toSignRight div:nth-child(2) {
     font-size: 11px;
-    line-height: 3em;
+    margin-top: 0.5em;
+    /*line-height: 3em;*/
+    text-align: center;
+}
+
+.toSignLeft div:nth-child(3), .toSignRight div:nth-child(3) {
+    font-size: 11px;
+    margin-top: 0;
+    /*line-height: 3em;*/
     text-align: center;
 }
 

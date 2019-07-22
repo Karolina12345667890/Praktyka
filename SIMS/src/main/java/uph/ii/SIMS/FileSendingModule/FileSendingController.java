@@ -25,6 +25,7 @@ public class FileSendingController {
             .map(f -> new FileInfoDTO(f.getName(), f.length(), "test"))
             .collect(Collectors.toList());
         
+        
     }
     @GetMapping(
         value = "file/{filename}",

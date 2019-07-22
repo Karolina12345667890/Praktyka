@@ -4,13 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 
 @AllArgsConstructor
@@ -48,7 +45,6 @@ class PdfBuilder {
             return outputStream.toByteArray();
         }
     }
-    
     
     
 }
