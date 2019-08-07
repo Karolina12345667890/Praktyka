@@ -1,4 +1,4 @@
-package uph.ii.SIMS.DocumentModule;
+package uph.ii.SIMS.PdfCreationService;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,15 +11,15 @@ import java.io.ByteArrayOutputStream;
 import java.util.Map;
 
 @AllArgsConstructor
-class PdfBuilder {
+public class PdfBuilder {
     
     private final String STATIC_RESOURCES_URI;
     private PdfRendererBuilder rendererBuilder;
     private TemplateEngine templateEngine;
     
-    byte[] getPdf(String templateName, String json) throws Exception {
-        var dataToBind = processJson(json);
-        var processedHtml = processHtml(templateName, dataToBind);
+    public byte[] getPdf(String templateName, String json) throws Exception {
+        Map<String, Object> dataToBind = processJson(json);
+        String processedHtml = processHtml(templateName, dataToBind);
         return renderPdf(processedHtml);
     }
     

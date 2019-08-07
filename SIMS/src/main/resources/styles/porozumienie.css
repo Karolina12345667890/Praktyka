@@ -1,19 +1,19 @@
-html{
+html {
     font-size: 0.75em;
 }
 
-.multiLineTitle h3{
+.multiLineTitle h3 {
     line-height: 0.5em;
     font-size: 1.2em;
     font-family: "arialbd";
 }
 
-h6{
+h6 {
     line-height: 4em;
     vertical-align: bottom;
 }
 
-h4{
+h4 {
     font-size: 1.1em;
     line-height: 0em;
 }

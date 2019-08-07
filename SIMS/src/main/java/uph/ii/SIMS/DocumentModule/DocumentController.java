@@ -31,10 +31,14 @@ class DocumentController {
         return documentFacade.createPdf("Oswiadczenie", oswiadczenieJson);
     }
     
+    
     @GetMapping(value = "/pdf2", produces = MediaType.APPLICATION_PDF_VALUE)
     @ResponseBody
     byte[] createPdf2() throws Exception {
         return documentFacade.createPdf("Porozumienie", "{}");
     }
-    
+
+//    @GetMapping(value = "oswiadczenie")
+
+
 }

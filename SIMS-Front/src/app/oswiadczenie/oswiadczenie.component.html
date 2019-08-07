@@ -1,0 +1,45 @@
+<div>
+  <form [formGroup]="oswiadczenieForm" (ngSubmit)="onSubmit()">
+
+    <label>
+      studentName
+      <input type="text" formControlName="studentName"/>
+    </label>
+    <label>
+      studentSurname
+      <input type="text" formControlName="studentSurname"/>
+    </label>
+
+  <label>
+<!--    <button (click)="addDuty()">Add duty</button>-->
+    <span *ngFor="let duty of duties.controls; let i=index" >
+      studentDuty
+        <input type=" text " [formControl]="duties.controls[i]" />
+    </span>
+  </label>
+
+
+    <label>
+      carerName
+      <input type="text" formControlName="carerName"/>
+    </label>
+    <label>
+      carerSurname
+      <input type="text" formControlName="carerSurname"/>
+    </label>
+    <label>
+      carerPhone
+      <input type="text" formControlName="carerPhone"/>
+    </label>
+    <label>
+      carerEmail
+      <input type="text" formControlName="carerEmail"/>
+    </label>
+
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+
+
+  </form>
+</div>

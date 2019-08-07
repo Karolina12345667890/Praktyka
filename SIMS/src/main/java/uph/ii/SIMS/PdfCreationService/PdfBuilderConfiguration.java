@@ -1,16 +1,25 @@
-package uph.ii.SIMS.DocumentModule;
+package uph.ii.SIMS.PdfCreationService;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import java.io.File;
 
+@Configuration
 class PdfBuilderConfiguration {
     
     private static final String FONTS_DIRECTORY = "src/main/resources/fonts/";
     
-    PdfRendererBuilder config() {
+    @Bean
+    PdfBuilder pdfBuilder() {
+        String static_resources_uri = new File("src/main/resources").toURI().toString();
+        return new PdfBuilder(static_resources_uri, config(), templateEngine());
+    }
+    
+    private PdfRendererBuilder config() {
         return new PdfRendererBuilder()
             .useFastMode()
             .useFont(new File(FONTS_DIRECTORY + "times.ttf"), "times")
@@ -20,15 +29,12 @@ class PdfBuilderConfiguration {
     }
     
     
-    SpringTemplateEngine templateEngine() {
+    private SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;
     }
     
-    String getStaticResourcesLocation() {
-        return new File("src/main/resources").toURI().toString();
-    }
     
     private ClassLoaderTemplateResolver templateResolver() {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();

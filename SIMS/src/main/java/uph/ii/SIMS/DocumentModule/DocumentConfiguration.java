@@ -3,21 +3,28 @@ package uph.ii.SIMS.DocumentModule;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieConfiguration;
+import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
+import uph.ii.SIMS.PdfCreationService.PdfBuilder;
+import uph.ii.SIMS.UserModule.UserFacade;
 
 @Configuration
-@AllArgsConstructor
 class DocumentConfiguration {
     
     @Bean
-    DocumentFacade documentsFacade() {
-        PdfBuilderConfiguration pdfBuilderConfig = new PdfBuilderConfiguration();
-        PdfBuilder pdfBuilder = new PdfBuilder(
-            pdfBuilderConfig.getStaticResourcesLocation(),
-            pdfBuilderConfig.config(),
-            pdfBuilderConfig.templateEngine()
-        );
+    DocumentFacade documentFacade(PdfBuilder pdfBuilder, UserFacade userFacade) {
+        OswiadczenieFacade oswiadczenieFacade = new OswiadczenieConfiguration(userFacade)
+            .oswiadczenieFacadeInMemoryIO();
         
-        return new DocumentFacade(pdfBuilder);
+        return new DocumentFacade(pdfBuilder, oswiadczenieFacade);
     }
     
+    DocumentFacade documentFacadeInMemoryIO(PdfBuilder pdfBuilder, UserFacade userFacade) {
+        OswiadczenieFacade oswiadczenieFacadeInMemoryIO =
+            new OswiadczenieConfiguration(userFacade).oswiadczenieFacadeInMemoryIO();
+        
+        return new DocumentFacade(pdfBuilder, oswiadczenieFacadeInMemoryIO);
+    }
 }
+    
+

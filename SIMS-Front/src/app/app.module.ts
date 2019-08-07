@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
 
 
 
@@ -14,7 +15,8 @@ import {HttpClientModule} from '@angular/common/http';
   declarations: [
     AppComponent,
     HomeComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    OswiadczenieComponent
   ],
   imports: [
     BrowserModule,

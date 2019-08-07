@@ -27,22 +27,25 @@ public class FileSendingController {
         
         
     }
+    
     @GetMapping(
         value = "file/{filename}",
         produces = {MediaType.IMAGE_JPEG_VALUE}
     )
     public @ResponseBody
     byte[] downloadFileWithGet(@PathVariable String filename) throws IOException {
-    
-    
+        
+        
         File directory = new File("./");
-    
+        
         System.out.println(filename);
         File file =
             Arrays.stream(directory.listFiles()).
-                filter(f -> f.getName().contains(filename)).findFirst().orElse(null);
+                filter(f -> f.getName().contains(filename))
+                .findFirst()
+                .orElse(null);
         
-  
+        
         FileInputStream fileInputStream = new FileInputStream(file);
         
         return fileInputStream.readAllBytes();
