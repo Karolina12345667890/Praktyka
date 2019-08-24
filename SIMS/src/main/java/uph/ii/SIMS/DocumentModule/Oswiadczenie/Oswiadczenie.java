@@ -14,15 +14,15 @@ import javax.persistence.Table;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
-@EqualsAndHashCode
-public class Oswiadczenie extends Document {
+@EqualsAndHashCode(callSuper = true)
+class Oswiadczenie extends Document {
     
     private String opiekunI;
     private String opiekunN;
     private String opiekunMail;
     private String opiekunTel;
     
-    public Oswiadczenie(Long owner, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
+    Oswiadczenie(Long owner, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
         super(owner);
         this.opiekunI = opiekunI;
         this.opiekunN = opiekunN;

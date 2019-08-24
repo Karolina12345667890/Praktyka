@@ -12,16 +12,22 @@ import javax.persistence.*;
 @Entity
 @Table(name = "users")
 @Builder
-public class User {
+class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    private String name;
+    private String surname;
+    private String email;
     
     UserDto dto() {
         return UserDto.builder()
-            .id(this.id)
+            .id(id)
+            .name(name)
+            .surname(surname)
+            .email(email)
             .build();
     }
 }

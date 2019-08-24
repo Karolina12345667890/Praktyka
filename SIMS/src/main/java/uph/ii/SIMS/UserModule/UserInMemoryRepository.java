@@ -3,7 +3,7 @@ package uph.ii.SIMS.UserModule;
 import java.util.HashMap;
 import java.util.Optional;
 
-public class UserInMemoryRepository implements UserRepository {
+class UserInMemoryRepository implements UserRepository {
     
     private HashMap<Long, User> map = new HashMap<>();
     

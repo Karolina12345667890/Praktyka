@@ -26,7 +26,7 @@ trait SampleDocuments {
                 .opiekunN(opiekunN)
                 .opiekunMail(opiekunMail)
                 .opiekunTel(opiekunTel)
-                .build();
+                .build()
     }
 
 }

@@ -15,7 +15,7 @@ class UserConfiguration {
         return new UserFacade(userRepository);
     }
     
-    UserFacade userFacadeInMemoryIO(){
+    UserFacade userFacadeInMemoryIO() {
         return new UserFacade(new UserInMemoryRepository());
     }
 }

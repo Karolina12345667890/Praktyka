@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -34,9 +35,9 @@ class OswiadczenieInMemoryRepository implements OswiadczenieRepository {
     
     @Override
     public Page<Oswiadczenie> findAllByOwnerId(Long ownerId, Pageable pageable) {
-        ArrayList<Oswiadczenie> oswiadczenies = new ArrayList<>(map.values().stream()
-            .filter(oswiadczenie -> oswiadczenie.getUserId().equals(ownerId))
-            .collect(Collectors.toList()));
+        List<Oswiadczenie> oswiadczenies = map.values().stream()
+            .filter(oswiadczenie -> oswiadczenie.getOwnerId().equals(ownerId))
+            .collect(Collectors.toList());
         
         return new PageImpl<>(oswiadczenies, pageable, map.size());
     }

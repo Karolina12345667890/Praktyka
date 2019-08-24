@@ -1,8 +1,6 @@
 package uph.ii.SIMS.DocumentModule;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -10,20 +8,19 @@ import javax.persistence.*;
 @Entity
 @Table(name = "documents")
 @Inheritance(strategy = InheritanceType.JOINED)
-
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 abstract public class Document {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @SequenceGenerator(name = "qqq")
     protected Long id;
     
-    protected Long userId;
+    protected Long ownerId;
     
-    public Document(Long owner) {
-        this.userId = owner;
+    protected Document(Long owner) {
+        this.ownerId = owner;
     }
-    
 }

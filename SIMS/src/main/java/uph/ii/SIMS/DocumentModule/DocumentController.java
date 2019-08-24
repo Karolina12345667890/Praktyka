@@ -1,44 +1,66 @@
 package uph.ii.SIMS.DocumentModule;
 
 import lombok.AllArgsConstructor;
-import org.intellij.lang.annotations.Language;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
+import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 
+@Configuration // TODO delete this, used to fill the DB
 @RestController
 @AllArgsConstructor
 class DocumentController {
     
     private DocumentFacade documentFacade;
     
-    @GetMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
-    @ResponseBody
-    byte[] createPdf() throws Exception {
-        
-        @Language("Json")
-        String oswiadczenieJson = "{\n" +
-            "  \"studentName\": \"nameTest\",\n" +
-            "  \"studentSurname\": \"surnameTest\",\n" +
-            "  \"studentDuties\": [\"test duty no. 1\", \"test duty no. 2\"],\n" +
-            "  \"carerName\": \"carer Test Name\",\n" +
-            "  \"carerSurname\": \"carer Test Surname\",\n" +
-            "  \"carerPhone\": \"123456789\",\n" +
-            "  \"carerEmail\": \"test123@test.com\"\n" +
-            "}";
-        
-        return documentFacade.createPdf("Oswiadczenie", oswiadczenieJson);
+    @Bean
+        // TODO delete this, used to fill the DB
+    void fillValues() throws Exception {
+        documentFacade.storeOswiadczenie(OswiadczenieDto.builder()
+            .opiekunI("Adam")
+            .opiekunN("Nowak")
+            .opiekunMail("adam.nowak@gmail.com")
+            .opiekunTel("123456789")
+            .build()
+        );
+        documentFacade.storePorozumienie(PorozumienieDto.builder()
+            .build()
+        );
     }
     
     
-    @GetMapping(value = "/pdf2", produces = MediaType.APPLICATION_PDF_VALUE)
-    @ResponseBody
-    byte[] createPdf2() throws Exception {
-        return documentFacade.createPdf("Porozumienie", "{}");
+    @RestController
+    @RequestMapping(headers = "Document-Type=Oswiadczenie")
+    class OswiadczenieController {
+        @GetMapping(value = "/api/document/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+        OswiadczenieDto fetchOswiadczenieDto(@PathVariable Long id) {
+            return documentFacade.fetchOswiadczenie(id);
+        }
+        
+        @GetMapping(value = "/api/document/{id}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+        @ResponseBody
+        byte[] createOswiadczeniePdf(@PathVariable Long id) throws Exception {
+            return documentFacade.printOswiadczenieToPdf(id);
+        }
     }
-
-//    @GetMapping(value = "oswiadczenie")
-
-
+    
+    @RestController
+    @RequestMapping(headers = "Document-Type=Porozumienie")
+    class PorozumienieController {
+        @GetMapping(value = "/api/document/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+        PorozumienieDto fetchPorozumienieDto(@PathVariable Long id) {
+            return documentFacade.fetchPorozumienie(id);
+        }
+        
+        @GetMapping(value = "/api/document/{id}/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+        @ResponseBody
+        byte[] createPorozumieniePdf(@PathVariable Long id) throws Exception {
+            return documentFacade.printPorozumienieToPdf(id);
+        }
+        
+    }
+    
+    
 }

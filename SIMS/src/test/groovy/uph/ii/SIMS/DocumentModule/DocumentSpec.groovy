@@ -2,7 +2,6 @@ package uph.ii.SIMS.DocumentModule
 
 import spock.lang.Specification
 import uph.ii.SIMS.PdfCreationService.PdfBuilder
-import uph.ii.SIMS.UserModule.Dto.UserDto
 import uph.ii.SIMS.UserModule.SampleUsers
 import uph.ii.SIMS.UserModule.UserFacade
 
@@ -20,7 +19,7 @@ class DocumentSpec extends Specification implements SampleDocuments, SampleUsers
             facade.storeOswiadczenie(oswiadczenie1)
 
         expect: "System should show the document"
-            facade.showOswiadczenie(oswiadczenie1.id) == oswiadczenie1
+            facade.fetchOswiadczenie(oswiadczenie1.id) == oswiadczenie1
     }
 
     def "Should show my documents"(){

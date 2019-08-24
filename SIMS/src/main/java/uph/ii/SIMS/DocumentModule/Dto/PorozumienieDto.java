@@ -7,11 +7,6 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
-public class OswiadczenieDto {
+public class PorozumienieDto {
     private Long id;
-    private String opiekunI;
-    private String opiekunN;
-    private String opiekunMail;
-    private String opiekunTel;
-    
 }

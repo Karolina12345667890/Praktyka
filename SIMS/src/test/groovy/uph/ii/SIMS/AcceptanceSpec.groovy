@@ -6,7 +6,7 @@ import uph.ii.SIMS.DocumentModule.DocumentFacade
 
 class AcceptanceSpec extends IntegrationSpec {
     @Autowired
-    DocumentFacade documentFacade;
+    DocumentFacade documentFacade
 
     def "positive scenario"() {
         given: ""
