@@ -17,15 +17,16 @@ export class OswiadczenieComponent implements OnInit {
               private httpClient: HttpClient) {
 
     this.oswiadczenieForm = this.fb.group({
-      studentName: ['a'],
-      studentSurname: ['b'],
-      studentDuties: this.fb.array([
-        this.fb.control('c')
-      ]),
-      carerName: ['d'],
-      carerSurname: ['e'],
-      carerPhone: ['f'],
-      carerEmail: ['g'],
+      studentName: ['tomek'],
+      studentSurname: ['romek'],
+      studentDuties: ['1,2,3,4'],
+        //this.fb.array([
+       // this.fb.control('c')
+     // ]),
+      carerName: ['ja'],
+      carerSurname: ['moje'],
+      carerPhone: ['123456789'],
+      carerEmail: ['test@test.test'],
     });
   }
 
