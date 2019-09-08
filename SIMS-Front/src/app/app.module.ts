@@ -8,6 +8,11 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { PorozumienieComponent } from './porozumienie/porozumienie.component';
+import { LoginComponent } from './login/login.component';
+import {LoginServiceService} from "./login-service.service";
+import {AuthGuardService} from "./auth-guard.service";
 
 
 
@@ -16,7 +21,10 @@ import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
     AppComponent,
     HomeComponent,
     FileUploadComponent,
-    OswiadczenieComponent
+    NavbarComponent,
+    OswiadczenieComponent,
+    PorozumienieComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +32,7 @@ import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [LoginServiceService,AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

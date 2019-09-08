@@ -1,0 +1,8 @@
+<ul>
+  <li><a routerLink="/home">Home</a></li>
+  <li><a *ngIf="loggedIn" routerLink="/osw">Oświadczenie</a></li>
+  <li><a *ngIf="loggedIn" routerLink="/por">Porozumienie</a></li>
+  <li><a *ngIf="loggedIn" routerLink="/upload">Upload</a></li>
+  <li><a *ngIf="!loggedIn" routerLink="/login">Login</a></li>
+  <li><a *ngIf="loggedIn" (click)="logOut()">Logout</a></li>
+</ul>

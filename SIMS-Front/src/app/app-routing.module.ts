@@ -4,6 +4,9 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {FileUploadComponent} from './file-upload/file-upload.component';
 import {OswiadczenieComponent} from './oswiadczenie/oswiadczenie.component';
+import {PorozumienieComponent} from "./porozumienie/porozumienie.component";
+import {LoginComponent} from "./login/login.component";
+import {AuthGuardService} from "./auth-guard.service";
 
 
 const appRoutes: Routes = [
@@ -13,12 +16,24 @@ const appRoutes: Routes = [
   },
   {
     path: 'osw',
-    component: OswiadczenieComponent
+    component: OswiadczenieComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: 'upload',
-    component: FileUploadComponent
+    component: FileUploadComponent,
+    canActivate: [AuthGuardService]
   },
+  {
+    path: 'por',
+    component: PorozumienieComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+
   {
     path: '',
     redirectTo: 'home',
@@ -29,6 +44,7 @@ const appRoutes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   }
+
 ];
 
 
