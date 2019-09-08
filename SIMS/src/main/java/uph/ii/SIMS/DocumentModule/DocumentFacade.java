@@ -1,0 +1,83 @@
+package uph.ii.SIMS.DocumentModule;
+
+
+import lombok.AllArgsConstructor;
+import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
+import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
+import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
+import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
+import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
+import uph.ii.SIMS.PdfCreationService.PdfBuilder;
+import uph.ii.SIMS.UserModule.UserFacade;
+
+@AllArgsConstructor
+public class DocumentFacade {
+    
+    private PdfBuilder pdfBuilder;
+    private OswiadczenieFacade oswiadczenieFacade;
+    private PorozumienieFacade porozumienieFacade;
+    private UserFacade userFacade;
+    
+    public byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
+        return pdfBuilder.getPdfFromObject(templateName, pdfDto);
+    }
+    
+    public byte[] createPdf(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
+        return pdfBuilder.getPdfFromObject(templateName, pdfDto);
+    }
+    
+    byte[] printOswiadczenieToPdf(Long id) throws Exception {
+        var oswiadczenieDto = oswiadczenieFacade.find(id);
+        var currentUserDto = userFacade.getCurrentUser();
+        var pdfDto = OswiadczeniePdfDto.builder()
+            .studentName(currentUserDto.getName())
+            .studentSurname(currentUserDto.getSurname())
+            .carerName(oswiadczenieDto.getOpiekunI())
+            .carerSurname(oswiadczenieDto.getOpiekunN())
+            .carerEmail(oswiadczenieDto.getOpiekunMail())
+            .carerPhone(oswiadczenieDto.getOpiekunTel())
+            .build();
+        
+        return pdfBuilder.getPdfFromObject("Oswiadczenie", pdfDto);
+    }
+    
+    byte[] printPorozumienieToPdf(Long id) throws Exception {
+        var porozumienieDto = porozumienieFacade.find(id);
+        var currentUserDto = userFacade.getCurrentUser();
+        var pdfDto = PorozumieniePdfDto.builder()
+            .studentName(currentUserDto.getName())
+            .studentSurname(currentUserDto.getSurname())
+            .studentSpecialization("SPECJALIZACJA")
+            .studentInternshipDuration("40 tyg")
+            .studentInternshipStart("01-09-2019")
+            .studentInternshipEnd("30-09-2019")
+            
+            .companyName("NAZWA FIRMY")
+            .companyLocationCity("MIASTO")
+            .companyLocationStreet("ULICA")
+            
+            .companyRepresentantName("IMIE REPREZENTANTA")
+            .companyRepresentantSurname("NAZWISKO REPREZENTANTA")
+            .build();
+        
+        return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
+    }
+    
+    
+    public OswiadczenieDto fetchOswiadczenie(Long id) {
+        return oswiadczenieFacade.find(id);
+    }
+    
+    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto) throws Exception {
+        oswiadczenieFacade.save(oswiadczenieDto);
+    }
+    
+    public PorozumienieDto fetchPorozumienie(Long id) {
+        return porozumienieFacade.find(id);
+    }
+    
+    public void storePorozumienie(PorozumienieDto porozumienieDto) throws Exception {
+        porozumienieFacade.save(porozumienieDto);
+    }
+}

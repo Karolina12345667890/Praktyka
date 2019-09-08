@@ -1,0 +1,118 @@
+html {
+    font-family: 'times';
+    font-size: 14px;
+}
+
+#content {
+    margin-top: 0em;
+    margin-left: 2em;
+    margin-right: 2em;
+    /*border: 1px solid black;*/
+}
+
+br {
+    line-height: 0px;
+}
+
+
+.toSignLeft {
+    float: left;
+}
+
+
+.toSignRight {
+    margin-left: 70%;
+}
+
+.toSignLeft, .toSignRight {
+    width: 30%;
+}
+
+.toSignLeft div:nth-child(1), .toSignRight div:nth-child(1) {
+    text-align: center;
+}
+
+.toSignLeft div:nth-child(2), .toSignRight div:nth-child(2) {
+    font-size: 11px;
+    margin-top: 0.5em;
+    /*line-height: 3em;*/
+    text-align: center;
+}
+
+.toSignLeft div:nth-child(3), .toSignRight div:nth-child(3) {
+    font-size: 11px;
+    margin-top: 0;
+    /*line-height: 3em;*/
+    text-align: center;
+}
+
+
+.inline {
+    display: inline;
+}
+
+.highLetters {
+    font-size: 1.1em;
+    line-height: 1.5em;
+    font-family: "timesbd";
+    /*margin-left: 1px;*/
+}
+
+
+.highLetters span {
+    /*line-height: 1.5;*/
+    display: inline-block;
+    vertical-align: bottom;
+    width: 50%;
+
+}
+
+.highLetters span:nth-child(1) {
+    float: left;
+}
+
+.highLetters span:nth-child(2) {
+    margin-left: 0%;
+    word-wrap: break-word;
+
+}
+
+.highLetters span:last-child {
+    float: none;
+}
+
+
+#activities {
+    list-style: none;
+    padding-left: 1px;
+    margin: 0.1em;
+}
+
+#clause1, #clause2 {
+    font-size: 12px;
+}
+
+#clause2 {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
+
+h1 {
+    font-size: 20px;
+}
+
+h1, h2, h3, h4, h5 {
+    text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "timesbd";
+    font-weight: 400;
+}
+
+
+h6 {
+    font-size: 10px;
+}
+
