@@ -5,6 +5,9 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * Klasa zawierająca wszystkie wymagane dane o użytkowniku
+ */
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor

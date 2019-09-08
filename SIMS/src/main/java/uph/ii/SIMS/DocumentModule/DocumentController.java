@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 
+/**
+ * kontroler dla modułu dokumentów, posiada mapowania metod {@link DocumentFacade fasady} na adresy url
+ */
 @Configuration // TODO delete this, used to fill the DB
 @RestController
 @AllArgsConstructor
@@ -15,8 +18,11 @@ class DocumentController {
     
     private DocumentFacade documentFacade;
     
+    /**
+     * Tworzy przykładowe dane i zapisuje je do BD
+     */
+// TODO delete this, used to fill the DB
     @Bean
-        // TODO delete this, used to fill the DB
     void fillValues() throws Exception {
         documentFacade.storeOswiadczenie(OswiadczenieDto.builder()
             .opiekunI("Adam")
@@ -31,6 +37,9 @@ class DocumentController {
     }
     
     
+        /**
+         * Kontroler odpowiedzialny za dokument oświadczenia
+         */
     @RestController
     @RequestMapping(headers = "Document-Type=Oswiadczenie")
     class OswiadczenieController {
@@ -46,6 +55,9 @@ class DocumentController {
         }
     }
     
+        /**
+         * Kontroler odpowiedzialny za dokument porozumienia
+         */
     @RestController
     @RequestMapping(headers = "Document-Type=Porozumienie")
     class PorozumienieController {

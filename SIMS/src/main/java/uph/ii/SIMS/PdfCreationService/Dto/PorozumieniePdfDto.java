@@ -3,6 +3,9 @@ package uph.ii.SIMS.PdfCreationService.Dto;
 import lombok.Builder;
 import lombok.Getter;
 
+/**
+ * Zawiera wszystkie pola wymagane do utworzenia pdf porozumienia
+ */
 @Getter
 @Builder
 public class PorozumieniePdfDto {

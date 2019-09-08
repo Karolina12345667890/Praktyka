@@ -11,6 +11,10 @@ import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.UserFacade;
 
+/**
+ * Klasa zawiera wszystkie metody związane z dokumentami. Odpowiada za komunikację z innymi modułami, {@link DocumentController} udostępnia jej metody przez HTTP
+ * @see DocumentController
+ */
 @AllArgsConstructor
 public class DocumentFacade {
     
@@ -19,14 +23,20 @@ public class DocumentFacade {
     private PorozumienieFacade porozumienieFacade;
     private UserFacade userFacade;
     
-    public byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
+    byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
     
-    public byte[] createPdf(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
+    byte[] createPdf(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
     
+    /**
+     * Tworzy pdf oświadczenia, wypełnia wszystkie pola wartościami pobranymi z BD
+     * @param id Id oświadczenia
+     * @return Pdf oświadczenia (jako tablica bajtów) z wartościami wszystkich pól pobranymi z BD
+     * @throws Exception
+     */
     byte[] printOswiadczenieToPdf(Long id) throws Exception {
         var oswiadczenieDto = oswiadczenieFacade.find(id);
         var currentUserDto = userFacade.getCurrentUser();
@@ -42,6 +52,12 @@ public class DocumentFacade {
         return pdfBuilder.getPdfFromObject("Oswiadczenie", pdfDto);
     }
     
+    /**
+     * Tworzy pdf porozumienia, wypełnia wszystkie pola wartościami pobranymi z BD
+     * @param id Id porozumienia
+     * @return Pdf porozumienia (jako tablica bajtów) z wartościami wszystkich pól pobranymi z BD
+     * @throws Exception
+     */
     byte[] printPorozumienieToPdf(Long id) throws Exception {
         var porozumienieDto = porozumienieFacade.find(id);
         var currentUserDto = userFacade.getCurrentUser();
@@ -64,18 +80,40 @@ public class DocumentFacade {
         return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
     }
     
-    
+    /**
+     * Zwraca Dto oswiadczenia o podanym id, wywołuje {@link OswiadczenieFacade#find(Long)}
+     * @param id Id oswiadczenia
+     * @return Dto oswiadczenia
+     */
     public OswiadczenieDto fetchOswiadczenie(Long id) {
         return oswiadczenieFacade.find(id);
     }
     
+    /**
+     * Persystuje przekazane oświadczenie, jesli w bazie danych nie ma oświadczenia z id takim, jak w przekazanym dto zostaje utworzone nowe oświadczenie,
+     * w przeciwnym razie aktualizowany jest już istniejący dokument
+     * @param oswiadczenieDto oswiadczenie do zapisania
+     * @throws Exception
+     */
     public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto) throws Exception {
         oswiadczenieFacade.save(oswiadczenieDto);
     }
     
+    /**
+     * Zwraca Dto porozumienia o podanym id, wywołuje {@link PorozumienieFacade#find(Long)}
+     * @param id Id porozumienia
+     * @return Dto porozumienia
+     */
     public PorozumienieDto fetchPorozumienie(Long id) {
         return porozumienieFacade.find(id);
     }
+    
+    /**
+     * Persystuje przekazane porozumienie, jesli w bazie danych nie ma porozumienie z id takim, jak w przekazanym dto zostaje utworzone nowe porozumienie,
+     * w przeciwnym razie aktualizowany jest już istniejący dokument
+     * @param porozumienieDto oswiadczenie do zapisania
+     * @throws Exception
+     */
     
     public void storePorozumienie(PorozumienieDto porozumienieDto) throws Exception {
         porozumienieFacade.save(porozumienieDto);

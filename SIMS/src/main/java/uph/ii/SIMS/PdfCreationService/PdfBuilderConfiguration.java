@@ -9,16 +9,38 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.io.File;
 
 @Configuration
+/**
+ * <p>
+ *     Klasa odpowiedzialna za utworzenie skonfigurowanej instancji klasy {@link PdfBuilder}
+ * </p>
+ * <p>
+ *     Posiada konfigurację czcionek, oraz ustawienia resolvera widoków
+ * </p>
+ */
 class PdfBuilderConfiguration {
     
     private static final String FONTS_DIRECTORY = "src/main/resources/fonts/";
     
     @Bean
+    /**
+     * @return Skonfigurowana instancja {@link PdfBuilder}
+     */
     PdfBuilder pdfBuilder() {
-        String static_resources_uri = new File("src/main/resources").toURI().toString();
-        return new PdfBuilder(static_resources_uri, config(), templateEngine());
+        return new PdfBuilder(staticResourcesUri(), config(), templateEngine());
     }
     
+    /**
+     * Zwraca ścieżkę do folderu z zasobami
+     * @return ścieżka do folderu z zasobami
+     */
+    private String staticResourcesUri() {
+        return new File("src/main/resources").toURI().toString();
+    }
+    
+    /**
+     * Zwraca skonfigurowany PdfRendererBuilder (z biblioteki openhtmltopdf)
+     * @return skonfigurowany PdfRendererBuilder
+     */
     private PdfRendererBuilder config() {
         return new PdfRendererBuilder()
             .useFastMode()
@@ -28,14 +50,20 @@ class PdfBuilderConfiguration {
             .useFont(new File(FONTS_DIRECTORY + "arialbd.ttf"), "arialbd");
     }
     
-    
+    /**
+     * Zwraca template engine z ustawionym resolverem widokow z {@link #templateResolver()}
+     * @return skonfigurowany template engine
+     */
     private SpringTemplateEngine templateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         return templateEngine;
     }
     
-    
+    /**
+     * Zwraca skonfigurowany template resolver
+     * @return skonfigurowany template resolver
+     */
     private ClassLoaderTemplateResolver templateResolver() {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
         templateResolver.setPrefix("templates/");

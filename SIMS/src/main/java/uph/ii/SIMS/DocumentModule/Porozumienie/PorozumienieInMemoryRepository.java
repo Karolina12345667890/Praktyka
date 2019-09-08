@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Repozytorium w pamięci (w postaci hashmapy), wykorzystywane w celach testowych (podniesienie kontekstu springa - 20 sekund, stworzenie mapy - milisekundy)
+ */
 class PorozumienieInMemoryRepository implements PorozumienieRepository {
     
     private HashMap<Long, Porozumienie> map = new HashMap<>();

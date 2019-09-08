@@ -5,6 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 
+/**
+ * Abstrakcyjna klasa dokumentu, zawiera pola Id i Id właściciela dokumentu
+ */
 @Entity
 @Table(name = "documents")
 @Inheritance(strategy = InheritanceType.JOINED)

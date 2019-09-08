@@ -4,6 +4,9 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+/**
+ * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu porozumienia
+ */
 @Getter
 @Builder
 @EqualsAndHashCode
