@@ -107,12 +107,15 @@ h1 {
 
 h1, h2, h3, h4, h5 {
   text-align: center;
+
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: "timesbd";
   font-weight: 400;
   font-weight: bold;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 
@@ -121,25 +124,28 @@ h6 {
 }
 
 .a4{
-  width:800px;
+  width:840px;
   border: 1px solid black;
   margin: 0 auto;
   padding: 40px;
 }
+ol, li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
 
-.a4 input:focus, .a4 input{
-  outline: none;
-  border-top: 0px solid;
-  border-left: 0px solid;
-  border-right: 0px solid;
+.a4 input, .a4 input:focus, .a4 textarea , .a4 textarea:focus{
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
   border-radius: 5px;
 }
 
 .ng-valid[required], .ng-valid.required  {
-  border-bottom: 3px solid #42A948;
+  border-left: 5px solid #42A948;
 }
 
 .ng-invalid:not(form)  {
-  border-bottom: 3px solid #a94442;
+  border-left: 5px solid #a94442;
 }
-

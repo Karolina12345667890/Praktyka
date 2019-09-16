@@ -1,0 +1,129 @@
+
+<form [formGroup]="zaswiadczenieForm" (ngSubmit)="onSubmit()">
+
+
+  <div>
+    <button [disabled]="zaswiadczenieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit">Wyślij</button>
+  </div>
+
+
+
+
+  <body class="a4" >
+
+  <h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
+  <br/>
+
+  <div id="content">
+    <div>
+      <div class="toSignLeft">
+        <div>
+          ........................................................
+        </div>
+        <div>
+          (Pięczeć zakładu pracy)
+        </div>
+      </div>
+
+      <div class="toSignRight">
+        <div>
+          ........................................................
+        </div>
+        <div>
+          (Miejscowość, data)
+        </div>
+      </div>
+    </div>
+    <br/> <br/> <br/>
+
+    <h3>ZAŚWIADCZENIE</h3>
+    <br/> <br/>
+    <div>
+
+
+        <div>
+          Pan(i) <input type="text" formControlName="studentName" placeholder="First name" required/> <input type="text" formControlName="studentSurname" placeholder="Last name" required/>student(ka) kierunku Informatyka
+        </div>
+
+
+
+        Przebywał(a) na praktyce w naszym przedsiębiorstwie w okresie
+
+        <div>
+          od <input type="date" formControlName="periodFrom" placeholder="00.00.0000" required/> do <input type="date" formControlName="periodTo" placeholder="00.00.0000" required/>
+        </div>
+<br><br>
+
+        <div class="toSignLeft" style="width: 70%">
+
+            Praktykant(ka) otrzymał(a) następujące oceny:
+
+
+
+          <ol>
+            <li>    za przestrzeganie dyscypliny pracy</li>
+            <li> merytoryczna ocena pracy (wykonanie przydzielonych zadań)  </li>
+            <li>umiejętność współpracy z pracownikami przedsiębiorstwa </li>
+
+          </ol>
+
+          </div>
+
+            <div class="toSignRight">
+              <div><br>
+                <input type="text" formControlName="studentRating1" placeholder="bardzo dobry, dobry, dostateczny, niedostateczny" required/>
+                <input type="text" formControlName="studentRating2" placeholder="bardzo dobry, dobry, dostateczny, niedostateczny" required/>
+                <input type="text" formControlName="studentRating3" placeholder="bardzo dobry, dobry, dostateczny, niedostateczny" required/>
+              </div>
+            </div>
+
+<br>
+      <div>
+        Ogólna ocena praktyki: <input type="text" formControlName="studentRating" placeholder="bardzo dobry, dobry, dostateczny, niedostateczny" required/>
+        </div>
+      <br>
+<div>
+  Praktykant(ka) w trakcie praktyki wykonywała następujące zadania:
+</div>
+      <div>
+        <textarea rows="5" cols="90" formControlName="studentWorks" required></textarea>
+      </div>
+      <br>
+      <div>
+        Praktykant(ka) szczególne zainteresowania/umiejętności wykazała w dziedzinie:
+      </div>
+      <div>
+        <textarea rows="5" cols="90" formControlName="studentInterests" required></textarea>
+      </div>
+
+      <br/> <br/>
+      <div>
+        <div class="toSignLeft">
+          <div>
+            Pracownik nadzorujący przebieg praktyk <br/> <br/> <br/>
+          </div>
+          <div>
+            ........................................................
+          </div>
+
+        </div>
+        <div class="toSignRight">
+          <div>
+            Dyrektor/kierownik <br/> <br/> <br/> <br/>
+          </div>
+          <div>
+            ........................................................
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </body>
+
+  <div>
+    <button [disabled]="zaswiadczenieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit">Wyślij</button>
+  </div>
+</form>

@@ -2,7 +2,6 @@
   "name": "sims-front",
   "version": "0.0.0",
   "scripts": {
-    "ng g serv" : "ng g service auth-guard",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -20,6 +19,8 @@
     "@angular/platform-browser": "~8.1.0",
     "@angular/platform-browser-dynamic": "~8.1.0",
     "@angular/router": "~8.1.0",
+    "bootstrap": "^4.3.1",
+    "jquery": "^3.4.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

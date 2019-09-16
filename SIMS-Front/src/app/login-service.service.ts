@@ -9,8 +9,9 @@ export class LoginServiceService {
 
   constructor(private router: Router) { }
 
+  // prosta metoda do logowania przyjmująca 2 string login i password
   login(login: string, password: string) {
-
+  // tymczasowa opcja sprawdzająca czy dane logowania są poprawne
   if(login=="admin"&& password=="admin"){
   this.isLogged.next(true);
   this.router.navigateByUrl('/home');
@@ -18,15 +19,16 @@ export class LoginServiceService {
   }
   }
 
+  //metoda powodująca wyglogowanie użytkownika i zabranie u dostępu do niektórych stron
   logout() {
     this.isLogged.next(false);
     this.router.navigateByUrl('/home');
   }
 
-  getLoginStatis(): Observable<Boolean> {
+
+  // metoda zwracająca status logowania jako observable
+  getLoginStatus(): Observable<Boolean> {
     return this.isLogged.asObservable();
-
-
   }
 
 }

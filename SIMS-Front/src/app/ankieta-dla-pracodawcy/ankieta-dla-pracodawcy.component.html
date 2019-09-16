@@ -1,0 +1,395 @@
+<div class="container" style="margin-top: 100px">
+
+  <h3 class="text-center">Wydziałowa ankieta oceny studenckich praktyk przez pracodawców</h3>
+
+  <p>(Celem poniższej ankiety jest ewaluacja jakości przygotowania zawodowego studentów na Wydziale Nauk Ścisłych
+    Uniwersytetu Przyrodniczo - Humanistycznego w Siedlcach).</p>
+  {{questionNumber}}/{{totalQuestions }} <br><br>
+  <button *ngIf="questionNumber!=totalQuestions " (click)="nextQuestion()" class="btn btn-primary ">Następne</button>
+  <div class="float-right">
+    <button (click)="peviousQuestion()" class="btn btn-warning ">Wstecz</button>
+  </div>
+
+  <form [formGroup]="ankietaPracForm" (ngSubmit)="onSubmit()">
+    <div class="toLeft" *ngIf="questionNumber==totalQuestions ">
+      <button  type="submit" class="btn btn-success" [disabled]="ankietaPracForm.invalid">Wyślij</button>
+
+    </div>
+    <br *ngIf="questionNumber==totalQuestions ">
+    <hr>
+    <div id="question1" *ngIf="questionNumber==0">
+      Kierunek studiów studentów odbywających praktyki w Państwa zakładzie pracy (zaznaczyć właściwe pole):<br><br>
+      <label class="container">chemia
+        <input type="radio" name="answerTo0" value="a" formControlName="answerTo0"/>
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">informatyka
+        <input type="radio" name="answerTo0" value="b" formControlName="answerTo0"/>
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">matematyka
+        <input type="radio" name="answerTo0" value="c" formControlName="answerTo0"/>
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="question2" *ngIf="questionNumber==1">
+      Wiedza niezbędna do szybkiego opanowania umiejętności wykonywania zadań readivzowanych w Państwa instytucji
+      <br><br>
+      <label class="container">
+        <input type="radio" name="answerTo1" value="a" formControlName="answerTo1">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo1" value="b" formControlName="answerTo1">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo1" value="c" formControlName="answerTo1">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo1" value="d" formControlName="answerTo1">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo1" value="e" formControlName="answerTo1">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question3" *ngIf="questionNumber==2">
+      Ogólne przygotowanie zawodowe <br><br>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="a" formControlName="answerTo2">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="b" formControlName="answerTo2">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="c" formControlName="answerTo2">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="d" formControlName="answerTo2">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="e" formControlName="answerTo2">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="question4" *ngIf="questionNumber==3">
+      Umiejętność nawiązywania kontaktów <br><br>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="a" formControlName="answerTo3">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="b" formControlName="answerTo3">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="c" formControlName="answerTo3">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="d" formControlName="answerTo3">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="e" formControlName="answerTo3">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="question5" *ngIf="questionNumber==4">
+      Umiejętność organizacji pracy <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo4" value="a" formControlName="answerTo4">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo4" value="b" formControlName="answerTo4">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo4" value="c" formControlName="answerTo4">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo4" value="d" formControlName="answerTo4">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo4" value="e" formControlName="answerTo4">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="question6" *ngIf="questionNumber==5">
+      Umiejętność pracy w zespole <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo5" value="a" formControlName="answerTo5">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo5" value="b" formControlName="answerTo5">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo5" value="c" formControlName="answerTo5">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo5" value="d" formControlName="answerTo5">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo5" value="e" formControlName="answerTo5">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="question7" *ngIf="questionNumber==6">
+      Umiejętność rozwiązywania problemów(związanych z wykonywaną pracą) <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo6" value="a" formControlName="answerTo6">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="b" formControlName="answerTo6">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="c" formControlName="answerTo6">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="d" formControlName="answerTo6">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="e" formControlName="answerTo6">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question8" *ngIf="questionNumber==7">
+      Umiejętność argumentacji i przekonywania <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo7" value="a" formControlName="answerTo7">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo7" value="b" formControlName="answerTo7">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo7" value="c" formControlName="answerTo7">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo7" value="d" formControlName="answerTo7">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo7" value="e" formControlName="answerTo7">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question9" *ngIf="questionNumber==8">
+      Umiejętność sprawnego uczenia się nowych zagadnień niezbędnych w pracy <br><br>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="a" formControlName="answerTo8">bardzo dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="b" formControlName="answerTo8">dobra
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="c" formControlName="answerTo8">dostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="d" formControlName="answerTo8">niedostateczna
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="e" formControlName="answerTo8">brak podstaw do oceny
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question10" *ngIf="questionNumber==9">
+      Czy studenci są kreatywni? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo9" value="a" formControlName="answerTo9">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo9" value="b" formControlName="answerTo9">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo9" value="c" formControlName="answerTo9">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo9" value="d" formControlName="answerTo9">nie
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div id="question11" *ngIf="questionNumber==10">
+      Czy studenci są samodzielni? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo10" value="a" formControlName="answerTo10">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo10" value="b" formControlName="answerTo10">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo10" value="c" formControlName="answerTo10">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo10" value="d" formControlName="answerTo10">nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question12" *ngIf="questionNumber==11">
+      Czy studenci są sumienni? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo11" value="a" formControlName="answerTo11">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo11" value="b" formControlName="answerTo11">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo11" value="c" formControlName="answerTo11">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo11" value="d" formControlName="answerTo11">nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question13" *ngIf="questionNumber==12">
+      Czy studenci są obowiązkowi? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo12" value="a" formControlName="answerTo12">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo12" value="b" formControlName="answerTo12">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo12" value="c" formControlName="answerTo12">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo12" value="d" formControlName="answerTo12">nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question14" *ngIf="questionNumber==13">
+      Czy pracodawcy powinni być bdivżej związani z Uniwersytetem? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo13" value="a" formControlName="answerTo13">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo13" value="b" formControlName="answerTo13">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo13" value="c" formControlName="answerTo13">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo13" value="d" formControlName="answerTo13">nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question15" *ngIf="questionNumber==14">
+      Czy podczas studiów studenci powinni pracować? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo14" value="a" formControlName="answerTo14">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo14" value="b" formControlName="answerTo14">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo14" value="c" formControlName="answerTo14">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo14" value="d" formControlName="answerTo14">nie<br>
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question16" *ngIf="questionNumber==15">
+      Czy sądzicie Państwo, że plany i programy nauczania są dopasowane do potrzeb pracodawców , uwzględniając ich
+      różnorodność, a jeśdi nie to jakie zmiany by Pan/Pani proponował/a? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo15" value="a" formControlName="answerTo15">tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo15" value="b" formControlName="answerTo15">Raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo15" value="c" formControlName="answerTo15">Raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo15" value="d" formControlName="answerTo15">nie<br>
+        <span class="checkmark"></span>
+      </label>
+      <textarea class="form-control" rows="3" cols="90" formControlName="answerTo15text"></textarea>
+    </div>
+    <div id="question17" *ngIf="questionNumber==16">
+      <div> Inne uwagi i opinie <br>
+        <textarea class="form-control" rows="5" cols="90" formControlName="answerTo16text"></textarea>
+      </div>
+      <div class="cross-validation">
+      <div>
+        Dane informacyjne:<br>
+        <span style="font-size: 17px"> Nazwa i adres Zakładu</span><br>
+        <textarea class="form-control" rows="5" cols="90" formControlName="companyinfo" required></textarea>
+      </div>
+      <div>
+        liczba studentów na praktyce:
+        <input class="form-control" type="number" formControlName="numberofstudents" placeholder="1" required/></div>
+      </div>
+
+    </div>
+  </form>
+
+
+
+</div>

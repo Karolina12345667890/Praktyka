@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 
 @Component({
@@ -12,29 +12,30 @@ export class PorozumienieComponent implements OnInit {
   porozumienieForm;
   SERVER_URL = 'http://localhost:8080/pdfPost';
   visibility = false;
-
+// wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private fb: FormBuilder,
               private httpClient: HttpClient) {
-
+// tworzy wypełniony obiekt porozumienieForm w celu łatwiejszego testowania
     this.porozumienieForm = this.fb.group({
-      companyName: ['nazwa firmy sp. z o. o.'],
-      companyLocationCity: ['Siedlce'],
-      companyLocationStreet: ['3-go maja'],
-      companyRepresentantName: ['ja'],
-      companyRepresentantSurname: ['moje'],
-      studentSpecialization: ['Informatyka'],
-      studentInternshipDuration: ['4'],
-      studentName: ['tomek'],
-      studentSurname: ['romek'],
-      studentStudyForm: ['Stacjonarne'],
-      studentInternshipStart: ['01.01.2000'],
-      studentInternshipEnd: ['01.02.2000'],
+      companyName: new FormControl('', [ Validators.required, ]),
+      companyLocationCity: new FormControl('', [ Validators.required, ]),
+      companyLocationStreet: new FormControl('', [ Validators.required, ]),
+      companyRepresentantName: new FormControl('', [ Validators.required, ]),
+      companyRepresentantSurname: new FormControl('', [ Validators.required, ]),
+      studentSpecialization: new FormControl('', [ Validators.required, ]),
+      studentInternshipDuration: new FormControl('', [ Validators.required, ]),
+      studentName: new FormControl('', [ Validators.required, ]),
+      studentSurname: new FormControl('', [ Validators.required, ]),
+      studentStudyForm: new FormControl('', [ Validators.required, ]),
+      studentInternshipStart: new FormControl('', [ Validators.required, ]),
+      studentInternshipEnd: new FormControl('', [ Validators.required, ]),
     });
 
   }
 
   ngOnInit() {
   }
+  // metoda wysyłająca nasz obiekt porozumienieForm na server
   onSubmit() {
     console.log(this.porozumienieForm.value);
 

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormArray, FormBuilder} from '@angular/forms';
+import {FormArray, FormBuilder, FormControl, Validators} from '@angular/forms';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Component({
@@ -10,38 +10,30 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 export class OswiadczenieComponent implements OnInit {
 
   oswiadczenieForm;
-  SERVER_URL = 'http://localhost:8080/pdfPost';
+  SERVER_URL = 'http://localhost:8080/api/document';
   visibility = false;
 
+  // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private fb: FormBuilder,
               private httpClient: HttpClient) {
-
+// tworzy wypełniony oswiadczenieFor w celu łatwiejszego testowania
     this.oswiadczenieForm = this.fb.group({
-      studentName: ['tomek'],
-      studentSurname: ['romek'],
-      studentDuties: ['1,2,3,4'],
-        //this.fb.array([
-       // this.fb.control('c')
-     // ]),
-      carerName: ['ja'],
-      carerSurname: ['moje'],
-      carerPhone: ['123456789'],
-      carerEmail: ['test@test.test'],
+      studentName: new FormControl('', [ Validators.required, ]),
+      studentSurname: new FormControl('', [ Validators.required, ]),
+      studentDuties: new FormControl('', [ Validators.required, ]),
+      carerName: new FormControl('', [ Validators.required, ]),
+      carerSurname: new FormControl('', [ Validators.required, ]),
+      carerPhone: new FormControl('', [ Validators.required, ]),
+      carerEmail: new FormControl('', [ Validators.required, ]),
     });
   }
 
-  get duties() {
-    return this.oswiadczenieForm.get('studentDuties') as FormArray;
-  }
 
-  addDuty() {
-    this.duties.push(this.fb.control(''));
-  }
 
   ngOnInit() {
   }
 
-
+// metoda wysyłająca nasz obiekt oswiadczenieForm na server
   onSubmit() {
     console.log(this.oswiadczenieForm.value);
 
@@ -49,7 +41,6 @@ export class OswiadczenieComponent implements OnInit {
     const headers = new HttpHeaders();
     headers.append('Accept', 'application/pdf');
     headers.append('Content-Type', 'application/pdf');
-
     this.httpClient.post<any>(
       this.SERVER_URL, data, {headers}).subscribe(
       res => {

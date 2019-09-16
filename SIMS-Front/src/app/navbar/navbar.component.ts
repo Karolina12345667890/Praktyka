@@ -8,13 +8,17 @@ import { LoginServiceService } from '../login-service.service';
 })
 export class NavbarComponent implements OnInit {
 
+
   loggedIn : boolean;
+  // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private auth : LoginServiceService) {
-    this.auth.getLoginStatis().subscribe((status : boolean) =>this.loggedIn=status)
+    //nasłuchuje status zalogowania do zmiennej loggedIn
+    this.auth.getLoginStatus().subscribe((status : boolean) =>this.loggedIn=status)
   }
 
   ngOnInit() {
   }
+  // uruchamia metode logout z LoginServiceService
   logOut(){
     this.auth.logout();
   }

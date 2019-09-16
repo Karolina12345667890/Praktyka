@@ -13,6 +13,10 @@ import { PorozumienieComponent } from './porozumienie/porozumienie.component';
 import { LoginComponent } from './login/login.component';
 import {LoginServiceService} from "./login-service.service";
 import {AuthGuardService} from "./auth-guard.service";
+import { ZaswiadczenieComponent } from './zaswiadczenie/zaswiadczenie.component';
+import { AnkietaDlaStudentaComponent } from './ankieta-dla-studenta/ankieta-dla-studenta.component';
+import { AnkietaDlaPracodawcyComponent } from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
+import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.component';
 
 
 
@@ -24,7 +28,11 @@ import {AuthGuardService} from "./auth-guard.service";
     NavbarComponent,
     OswiadczenieComponent,
     PorozumienieComponent,
-    LoginComponent
+    LoginComponent,
+    ZaswiadczenieComponent,
+    AnkietaDlaStudentaComponent,
+    AnkietaDlaPracodawcyComponent,
+    DziennikPraktykComponent
   ],
   imports: [
     BrowserModule,

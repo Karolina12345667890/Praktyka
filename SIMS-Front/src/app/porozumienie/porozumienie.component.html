@@ -1,8 +1,10 @@
 
 <form [formGroup]="porozumienieForm" (ngSubmit)="onSubmit()">
+  <div>
+    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>
+  </div>
 
-
-  <body class="a4" >
+  <body class="a4">
 
 <h6>Załącznik nr 2 do Regulaminu praktyk zawodowych</h6>
 <br/>
@@ -21,7 +23,7 @@
         Siedlcach z siedzibą przy ul. Konarskiego 2, zwanym dalej Uniwersytetem, reprezentowanym na podstawie
         udzielonego przez Rektora UPH pełnomocnictwa przez Dziekana Wydziału Nauk Ścisłych a
         <div class="highLetters inline">
-          <span ><input type="text" formControlName="companyName" placeholder="Company name"/></span>
+          <span ><input type="text" formControlName="companyName" placeholder="Company name" style="width: 670px" required/></span>
         </div>
       </div>
       <div>
@@ -29,17 +31,17 @@
                     <span>
                         <span style=" width: 30%">z siedzibą w: </span>
                         <span style="  width: 70% "
-                             ><input type="text" formControlName="companyLocationCity" placeholder="City"/></span>
+                             ><input type="text" formControlName="companyLocationCity" placeholder="City" required/></span>
                     </span>
           <span>
                         <span style="width: 18% ">przy ul.</span>
                         <span style="font-family: 'arialbd';width: 82%">
-                             <input type="text" formControlName="companyLocationStreet" placeholder="City"/></span>
+                             <input type="text" formControlName="companyLocationStreet" placeholder="City" required/></span>
                     </span>
         </div>
 
         której reprezentantem/tką jest:
-        <div class="highLetters inline"><span style="width: auto"><input type="text" formControlName="companyRepresentantName" placeholder="First Name"/><input type="text" formControlName="companyRepresentantSurname" placeholder="Surname"/></span>
+        <div class="highLetters inline"><span style="width: auto"><input type="text" formControlName="companyRepresentantName" placeholder="First Name" required/><input type="text" formControlName="companyRepresentantSurname" placeholder="Surname" required/></span>
         </div>
         zwanym dalej Zakładem Pracy, o następującej treści:
       </div>
@@ -50,8 +52,8 @@
     <h4>§1</h4>
 
       Uniwersytet kieruje niżej wymienionych studentów kierunku Informatyka
-     specjalności <span> <input type="text" formControlName="studentSpecialization" placeholder="Student Specialization"/> </span>
-      na <span > <input type="text" formControlName="studentInternshipDuration" placeholder="Internship Duration"/> </span> -tygodniową praktykę zawodową:
+     specjalności <span> <input type="text" formControlName="studentSpecialization" placeholder="Student Specialization" required/> </span>
+      na <span > <input type="number" formControlName="studentInternshipDuration" placeholder="Internship Duration" required/> </span> -tygodniową praktykę zawodową:
 
     <br><br>
     <table style="width: 100%; border: 1px solid black">
@@ -61,9 +63,9 @@
         <td>Okres praktyki</td>
       </tr>
       <tr>
-        <td><input type="text" formControlName="studentName" placeholder="First Name"/><input type="text" formControlName="studentSurname" placeholder="Surname"/></td>
-        <td ><input type="text" formControlName="studentStudyForm" placeholder="Study Form"/></td>
-        <td ><input type="text" formControlName="studentInternshipStart" placeholder="Internship Start"/> - <input type="text" formControlName="studentInternshipEnd" placeholder="InternshipEnd"/></td>
+        <td><input type="text" formControlName="studentName" placeholder="First Name" required/><input type="text" formControlName="studentSurname" placeholder="Surname" required/></td>
+        <td ><input type="text" formControlName="studentStudyForm" placeholder="Study Form" required/></td>
+        <td ><input type="date" formControlName="studentInternshipStart" placeholder="Internship Start" required/> - <input type="date" formControlName="studentInternshipEnd" placeholder="InternshipEnd" required/></td>
       </tr>
     </table>
 
@@ -150,8 +152,8 @@
 
 </body>
 
-  <br>
+
   <div>
-    <button type="submit">Wyślij</button>
+    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>
   </div>
 </form>

@@ -42,7 +42,9 @@
 
 
 
-
+    <div>
+      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
+    </div>
 
     <body class="a4" >
 
@@ -77,7 +79,7 @@
     <div>
       Niniejszym wyrażam zgodę na przyjęcie studenta(ki):<br/>
       <div class="highLetters">
-        <input type="text" formControlName="studentName" placeholder="First name"/> <input type="text" formControlName="studentSurname" placeholder="Last name"/>
+        <input type="text" formControlName="studentName" placeholder="First name" required/> <input type="text" formControlName="studentSurname" placeholder="Last name" required/>
       </div>
     </div>
     <div>
@@ -85,19 +87,19 @@
       charakter wykonywanej pracy będzie zgodny z programem praktyki i będzie obejmował
       następujące obszary działalności:
       <ul id="activities">
-        <li ><span ><textarea rows="5" cols="90" formControlName="studentDuties"></textarea></span></li>
+        <li ><span ><textarea rows="5" cols="90" formControlName="studentDuties" required></textarea></span></li>
       </ul>
     </div>
     <div>
       Pracownikiem naszego zakładu pracy bezpośrednio nadzorującym i odpowiedzialnym za przebieg
       praktyk będzie:
       <div class="highLetters inline">
-        <input type="text" formControlName="carerName" placeholder="First name"/>   <input type="text" formControlName="carerSurname" placeholder="Last name"/>
+        <input type="text" formControlName="carerName" placeholder="First name" required/>   <input type="text" formControlName="carerSurname" placeholder="Last name" required/>
       </div>
 
       <div class="highLetters">
-        <span >tel.: <input type="text" formControlName="carerPhone" placeholder="Phone Number"/></span>
-        <span >e-mail:  <input type="text" formControlName="carerEmail" placeholder="Email"/></span>
+        <span >tel.: <input type="number" formControlName="carerPhone" placeholder="Phone Number" required/></span>
+        <span >e-mail:  <input type="email" formControlName="carerEmail" placeholder="Email" required/></span>
       </div>
     </div>
 
@@ -199,6 +201,6 @@
 </body>
 
     <div>
-      <button type="submit">Wyślij</button>
+      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
     </div>
   </form>
