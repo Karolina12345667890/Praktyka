@@ -31,6 +31,7 @@ class PdfBuilderConfiguration {
     
     /**
      * Zwraca ścieżkę do folderu z zasobami
+     *
      * @return ścieżka do folderu z zasobami
      */
     private String staticResourcesUri() {
@@ -39,6 +40,7 @@ class PdfBuilderConfiguration {
     
     /**
      * Zwraca skonfigurowany PdfRendererBuilder (z biblioteki openhtmltopdf)
+     *
      * @return skonfigurowany PdfRendererBuilder
      */
     private PdfRendererBuilder config() {
@@ -52,6 +54,7 @@ class PdfBuilderConfiguration {
     
     /**
      * Zwraca template engine z ustawionym resolverem widokow z {@link #templateResolver()}
+     *
      * @return skonfigurowany template engine
      */
     private SpringTemplateEngine templateEngine() {
@@ -62,6 +65,7 @@ class PdfBuilderConfiguration {
     
     /**
      * Zwraca skonfigurowany template resolver
+     *
      * @return skonfigurowany template resolver
      */
     private ClassLoaderTemplateResolver templateResolver() {

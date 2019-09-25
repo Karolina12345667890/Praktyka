@@ -1,41 +1,65 @@
 package uph.ii.SIMS.UserModule;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
-import uph.ii.SIMS.UserModule.Dto.UserDto;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
+import java.util.Collection;
 
-/**
- * Klasa reprezentująca użytkownika. Posiada adnotację {@link javax.persistence.Entity}, przez co posiada również reprezentację w bazie danych
- */
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
-@Builder
-class User {
-    
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String name;
-    private String surname;
-    private String email;
+    @Column(nullable = false, unique = true)
+    private String login;
     
-    /**
-     * Metoda tworząca obiekt klasy {@link UserDto}
-     * @return Obiekt klasy {@link UserDto}, powstały na podstawie użytkownika, na którym wołana jest metoda
-     */
-    UserDto dto() {
-        return UserDto.builder()
-            .id(id)
-            .name(name)
-            .surname(surname)
-            .email(email)
-            .build();
+    @NotBlank
+    private String password;
+    
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new ArrayList<>();
+    }
+    
+    @Override
+    public String getPassword() {
+        return password;
+    }
+    
+    @Override
+    public String getUsername() {
+        return login;
+    }
+    
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    
+    
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

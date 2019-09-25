@@ -9,13 +9,13 @@ import uph.ii.SIMS.UserModule.UserFacade;
 
 /**
  * <p>
- *     Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
+ * Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
  * </p>
  * <p>
- *     Wykorzystywana przez {@link uph.ii.SIMS.DocumentModule.DocumentFacade}.
+ * Wykorzystywana przez {@link uph.ii.SIMS.DocumentModule.DocumentFacade}.
  * </p>
- * @see OswiadczenieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  *
+ * @see OswiadczenieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  */
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class OswiadczenieFacade {
@@ -25,6 +25,7 @@ public class OswiadczenieFacade {
     
     /**
      * Persystuje oświadczenie utworzone na podstawie przekazanego DTO. Właścicielem oświadczenia staje się aktualny użytkownik.
+     *
      * @param dto Dane potrzebne do zapisania oświaczenia
      * @throws Exception
      */
@@ -43,6 +44,7 @@ public class OswiadczenieFacade {
     
     /**
      * Zwraca dane oświadczenia o podanym id
+     *
      * @param id id szukanego oświadczenia
      * @return DTO z danymi oświadczenia o podanym id
      */
@@ -52,6 +54,7 @@ public class OswiadczenieFacade {
     
     /**
      * Zwraca listę (z paginacją) dokumentów aktualnie zalogowanego użytkownika
+     *
      * @return dokumentów aktualnie zalogowanego użytkownika
      * @throws Exception
      */

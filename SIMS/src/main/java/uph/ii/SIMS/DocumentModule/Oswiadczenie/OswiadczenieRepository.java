@@ -34,8 +34,8 @@ interface OswiadczenieRepository extends Repository<Oswiadczenie, Long> {
      * Wyszukuje wszystkie Oswiadczenia i dzieli je odpowiednio na strony
      *
      * @param pageable Obiekt klasy implementującej interfejs {@link org.springframework.data.domain.Pageable},
-     *                Zawiera informacje, którą stronę należy zwrócić i ile elementów przypada na jedną strone.
-     *                Obiekt taki można uzyskać korzystając np. ze statycznej metody {@link org.springframework.data.domain.PageRequest#of(int, int)}
+     *                 Zawiera informacje, którą stronę należy zwrócić i ile elementów przypada na jedną strone.
+     *                 Obiekt taki można uzyskać korzystając np. ze statycznej metody {@link org.springframework.data.domain.PageRequest#of(int, int)}
      * @return
      */
     Page<Oswiadczenie> findAll(Pageable pageable);
@@ -43,10 +43,10 @@ interface OswiadczenieRepository extends Repository<Oswiadczenie, Long> {
     /**
      * Wyszukuje wszystkie Oswiadczenia danego użytkownika i dzieli je odpowiednio na strony
      *
-     * @param ownerId Id użytkownika, którego oświadczenia chcemy znaleźć
+     * @param ownerId  Id użytkownika, którego oświadczenia chcemy znaleźć
      * @param pageable Obiekt klasy implementującej interfejs {@link org.springframework.data.domain.Pageable},
-     *                Zawiera informacje, którą stronę należy zwrócić i ile elementów przypada na jedną strone.
-     *                Obiekt taki można uzyskać korzystając np. ze statycznej metody {@link org.springframework.data.domain.PageRequest#of(int, int)}
+     *                 Zawiera informacje, którą stronę należy zwrócić i ile elementów przypada na jedną strone.
+     *                 Obiekt taki można uzyskać korzystając np. ze statycznej metody {@link org.springframework.data.domain.PageRequest#of(int, int)}
      * @return
      */
     Page<Oswiadczenie> findAllByOwnerId(Long ownerId, Pageable pageable);

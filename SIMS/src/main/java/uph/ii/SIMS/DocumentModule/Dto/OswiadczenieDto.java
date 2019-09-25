@@ -1,13 +1,14 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu oswiadczenie
  */
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @EqualsAndHashCode
 public class OswiadczenieDto {

@@ -16,6 +16,7 @@ public class PorozumienieConfiguration {
     
     /**
      * Metoda oznaczona adnotacją {@link Bean}, wykorzystywana przez Spring, nie używać ręcznie
+     *
      * @param porozumienieRepository Spring wstrzyknie wygenerowaną klasę implementującą {@link PorozumienieRepository}
      * @return Fasada podmodułu działająca na bazie danych
      */

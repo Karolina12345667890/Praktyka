@@ -16,6 +16,7 @@ public class OswiadczenieConfiguration {
     
     /**
      * Metoda oznaczona adnotacją {@link Bean}, wykorzystywana przez Spring, nie używać ręcznie
+     *
      * @param oswiadczenieRepository Spring wstrzyknie wygenerowaną klasę implementującą {@link OswiadczenieRepository}
      * @return Fasada podmodułu działająca na bazie danych
      */
@@ -26,6 +27,7 @@ public class OswiadczenieConfiguration {
     
     /**
      * Metoda tworząca fasadę podmodułu działającą na repozytorium w pamięci ({@link OswiadczenieInMemoryRepository}) wykorzystywana w testach
+     *
      * @return Fasada podmodułu na potrzeby testów, działająca w pamięci
      */
     public OswiadczenieFacade oswiadczenieFacadeInMemoryIO() {

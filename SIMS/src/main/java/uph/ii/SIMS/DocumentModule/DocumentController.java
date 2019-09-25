@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * kontroler dla modułu dokumentów, posiada mapowania metod {@link DocumentFacade fasady} na adresy url
  */
@@ -37,9 +40,9 @@ class DocumentController {
     }
     
     
-        /**
-         * Kontroler odpowiedzialny za dokument oświadczenia
-         */
+    /**
+     * Kontroler odpowiedzialny za dokument oświadczenia
+     */
     @RestController
     @RequestMapping(headers = "Document-Type=Oswiadczenie")
     class OswiadczenieController {
@@ -53,11 +56,20 @@ class DocumentController {
         byte[] createOswiadczeniePdf(@PathVariable Long id) throws Exception {
             return documentFacade.printOswiadczenieToPdf(id);
         }
+        
+        @PostMapping(value = "/api/document/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+        List<Object> postOswiadczenie(@PathVariable Long id, @RequestBody OswiadczenieDto dto) throws Exception {
+            System.out.println(dto);
+            documentFacade.storeOswiadczenie(dto);
+            return documentFacade.oswiadczenieFacade.findMyDocuments().stream().collect(Collectors.toList());
+        }
+        
+        
     }
     
-        /**
-         * Kontroler odpowiedzialny za dokument porozumienia
-         */
+    /**
+     * Kontroler odpowiedzialny za dokument porozumienia
+     */
     @RestController
     @RequestMapping(headers = "Document-Type=Porozumienie")
     class PorozumienieController {

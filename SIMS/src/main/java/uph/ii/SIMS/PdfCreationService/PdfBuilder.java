@@ -28,8 +28,9 @@ public class PdfBuilder {
     
     /**
      * Tworzy dokument pdf na podstawie szablonu i danych
+     *
      * @param templateName nazwa szablonu
-     * @param pdfDto dane, którymi zostanie wypełniony szablon
+     * @param pdfDto       dane, którymi zostanie wypełniony szablon
      * @return
      * @throws Exception
      */
@@ -41,8 +42,9 @@ public class PdfBuilder {
     
     /**
      * Tworzy dokument pdf na podstawie szablonu i danych
+     *
      * @param templateName nazwa szablonu
-     * @param pdfDto dane, którymi zostanie wypełniony szablon
+     * @param pdfDto       dane, którymi zostanie wypełniony szablon
      * @return
      * @throws Exception
      */
@@ -69,8 +71,9 @@ public class PdfBuilder {
     
     /**
      * Przetwarza szablon na czysty html, uzupelnia wszystkie luki danymi z przekazanego dto
+     *
      * @param templateName nazwa szablonu, który ma zostać użyty
-     * @param dataToBind dto z potrzebnymi danymi
+     * @param dataToBind   dto z potrzebnymi danymi
      * @return
      */
     private String processHtmlWithObject(String templateName, Object dataToBind) {
@@ -81,6 +84,7 @@ public class PdfBuilder {
     
     /**
      * Tworzy dokument pdf z czystego html (uzyskanego z {@link #renderPdf(String)}
+     *
      * @param processedHtml czysty html do zamiany na pdf
      * @return dokument pdf w postaci tablicy bajtów
      * @throws Exception
