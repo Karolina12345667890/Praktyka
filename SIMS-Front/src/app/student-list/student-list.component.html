@@ -1,0 +1,82 @@
+<div class="container text-center" style="margin-top: 70px">
+  <div class="display-4">Lista Stundentów</div>
+  <br>
+</div>
+
+
+<table class="table table-hover table-striped ">
+
+  <thead class="thead-dark">
+  <tr>
+    <th width="7%"> Imie</th>
+    <th width="8%"> Nazwisko</th>
+    <th width="7%"> Kierunek</th>
+    <th width="7%"> Okres Od</th>
+    <th width="7%"> Okres Do</th>
+    <th> Nazwa Firmy</th>
+    <th width="5%"  class="docs"> Oświadczenie</th>
+    <th width="5%"  class="docs"> Porozumienie</th>
+    <th width="5%"  class="docs"> Zaświadczenie</th>
+    <th width="7%"  class="docs"> Dziennik</th>
+  </tr>
+  </thead>
+  <tbody >
+
+  <tr *ngFor="let item of studentList.controls " >
+    <td>
+      {{ item.controls.studentName.value}}
+    </td>
+    <td>
+      {{ item.controls.studentSurname.value }}
+    </td>
+    <td>
+      {{ item.controls.studentSpecialization.value }}
+    </td>
+    <td>
+      {{ item.controls.periodFrom.value }}
+    </td>
+    <td>
+      {{ item.controls.periodTo.value }}
+    </td>
+    <td>
+     {{ item.controls.companyName.value }}
+    </td>
+    <td class="docs"
+      [ngStyle]="item.controls.documentOswiadczenieStatus.value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentOswiadczenieStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentOswiadczenieStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+        (click)="onClick(item.controls.id.value,'Oswiadczenie')"
+    >
+<!--      {{ item.controls.documentOswiadczenieStatus.value }}-->
+
+    </td>
+    <td class="docs"
+      [ngStyle]="item.controls.documentPorozumienieStatus.value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentPorozumienieStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentPorozumienieStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+        (click)="onClick(item.controls.id.value,'Porozumienie')"
+    >
+<!--      {{ item.controls.documentPorozumienieStatus.value }}-->
+    </td>
+    <td class="docs"
+      [ngStyle]="item.controls.documentZaswiadczenieStatus.value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentZaswiadczenieStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentZaswiadczenieStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+        (click)="onClick(item.controls.id.value,'Zaswiadczenie')"
+    >
+<!--      {{ item.controls.documentZaswiadczenieStatus.value }}-->
+    </td>
+    <td class="docs"
+        [ngStyle]="item.controls.documentDziennikStatus.value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentDziennikStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentDziennikStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+        (click)="onClick(item.controls.id.value,'Dziennik')"
+    >
+      <!--      {{ item.controls.documentZaswiadczenieStatus.value }}-->
+    </td>
+
+  </tr>
+  </tbody>
+
+</table>
+

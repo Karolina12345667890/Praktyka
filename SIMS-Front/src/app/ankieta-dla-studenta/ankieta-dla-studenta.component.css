@@ -67,12 +67,19 @@
 .container input:checked ~ .checkmark:after {
   display: block;
 }
-.cross-validation .ng-valid[required], .ng-valid.required  {
+.cross-validation .ng-valid[required], .ng-valid.required ,.example .example-valid{
   border-left: 5px solid #42A948;
 }
 
-.cross-validation .ng-invalid:not(form)  {
+.cross-validation .ng-invalid:not(form) ,.example .example-invalid{
   border-left: 5px solid #a94442;
+}
+.example input{
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+  border-right: 1px solid gray;
+  border-radius: 5px;
+  background: white;
 }
 
 .fontSize{

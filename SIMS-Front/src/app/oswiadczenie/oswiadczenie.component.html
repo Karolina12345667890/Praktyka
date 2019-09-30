@@ -43,7 +43,9 @@
 
 
     <div>
-      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
+      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="oswiadczenieForm.invalid"><div (click)="check()"><div class="example">
+        <h3 > Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
+      </div></div></div> <div *ngIf="oswiadczenieForm.valid"> Wyślij </div> </button>
     </div>
 
     <body class="a4" >
@@ -201,6 +203,8 @@
 </body>
 
     <div>
-      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
+      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="oswiadczenieForm.invalid"><div (click)="check()"><div class="example">
+        <h3 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
+      </div></div></div> <div *ngIf="oswiadczenieForm.valid"> Wyślij </div> </button>
     </div>
   </form>

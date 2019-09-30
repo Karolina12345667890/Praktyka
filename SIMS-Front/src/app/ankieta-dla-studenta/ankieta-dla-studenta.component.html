@@ -17,6 +17,11 @@
     <br *ngIf="questionNumber==totalQuestions">
     <hr>
     <div id="question1" *ngIf="questionNumber==0" class="cross-validation">
+      <div class="example text-center" >
+        <h4 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h4>
+      </div>
+
+
       <div>Imię i nazwisko<br>
         <div class="form-row">
         <div class="form-group col-md-3">
@@ -29,15 +34,15 @@
       </div>
 
       <div class=" form-row">
-        <div *ngIf="studentName.invalid && (studentName.dirty || studentName.touched)"
+        <div *ngIf="getstudentName.invalid && (getstudentName.dirty || getstudentName.touched)"
              class="alert alert-danger form-group col-md-3">
-          <div *ngIf="studentName.errors.required"  class="text-center  fontSize">
+          <div *ngIf="getstudentName.errors.required"  class="text-center  fontSize">
             Imie jest wymagane!
           </div>
         </div>
-        <div  *ngIf="studentSurname.invalid && (studentSurname.dirty || studentSurname.touched)"
+        <div  *ngIf="getstudentSurname.invalid && (getstudentSurname.dirty || getstudentSurname.touched)"
               class=" form-group col-md-3 alert alert-danger">
-          <div *ngIf="studentSurname.errors.required" class="text-center fontSize">
+          <div *ngIf="getstudentSurname.errors.required" class="text-center fontSize">
             Nazwisko jest wymagane!
           </div>
         </div>
@@ -54,9 +59,9 @@
       </div>
 
       <div class=" form-row">
-        <div  *ngIf="studentSpecialization.invalid && (studentSpecialization.dirty || studentSpecialization.touched)"
+        <div  *ngIf="getstudentSpecialization.invalid && (getstudentSpecialization.dirty || getstudentSpecialization.touched)"
               class=" form-group col-md-6 alert alert-danger">
-          <div *ngIf="studentSpecialization.errors.required" class="text-center fontSize">
+          <div *ngIf="getstudentSpecialization.errors.required" class="text-center fontSize">
             Kierunek studiów jest wymagany!
           </div>
         </div>
@@ -74,9 +79,9 @@
       </div>
 
       <div class=" form-row">
-        <div  *ngIf="instytutionType.invalid && (instytutionType.dirty || instytutionType.touched)"
+        <div  *ngIf="getinstytutionType.invalid && (getinstytutionType.dirty || getinstytutionType.touched)"
               class=" form-group col-md-6 alert alert-danger">
-          <div *ngIf="instytutionType.errors.required" class="text-center fontSize">
+          <div *ngIf="getinstytutionType.errors.required" class="text-center fontSize">
             Rodzaj instytucji jest wymagany!
           </div>
         </div>
@@ -91,9 +96,9 @@
       </div>
 
       <div class=" form-row">
-        <div  *ngIf="companyNameAndLocation.invalid && (companyNameAndLocation.dirty || companyNameAndLocation.touched)"
+        <div  *ngIf="getcompanyNameAndLocation.invalid && (getcompanyNameAndLocation.dirty || getcompanyNameAndLocation.touched)"
               class=" form-group col-md-6 alert alert-danger">
-          <div *ngIf="companyNameAndLocation.errors.required" class="text-center fontSize">
+          <div *ngIf="getcompanyNameAndLocation.errors.required" class="text-center fontSize">
             Nazwa i adres zakładu pracy jest wymagane!
           </div>
         </div>
@@ -111,15 +116,15 @@
       </div>
 
       <div class=" form-row">
-        <div *ngIf="periodFrom.invalid && (periodFrom.dirty || periodFrom.touched)"
+        <div *ngIf="getperiodFrom.invalid && (getperiodFrom.dirty || getperiodFrom.touched)"
              class="alert alert-danger form-group col-md-3">
-          <div *ngIf="periodFrom.errors.required"  class="text-center fontSize">
+          <div *ngIf="getperiodFrom.errors.required"  class="text-center fontSize">
             Termin od jest wymagany!
           </div>
         </div>
-        <div  *ngIf="periodTo.invalid && (periodTo.dirty || periodTo.touched)"
+        <div  *ngIf="getperiodTo.invalid && (getperiodTo.dirty || getperiodTo.touched)"
               class=" form-group col-md-3 alert alert-danger">
-          <div *ngIf="periodTo.errors.required" class="text-center fontSize">
+          <div *ngIf="getperiodTo.errors.required" class="text-center fontSize">
             Termin do jest wymagany!
           </div>
         </div>

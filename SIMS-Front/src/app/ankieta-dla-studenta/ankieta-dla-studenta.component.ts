@@ -47,13 +47,13 @@ export class AnkietaDlaStudentaComponent implements OnInit {
     });
   }
 
-  get studentName() { return this.ankietaStudentForm.get('studentName')}
-  get studentSurname() { return this.ankietaStudentForm.get('studentSurname')}
-  get studentSpecialization() { return this.ankietaStudentForm.get('studentSpecialization')}
-  get instytutionType() { return this.ankietaStudentForm.get('instytutionType')}
-  get companyNameAndLocation() { return this.ankietaStudentForm.get('companyNameAndLocation')}
-  get periodFrom() { return this.ankietaStudentForm.get('periodFrom')}
-  get periodTo() { return this.ankietaStudentForm.get('periodTo')}
+  get getstudentName() { return this.ankietaStudentForm.get('studentName')}
+  get getstudentSurname() { return this.ankietaStudentForm.get('studentSurname')}
+  get getstudentSpecialization() { return this.ankietaStudentForm.get('studentSpecialization')}
+  get getinstytutionType() { return this.ankietaStudentForm.get('instytutionType')}
+  get getcompanyNameAndLocation() { return this.ankietaStudentForm.get('companyNameAndLocation')}
+  get getperiodFrom() { return this.ankietaStudentForm.get('periodFrom')}
+  get getperiodTo() { return this.ankietaStudentForm.get('periodTo')}
   ngOnInit() {
   }
 

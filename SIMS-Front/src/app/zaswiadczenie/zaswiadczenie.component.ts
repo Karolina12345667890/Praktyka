@@ -34,5 +34,9 @@ export class ZaswiadczenieComponent implements OnInit {
   onSubmit(){
     console.log(this.zaswiadczenieForm);
   }
-
+  check(){
+    if(this.zaswiadczenieForm.invalid){
+      alert("disabled");
+    }
+  }
 }

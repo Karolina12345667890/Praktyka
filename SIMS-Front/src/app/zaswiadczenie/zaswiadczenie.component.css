@@ -135,7 +135,7 @@ ol, li {
   list-style-type: none;
 }
 
-.a4 input, .a4 input:focus, .a4 textarea , .a4 textarea:focus{
+.a4 input, .a4 input:focus, .a4 textarea , .a4 textarea:focus, .example input{
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
   border-right: 1px solid gray;
@@ -148,4 +148,16 @@ ol, li {
 
 .ng-invalid:not(form)  {
   border-left: 5px solid #a94442;
+}
+
+.example .example-valid{
+  border-left: 5px solid green;
+}
+.example .example-invalid{
+  border-left: 5px solid darkred;
+}
+button:disabled {
+  background: darkgray;
+  border: darkgray;
+  color:red;
 }

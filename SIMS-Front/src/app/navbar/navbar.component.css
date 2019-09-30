@@ -1,0 +1,12 @@
+.navbar a:hover {
+  color: white;
+}
+
+.navbar .dropdown-menu a {
+  color: gray;
+}
+
+.navbar .dropdown-menu a:hover {
+  color: white;
+  background: none;
+}

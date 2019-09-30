@@ -1,8 +1,17 @@
 
 <form [formGroup]="porozumienieForm" (ngSubmit)="onSubmit()">
+<!--  <div>-->
+<!--    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>-->
+<!--  </div>-->
+<!--  <div class="example">-->
+<!--    <h3 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> gdy są zielone znaczy że wsyztko ok <input class=" example-valid" disabled  size="4"/></h3>-->
+<!--  </div>-->
   <div>
-    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>
+    <button [disabled]="porozumienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="porozumienieForm.invalid"><div (click)="check()"><div class="example">
+      <h3 > Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
+    </div></div></div> <div *ngIf="porozumienieForm.valid"> Wyślij </div> </button>
   </div>
+
 
   <body class="a4">
 
@@ -23,7 +32,7 @@
         Siedlcach z siedzibą przy ul. Konarskiego 2, zwanym dalej Uniwersytetem, reprezentowanym na podstawie
         udzielonego przez Rektora UPH pełnomocnictwa przez Dziekana Wydziału Nauk Ścisłych a
         <div class="highLetters inline">
-          <span ><input type="text" formControlName="companyName" placeholder="Company name" style="width: 670px" required/></span>
+          <span ><input type="text" formControlName="companyName" placeholder="Company name" style="width: 500px" required/></span>
         </div>
       </div>
       <div>
@@ -68,9 +77,10 @@
         <td ><input type="date" formControlName="studentInternshipStart" placeholder="Internship Start" required/> - <input type="date" formControlName="studentInternshipEnd" placeholder="InternshipEnd" required/></td>
       </tr>
     </table>
-
+<div id="clause1" >
     <h4>§2</h4>
     Zakład pracy zobowiązuje się do:
+
     <ol>
       <li>powołania opiekuna(ów), pod kierunkiem których student będzie realizować program praktyki;</li>
       <li>zaplanowania odpowiedniej ilości zajęć, aby umożliwić studentowi wykonanie zadań ustalonych w
@@ -106,6 +116,7 @@
     <h4>§7</h4>
     Niniejsze porozumienie sporządzone zostało w dwóch jednobrzmiących egzemplarzach po jednym dla każdej ze
       stron.
+</div>
   </div>
 
   <br/>
@@ -127,7 +138,7 @@
       </div>
     </div>
 <br>
-    <div style="float: none; margin-top: 8em">
+    <div style="float: none; margin-top: 4em">
       <div class="toSignLeft">
         <div>
           ........................................................
@@ -152,8 +163,12 @@
 
 </body>
 
-
   <div>
-    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>
+    <button [disabled]="porozumienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="porozumienieForm.invalid"><div (click)="check()"><div class="example">
+      <h3 > Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
+    </div></div></div> <div *ngIf="porozumienieForm.valid"> Wyślij </div> </button>
   </div>
+<!--  <div>-->
+<!--    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>-->
+<!--  </div>-->
 </form>

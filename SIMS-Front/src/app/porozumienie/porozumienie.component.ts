@@ -62,4 +62,10 @@ export class PorozumienieComponent implements OnInit {
       }
     );
   }
+
+  check(){
+    if(this.porozumienieForm.invalid){
+      alert("disabled");
+    }
+  }
 }

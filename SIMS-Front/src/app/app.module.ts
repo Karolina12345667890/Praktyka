@@ -17,6 +17,7 @@ import { ZaswiadczenieComponent } from './zaswiadczenie/zaswiadczenie.component'
 import { AnkietaDlaStudentaComponent } from './ankieta-dla-studenta/ankieta-dla-studenta.component';
 import { AnkietaDlaPracodawcyComponent } from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
 import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.component';
+import { StudentListComponent } from './student-list/student-list.component';
 
 
 
@@ -32,7 +33,8 @@ import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.co
     ZaswiadczenieComponent,
     AnkietaDlaStudentaComponent,
     AnkietaDlaPracodawcyComponent,
-    DziennikPraktykComponent
+    DziennikPraktykComponent,
+    StudentListComponent,
   ],
   imports: [
     BrowserModule,

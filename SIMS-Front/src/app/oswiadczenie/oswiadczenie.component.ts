@@ -35,29 +35,15 @@ export class OswiadczenieComponent implements OnInit {
 
 // metoda wysyłająca nasz obiekt oswiadczenieForm na server
   onSubmit() {
+
     console.log(this.oswiadczenieForm.value);
 
-    const data = JSON.stringify(this.oswiadczenieForm.value);
-    const headers = new HttpHeaders();
-    headers.append('Accept', 'application/pdf');
-    headers.append('Content-Type', 'application/pdf');
-    this.httpClient.post<any>(
-      this.SERVER_URL, data, {headers}).subscribe(
-      res => {
-        this.visibility = true;
-        console.log('sukces');
-        // const fileURL = URL.createObjectURL(res);
-        // window.open("http://localhost:8080/pdf123", '_blank');
-      },
-      (err) => {
-        console.log(err);
-        window.open('http://localhost:8080/pdf123', '_blank');
-      },
-      () => {
-        console.log('3');
-        this.visibility = true;
-      }
-    );
+  }
+
+  check(){
+    if(this.oswiadczenieForm.invalid){
+      alert("disabled");
+    }
   }
 
 }

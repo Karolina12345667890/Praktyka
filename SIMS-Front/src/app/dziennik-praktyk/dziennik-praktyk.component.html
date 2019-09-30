@@ -1,9 +1,15 @@
 <form [formGroup]="diaryGroup" (ngSubmit)="onSubmit()">
 
-  <div class="container" style="margin-top: 100px">
+  <div class="example text-center" style="margin-top: 100px">
+    <h4 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h4>
+  </div>
+
+  <div class="container" >
+
+    <hr>
     <div class="cross-validation" [class.cross-validation-error]="diaryGroup.errors?.identityRevealed && (diaryGroup.touched || diaryGroup.dirty)">
       <div class="form-group">
-        <div>  Imię i nazwisko <br>
+        <div class="fontSize">  Imię i nazwisko <br>
       <div class=" form-row">
         <div class=" form-group col-md-3">
           <input id="studentName" type="text" class="  form-control" formControlName="studentName" placeholder="First name" required/>
@@ -17,16 +23,16 @@
     </div>
 
           <div class=" form-row">
-        <div *ngIf="studentName.invalid && (studentName.dirty || studentName.touched)"
+        <div *ngIf="getstudentName.invalid && (getstudentName.dirty || getstudentName.touched)"
              class="alert alert-danger form-group col-md-3">
-          <div *ngIf="studentName.errors.required"  class="text-center">
+          <div *ngIf="getstudentName.errors.required"  class="text-center">
 
             Imie jest wymagane!
           </div>
         </div>
-        <div  *ngIf="studentSurname.invalid && (studentSurname.dirty || studentSurname.touched)"
+        <div  *ngIf="getstudentSurname.invalid && (getstudentSurname.dirty || getstudentSurname.touched)"
              class=" form-group col-md-3 alert alert-danger">
-          <div *ngIf="studentSurname.errors.required" class="text-center">
+          <div *ngIf="getstudentSurname.errors.required" class="text-center">
             Nazwisko jest wymagane!
           </div>
         </div>
@@ -43,9 +49,9 @@
     </div>
 
         <div class=" form-row">
-          <div  *ngIf="studentAlbumNumber.invalid && (studentAlbumNumber.dirty || studentAlbumNumber.touched)"
+          <div  *ngIf="getstudentAlbumNumber.invalid && (getstudentAlbumNumber.dirty || getstudentAlbumNumber.touched)"
                 class=" form-group col-md-6 alert alert-danger">
-            <div *ngIf="studentAlbumNumber.errors.required" class="text-center">
+            <div *ngIf="getstudentAlbumNumber.errors.required" class="text-center">
               Numer Albumu jest wymagany!
             </div>
           </div>
@@ -61,9 +67,9 @@
     </div>
 
         <div class=" form-row">
-          <div  *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)"
+          <div  *ngIf="getcompanyName.invalid && (getcompanyName.dirty || getcompanyName.touched)"
                 class=" form-group col-md-6 alert alert-danger">
-            <div *ngIf="companyName.errors.required" class="text-center">
+            <div *ngIf="getcompanyName.errors.required" class="text-center">
               Nazwa Zakładu Pracy jest wymagana!
             </div>
           </div>

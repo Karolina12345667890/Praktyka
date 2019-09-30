@@ -11,6 +11,8 @@ import {ZaswiadczenieComponent} from "./zaswiadczenie/zaswiadczenie.component";
 import {AnkietaDlaStudentaComponent} from "./ankieta-dla-studenta/ankieta-dla-studenta.component";
 import {AnkietaDlaPracodawcyComponent} from "./ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component";
 import {DziennikPraktykComponent} from "./dziennik-praktyk/dziennik-praktyk.component";
+import {StudentListComponent} from "./student-list/student-list.component";
+
 
 //tabele rutingu
 const appRoutes: Routes = [
@@ -51,6 +53,11 @@ const appRoutes: Routes = [
   {
     path: 'ankietaprac',
     component: AnkietaDlaPracodawcyComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'sl',
+    component: StudentListComponent,
     canActivate: [AuthGuardService]
   },
   {
