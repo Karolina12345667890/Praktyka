@@ -1,6 +1,7 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-file-upload',
@@ -11,9 +12,12 @@ export class FileUploadComponent implements OnInit {
 
   SERVER_URL = 'http://localhost:8080/upload';
   uploadForm: FormGroup;
+  private readonly notifier: NotifierService;
 
   constructor(private formBuilder: FormBuilder,
-              private httpClient: HttpClient) {
+              private httpClient: HttpClient,
+              notifierService: NotifierService ) {
+    this.notifier = notifierService;
   }
 
   ngOnInit() {
@@ -37,8 +41,12 @@ export class FileUploadComponent implements OnInit {
     formData.append('file', this.uploadForm.get('file').value);
 
     this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
+      (res) => {console.log(res)
+        this.notifier.notify( 'success', 'Pomyślnie wysłano: '+ this.uploadForm.get('documentType').value );
+      },
+      (err) => {console.log(err)
+        this.notifier.notify( 'error', 'Wystąpił błąd przy wysyłaniu dokumentu: '+ this.uploadForm.get('documentType').value );
+      }
     );
   }
 

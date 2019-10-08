@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-student-list',
@@ -10,10 +11,11 @@ export class StudentListComponent implements OnInit {
 
   studentListForm: FormGroup;
   studentList: FormArray;
+  private readonly notifier: NotifierService;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, notifierService: NotifierService ) {
 
-
+    this.notifier = notifierService;
     this.studentList= this.fb.array([]);
     this.fill();
     console.log(this.studentList)
@@ -31,10 +33,22 @@ export class StudentListComponent implements OnInit {
         periodFrom: '11.11.2001',
         periodTo: '11.12.2001',
         companyName:  'Sony Corporation',
-        documentOswiadczenieStatus: 'New',
-        documentPorozumienieStatus: '',
-        documentZaswiadczenieStatus: 'Accepted',
-        documentDziennikStatus: '',
+        documentOswiadczenie: this.fb.group({
+          status: 'New',
+          warning: '',
+        }),
+        documentPorozumienie: this.fb.group({
+          status: '',
+          warning: '123',
+        }),
+        documentZaswiadczenie: this.fb.group({
+          status: 'Accepted',
+          warning: '',
+        }),
+        documentDziennik: this.fb.group({
+          status: '',
+          warning: '',
+        }),
       })
     );
 
@@ -47,10 +61,22 @@ export class StudentListComponent implements OnInit {
         periodFrom: '11.11.2001',
         periodTo: '11.12.2001',
         companyName:  'mBank, Bankowość Detaliczna BRE Banku SA',
-        documentOswiadczenieStatus: 'Declined',
-        documentPorozumienieStatus: 'Accepted',
-        documentZaswiadczenieStatus: 'Accepted',
-        documentDziennikStatus: '',
+        documentOswiadczenie: this.fb.group({
+          status: 'New',
+          warning: '',
+        }),
+        documentPorozumienie: this.fb.group({
+          status: '',
+          warning: '123',
+        }),
+        documentZaswiadczenie: this.fb.group({
+          status: 'Accepted',
+          warning: '',
+        }),
+        documentDziennik: this.fb.group({
+          status: '',
+          warning: '',
+        }),
       })
     );
 
@@ -63,10 +89,22 @@ export class StudentListComponent implements OnInit {
         periodFrom: '11.11.2001',
         periodTo: '11.12.2001',
         companyName:  'Uniwersytet Przyrodniczo Humanistyczny w Siedlcach wydział Nauk Ścisłych',
-        documentOswiadczenieStatus: 'New',
-        documentPorozumienieStatus: 'New',
-        documentZaswiadczenieStatus: '',
-        documentDziennikStatus: '',
+        documentOswiadczenie: this.fb.group({
+          status: 'New',
+          warning: '',
+        }),
+        documentPorozumienie: this.fb.group({
+          status: 'Declined',
+          warning: '123',
+        }),
+        documentZaswiadczenie: this.fb.group({
+          status: 'Accepted',
+          warning: '',
+        }),
+        documentDziennik: this.fb.group({
+          status: '',
+          warning: '',
+        }),
       })
     )
   }
@@ -75,7 +113,13 @@ export class StudentListComponent implements OnInit {
     console.log(id+" "+ document);
   }
 
+  showWarning(warning:string){
+    alert( warning );
+
+  }
+
   ngOnInit() {
   }
+
 
 }

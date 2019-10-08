@@ -18,3 +18,16 @@
   outline-offset: -5px;
 
 }
+
+.square {
+  height: 25px;
+  width: 25px;
+  background-color: orange;
+  margin-left: 70%;
+}
+
+.square:hover {
+
+  background-color: yellow;
+
+}

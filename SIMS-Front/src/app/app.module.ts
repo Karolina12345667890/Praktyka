@@ -18,8 +18,48 @@ import { AnkietaDlaStudentaComponent } from './ankieta-dla-studenta/ankieta-dla-
 import { AnkietaDlaPracodawcyComponent } from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
 import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.component';
 import { StudentListComponent } from './student-list/student-list.component';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
 
-
+const customNotifierOptions: NotifierOptions = {
+  position: {
+    horizontal: {
+      position: 'right',
+      distance: 12
+    },
+    vertical: {
+      position: 'bottom',
+      distance: 12,
+      gap: 10
+    }
+  },
+  theme: 'material',
+  behaviour: {
+    autoHide: 5000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: true,
+    stacking: 4
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease'
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease'
+    },
+    overlap: 150
+  }
+};
 
 @NgModule({
   declarations: [
@@ -40,7 +80,8 @@ import { StudentListComponent } from './student-list/student-list.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NotifierModule.withConfig(customNotifierOptions),
   ],
   providers: [LoginServiceService,AuthGuardService],
   bootstrap: [AppComponent]

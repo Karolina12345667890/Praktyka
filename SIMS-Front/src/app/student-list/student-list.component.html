@@ -1,7 +1,10 @@
+
+
 <div class="container text-center" style="margin-top: 70px">
   <div class="display-4">Lista Stundentów</div>
   <br>
 </div>
+
 
 
 <table class="table table-hover table-striped ">
@@ -42,37 +45,39 @@
      {{ item.controls.companyName.value }}
     </td>
     <td class="docs"
-      [ngStyle]="item.controls.documentOswiadczenieStatus.value == 'New' && {'background-color':'#2196F3'} ||
-      item.controls.documentOswiadczenieStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
-      item.controls.documentOswiadczenieStatus.value == 'Declined' && {'background-color':'#dc3545'}"
-        (click)="onClick(item.controls.id.value,'Oswiadczenie')"
-    >
-<!--      {{ item.controls.documentOswiadczenieStatus.value }}-->
-
+      [ngStyle]="item.controls.documentOswiadczenie.get('status').value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentOswiadczenie.get('status').value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentOswiadczenie.get('status').value == 'Declined' && {'background-color':'#dc3545'}"
+        (click)="onClick(item.controls.id.value,'Oswiadczenie')">
+<!--      {{ item.controls.documentOswiadczenie.get('Status').value }}-->
+    <div class="square" *ngIf="item.controls.documentOswiadczenie.get('warning').value != '' " (click)="showWarning(item.controls.documentOswiadczenie.get('warning').value)" ></div>
     </td>
     <td class="docs"
-      [ngStyle]="item.controls.documentPorozumienieStatus.value == 'New' && {'background-color':'#2196F3'} ||
-      item.controls.documentPorozumienieStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
-      item.controls.documentPorozumienieStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+      [ngStyle]="item.controls.documentPorozumienie.get('status').value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentPorozumienie.get('status').value== 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentPorozumienie.get('status').value == 'Declined' && {'background-color':'#dc3545'}"
         (click)="onClick(item.controls.id.value,'Porozumienie')"
     >
-<!--      {{ item.controls.documentPorozumienieStatus.value }}-->
+<!--      {{ item.controls.documentPorozumienie.value }}-->
+      <div class="square" *ngIf="item.controls.documentPorozumienie.get('warning').value != '' " (click)="showWarning(item.controls.documentPorozumienie.get('warning').value)" ></div>
     </td>
     <td class="docs"
-      [ngStyle]="item.controls.documentZaswiadczenieStatus.value == 'New' && {'background-color':'#2196F3'} ||
-      item.controls.documentZaswiadczenieStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
-      item.controls.documentZaswiadczenieStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+      [ngStyle]="item.controls.documentZaswiadczenie.get('status').value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentZaswiadczenie.get('status').value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentZaswiadczenie.get('status').value == 'Declined' && {'background-color':'#dc3545'}"
         (click)="onClick(item.controls.id.value,'Zaswiadczenie')"
     >
-<!--      {{ item.controls.documentZaswiadczenieStatus.value }}-->
+<!--      {{ item.controls.documentZaswiadczenie.value }}-->
+      <div class="square" *ngIf="item.controls.documentZaswiadczenie.get('warning').value != '' " (click)="showWarning(item.controls.documentZaswiadczenie.get('warning').value)" ></div>
     </td>
     <td class="docs"
-        [ngStyle]="item.controls.documentDziennikStatus.value == 'New' && {'background-color':'#2196F3'} ||
-      item.controls.documentDziennikStatus.value == 'Accepted' && {'background-color':'#42A948'} ||
-      item.controls.documentDziennikStatus.value == 'Declined' && {'background-color':'#dc3545'}"
+        [ngStyle]="item.controls.documentDziennik.get('status').value == 'New' && {'background-color':'#2196F3'} ||
+      item.controls.documentDziennik.get('status').value == 'Accepted' && {'background-color':'#42A948'} ||
+      item.controls.documentDziennik.get('status').value == 'Declined' && {'background-color':'#dc3545'}"
         (click)="onClick(item.controls.id.value,'Dziennik')"
     >
-      <!--      {{ item.controls.documentZaswiadczenieStatus.value }}-->
+      <!--      {{ item.controls.documentZaswiadczenie.value }}-->
+      <div class="square" *ngIf="item.controls.documentDziennik.get('warning').value != '' " (click)="showWarning(item.controls.documentDziennik.get('warning').value)" ></div>
     </td>
 
   </tr>

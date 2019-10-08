@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-ankieta-dla-studenta',
@@ -12,8 +13,10 @@ export class AnkietaDlaStudentaComponent implements OnInit {
   questionNumber = 0;
   totalQuestions = 14;
   ankietaStudentForm;
+  private readonly notifier: NotifierService;
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient,notifierService: NotifierService) {
+    this.notifier = notifierService;
     this.ankietaStudentForm = this.fb.group({
       studentName: new FormControl('', [ Validators.required, ]),
       studentSurname: new FormControl('', [ Validators.required, ]),
@@ -59,6 +62,7 @@ export class AnkietaDlaStudentaComponent implements OnInit {
 
   onSubmit() {
     console.log(this.ankietaStudentForm);
+    this.notifier.notify( 'success', 'Pomyślnie wysłano ankiete' );
   }
 
   nextQuestion() {
@@ -68,14 +72,16 @@ export class AnkietaDlaStudentaComponent implements OnInit {
       && this.ankietaStudentForm.get("periodFrom").value != '' && this.ankietaStudentForm.get("periodTo").value != '' && this.ankietaStudentForm.get("studentSpecialization").value != '') {
       if (this.ankietaStudentForm.get("periodFrom").value < this.ankietaStudentForm.get("periodTo").value) {
         this.questionNumber++;
+        this.notifier.notify( 'info', 'Następne pytanie' );
       }
-    }
-    if (this.questionNumber == 9 && this.ankietaStudentForm.get("answerTo91").value != '' && this.ankietaStudentForm.get("answerTo92").value != '' && this.ankietaStudentForm.get("answerTo93").value != '') {
+    }else if (this.questionNumber == 9 && this.ankietaStudentForm.get("answerTo91").value != '' && this.ankietaStudentForm.get("answerTo92").value != '' && this.ankietaStudentForm.get("answerTo93").value != '') {
       this.questionNumber++;
-    }
-
-    if (this.questionNumber != 0 && this.ankietaStudentForm.get("answerTo" + this.questionNumber).value != '') {
+      this.notifier.notify( 'info', 'Następne pytanie' );
+    }else if (this.questionNumber != 0 && this.questionNumber != 9 && this.ankietaStudentForm.get("answerTo" + this.questionNumber).value != '') {
       this.questionNumber++;
+      this.notifier.notify( 'info', 'Następne pytanie' );
+    }else{
+      this.notifier.notify( 'warning', 'Wypełnij wymagane pola' );
     }
 
 
@@ -83,6 +89,7 @@ export class AnkietaDlaStudentaComponent implements OnInit {
   peviousQuestion(){
     if(this.questionNumber>0) {
       this.questionNumber--;
+      this.notifier.notify( 'info', 'Poprzednie pytanie' );
     }
   }
 }

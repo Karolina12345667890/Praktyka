@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-dziennik-praktyk',
@@ -11,10 +12,11 @@ export class DziennikPraktykComponent implements OnInit {
   periodFrom: Date;
   periodTo: Date;
   days: Date;
-  //dayOfTheWeek;
+
   diary: FormArray;
   dateFrom: boolean = false;
   dateTo: boolean = false;
+  private readonly notifier: NotifierService;
 
   daysName: Array<{ id: number, text: string }> = [
     {id: 0, text: "Niedziela"},
@@ -27,7 +29,8 @@ export class DziennikPraktykComponent implements OnInit {
   ];
   diaryGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, notifierService: NotifierService) {
+    this.notifier = notifierService;
     this.diaryGroup = this.fb.group({
       studentName: new FormControl('', [Validators.required,]),
       studentSurname: new FormControl('', [Validators.required,]),
@@ -93,22 +96,20 @@ export class DziennikPraktykComponent implements OnInit {
           for (let i: number = 0; i < newDays; i++) {
             this.diary.removeAt(0);
           }
+          this.notifier.notify( 'info', 'Tabela zmieniona' );
         } else if (this.periodFrom > new Date(value)) {
           let newDays = (this.periodFrom.getTime() - new Date(value).getTime()) / (1000 * 3600 * 24);
-          //let days:Date=this.days;
           for (let i: number = 0; i < newDays; i++) {
-            // days = new Date(days.getTime() - (1000 * 3600 * 24));
             this.periodFrom = new Date(this.periodFrom.getTime() - (1000 * 3600 * 24));
-            //days = this.periodFrom;
             this.diary.insert(0, this.createItem(this.periodFrom.toLocaleDateString(), this.daysName[this.periodFrom.getDay()].text));
           }
+          this.notifier.notify( 'info', 'Tabela zmieniona' );
         }
       }
       this.periodFrom = new Date(value);
 
     }
     if (this.dateFrom == false) {
-      // this.dayOfTheWeek = this.periodFrom.getDay();
       this.days = this.periodFrom;
       this.createTable();
     }
@@ -125,18 +126,18 @@ export class DziennikPraktykComponent implements OnInit {
         for (let i: number = 0; i < newDays; i++) {
           this.addItem(this.days.toLocaleDateString(), this.daysName[this.days.getDay()].text);
           this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
-          //this.dayOfTheWeek=this.days.getDay();
 
         }
         this.periodTo = new Date(value);
+        this.notifier.notify( 'info', 'Tabela zmieniona' );
       } else if (this.periodTo > new Date(value)) {
         let newDays = (this.periodTo.getTime() - new Date(value).getTime()) / (1000 * 3600 * 24);
         this.periodTo = new Date(value);
         for (let i: number = 0; i < newDays; i++) {
           this.days = new Date(this.days.getTime() - (1000 * 3600 * 24));
-          // this.dayOfTheWeek=this.days.getDay();
           this.diary.removeAt(this.diary.length - 1);
         }
+        this.notifier.notify( 'info', 'Tabela zmieniona' );
       }
 
 
@@ -152,11 +153,11 @@ export class DziennikPraktykComponent implements OnInit {
 
   private createTable() {
     if (this.periodFrom != null && this.periodTo != null) {
+      this.notifier.notify( 'info', 'Tabela stworzona' );
       let daysNumber = (this.periodTo.getTime() - this.periodFrom.getTime()) / (1000 * 3600 * 24) + 1;
       for (let i: number = daysNumber; i > 0; i--) {
         this.addItem(this.days.toLocaleDateString(), this.daysName[this.days.getDay()].text);
         this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
-        // this.dayOfTheWeek=this.days.getDay();
       }
     }
   }
@@ -164,6 +165,7 @@ export class DziennikPraktykComponent implements OnInit {
 
   onSubmit() {
     console.log(this.diaryGroup);
+    this.notifier.notify( 'success', 'Pomyślnie wysłano dziennik' );
   }
 
 }

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-ankieta-dla-pracodawcy',
@@ -13,8 +14,10 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
   totalQuestions = 16;
   ankietaPracForm: FormGroup;
   answers: FormArray;
+  private readonly notifier: NotifierService;
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient,  notifierService: NotifierService) {
+    this.notifier = notifierService;
     this.ankietaPracForm = this.fb.group({
       answers: this.fb.array([]),
       answerTo16text: [''],
@@ -34,18 +37,21 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
 
   onSubmit() {
     console.log(this.ankietaPracForm);
+    this.notifier.notify( 'success', 'Pomyślnie wysłano ankiete' );
   }
 
   nextQuestion() {
-
-   console.log(this.answers.at(this.questionNumber).value);
      if ( this.answers.at(this.questionNumber).value != '') {
        this.questionNumber++;
+       this.notifier.notify( 'info', 'Następne pytanie' );
+     }else{
+       this.notifier.notify( 'warning', 'Zaznacz jedną z odpowiedzi' );
      }
   }
   peviousQuestion(){
     if(this.questionNumber>0) {
       this.questionNumber--;
+      this.notifier.notify( 'info', 'Poprzednie pytanie' );
     }
   }
 
