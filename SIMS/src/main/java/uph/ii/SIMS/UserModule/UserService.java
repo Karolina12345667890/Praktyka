@@ -8,28 +8,38 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class UserService implements UserDetailsService {
     
     @Autowired
     PasswordEncoder passwordEncoder;
     private UserRepository userRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
     
-    public void createNewUser(String username, String password) {
+    public void createNewUser(String username, String password, List<Role> roles) {
         System.out.println(username);
         System.out.println(password);
         User user = new User();
         user.setLogin(username);
         user.setPassword(passwordEncoder.encode(password));
+        user.setRoles(roles);
         
         System.out.println(user + " created!");
         
         userRepository.save(user);
+    }
+    
+    public void createNewUser(String username, String password) {
+        createNewUser(username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
     }
     
     

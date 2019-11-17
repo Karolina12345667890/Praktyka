@@ -44,7 +44,7 @@ public class OAuth2AuthorizationServerConfigJwt extends AuthorizationServerConfi
                 .withClient("sampleClientId")
                 .authorizedGrantTypes("implicit")
                 .scopes("read", "write", "foo", "bar")
-                .autoApprove(false)
+                .autoApprove(true)
                 .accessTokenValiditySeconds(45*60*60)
                 .redirectUris("http://localhost:4200/");
             
