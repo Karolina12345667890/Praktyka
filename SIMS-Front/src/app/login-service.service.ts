@@ -83,7 +83,7 @@ export class LoginServiceService {
   logout() {
     this.isLoggedIn();
     this.oauthService.logOut();
-    window.open('http://localhost:8080/logout', 'theFrame').close();
+    window.open('http://localhost:8080/logout', 'theFrame');
     // .addEventListener('change', function() { window.close(); } , false);
     // this.getResource('http://localhost:8080/logout').subscribe(value => {
     //   // this.deleteResource('http://localhost:8080/oauth/token');
