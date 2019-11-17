@@ -10,7 +10,14 @@
 
 <p>home-component works!</p>
 <button (click)="test123()"></button>
-<button (click)="test1234()"></button>
+
+<li>
+  <ul *ngFor="let document of myDocumentList">
+     {{document.type}}
+  </ul>
+</li>
+
+
 <button (click)="test12345()"></button>
 <h1>{{authService.isLoggedIn()}}</h1>
 
