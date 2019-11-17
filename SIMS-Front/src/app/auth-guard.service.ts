@@ -12,9 +12,9 @@ export class AuthGuardService {
   // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private router: Router, private auth: LoginServiceService) {
     //pobiera z LoginServiceService informacje o tym czy użytkownik jest zalogowany, ostrzymuje informacjie z strumienia observable(nasłuchuje go)
-    this.auth.getLoginStatus().subscribe((flag: boolean) => {
-      this.loggedIn = flag;
-    });
+    // this.auth.getLoginStatus().subscribe((flag: boolean) => {
+      this.loggedIn = this.auth.isLoggedIn();
+    // });
   }
 
   // metoda wywoływana gdy chcemy się dostać na jakąś strone zwracające informacje o tym czy mamy do niej dostęp czy nie

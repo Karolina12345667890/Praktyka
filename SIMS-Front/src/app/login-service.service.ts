@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
-import { NotifierService } from 'angular-notifier';
+import {NotifierService} from 'angular-notifier';
 import {OAuthService} from 'angular-oauth2-oidc';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
@@ -14,7 +14,7 @@ export class LoginServiceService {
   private isLogged = new Subject<boolean>();
   private readonly notifier: NotifierService;
 
-  constructor(private router: Router, private oauthService: OAuthService, private http: HttpClient, private cookieService: CookieService,private notifierService: NotifierService) {
+  constructor(private router: Router, private oauthService: OAuthService, private http: HttpClient, private cookieService: CookieService, private notifierService: NotifierService) {
     this.oauthService.configure({
       loginUrl: 'http://localhost:8080/oauth/authorize',
       logoutUrl: 'http://localhost:8080/logout',
@@ -83,8 +83,8 @@ export class LoginServiceService {
   logout() {
     this.isLoggedIn();
     this.oauthService.logOut();
-    window.open('http://localhost:8080/logout','theFrame', 'width=400,height=400,scrollbars=no').close();
-      // .addEventListener('change', function() { window.close(); } , false);
+    window.open('http://localhost:8080/logout', 'theFrame').close();
+    // .addEventListener('change', function() { window.close(); } , false);
     // this.getResource('http://localhost:8080/logout').subscribe(value => {
     //   // this.deleteResource('http://localhost:8080/oauth/token');
     //   location.reload();
@@ -94,14 +94,14 @@ export class LoginServiceService {
   }
 
   // prosta metoda do logowania przyjmująca 2 string login i password
- // login(login: string, password: string) {
-    // tymczasowa opcja sprawdzająca czy dane logowania są poprawne
-    //if (login == 'admin' && password == 'admin') {
- //     this.isLogged.next(true);
-    //  this.router.navigateByUrl('/home');
+  // login(login: string, password: string) {
+  // tymczasowa opcja sprawdzająca czy dane logowania są poprawne
+  //if (login == 'admin' && password == 'admin') {
+  //     this.isLogged.next(true);
+  //  this.router.navigateByUrl('/home');
 
   //  }
- // }
+  // }
 
   // //metoda powodująca wyglogowanie użytkownika i zabranie u dostępu do niektórych stron
   // logout() {
