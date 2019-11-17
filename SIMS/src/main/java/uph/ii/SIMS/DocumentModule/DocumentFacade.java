@@ -2,6 +2,7 @@ package uph.ii.SIMS.DocumentModule;
 
 
 import lombok.AllArgsConstructor;
+import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
@@ -9,18 +10,24 @@ import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
+import uph.ii.SIMS.UserModule.Dto.UserDto;
 import uph.ii.SIMS.UserModule.UserFacade;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Klasa zawiera wszystkie metody związane z dokumentami. Odpowiada za komunikację z innymi modułami, {@link DocumentController} udostępnia jej metody przez HTTP
+ *
  * @see DocumentController
  */
 @AllArgsConstructor
 public class DocumentFacade {
     
+    public OswiadczenieFacade oswiadczenieFacade;
     private PdfBuilder pdfBuilder;
-    private OswiadczenieFacade oswiadczenieFacade;
     private PorozumienieFacade porozumienieFacade;
+    private DocumentRepository documentRepository;
     private UserFacade userFacade;
     
     byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
@@ -33,11 +40,12 @@ public class DocumentFacade {
     
     /**
      * Tworzy pdf oświadczenia, wypełnia wszystkie pola wartościami pobranymi z BD
+     *
      * @param id Id oświadczenia
      * @return Pdf oświadczenia (jako tablica bajtów) z wartościami wszystkich pól pobranymi z BD
      * @throws Exception
      */
-    byte[] printOswiadczenieToPdf(Long id) throws Exception {
+    public byte[] printOswiadczenieToPdf(Long id) throws Exception {
         var oswiadczenieDto = oswiadczenieFacade.find(id);
         var currentUserDto = userFacade.getCurrentUser();
         var pdfDto = OswiadczeniePdfDto.builder()
@@ -54,11 +62,12 @@ public class DocumentFacade {
     
     /**
      * Tworzy pdf porozumienia, wypełnia wszystkie pola wartościami pobranymi z BD
+     *
      * @param id Id porozumienia
      * @return Pdf porozumienia (jako tablica bajtów) z wartościami wszystkich pól pobranymi z BD
      * @throws Exception
      */
-    byte[] printPorozumienieToPdf(Long id) throws Exception {
+    public byte[] printPorozumienieToPdf(Long id) throws Exception {
         var porozumienieDto = porozumienieFacade.find(id);
         var currentUserDto = userFacade.getCurrentUser();
         var pdfDto = PorozumieniePdfDto.builder()
@@ -80,8 +89,10 @@ public class DocumentFacade {
         return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
     }
     
+    
     /**
      * Zwraca Dto oswiadczenia o podanym id, wywołuje {@link OswiadczenieFacade#find(Long)}
+     *
      * @param id Id oswiadczenia
      * @return Dto oswiadczenia
      */
@@ -92,6 +103,7 @@ public class DocumentFacade {
     /**
      * Persystuje przekazane oświadczenie, jesli w bazie danych nie ma oświadczenia z id takim, jak w przekazanym dto zostaje utworzone nowe oświadczenie,
      * w przeciwnym razie aktualizowany jest już istniejący dokument
+     *
      * @param oswiadczenieDto oswiadczenie do zapisania
      * @throws Exception
      */
@@ -101,6 +113,7 @@ public class DocumentFacade {
     
     /**
      * Zwraca Dto porozumienia o podanym id, wywołuje {@link PorozumienieFacade#find(Long)}
+     *
      * @param id Id porozumienia
      * @return Dto porozumienia
      */
@@ -111,11 +124,18 @@ public class DocumentFacade {
     /**
      * Persystuje przekazane porozumienie, jesli w bazie danych nie ma porozumienie z id takim, jak w przekazanym dto zostaje utworzone nowe porozumienie,
      * w przeciwnym razie aktualizowany jest już istniejący dokument
+     *
      * @param porozumienieDto oswiadczenie do zapisania
      * @throws Exception
      */
-    
     public void storePorozumienie(PorozumienieDto porozumienieDto) throws Exception {
         porozumienieFacade.save(porozumienieDto);
+    }
+    
+    public List<DocumentDto> listMyDocuments() {
+        UserDto currentUser = userFacade.getCurrentUser();
+        return documentRepository.getAllByOwnerId(currentUser.getId()).stream()
+            .map(document -> new DocumentDto(document.getComment(), document.getStatus(), document.getUrl()))
+            .collect(Collectors.toList());
     }
 }

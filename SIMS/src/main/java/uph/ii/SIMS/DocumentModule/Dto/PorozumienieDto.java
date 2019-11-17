@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 /**
+ *
  * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu porozumienia
  */
 @Getter
@@ -12,4 +13,7 @@ import lombok.Getter;
 @EqualsAndHashCode
 public class PorozumienieDto {
     private Long id;
+    private String comment;
+    private String status;
+    
 }

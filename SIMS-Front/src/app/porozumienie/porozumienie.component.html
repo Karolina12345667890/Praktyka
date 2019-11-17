@@ -1,4 +1,3 @@
-
 <form [formGroup]="porozumienieForm" (ngSubmit)="onSubmit()">
 <!--  <div>-->
 <!--    <button [disabled]="porozumienieForm.invalid" class="btn btn-success  btn-lg btn-block" type="submit" >Wyślij</button>-->
@@ -15,17 +14,16 @@
 
   <body class="a4">
 
-<h6>Załącznik nr 2 do Regulaminu praktyk zawodowych</h6>
-<br/>
+  <h6>Załącznik nr 2 do Regulaminu praktyk zawodowych</h6>
+  <br/>
 
-<div class="multiLineTitle">
-  <h3>Porozumienie</h3>
-  <h3>w sprawie organizacji zawodowej praktyki studenckiej ciągłej</h3>
-</div>
+  <div class="multiLineTitle">
+    <h3>Porozumienie</h3>
+    <h3>w sprawie organizacji zawodowej praktyki studenckiej ciągłej</h3>
+  </div>
 
-<br/>
-<div id="content">
-  <div>
+  <br/>
+  <div id="content">
     <div>
       <div>
         zawarte dnia …………………………….. w Siedlcach, pomiędzy Uniwersytetem Przyrodniczo-Humanistycznym w
@@ -34,35 +32,40 @@
         <div class="highLetters inline">
           <span ><input type="text" formControlName="companyName" placeholder="Company name" style="width: 500px" required/></span>
         </div>
-      </div>
-      <div>
-        <div class="highLetters">
+        <div>
+          <div class="highLetters">
                     <span>
                         <span style=" width: 30%">z siedzibą w: </span>
                         <span style="  width: 70% "
-                             ><input type="text" formControlName="companyLocationCity" placeholder="City" required/></span>
+                        ><input type="text" formControlName="companyLocationCity" placeholder="City" required/></span>
                     </span>
-          <span>
+            <span>
                         <span style="width: 18% ">przy ul.</span>
                         <span style="font-family: 'arialbd';width: 82%">
-                             <input type="text" formControlName="companyLocationStreet" placeholder="City" required/></span>
+                             <input type="text" formControlName="companyLocationStreet" placeholder="City"
+                                    required/></span>
                     </span>
-        </div>
+          </div>
 
-        której reprezentantem/tką jest:
-        <div class="highLetters inline"><span style="width: auto"><input type="text" formControlName="companyRepresentantName" placeholder="First Name" required/><input type="text" formControlName="companyRepresentantSurname" placeholder="Surname" required/></span>
+          której reprezentantem/tką jest:
+          <div class="highLetters inline"><span style="width: auto"><input type="text"
+                                                                           formControlName="companyRepresentantName"
+                                                                           placeholder="First Name" required/><input
+            type="text" formControlName="companyRepresentantSurname" placeholder="Surname" required/></span>
+          </div>
+          zwanym dalej Zakładem Pracy, o następującej treści:
         </div>
-        zwanym dalej Zakładem Pracy, o następującej treści:
       </div>
     </div>
-  </div>
 
-  <div id="bottom-content">
-    <h4>§1</h4>
+    <div id="bottom-content">
+      <h4>§1</h4>
 
       Uniwersytet kieruje niżej wymienionych studentów kierunku Informatyka
-     specjalności <span> <input type="text" formControlName="studentSpecialization" placeholder="Student Specialization" required/> </span>
-      na <span > <input type="number" formControlName="studentInternshipDuration" placeholder="Internship Duration" required/> </span> -tygodniową praktykę zawodową:
+      specjalności <span> <input type="text" formControlName="studentSpecialization"
+                                 placeholder="Student Specialization" required/> </span>
+      na <span> <input type="number" formControlName="studentInternshipDuration" placeholder="Internship Duration"
+                       required/> </span> -tygodniową praktykę zawodową:
 
     <br><br>
     <table style="width: 100%; border: 1px solid black">
@@ -94,47 +97,48 @@
       </li>
     </ol>
 
-    <h4>§3</h4>
-   Uniwersytet zobowiązuje się do:
-    <ol>
-      <li>opracowania programu praktyki i zapoznania z nim studentów,</li>
-      <li>sprawowania nadzoru dydaktyczno-wychowawczego i organizacyjnego nad przebiegiem praktyki oraz
-        kontroli i oceny praktyki.
-      </li>
-    </ol>
+      <h4>§3</h4>
+      Uniwersytet zobowiązuje się do:
+      <ol>
+        <li>opracowania programu praktyki i zapoznania z nim studentów,</li>
+        <li>sprawowania nadzoru dydaktyczno-wychowawczego i organizacyjnego nad przebiegiem praktyki oraz
+          kontroli i oceny praktyki.
+        </li>
+      </ol>
 
-    <h4>§4</h4>
-    Uniwersytet nie ponosi kosztów związanych z odbyciem praktyki.
+      <h4>§4</h4>
+      Uniwersytet nie ponosi kosztów związanych z odbyciem praktyki.
 
-    <h4>§5</h4>
-    Zakład pracy może żądać od Uniwersytetu odwołania z praktyki zawodowej studenta w przypadku naruszenia
+      <h4>§5</h4>
+      Zakład pracy może żądać od Uniwersytetu odwołania z praktyki zawodowej studenta w przypadku naruszenia
       w sposób rażący dyscypliny pracy.
 
-    <h4>§6</h4>
-    Sprawy nie uregulowane niniejszym Porozumieniem strony będą rozstrzygać w negocjacjach bezpośrednich.
+      <h4>§6</h4>
+      Sprawy nie uregulowane niniejszym Porozumieniem strony będą rozstrzygać w negocjacjach bezpośrednich.
 
-    <h4>§7</h4>
-    Niniejsze porozumienie sporządzone zostało w dwóch jednobrzmiących egzemplarzach po jednym dla każdej ze
+      <h4>§7</h4>
+      Niniejsze porozumienie sporządzone zostało w dwóch jednobrzmiących egzemplarzach po jednym dla każdej ze
       stron.
 </div>
   </div>
 
-  <br/>
-  <br/>
-  <br/>
-  <div>
-
+    <br/>
+    <br/>
+    <br/>
     <div>
-      <div class="toSignLeft">
-        <div>
-          ........................................................
+
+      <div>
+        <div class="toSignLeft">
+          <div>
+            ........................................................
+          </div>
+          <div> (podpis opiekuna praktyki</div>
+          <div style=""> z ramienia Uniwersytetu)</div>
         </div>
-        <div> (podpis opiekuna praktyki</div>
-        <div style=""> z ramienia Uniwersytetu)</div>
-      </div>
 
-      <div class="toSignRight">
+        <div class="toSignRight">
 
+        </div>
       </div>
     </div>
 <br>
@@ -143,25 +147,21 @@
         <div>
           ........................................................
         </div>
-        <div>
-          (podpis i pieczątka Dziekana)
-        </div>
-      </div>
 
-      <div class="toSignRight">
-        <div>
-          ........................................................
-        </div>
-        <div>
-          (podpis i pieczątka przedstawiciela
-          podmiotu przyjmującego na praktykę zawodową)
+        <div class="toSignRight">
+          <div>
+            ........................................................
+          </div>
+          <div>
+            (podpis i pieczątka przedstawiciela
+            podmiotu przyjmującego na praktykę zawodową)
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-</body>
+  </body>
 
   <div>
     <button [disabled]="porozumienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="porozumienieForm.invalid"><div (click)="check()"><div class="example">

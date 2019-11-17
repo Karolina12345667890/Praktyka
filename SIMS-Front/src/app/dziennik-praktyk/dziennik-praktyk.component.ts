@@ -19,13 +19,13 @@ export class DziennikPraktykComponent implements OnInit {
   private readonly notifier: NotifierService;
 
   daysName: Array<{ id: number, text: string }> = [
-    {id: 0, text: "Niedziela"},
-    {id: 1, text: "Poniedziałek"},
-    {id: 2, text: "Wotrek"},
-    {id: 3, text: "Środa"},
-    {id: 4, text: "Czwartek"},
-    {id: 5, text: "Piątek"},
-    {id: 6, text: "Sobota"},
+    {id: 0, text: 'Niedziela'},
+    {id: 1, text: 'Poniedziałek'},
+    {id: 2, text: 'Wotrek'},
+    {id: 3, text: 'Środa'},
+    {id: 4, text: 'Czwartek'},
+    {id: 5, text: 'Piątek'},
+    {id: 6, text: 'Sobota'},
   ];
   diaryGroup: FormGroup;
 

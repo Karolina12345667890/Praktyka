@@ -3,7 +3,7 @@
   <h3 class="text-center">Wydziałowa ankieta oceny efektów praktyk przez studentów</h3>
   {{questionNumber}}/{{totalQuestions}} <br><br>
 
-  <button *ngIf="questionNumber!=totalQuestions" (click)="nextQuestion()" class="btn btn-primary "  >Następne</button>
+  <button *ngIf="questionNumber!=totalQuestions" (click)="nextQuestion()" class="btn btn-primary ">Następne</button>
   <div class="float-right">
     <button (click)="peviousQuestion()" class="btn btn-warning ">Wstecz</button>
   </div>
@@ -11,7 +11,7 @@
   <form [formGroup]="ankietaStudentForm" (ngSubmit)="onSubmit()">
 
     <div class="toLeft " *ngIf="questionNumber==totalQuestions">
-      <button  type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
+      <button type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
 
     </div>
     <br *ngIf="questionNumber==totalQuestions">
@@ -24,12 +24,12 @@
 
       <div>Imię i nazwisko<br>
         <div class="form-row">
-        <div class="form-group col-md-3">
-          <input type="text" class="form-control" formControlName="studentName" placeholder="First name" required/>
-        </div>
-        <div class="form-group col-md-3">
-          <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name" required/>
-        </div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control" formControlName="studentName" placeholder="First name" required/>
+          </div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name" required/>
+          </div>
         </div>
       </div>
 
@@ -71,10 +71,10 @@
       <div>Rodzaj instytucji, w której była readivzowana praktyka (np. finansowa, urząd, zakład produkcyjny,
         laboratorium)<br>
         <div class="form-row">
-        <div class="form-group col-md-6">
-        <input type="text" formControlName="instytutionType" class="form-control"
-               placeholder="finansowa, urząd, zakład produkcyjny, laboratorium" required/>
-        </div>
+          <div class="form-group col-md-6">
+            <input type="text" formControlName="instytutionType" class="form-control"
+                   placeholder="finansowa, urząd, zakład produkcyjny, laboratorium" required/>
+          </div>
         </div>
       </div>
 
@@ -90,7 +90,8 @@
       <div>Nazwa i adres zakładu pracy, w którym odbywał Pan(i) praktykę<br>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <textarea rows="2" cols="50" class="form-control" formControlName="companyNameAndLocation" placeholder="" required></textarea>
+            <textarea rows="2" cols="50" class="form-control" formControlName="companyNameAndLocation" placeholder=""
+                      required></textarea>
           </div>
         </div>
       </div>
@@ -107,12 +108,13 @@
       <div>Termin odbywania praktyki <br>
         <div class="form-row">
           <div class="form-group col-md-3">
-        <input type="date" class="form-control" formControlName="periodFrom" required/>
-          </div>-
+            <input type="date" class="form-control" formControlName="periodFrom" required/>
+          </div>
+          -
           <div class="form-group col-md-3">
-         <input type="date" class="form-control" formControlName="periodTo" required/>
+            <input type="date" class="form-control" formControlName="periodTo" required/>
           </div>
-          </div>
+        </div>
       </div>
 
       <div class=" form-row">
@@ -203,7 +205,8 @@
         <input type="radio" name="answerTo5" value="a" formControlName="answerTo5"> tak (jakie?)
         <span class="checkmark"></span>
       </label>
-      <textarea class="form-control" formControlName="answerTo5atext" placeholder="...." rows="2" cols="80"></textarea><br>
+      <textarea class="form-control" formControlName="answerTo5atext" placeholder="...." rows="2"
+                cols="80"></textarea><br>
       <label class="container">
         <input type="radio" name="answerTo5" value="b" formControlName="answerTo5"> nie
         <span class="checkmark"></span>
@@ -237,7 +240,8 @@
         <input type="radio" name="answerTo7" value="a" formControlName="answerTo7"> tak (na czym ono polegało?)
         <span class="checkmark"></span>
       </label>
-      <textarea class="form-control" formControlName="answerTo7atext" placeholder="...." rows="2" cols="80"></textarea><br>
+      <textarea class="form-control" formControlName="answerTo7atext" placeholder="...." rows="2"
+                cols="80"></textarea><br>
       <label class="container">
         <input type="radio" name="answerTo7" value="b" formControlName="answerTo7"> nie
         <span class="checkmark"></span>
@@ -261,7 +265,8 @@
       </label>
 
     </div>
-    <div id="question10" *ngIf="questionNumber==9">Czy odbyta praktyka pozwodivła Panu(i) na podniesienie poziomu:<br><br>
+    <div id="question10" *ngIf="questionNumber==9">Czy odbyta praktyka pozwodivła Panu(i) na podniesienie
+      poziomu:<br><br>
       <div class="toLeft">
         - wiedzy:
       </div>

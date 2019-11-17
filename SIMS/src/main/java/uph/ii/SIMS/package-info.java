@@ -1,6 +1,6 @@
 /**
  * <h2>
- *     Informacje ogólne
+ * Informacje ogólne
  * </h2>
  * <h3>
  * Architektura systemu
@@ -16,31 +16,30 @@
  *
  * <h3>
  * szablony dokumentów - edycja, dodanie nowego itp.
- * </h3>
- *     <ul>
- *        <li>
- *            Metoda staticResourcesUri() w klasie PdfBuilderConfiguration określa, gdzie znajdować się bedą szablony.
- *        </li>
- *        <li>
- *            Do folderu tego należy dodać nowy szablon thymeleaf (ew. edytować istniejący).
- *        </li>
- *        <li>
- *            Obiekt z danymi powinien nazywać się "dto", ponieważ w klasie PdfBuilder obiekt dodawany do kontekstu ma taki identyfikator
- *        </li>
- *        <li>
- *            W razie potrzeby należy dodać własną klasę do pakietu {@link uph.ii.SIMS.PdfCreationService.Dto}, oraz dodać metodę
- *            analogiczną do {@link uph.ii.SIMS.PdfCreationService.PdfBuilder#getPdfFromObject(java.lang.String, uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto)}
- *            i {@link uph.ii.SIMS.PdfCreationService.PdfBuilder#getPdfFromObject(java.lang.String, uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto)}
- *        </li>
- *        <li>
- *            W przypadku dodawania nowego typu dokumentu, należy dodać odpowiedni podpakiet do modułu {@link uph.ii.SIMS.DocumentModule}, analogicznie do już istniejących
- *            {@link uph.ii.SIMS.DocumentModule.Oswiadczenie} i {@link uph.ii.SIMS.DocumentModule.Porozumienie}
- *        </li>
- *        <li>
- *           Następnie należy dodać fasadę nowego podmodułu do {@link uph.ii.SIMS.DocumentModule.DocumentFacade}
- *           i mapowanie nowych funkcjonalności w kontrolerze.
- *        </li>
- *     </ul>
- *
+ * >
+ * <ul>
+ *    <li>
+ *        Metoda staticResourcesUri() w klasie PdfBuilderConfiguration określa, gdzie znajdować się bedą szablony.
+ *    </li>
+ *    <li>
+ *        Do folderu tego należy dodać nowy szablon thymeleaf (ew. edytować istniejący).
+ *    </li>
+ *    <li>
+ *        Obiekt z danymi powinien nazywać się "dto", ponieważ w klasie PdfBuilder obiekt dodawany do kontekstu ma taki identyfikator
+ *    </li>
+ *    <li>
+ *        W razie potrzeby należy dodać własną klasę do pakietu {@link uph.ii.SIMS.PdfCreationService.Dto}, oraz dodać metodę
+ *        analogiczną do {@link uph.ii.SIMS.PdfCreationService.PdfBuilder#getPdfFromObject(java.lang.String, uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto)}
+ *        i {@link uph.ii.SIMS.PdfCreationService.PdfBuilder#getPdfFromObject(java.lang.String, uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto)}
+ *    </li>
+ *    <li>
+ *        W przypadku dodawania nowego typu dokumentu, należy dodać odpowiedni podpakiet do modułu {@link uph.ii.SIMS.DocumentModule}, analogicznie do już istniejących
+ *        {@link uph.ii.SIMS.DocumentModule.Oswiadczenie} i {@link uph.ii.SIMS.DocumentModule.Porozumienie}
+ *    </li>
+ *    <li>
+ *       Następnie należy dodać fasadę nowego podmodułu do {@link uph.ii.SIMS.DocumentModule.DocumentFacade}
+ *       i mapowanie nowych funkcjonalności w kontrolerze.
+ *    </li>
+ * </ul>
  */
 package uph.ii.SIMS;

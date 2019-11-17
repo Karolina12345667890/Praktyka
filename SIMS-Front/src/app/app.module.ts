@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-import { AppRoutingModule } from './app-routing.module';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+import {AppRoutingModule} from './app-routing.module';
+import {FileUploadComponent} from './file-upload/file-upload.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
@@ -19,6 +19,8 @@ import { AnkietaDlaPracodawcyComponent } from './ankieta-dla-pracodawcy/ankieta-
 import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.component';
 import { StudentListComponent } from './student-list/student-list.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
+import {OAuthModule} from 'angular-oauth2-oidc';
+import {CookieService} from 'ngx-cookie-service';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -81,9 +83,11 @@ const customNotifierOptions: NotifierOptions = {
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    OAuthModule.forRoot()
+    HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
   ],
-  providers: [LoginServiceService,AuthGuardService],
+  providers: [LoginServiceService, AuthGuardService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

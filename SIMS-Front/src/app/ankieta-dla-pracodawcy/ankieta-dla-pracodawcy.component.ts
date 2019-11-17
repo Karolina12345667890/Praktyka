@@ -21,8 +21,8 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
     this.ankietaPracForm = this.fb.group({
       answers: this.fb.array([]),
       answerTo16text: [''],
-      companyinfo: new FormControl('', [ Validators.required, ]),
-      numberofstudents: new FormControl('', [ Validators.required, ]),
+      companyinfo: new FormControl('', [Validators.required,]),
+      numberofstudents: new FormControl('', [Validators.required,]),
     });
 
     this.answers = this.ankietaPracForm.get('answers') as FormArray;
@@ -48,8 +48,9 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
        this.notifier.notify( 'warning', 'Zaznacz jedną z odpowiedzi' );
      }
   }
-  peviousQuestion(){
-    if(this.questionNumber>0) {
+
+  peviousQuestion() {
+    if (this.questionNumber > 0) {
       this.questionNumber--;
       this.notifier.notify( 'info', 'Poprzednie pytanie' );
     }

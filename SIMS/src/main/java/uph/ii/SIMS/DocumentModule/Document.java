@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 
 /**
+ *
  * Abstrakcyjna klasa dokumentu, zawiera pola Id i Id właściciela dokumentu
  */
 @Entity
@@ -20,10 +21,14 @@ abstract public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
-    
     protected Long ownerId;
+    protected String comment;
     
     protected Document(Long owner) {
         this.ownerId = owner;
     }
+    
+    public abstract String getStatus();
+    
+    public abstract String getUrl();
 }

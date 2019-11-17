@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
+ *
  * Klasa reprezentująca porozumienie. Posiada adnotację {@link javax.persistence.Entity}, przez co posiada również reprezentację w bazie danych
  */
 @Entity
@@ -21,11 +22,14 @@ import javax.persistence.Table;
 @AllArgsConstructor
 class Porozumienie extends Document {
     
+    public static final String URL = "/api/document/porozumienie";
+    
+    
     public Porozumienie(Long owner) {
         super(owner);
     }
-    
     /**
+     *
      * Metoda tworząca obiekt klasy {@link OswiadczenieDto}
      *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie porozumienia, na którym wołana jest metoda
@@ -36,4 +40,13 @@ class Porozumienie extends Document {
             .build();
     }
     
+    @Override
+    public String getStatus() {
+        return null;
+    }
+    
+    @Override
+    public String getUrl() {
+        return URL + "/" + id;
+    }
 }

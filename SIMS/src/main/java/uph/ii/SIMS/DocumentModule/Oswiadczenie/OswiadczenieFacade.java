@@ -8,14 +8,15 @@ import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 /**
- * <p>
- *     Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
- * </p>
- * <p>
- *     Wykorzystywana przez {@link uph.ii.SIMS.DocumentModule.DocumentFacade}.
- * </p>
- * @see OswiadczenieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  *
+ * <p>
+ * Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
+ * </p>
+ * <p>
+ * Wykorzystywana przez {@link uph.ii.SIMS.DocumentModule.DocumentFacade}.
+ * </p>
+ *
+ * @see OswiadczenieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  */
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class OswiadczenieFacade {
@@ -24,25 +25,31 @@ public class OswiadczenieFacade {
     private UserFacade userFacade;
     
     /**
+     *
      * Persystuje oświadczenie utworzone na podstawie przekazanego DTO. Właścicielem oświadczenia staje się aktualny użytkownik.
+     *
      * @param dto Dane potrzebne do zapisania oświaczenia
      * @throws Exception
      */
     //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
     public void save(OswiadczenieDto dto) throws Exception {
         Long ownerId = userFacade.getCurrentUser().getId();
-        oswiadczenieRepository.save(
-            new Oswiadczenie(
-                ownerId,
-                dto.getOpiekunI(),
-                dto.getOpiekunN(),
-                dto.getOpiekunMail(),
-                dto.getOpiekunTel())
-        );
+        
+        Oswiadczenie oswiadczenie = new Oswiadczenie(
+            ownerId,
+            dto.getOpiekunI(),
+            dto.getOpiekunN(),
+            dto.getOpiekunMail(),
+            dto.getOpiekunTel());
+        oswiadczenie.setComment(dto.getComment());
+        
+        oswiadczenieRepository.save(oswiadczenie);
     }
     
     /**
+     *
      * Zwraca dane oświadczenia o podanym id
+     *
      * @param id id szukanego oświadczenia
      * @return DTO z danymi oświadczenia o podanym id
      */
@@ -51,7 +58,9 @@ public class OswiadczenieFacade {
     }
     
     /**
+     *
      * Zwraca listę (z paginacją) dokumentów aktualnie zalogowanego użytkownika
+     *
      * @return dokumentów aktualnie zalogowanego użytkownika
      * @throws Exception
      */
