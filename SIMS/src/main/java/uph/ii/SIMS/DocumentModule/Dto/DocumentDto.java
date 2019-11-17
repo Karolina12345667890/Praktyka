@@ -11,4 +11,5 @@ public class DocumentDto {
     private String comment;
     private String status;
     private String link;
+    private String type;
 }

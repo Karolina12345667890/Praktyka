@@ -3,6 +3,7 @@ package uph.ii.SIMS.DocumentModule.Oswiadczenie;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
  * Kontroler odpowiedzialny za dokument oświadczenia
  */
 @RestController
-@RequestMapping(value = Oswiadczenie.URL)
+@RequestMapping(value = Document.URL + Oswiadczenie.DOCUMENT_TYPE)
 @AllArgsConstructor
 class OswiadczenieController {
     private DocumentFacade documentFacade;

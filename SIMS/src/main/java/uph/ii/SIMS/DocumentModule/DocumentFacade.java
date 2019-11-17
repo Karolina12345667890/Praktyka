@@ -135,7 +135,12 @@ public class DocumentFacade {
     public List<DocumentDto> listMyDocuments() {
         UserDto currentUser = userFacade.getCurrentUser();
         return documentRepository.getAllByOwnerId(currentUser.getId()).stream()
-            .map(document -> new DocumentDto(document.getComment(), document.getStatus(), document.getUrl()))
+            .map(document ->
+                new DocumentDto(
+                    document.getComment(),
+                    document.getStatus(),
+                    document.getUrl(),
+                    document.getType().toUpperCase()))
             .collect(Collectors.toList());
     }
 }

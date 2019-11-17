@@ -3,6 +3,7 @@ package uph.ii.SIMS.DocumentModule.Porozumienie;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 
@@ -11,7 +12,7 @@ import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
  * Kontroler odpowiedzialny za dokument porozumienia
  */
 @RestController
-@RequestMapping(value = Porozumienie.URL)
+@RequestMapping(value = Document.URL + Porozumienie.DOCUMENT_TYPE )
 @AllArgsConstructor
 class PorozumienieController {
     private DocumentFacade documentFacade;

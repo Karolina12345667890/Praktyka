@@ -25,7 +25,7 @@ class Oswiadczenie extends Document {
     private String opiekunMail;
     private String opiekunTel;
     
-    public static final String URL = "/api/document/oswiadczenie";
+    public static final String DOCUMENT_TYPE = "oswiadczenie";
     
     Oswiadczenie(Long owner, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
         super(owner);
@@ -57,7 +57,7 @@ class Oswiadczenie extends Document {
     }
     
     @Override
-    public String getUrl() {
-        return URL + "/" + id;
+    public String getType() {
+        return DOCUMENT_TYPE;
     }
 }

@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 
 /**
- *
  * Abstrakcyjna klasa dokumentu, zawiera pola Id i Id właściciela dokumentu
  */
 @Entity
@@ -18,6 +17,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 abstract public class Document {
     
+    public static final String URL = "/api/document/";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -30,5 +30,9 @@ abstract public class Document {
     
     public abstract String getStatus();
     
-    public abstract String getUrl();
+    public abstract String getType();
+    
+    public String getUrl() {
+        return URL + getType() + "/" + id;
+    }
 }

@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @AllArgsConstructor
 class Porozumienie extends Document {
     
-    public static final String URL = "/api/document/porozumienie";
+    public static final String DOCUMENT_TYPE = "porozumienie";
     
     
     public Porozumienie(Long owner) {
@@ -46,7 +46,7 @@ class Porozumienie extends Document {
     }
     
     @Override
-    public String getUrl() {
-        return URL + "/" + id;
+    public String getType() {
+        return DOCUMENT_TYPE;
     }
 }
