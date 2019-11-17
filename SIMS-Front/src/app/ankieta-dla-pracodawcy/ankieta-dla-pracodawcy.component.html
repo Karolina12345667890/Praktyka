@@ -12,7 +12,7 @@
 
   <form [formGroup]="ankietaPracForm" (ngSubmit)="onSubmit()">
     <div class="toLeft" *ngIf="questionNumber==totalQuestions ">
-      <button  type="submit" class="btn btn-success" [disabled]="ankietaPracForm.invalid">Wyślij</button>
+      <button type="submit" class="btn btn-success" [disabled]="ankietaPracForm.invalid">Wyślij</button>
 
     </div>
     <br *ngIf="questionNumber==totalQuestions ">
@@ -377,19 +377,18 @@
         <textarea class="form-control" rows="5" cols="90" formControlName="answerTo16text"></textarea>
       </div>
       <div class="cross-validation">
-      <div>
-        Dane informacyjne:<br>
-        <span style="font-size: 17px"> Nazwa i adres Zakładu</span><br>
-        <textarea class="form-control" rows="5" cols="90" formControlName="companyinfo" required></textarea>
-      </div>
-      <div>
-        liczba studentów na praktyce:
-        <input class="form-control" type="number" formControlName="numberofstudents" placeholder="1" required/></div>
+        <div>
+          Dane informacyjne:<br>
+          <span style="font-size: 17px"> Nazwa i adres Zakładu</span><br>
+          <textarea class="form-control" rows="5" cols="90" formControlName="companyinfo" required></textarea>
+        </div>
+        <div>
+          liczba studentów na praktyce:
+          <input class="form-control" type="number" formControlName="numberofstudents" placeholder="1" required/></div>
       </div>
 
     </div>
   </form>
-
 
 
 </div>

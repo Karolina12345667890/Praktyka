@@ -25,6 +25,8 @@ class Oswiadczenie extends Document {
     private String opiekunMail;
     private String opiekunTel;
     
+    public static final String URL = "/api/document/oswiadczenie";
+    
     Oswiadczenie(Long owner, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
         super(owner);
         this.opiekunI = opiekunI;
@@ -34,6 +36,7 @@ class Oswiadczenie extends Document {
     }
     
     /**
+     *
      * Metoda tworząca obiekt klasy {@link OswiadczenieDto}
      *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie oswiadczenia, na którym wołana jest metoda
@@ -46,5 +49,15 @@ class Oswiadczenie extends Document {
             .opiekunMail(this.opiekunMail)
             .opiekunTel(this.opiekunTel)
             .build();
+    }
+    
+    @Override
+    public String getStatus() {
+        return null;
+    }
+    
+    @Override
+    public String getUrl() {
+        return URL + "/" + id;
     }
 }

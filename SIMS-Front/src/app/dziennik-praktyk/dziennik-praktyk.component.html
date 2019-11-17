@@ -1,99 +1,102 @@
 <form [formGroup]="diaryGroup" (ngSubmit)="onSubmit()">
 
   <div class="container" style="margin-top: 100px">
-    <div class="cross-validation" [class.cross-validation-error]="diaryGroup.errors?.identityRevealed && (diaryGroup.touched || diaryGroup.dirty)">
+    <div class="cross-validation"
+         [class.cross-validation-error]="diaryGroup.errors?.identityRevealed && (diaryGroup.touched || diaryGroup.dirty)">
       <div class="form-group">
-        <div>  Imię i nazwisko <br>
-      <div class=" form-row">
-        <div class=" form-group col-md-3">
-          <input id="studentName" type="text" class="  form-control" formControlName="studentName" placeholder="First name" required/>
-        </div>
-
-        <div class="form-group col-md-3">
-          <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name" required/>
-        </div>
-
-      </div>
-    </div>
-
+        <div> Imię i nazwisko <br>
           <div class=" form-row">
-        <div *ngIf="studentName.invalid && (studentName.dirty || studentName.touched)"
-             class="alert alert-danger form-group col-md-3">
-          <div *ngIf="studentName.errors.required"  class="text-center">
+            <div class=" form-group col-md-3">
+              <input id="studentName" type="text" class="  form-control" formControlName="studentName"
+                     placeholder="First name" required/>
+            </div>
 
-            Imie jest wymagane!
+            <div class="form-group col-md-3">
+              <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name"
+                     required/>
+            </div>
+
           </div>
         </div>
-        <div  *ngIf="studentSurname.invalid && (studentSurname.dirty || studentSurname.touched)"
-             class=" form-group col-md-3 alert alert-danger">
-          <div *ngIf="studentSurname.errors.required" class="text-center">
-            Nazwisko jest wymagane!
-          </div>
-        </div>
-        </div>
-
-    <div class="fontSize"> Numer Albumu:<br>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="number" formControlName="studentAlbumNumber" class="form-control"
-                 placeholder="00000" required/>
-        </div>
-
-      </div>
-    </div>
 
         <div class=" form-row">
-          <div  *ngIf="studentAlbumNumber.invalid && (studentAlbumNumber.dirty || studentAlbumNumber.touched)"
-                class=" form-group col-md-6 alert alert-danger">
+          <div *ngIf="studentName.invalid && (studentName.dirty || studentName.touched)"
+               class="alert alert-danger form-group col-md-3">
+            <div *ngIf="studentName.errors.required" class="text-center">
+
+              Imie jest wymagane!
+            </div>
+          </div>
+          <div *ngIf="studentSurname.invalid && (studentSurname.dirty || studentSurname.touched)"
+               class=" form-group col-md-3 alert alert-danger">
+            <div *ngIf="studentSurname.errors.required" class="text-center">
+              Nazwisko jest wymagane!
+            </div>
+          </div>
+        </div>
+
+        <div class="fontSize"> Numer Albumu:<br>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="number" formControlName="studentAlbumNumber" class="form-control"
+                     placeholder="00000" required/>
+            </div>
+
+          </div>
+        </div>
+
+        <div class=" form-row">
+          <div *ngIf="studentAlbumNumber.invalid && (studentAlbumNumber.dirty || studentAlbumNumber.touched)"
+               class=" form-group col-md-6 alert alert-danger">
             <div *ngIf="studentAlbumNumber.errors.required" class="text-center">
               Numer Albumu jest wymagany!
             </div>
           </div>
         </div>
 
-    <div class="fontSize"> Nazwa Zakładu Pracy:<br>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <input type="text" class="form-control" formControlName="companyName" placeholder=".........." required/>
+        <div class="fontSize"> Nazwa Zakładu Pracy:<br>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <input type="text" class="form-control" formControlName="companyName" placeholder=".........." required/>
+            </div>
+
+          </div>
         </div>
 
-      </div>
-    </div>
-
         <div class=" form-row">
-          <div  *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)"
-                class=" form-group col-md-6 alert alert-danger">
+          <div *ngIf="companyName.invalid && (companyName.dirty || companyName.touched)"
+               class=" form-group col-md-6 alert alert-danger">
             <div *ngIf="companyName.errors.required" class="text-center">
               Nazwa Zakładu Pracy jest wymagana!
             </div>
           </div>
         </div>
 
-    <div class="fontSize">Termin odbywania praktyki <br>
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <input id="inputperiodFrom" class="form-control" type="date" #box (change)="onChange(box.value) "
-                 formControlName="periodFrom" required>
-        </div>
-        -
-        <div class="form-group col-md-3">
-          <input id="inputperiodTo" class="form-control" type="date" #box1 (change)="onChange1(box1.value)"
-                 formControlName="periodTo" required>
-        </div>
+        <div class="fontSize">Termin odbywania praktyki <br>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <input id="inputperiodFrom" class="form-control" type="date" #box (change)="onChange(box.value) "
+                     formControlName="periodFrom" required>
+            </div>
+            -
+            <div class="form-group col-md-3">
+              <input id="inputperiodTo" class="form-control" type="date" #box1 (change)="onChange1(box1.value)"
+                     formControlName="periodTo" required>
+            </div>
 
-      </div>
-    </div>
+          </div>
+        </div>
 
         <div class=" form-row">
           <div *ngIf="getperiodFrom.invalid && (getperiodFrom.dirty || getperiodFrom.touched)"
                class="alert alert-danger form-group col-md-3">
-            <div *ngIf="getperiodFrom.errors.required"  class="text-center">
+            <div *ngIf="getperiodFrom.errors.required" class="text-center">
 
               Termin od jest wymagany!
             </div>
           </div>
-          <div  *ngIf="getperiodTo.invalid && (getperiodTo.dirty || getperiodTo.touched)"
-                class=" form-group col-md-3 alert alert-danger">
+          <div *ngIf="getperiodTo.invalid && (getperiodTo.dirty || getperiodTo.touched)"
+               class=" form-group col-md-3 alert alert-danger">
             <div *ngIf="getperiodTo.errors.required" class="text-center">
               Termin do jest wymagany!
             </div>
@@ -102,7 +105,7 @@
 
 
       </div>
-</div>
+    </div>
     <div *ngIf="periodFrom!=null && periodTo!=null">
       <table class="table">
 
@@ -134,7 +137,7 @@
 
       </table>
       <div>
-        <button  [disabled]="diaryGroup.invalid" class="btn btn-success  btn-lg btn-block" type="submit">Wyślij</button>
+        <button [disabled]="diaryGroup.invalid" class="btn btn-success  btn-lg btn-block" type="submit">Wyślij</button>
       </div>
     </div>
   </div>

@@ -1,15 +1,16 @@
 .gray {
   background: gray;
 }
-.fontSize{
+
+.fontSize {
   font-size: 22px;
 }
 
 
-.cross-validation .ng-valid[required], .ng-valid.required  {
+.cross-validation .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948;
 }
 
-.cross-validation .ng-invalid:not(form)  {
+.cross-validation .ng-invalid:not(form) {
   border-left: 5px solid #a94442;
 }

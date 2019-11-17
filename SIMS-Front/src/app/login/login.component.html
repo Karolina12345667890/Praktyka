@@ -1,37 +1,50 @@
-<div class="container">
-  <div class="row justify-content-center align-items-center" style="height:500px">
-    <div class="col-4">
-      <h3>Zaloguj się.</h3>
-      <div class="card">
-        <div class="card-body">
-          <form [formGroup]="loginForm" (ngSubmit)="login()">
-            <div class="form-group">
-              Email:<input type="text" class="form-control" formControlName="login" required>
-            </div>
+<!--<div class="container">-->
+<!--  <div class="row justify-content-center align-items-center" style="height:500px">-->
+<!--    <div class="col-4">-->
+<!--      <h3>Zaloguj się.</h3>-->
+<!--      <div class="card">-->
+<!--        <div class="card-body">-->
+<!--          <form [formGroup]="loginForm" (ngSubmit)="login()">-->
+<!--            <div class="form-group">-->
+<!--              Email:<input type="text" class="form-control" formControlName="login" required>-->
+<!--            </div>-->
 
-              <div  *ngIf="getlogin.invalid && (getlogin.dirty || getlogin.touched)"
-                    class=" form-control  alert-danger">
-                <div *ngIf="getlogin.errors.required" class="text-center">
-                  Email jest wymagany!
-                </div>
-              </div>
+<!--            <div *ngIf="getlogin.invalid && (getlogin.dirty || getlogin.touched)"-->
+<!--                 class=" form-control  alert-danger">-->
+<!--              <div *ngIf="getlogin.errors.required" class="text-center">-->
+<!--                Email jest wymagany!-->
+<!--              </div>-->
+<!--            </div>-->
 
-            <div class="form-group">
-              Hasło:<input type="password" class="form-control" formControlName="password" required>
-            </div>
+<!--            <div class="form-group">-->
+<!--              Hasło:<input type="password" class="form-control" formControlName="password" required>-->
+<!--            </div>-->
 
-            <div  *ngIf="getpassword.invalid && (getpassword.dirty || getpassword.touched)"
-                  class=" form-control  alert-danger">
-              <div *ngIf="getpassword.errors.required" class="text-center">
-                Hasło jest wymagane!
-              </div>
-            </div>
-<br>
-            <button type="submit" class="btn btn-primary form-control" [disabled]="loginForm.invalid">Zaloguj</button>
+<!--            <div *ngIf="getpassword.invalid && (getpassword.dirty || getpassword.touched)"-->
+<!--                 class=" form-control  alert-danger">-->
+<!--              <div *ngIf="getpassword.errors.required" class="text-center">-->
+<!--                Hasło jest wymagane!-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <br>-->
+<!--            <button type="submit" class="btn btn-primary form-control" [disabled]="loginForm.invalid">Zaloguj</button>-->
 
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<button *ngIf="!isLoggedIn" (click)="login()" type="submit">Login</button>
+<div *ngIf="isLoggedIn">
+  <span>Welcome !!</span>
+  <a (click)="logout()" href="http://localhost:4200/home">Logout</a>
+<!--  <a href="javascript:window.open('http://localhost:8080/logout','windowName', 'width=400,height=400,scrollbars=no')">close</a>-->
+  <iframe name="theFrame" style="width:0;height:0;border:0; border:none; position: absolute;"></iframe>
+  <!--  <a href="javascript:)">close</a>-->
+  <!--  window.open("foo.html","windowName", "width=400,height=400,scrollbars=no");-->
+
+
+  <br/>
+</div>`

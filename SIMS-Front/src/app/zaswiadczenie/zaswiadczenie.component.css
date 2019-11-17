@@ -1,6 +1,7 @@
-label{
+label {
   display: block;
 }
+
 html {
   font-family: 'times';
   font-size: 14px;
@@ -123,29 +124,30 @@ h6 {
   font-size: 10px;
 }
 
-.a4{
-  width:840px;
+.a4 {
+  width: 840px;
   border: 1px solid black;
   margin: 0 auto;
   padding: 40px;
 }
+
 ol, li {
   margin-top: 0;
   margin-bottom: 0;
   list-style-type: none;
 }
 
-.a4 input, .a4 input:focus, .a4 textarea , .a4 textarea:focus{
+.a4 input, .a4 input:focus, .a4 textarea, .a4 textarea:focus {
   border-top: 1px solid gray;
   border-bottom: 1px solid gray;
   border-right: 1px solid gray;
   border-radius: 5px;
 }
 
-.ng-valid[required], .ng-valid.required  {
+.ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948;
 }
 
-.ng-invalid:not(form)  {
+.ng-invalid:not(form) {
   border-left: 5px solid #a94442;
 }

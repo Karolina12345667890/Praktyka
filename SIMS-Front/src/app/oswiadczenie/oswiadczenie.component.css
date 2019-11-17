@@ -1,6 +1,7 @@
-label{
+label {
   display: block;
 }
+
 html {
   font-family: 'times';
   font-size: 14px;
@@ -120,14 +121,14 @@ h6 {
   font-size: 10px;
 }
 
-.a4{
-  width:800px;
+.a4 {
+  width: 800px;
   border: 1px solid black;
   margin: 0 auto;
   padding: 40px;
 }
 
-.a4 input:focus, .a4 input{
+.a4 input:focus, .a4 input {
   outline: none;
   border-top: 0px solid;
   border-left: 0px solid;
@@ -135,11 +136,11 @@ h6 {
   border-radius: 5px;
 }
 
-.ng-valid[required], .ng-valid.required  {
+.ng-valid[required], .ng-valid.required {
   border-bottom: 3px solid #42A948;
 }
 
-.ng-invalid:not(form)  {
+.ng-invalid:not(form) {
   border-bottom: 3px solid #a94442;
 }
 

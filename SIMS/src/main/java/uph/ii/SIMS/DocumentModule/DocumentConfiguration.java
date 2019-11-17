@@ -11,11 +11,14 @@ import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 /**
+ *
  * Klasa odpowiedzialna za utworzenie fasady modułu dokumentów
  */
 @Configuration
 @AllArgsConstructor
 class DocumentConfiguration {
+    
+    private DocumentRepository documentRepository;
     
     /**
      * Metoda oznaczona adnotacją {@link Bean}, wykorzystywana przez Spring, nie używać ręcznie. Kontener IoC springa zajmie się wstrzyknięciem wszystkich zależności
@@ -27,7 +30,7 @@ class DocumentConfiguration {
                                   PorozumienieFacade porozumienieFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(pdfBuilder, oswiadczenieFacade, porozumienieFacade, userFacade);
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade);
     }
     
     /**
@@ -43,7 +46,7 @@ class DocumentConfiguration {
             .porozumienieFacadeInMemoryIO();
         
         
-        return new DocumentFacade(pdfBuilder, oswiadczenieFacadeInMemoryIO, porozumienieFacadeInMemoryIO, userFacade);
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade);
     }
 }
     

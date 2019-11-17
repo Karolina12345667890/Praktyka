@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SecuredController {
     
     @GetMapping
-    public String securedResource(Authentication auth) {
-        return "This is a SECURED resource. Authentication: " + auth.getName() + "; Authorities: " + auth.getAuthorities();
+    public Response securedResource(Authentication auth) {
+        return new Response(
+            "This is a SECURED resource. Authentication: " + auth.getName() + "; Authorities: " + auth.getAuthorities()
+        );
+        
     }
     
 }

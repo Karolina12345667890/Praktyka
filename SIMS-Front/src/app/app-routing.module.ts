@@ -4,13 +4,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
 import {FileUploadComponent} from './file-upload/file-upload.component';
 import {OswiadczenieComponent} from './oswiadczenie/oswiadczenie.component';
-import {PorozumienieComponent} from "./porozumienie/porozumienie.component";
-import {LoginComponent} from "./login/login.component";
-import {AuthGuardService} from "./auth-guard.service";
-import {ZaswiadczenieComponent} from "./zaswiadczenie/zaswiadczenie.component";
-import {AnkietaDlaStudentaComponent} from "./ankieta-dla-studenta/ankieta-dla-studenta.component";
-import {AnkietaDlaPracodawcyComponent} from "./ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component";
-import {DziennikPraktykComponent} from "./dziennik-praktyk/dziennik-praktyk.component";
+import {PorozumienieComponent} from './porozumienie/porozumienie.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuardService} from './auth-guard.service';
+import {ZaswiadczenieComponent} from './zaswiadczenie/zaswiadczenie.component';
+import {AnkietaDlaStudentaComponent} from './ankieta-dla-studenta/ankieta-dla-studenta.component';
+import {AnkietaDlaPracodawcyComponent} from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
+import {DziennikPraktykComponent} from './dziennik-praktyk/dziennik-praktyk.component';
 
 //tabele rutingu
 const appRoutes: Routes = [

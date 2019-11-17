@@ -3,7 +3,7 @@
   <h3 class="text-center">Wydziałowa ankieta oceny efektów praktyk przez studentów</h3>
   {{questionNumber}}/{{totalQuestions}} <br><br>
 
-  <button *ngIf="questionNumber!=totalQuestions" (click)="nextQuestion()" class="btn btn-primary "  >Następne</button>
+  <button *ngIf="questionNumber!=totalQuestions" (click)="nextQuestion()" class="btn btn-primary ">Następne</button>
   <div class="float-right">
     <button (click)="peviousQuestion()" class="btn btn-warning ">Wstecz</button>
   </div>
@@ -11,7 +11,7 @@
   <form [formGroup]="ankietaStudentForm" (ngSubmit)="onSubmit()">
 
     <div class="toLeft " *ngIf="questionNumber==totalQuestions">
-      <button  type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
+      <button type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
 
     </div>
     <br *ngIf="questionNumber==totalQuestions">
@@ -19,24 +19,24 @@
     <div id="question1" *ngIf="questionNumber==0" class="cross-validation">
       <div>Imię i nazwisko<br>
         <div class="form-row">
-        <div class="form-group col-md-3">
-          <input type="text" class="form-control" formControlName="studentName" placeholder="First name" required/>
-        </div>
-        <div class="form-group col-md-3">
-          <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name" required/>
-        </div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control" formControlName="studentName" placeholder="First name" required/>
+          </div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name" required/>
+          </div>
         </div>
       </div>
 
       <div class=" form-row">
         <div *ngIf="studentName.invalid && (studentName.dirty || studentName.touched)"
              class="alert alert-danger form-group col-md-3">
-          <div *ngIf="studentName.errors.required"  class="text-center  fontSize">
+          <div *ngIf="studentName.errors.required" class="text-center  fontSize">
             Imie jest wymagane!
           </div>
         </div>
-        <div  *ngIf="studentSurname.invalid && (studentSurname.dirty || studentSurname.touched)"
-              class=" form-group col-md-3 alert alert-danger">
+        <div *ngIf="studentSurname.invalid && (studentSurname.dirty || studentSurname.touched)"
+             class=" form-group col-md-3 alert alert-danger">
           <div *ngIf="studentSurname.errors.required" class="text-center fontSize">
             Nazwisko jest wymagane!
           </div>
@@ -54,8 +54,8 @@
       </div>
 
       <div class=" form-row">
-        <div  *ngIf="studentSpecialization.invalid && (studentSpecialization.dirty || studentSpecialization.touched)"
-              class=" form-group col-md-6 alert alert-danger">
+        <div *ngIf="studentSpecialization.invalid && (studentSpecialization.dirty || studentSpecialization.touched)"
+             class=" form-group col-md-6 alert alert-danger">
           <div *ngIf="studentSpecialization.errors.required" class="text-center fontSize">
             Kierunek studiów jest wymagany!
           </div>
@@ -66,16 +66,16 @@
       <div>Rodzaj instytucji, w której była readivzowana praktyka (np. finansowa, urząd, zakład produkcyjny,
         laboratorium)<br>
         <div class="form-row">
-        <div class="form-group col-md-6">
-        <input type="text" formControlName="instytutionType" class="form-control"
-               placeholder="finansowa, urząd, zakład produkcyjny, laboratorium" required/>
-        </div>
+          <div class="form-group col-md-6">
+            <input type="text" formControlName="instytutionType" class="form-control"
+                   placeholder="finansowa, urząd, zakład produkcyjny, laboratorium" required/>
+          </div>
         </div>
       </div>
 
       <div class=" form-row">
-        <div  *ngIf="instytutionType.invalid && (instytutionType.dirty || instytutionType.touched)"
-              class=" form-group col-md-6 alert alert-danger">
+        <div *ngIf="instytutionType.invalid && (instytutionType.dirty || instytutionType.touched)"
+             class=" form-group col-md-6 alert alert-danger">
           <div *ngIf="instytutionType.errors.required" class="text-center fontSize">
             Rodzaj instytucji jest wymagany!
           </div>
@@ -85,14 +85,15 @@
       <div>Nazwa i adres zakładu pracy, w którym odbywał Pan(i) praktykę<br>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <textarea rows="2" cols="50" class="form-control" formControlName="companyNameAndLocation" placeholder="" required></textarea>
+            <textarea rows="2" cols="50" class="form-control" formControlName="companyNameAndLocation" placeholder=""
+                      required></textarea>
           </div>
         </div>
       </div>
 
       <div class=" form-row">
-        <div  *ngIf="companyNameAndLocation.invalid && (companyNameAndLocation.dirty || companyNameAndLocation.touched)"
-              class=" form-group col-md-6 alert alert-danger">
+        <div *ngIf="companyNameAndLocation.invalid && (companyNameAndLocation.dirty || companyNameAndLocation.touched)"
+             class=" form-group col-md-6 alert alert-danger">
           <div *ngIf="companyNameAndLocation.errors.required" class="text-center fontSize">
             Nazwa i adres zakładu pracy jest wymagane!
           </div>
@@ -102,23 +103,24 @@
       <div>Termin odbywania praktyki <br>
         <div class="form-row">
           <div class="form-group col-md-3">
-        <input type="date" class="form-control" formControlName="periodFrom" required/>
-          </div>-
+            <input type="date" class="form-control" formControlName="periodFrom" required/>
+          </div>
+          -
           <div class="form-group col-md-3">
-         <input type="date" class="form-control" formControlName="periodTo" required/>
+            <input type="date" class="form-control" formControlName="periodTo" required/>
           </div>
-          </div>
+        </div>
       </div>
 
       <div class=" form-row">
         <div *ngIf="periodFrom.invalid && (periodFrom.dirty || periodFrom.touched)"
              class="alert alert-danger form-group col-md-3">
-          <div *ngIf="periodFrom.errors.required"  class="text-center fontSize">
+          <div *ngIf="periodFrom.errors.required" class="text-center fontSize">
             Termin od jest wymagany!
           </div>
         </div>
-        <div  *ngIf="periodTo.invalid && (periodTo.dirty || periodTo.touched)"
-              class=" form-group col-md-3 alert alert-danger">
+        <div *ngIf="periodTo.invalid && (periodTo.dirty || periodTo.touched)"
+             class=" form-group col-md-3 alert alert-danger">
           <div *ngIf="periodTo.errors.required" class="text-center fontSize">
             Termin do jest wymagany!
           </div>
@@ -198,7 +200,8 @@
         <input type="radio" name="answerTo5" value="a" formControlName="answerTo5"> tak (jakie?)
         <span class="checkmark"></span>
       </label>
-      <textarea class="form-control" formControlName="answerTo5atext" placeholder="...." rows="2" cols="80"></textarea><br>
+      <textarea class="form-control" formControlName="answerTo5atext" placeholder="...." rows="2"
+                cols="80"></textarea><br>
       <label class="container">
         <input type="radio" name="answerTo5" value="b" formControlName="answerTo5"> nie
         <span class="checkmark"></span>
@@ -232,7 +235,8 @@
         <input type="radio" name="answerTo7" value="a" formControlName="answerTo7"> tak (na czym ono polegało?)
         <span class="checkmark"></span>
       </label>
-      <textarea class="form-control" formControlName="answerTo7atext" placeholder="...." rows="2" cols="80"></textarea><br>
+      <textarea class="form-control" formControlName="answerTo7atext" placeholder="...." rows="2"
+                cols="80"></textarea><br>
       <label class="container">
         <input type="radio" name="answerTo7" value="b" formControlName="answerTo7"> nie
         <span class="checkmark"></span>
@@ -256,7 +260,8 @@
       </label>
 
     </div>
-    <div id="question10" *ngIf="questionNumber==9">Czy odbyta praktyka pozwodivła Panu(i) na podniesienie poziomu:<br><br>
+    <div id="question10" *ngIf="questionNumber==9">Czy odbyta praktyka pozwodivła Panu(i) na podniesienie
+      poziomu:<br><br>
       <div class="toLeft">
         - wiedzy:
       </div>

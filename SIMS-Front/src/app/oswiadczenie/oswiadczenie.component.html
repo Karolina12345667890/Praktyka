@@ -1,187 +1,61 @@
-
-  <form [formGroup]="oswiadczenieForm" (ngSubmit)="onSubmit()">
-    <!--
-        <label>
-          studentName
-          <input type="text" formControlName="carerName"/>
-        </label>
-        <label>
-          studentSurname
-          <input type="text" formControlName="studentSurname"/>
-        </label>
-
+<form [formGroup]="oswiadczenieForm" (ngSubmit)="onSubmit()">
+  <!--
       <label>
-        <button (click)="addDuty()">Add duty</button>
-    <span *ngFor="let duty of duties.controls; let i=index" >
-      studentDuty
-        <input type=" text " [formControl]="duties.controls[i]" />
-    </span>
+        studentName
+        <input type="text" formControlName="carerName"/>
+      </label>
+      <label>
+        studentSurname
+        <input type="text" formControlName="studentSurname"/>
+      </label>
+
+    <label>
+      <button (click)="addDuty()">Add duty</button>
+  <span *ngFor="let duty of duties.controls; let i=index" >
+    studentDuty
+      <input type=" text " [formControl]="duties.controls[i]" />
+  </span>
+</label>
+
+
+  <label>
+    carerName
+    <input type="text" formControlName="carerName"/>
+  </label>
+  <label>
+    carerSurname
+    <input type="text" formControlName="carerSurname"/>
+  </label>
+  <label>
+    carerPhone
+    <input type="text" formControlName="carerPhone"/>
+  </label>
+  <label>
+    carerEmail
+    <input type="text" formControlName="carerEmail"/>
   </label>
 
 
-    <label>
-      carerName
-      <input type="text" formControlName="carerName"/>
-    </label>
-    <label>
-      carerSurname
-      <input type="text" formControlName="carerSurname"/>
-    </label>
-    <label>
-      carerPhone
-      <input type="text" formControlName="carerPhone"/>
-    </label>
-    <label>
-      carerEmail
-      <input type="text" formControlName="carerEmail"/>
-    </label>
+  -->
 
 
-    -->
-
-
-
-
-    <div>
-      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
-    </div>
-
-    <body class="a4" >
-
-<h6>Załącznik nr 1 do Regulaminu praktyk zawodowych</h6>
-<br/>
-
-<div id="content">
   <div>
-    <div class="toSignLeft">
-      <div>
-        ........................................................
-      </div>
-      <div>
-        (Pięczeć zakładu pracy)
-      </div>
-    </div>
-
-    <div class="toSignRight">
-      <div>
-        ........................................................
-      </div>
-      <div>
-        (Miejscowość, data)
-      </div>
-    </div>
+    <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
   </div>
+
+  <body class="a4">
+
+  <h6>Załącznik nr 1 do Regulaminu praktyk zawodowych</h6>
   <br/>
 
-  <h3>OŚWIADCZENIE</h3>
-
-  <div>
-    <div>
-      Niniejszym wyrażam zgodę na przyjęcie studenta(ki):<br/>
-      <div class="highLetters">
-        <input type="text" formControlName="studentName" placeholder="First name" required/> <input type="text" formControlName="studentSurname" placeholder="Last name" required/>
-      </div>
-    </div>
-    <div>
-      w celu odbycia praktyki zawodowej w naszym zakładzie pracy. Jednocześnie oświadczam, że
-      charakter wykonywanej pracy będzie zgodny z programem praktyki i będzie obejmował
-      następujące obszary działalności:
-      <ul id="activities">
-        <li ><span ><textarea rows="5" cols="90" formControlName="studentDuties" required></textarea></span></li>
-      </ul>
-    </div>
-    <div>
-      Pracownikiem naszego zakładu pracy bezpośrednio nadzorującym i odpowiedzialnym za przebieg
-      praktyk będzie:
-      <div class="highLetters inline">
-        <input type="text" formControlName="carerName" placeholder="First name" required/>   <input type="text" formControlName="carerSurname" placeholder="Last name" required/>
-      </div>
-
-      <div class="highLetters">
-        <span >tel.: <input type="number" formControlName="carerPhone" placeholder="Phone Number" required/></span>
-        <span >e-mail:  <input type="email" formControlName="carerEmail" placeholder="Email" required/></span>
-      </div>
-    </div>
-
-    <br/>
-    <br/>
-
-    <div>
-      <div class="toSignRight">
-        <div>
-          ........................................................
-        </div>
-        <div>
-          (Dyrektor/kierownik)
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <br/>
-
-    <div>
-      <h4>Klauzula informacyjna</h4>
-      <ol id="clause1">
-        <li>Administratorem Pani/Pana danych osobowych jest Uniwersytet Przyrodniczo-Humanistyczny w Siedlcach z
-          siedzibą przy ul.
-          Konarskiego 2, 08-110 Siedlce;
-        </li>
-        <li>Prawidłowość przetwarzania danych osobowych nadzoruje administratora bezpieczeństwa informacji z
-          którym
-          można
-          skontaktować się za pośrednictwem adresu e-mail: iod@uph.edu.pl;
-        </li>
-        <li>Pani/Pana dane osobowe przetwarzane będą w celach kontaktowych jako z osobą bezpośrednią
-          odpowiedzialną
-          za opiekę i nadzór
-          nad powierzonymi studentamiWydziału Nauk Ścisłych Uniwersytetu Przyrodniczo-Humanistycznego w
-          Siedlcach;
-        </li>
-        <li>Podane dane będą przetwarzane na podstawie art. 6 ust. 1 ogólnego rozporządzenia o ochronie danych
-          osobowych (Dz.U. UE L119
-          z 4.05.2016 r.);
-        </li>
-        <li>Podanie danych jest dobrowolne, jednak konieczne do realizacji celów, do jakich zostały zebrane;
-        </li>
-        <li>Dane nie będą udostępniane podmiotom zewnętrznym z wyjątkiem przypadków przewidzianych przepisami
-          prawa;
-        </li>
-        <li>Dane przechowywane będą przez okres niezbędny do realizacji wyżej określonych celów;</li>
-        <li>Posiada Pani/Pan prawo dostępu do treści swoich danych oraz z zastrzeżeniem przepisów prawa: prawo
-          ich
-          sprostowania,
-          usunięcia, ograniczenia przetwarzania, prawo do przenoszenia danych, prawo do wniesienia sprzeciwu,
-          prawo do cofnięcia zgody
-          w dowolnym momencie;
-        </li>
-        <li>Ma Pani/Pan prawo do wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych;</li>
-        <li>Pani/Pana dane nie będą przetwarzane w sposób zautomatyzowany i nie będą poddawane profilowaniu;
-        </li>
-      </ol>
-    </div>
-
-    <div>
-      <h4>Klauzula zgody</h4>
-      <p id="clause2">Wyrażam zgodę na gromadzenie i przetwarzaniemoich danych osobowych zbieranych w trakcie
-        podpisywania
-        oświadczeniajako
-        osoby bezpośrednio nadzorującej i odpowiedzialnej za praktykanta w celach kontaktowych. Zostałem
-        poinformowany o moich
-        prawach i obowiązkach. Przyjmuję do wiadomości, iż podanie przeze mnie danych kontaktowych jest
-        dobrowolne.</p>
-    </div>
-
-    <br/>
-
+  <div id="content">
     <div>
       <div class="toSignLeft">
         <div>
           ........................................................
         </div>
         <div>
-          (data)
+          (Pięczeć zakładu pracy)
         </div>
       </div>
 
@@ -190,17 +64,146 @@
           ........................................................
         </div>
         <div>
-          (podpis opiekuna)
+          (Miejscowość, data)
+        </div>
+      </div>
+    </div>
+    <br/>
+
+    <h3>OŚWIADCZENIE</h3>
+
+    <div>
+      <div>
+        Niniejszym wyrażam zgodę na przyjęcie studenta(ki):<br/>
+        <div class="highLetters">
+          <input type="text" formControlName="studentName" placeholder="First name" required/> <input type="text"
+                                                                                                      formControlName="studentSurname"
+                                                                                                      placeholder="Last name"
+                                                                                                      required/>
+        </div>
+      </div>
+      <div>
+        w celu odbycia praktyki zawodowej w naszym zakładzie pracy. Jednocześnie oświadczam, że
+        charakter wykonywanej pracy będzie zgodny z programem praktyki i będzie obejmował
+        następujące obszary działalności:
+        <ul id="activities">
+          <li><span><textarea rows="5" cols="90" formControlName="studentDuties" required></textarea></span></li>
+        </ul>
+      </div>
+      <div>
+        Pracownikiem naszego zakładu pracy bezpośrednio nadzorującym i odpowiedzialnym za przebieg
+        praktyk będzie:
+        <div class="highLetters inline">
+          <input type="text" formControlName="carerName" placeholder="First name" required/> <input type="text"
+                                                                                                    formControlName="carerSurname"
+                                                                                                    placeholder="Last name"
+                                                                                                    required/>
+        </div>
+
+        <div class="highLetters">
+          <span>tel.: <input type="number" formControlName="carerPhone" placeholder="Phone Number" required/></span>
+          <span>e-mail:  <input type="email" formControlName="carerEmail" placeholder="Email" required/></span>
+        </div>
+      </div>
+
+      <br/>
+      <br/>
+
+      <div>
+        <div class="toSignRight">
+          <div>
+            ........................................................
+          </div>
+          <div>
+            (Dyrektor/kierownik)
+          </div>
         </div>
       </div>
     </div>
 
-  </div>
-</div>
-
-</body>
-
     <div>
-      <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
+      <br/>
+
+      <div>
+        <h4>Klauzula informacyjna</h4>
+        <ol id="clause1">
+          <li>Administratorem Pani/Pana danych osobowych jest Uniwersytet Przyrodniczo-Humanistyczny w Siedlcach z
+            siedzibą przy ul.
+            Konarskiego 2, 08-110 Siedlce;
+          </li>
+          <li>Prawidłowość przetwarzania danych osobowych nadzoruje administratora bezpieczeństwa informacji z
+            którym
+            można
+            skontaktować się za pośrednictwem adresu e-mail: iod@uph.edu.pl;
+          </li>
+          <li>Pani/Pana dane osobowe przetwarzane będą w celach kontaktowych jako z osobą bezpośrednią
+            odpowiedzialną
+            za opiekę i nadzór
+            nad powierzonymi studentamiWydziału Nauk Ścisłych Uniwersytetu Przyrodniczo-Humanistycznego w
+            Siedlcach;
+          </li>
+          <li>Podane dane będą przetwarzane na podstawie art. 6 ust. 1 ogólnego rozporządzenia o ochronie danych
+            osobowych (Dz.U. UE L119
+            z 4.05.2016 r.);
+          </li>
+          <li>Podanie danych jest dobrowolne, jednak konieczne do realizacji celów, do jakich zostały zebrane;
+          </li>
+          <li>Dane nie będą udostępniane podmiotom zewnętrznym z wyjątkiem przypadków przewidzianych przepisami
+            prawa;
+          </li>
+          <li>Dane przechowywane będą przez okres niezbędny do realizacji wyżej określonych celów;</li>
+          <li>Posiada Pani/Pan prawo dostępu do treści swoich danych oraz z zastrzeżeniem przepisów prawa: prawo
+            ich
+            sprostowania,
+            usunięcia, ograniczenia przetwarzania, prawo do przenoszenia danych, prawo do wniesienia sprzeciwu,
+            prawo do cofnięcia zgody
+            w dowolnym momencie;
+          </li>
+          <li>Ma Pani/Pan prawo do wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych;</li>
+          <li>Pani/Pana dane nie będą przetwarzane w sposób zautomatyzowany i nie będą poddawane profilowaniu;
+          </li>
+        </ol>
+      </div>
+
+      <div>
+        <h4>Klauzula zgody</h4>
+        <p id="clause2">Wyrażam zgodę na gromadzenie i przetwarzaniemoich danych osobowych zbieranych w trakcie
+          podpisywania
+          oświadczeniajako
+          osoby bezpośrednio nadzorującej i odpowiedzialnej za praktykanta w celach kontaktowych. Zostałem
+          poinformowany o moich
+          prawach i obowiązkach. Przyjmuję do wiadomości, iż podanie przeze mnie danych kontaktowych jest
+          dobrowolne.</p>
+      </div>
+
+      <br/>
+
+      <div>
+        <div class="toSignLeft">
+          <div>
+            ........................................................
+          </div>
+          <div>
+            (data)
+          </div>
+        </div>
+
+        <div class="toSignRight">
+          <div>
+            ........................................................
+          </div>
+          <div>
+            (podpis opiekuna)
+          </div>
+        </div>
+      </div>
+
     </div>
-  </form>
+  </div>
+
+  </body>
+
+  <div>
+    <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit">Wyślij</button>
+  </div>
+</form>

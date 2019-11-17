@@ -67,14 +67,15 @@
 .container input:checked ~ .checkmark:after {
   display: block;
 }
-.cross-validation .ng-valid[required], .ng-valid.required  {
+
+.cross-validation .ng-valid[required], .ng-valid.required {
   border-left: 5px solid #42A948;
 }
 
-.cross-validation .ng-invalid:not(form)  {
+.cross-validation .ng-invalid:not(form) {
   border-left: 5px solid #a94442;
 }
 
-.fontSize{
+.fontSize {
   font-size: 16px;
 }

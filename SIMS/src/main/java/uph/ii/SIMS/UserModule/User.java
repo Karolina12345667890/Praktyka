@@ -20,12 +20,12 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     @Column(nullable = false, unique = true)
     private String login;
-    
     @NotBlank
     private String password;
+    private String name;
+    private String surname;
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -56,7 +56,6 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-    
     
     @Override
     public boolean isEnabled() {

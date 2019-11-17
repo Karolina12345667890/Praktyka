@@ -3,6 +3,7 @@ package uph.ii.SIMS.DocumentModule.Dto;
 import lombok.*;
 
 /**
+ *
  * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu oswiadczenie
  */
 @Getter
@@ -17,5 +18,6 @@ public class OswiadczenieDto {
     private String opiekunN;
     private String opiekunMail;
     private String opiekunTel;
-    
+    private String comment;
+    private String status;
 }

@@ -3,21 +3,22 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
-import { AppRoutingModule } from './app-routing.module';
-import { FileUploadComponent } from './file-upload/file-upload.component';
+import {AppRoutingModule} from './app-routing.module';
+import {FileUploadComponent} from './file-upload/file-upload.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { PorozumienieComponent } from './porozumienie/porozumienie.component';
-import { LoginComponent } from './login/login.component';
-import {LoginServiceService} from "./login-service.service";
-import {AuthGuardService} from "./auth-guard.service";
-import { ZaswiadczenieComponent } from './zaswiadczenie/zaswiadczenie.component';
-import { AnkietaDlaStudentaComponent } from './ankieta-dla-studenta/ankieta-dla-studenta.component';
-import { AnkietaDlaPracodawcyComponent } from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
-import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.component';
-
+import {OswiadczenieComponent} from './oswiadczenie/oswiadczenie.component';
+import {NavbarComponent} from './navbar/navbar.component';
+import {PorozumienieComponent} from './porozumienie/porozumienie.component';
+import {LoginComponent} from './login/login.component';
+import {LoginServiceService} from './login-service.service';
+import {AuthGuardService} from './auth-guard.service';
+import {ZaswiadczenieComponent} from './zaswiadczenie/zaswiadczenie.component';
+import {AnkietaDlaStudentaComponent} from './ankieta-dla-studenta/ankieta-dla-studenta.component';
+import {AnkietaDlaPracodawcyComponent} from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
+import {DziennikPraktykComponent} from './dziennik-praktyk/dziennik-praktyk.component';
+import {OAuthModule} from 'angular-oauth2-oidc';
+import {CookieService} from 'ngx-cookie-service';
 
 
 @NgModule({
@@ -38,9 +39,10 @@ import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.co
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    OAuthModule.forRoot()
   ],
-  providers: [LoginServiceService,AuthGuardService],
+  providers: [LoginServiceService, AuthGuardService, CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -15,6 +15,7 @@ import org.springframework.data.repository.Repository;
 interface OswiadczenieRepository extends Repository<Oswiadczenie, Long> {
     
     /**
+     *
      * Zapisuje Oswiadczenie do repozytorium
      *
      * @param oswiadczenie Oswiadczenie do zapisania
@@ -23,6 +24,7 @@ interface OswiadczenieRepository extends Repository<Oswiadczenie, Long> {
     Oswiadczenie save(Oswiadczenie oswiadczenie);
     
     /**
+     *
      * Wyszukuje Oswiadczenie o podanym Id
      *
      * @param id Id Oswiadczenia

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UnsecuredController {
     
     @GetMapping
-    public String unsecuredResource() {
-        return "This is an unsecured resource";
+    public Response unsecuredResource() {
+        return new Response("This is an unsecured resource");
     }
     
 }
