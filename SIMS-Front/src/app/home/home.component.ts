@@ -17,13 +17,16 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.authService.getResource('http://localhost:8080/test123').subscribe(
-      value => {
-        this.myDocumentList = value;
-        console.log(value);
-      },
-      error => console.log(error),
-    );
+    if(this.authService.isLoggedIn()) {
+      this.authService.getResource('http://localhost:8080/test123').subscribe(
+        value => {
+          this.myDocumentList = value;
+          //  console.log(value);
+        },
+        error => console.log(error),
+      );
+    }
+
   }
 
   test123() {
@@ -38,8 +41,8 @@ export class HomeComponent implements OnInit {
 
   }
 
-  test12345() {
-    this.authService.getResource2('http://localhost:8080/api/document/oswiadczenie/1/pdf').subscribe(
+  onClick(path:string,documentType:string){
+    this.authService.getResource2('http://localhost:8080'+path+'/pdf').subscribe(
       value => {
         this.myDocumentList = value;
         console.log(value);
@@ -48,7 +51,7 @@ export class HomeComponent implements OnInit {
         console.log(objectURL);
         var link = document.createElement('a');
         link.href = objectURL;
-        link.download = 'file.pdf'; //domyslna nazwa pliku
+        link.download = documentType+'.pdf'; //domyslna nazwa pliku
         link.click();
         setTimeout(function() {
           // For Firefox it is necessary to delay revoking the ObjectURL
@@ -58,8 +61,19 @@ export class HomeComponent implements OnInit {
       error => console.log(error),
     );
   }
+  // onClick(path:string,document:string){
+  //   console.log(path+" "+ document);
+  //
+  // }
+
+  showWarning(warning:string){
+    alert( warning );
+
+  }
 
 }
+
+
 
 export class Response {
   public response: string;

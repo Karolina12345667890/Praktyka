@@ -129,6 +129,6 @@ export class LoginServiceService {
   getRoles() {
     const decodedToken = jwt_decode(this.oauthService.getAccessToken());
     const roles = decodedToken.roles;
-    console.log(roles);
+   return roles;
   }
 }

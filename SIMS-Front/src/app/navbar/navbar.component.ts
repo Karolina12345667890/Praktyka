@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit {
 
 
   loggedIn: boolean;
+  isAdmin:boolean =false;
 
 
   // wstrzykuje zależności niezbedne servisy do działania componentu
@@ -21,7 +22,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    let tmp : string = this.auth.getRoles()
+    if(tmp.includes("ROLE_ADMIN")){
+      this.isAdmin = true;
+      return;
+    }
+    this.isAdmin = false;
   }
 
   login() {

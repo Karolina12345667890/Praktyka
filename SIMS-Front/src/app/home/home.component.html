@@ -1,4 +1,5 @@
 
+
 <div class="container text-center" style="margin-top: 100px">
 <h1>Witaj na Stronie "Student Internship Management System"</h1>
   <div class="fontSize"> System wspierający zarządzanie, wypełnianie oraz przesyłanie dokumentów do praktyk</div>
@@ -8,16 +9,54 @@
 </div>
 
 
-<p>home-component works!</p>
-<button (click)="test123()"></button>
+<div *ngIf="authService.isLoggedIn()">
 
-<li>
-  <ul *ngFor="let document of myDocumentList">
+
+
+<button (click)="test123()">test123</button>
+
+  <div  *ngIf="myDocumentList.length != 0">
+<table class="table table-hover table-striped ">
+
+  <thead class="thead-dark">
+  <h1>Moje Dokumenty</h1>
+  <tr>
+    <th width="60%">
+      Dokument
+    </th>
+    <th >
+      Status
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let document of myDocumentList">
+    <td  >
      {{document.type}}
-  </ul>
-</li>
+      <button type="button" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
+    </td>
+    <td class="docs"
+        [ngStyle]="document.status == 'NEW' && {'background-color':'#2196F3'} ||
+      document.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+      document.status == 'DECLINED' && {'background-color':'#dc3545'}">
 
+      {{document.status}}
 
-<button (click)="test12345()"></button>
-<h1>{{authService.isLoggedIn()}}</h1>
+      <button type="button"  class="btn btn-warning warning" *ngIf="document.comment != ''" (click)="showWarning(document.comment)" >Uwaga!</button>
 
+<!--    <div *ngIf="document.comment != null">-->
+<!--      {{document.comment}}-->
+<!--    </div>-->
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!--<h1>{{authService.isLoggedIn()}}</h1>-->
+
+</div>
+  <div  *ngIf="myDocumentList.length === 0">
+    <h1>Brak Dokumentów</h1>
+  </div>
+
+</div>
