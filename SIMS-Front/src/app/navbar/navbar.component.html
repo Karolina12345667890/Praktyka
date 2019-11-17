@@ -56,8 +56,12 @@
       <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/sl">Lista Studentów</a></li>
     </ul>
     <ul class="nav navbar-nav float-right">
-      <li class="nav-item"><a class="nav-link" *ngIf="!loggedIn" routerLink="/login">Zaloguj</a></li>
-      <li class="nav-item"><a class="nav-link" style="cursor: pointer" *ngIf="loggedIn" (click)="logOut()">Wyloguj</a></li>
+      <li class="nav-item"><a class="nav-link" *ngIf="!loggedIn" (click)="login()" >Zaloguj</a></li>
+      <li class="nav-item"><a class="nav-link" style="cursor: pointer" *ngIf="loggedIn" (click)="logout()" href="http://localhost:4200/home">Wyloguj</a></li>
+      <div *ngIf="loggedIn">
+        <iframe name="theFrame" style="width:0;height:0;border:0; border:none; position: absolute;"></iframe>
+      </div>
     </ul>
   </div>
 </nav>
+

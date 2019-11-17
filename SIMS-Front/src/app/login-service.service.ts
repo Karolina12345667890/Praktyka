@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import {OAuthService} from 'angular-oauth2-oidc';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class LoginServiceService {
   private isLogged = new Subject<boolean>();
   private readonly notifier: NotifierService;
 
-  constructor(private router: Router, private oauthService: OAuthService, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private router: Router, private oauthService: OAuthService, private http: HttpClient, private cookieService: CookieService,private notifierService: NotifierService) {
     this.oauthService.configure({
       loginUrl: 'http://localhost:8080/oauth/authorize',
       logoutUrl: 'http://localhost:8080/logout',
@@ -72,12 +73,15 @@ export class LoginServiceService {
   isLoggedIn() {
     // console.log(this.oauthService.getAccessToken());
     if (this.oauthService.getAccessToken() === null) {
+      this.isLogged.next(false);
       return false;
     }
+    this.isLogged.next(true);
     return true;
   }
 
   logout() {
+    this.isLoggedIn();
     this.oauthService.logOut();
     window.open('http://localhost:8080/logout','theFrame', 'width=400,height=400,scrollbars=no').close();
       // .addEventListener('change', function() { window.close(); } , false);
@@ -86,17 +90,18 @@ export class LoginServiceService {
     //   location.reload();
     // });
 
+
   }
 
   // prosta metoda do logowania przyjmująca 2 string login i password
-  login(login: string, password: string) {
+ // login(login: string, password: string) {
     // tymczasowa opcja sprawdzająca czy dane logowania są poprawne
-    if (login == 'admin' && password == 'admin') {
-      this.isLogged.next(true);
-      this.router.navigateByUrl('/home');
+    //if (login == 'admin' && password == 'admin') {
+ //     this.isLogged.next(true);
+    //  this.router.navigateByUrl('/home');
 
-    }
-  }
+  //  }
+ // }
 
   // //metoda powodująca wyglogowanie użytkownika i zabranie u dostępu do niektórych stron
   // logout() {
@@ -119,5 +124,11 @@ export class LoginServiceService {
 
     return this.http.get(resourceUrl, {headers: newHeaders, responseType: 'blob'});
     // return this.http.get(resourceUrl);
+  }
+
+  getRoles() {
+    const decodedToken = jwt_decode(this.oauthService.getAccessToken());
+    const roles = decodedToken.roles;
+    console.log(roles);
   }
 }

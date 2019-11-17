@@ -15,11 +15,11 @@ export class LoginComponent implements OnInit {
 
   // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private auth: LoginServiceService, private fb: FormBuilder, private guard: AuthGuardService) {
-    // tworzy wypełniony loginform w celu łatwiejszego testowania
-    this.loginForm = this.fb.group({
-      login: new FormControl('admin', [Validators.required,]),
-      password: new FormControl('admin', [Validators.required,]),
-    });
+    // // tworzy wypełniony loginform w celu łatwiejszego testowania
+    // this.loginForm = this.fb.group({
+    //   login: new FormControl('admin', [Validators.required,]),
+    //   password: new FormControl('admin', [Validators.required,]),
+    // });
   }
 
   public isLoggedIn = false;

@@ -83,7 +83,7 @@ const customNotifierOptions: NotifierOptions = {
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    OAuthModule.forRoot()
+    OAuthModule.forRoot(),
     HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
   ],

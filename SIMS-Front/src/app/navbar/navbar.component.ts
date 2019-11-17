@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
+import {FormBuilder} from "@angular/forms";
+import {AuthGuardService} from "../auth-guard.service";
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   loggedIn: boolean;
 
+
   // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private auth: LoginServiceService) {
     //nasłuchuje status zalogowania do zmiennej loggedIn
@@ -18,10 +21,14 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
+  login() {
+    this.auth.obtainAccessToken();
+  }
   // uruchamia metode logout z LoginServiceService
-  logOut() {
+  logout() {
     this.auth.logout();
   }
 }
