@@ -3,4 +3,5 @@ export interface DocumentDto {
   status: string;
   link: string;
   type: string;
+  groupId: number;
 }

@@ -1,0 +1,42 @@
+<h1 mat-dialog-title class="text-center" >Dodaj/Edytuj Grupe</h1>
+<hr>
+<div mat-dialog-content>
+
+  <div [formGroup]="data" >
+    <div class="input-group ">
+  <div class="input-group-prepend">
+  <label  style="width: 120px;" class="input-group-text ">   Nazwa Grupy:</label>
+  </div>
+<input formControlName="groupName" class="form-control">
+    </div>
+    <div class="input-group ">
+  <div class="input-group-prepend">
+    <label  style="width: 120px;" class="input-group-text ">   Data startu:</label>
+  </div>
+  <input formControlName="startDate" type="date" class="form-control">
+    </div>
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text "> Czas trwania:</label>
+      </div>
+      <input formControlName="durationInWeeks" type="number" class="form-control">
+    </div>
+<br>
+    <label class="container">
+      <input type="radio" name="isOpen" [value]="false" formControlName="isOpen"> Zamknięta
+      <span class="checkmark"></span>
+    </label>
+    <label class="container">
+      <input type="radio" name="isOpen" [value]="true" formControlName="isOpen"> Otwarta
+      <span class="checkmark"></span>
+    </label>
+
+
+
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-danger" (click)="onNoClick()">Anuluj</button>
+  <button class="btn btn-success" [disabled]="data.invalid" [mat-dialog-close]="data" style=" margin-left: 200px" >Wstaw</button>
+
+</div>

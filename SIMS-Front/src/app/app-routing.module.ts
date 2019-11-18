@@ -12,6 +12,7 @@ import {AnkietaDlaStudentaComponent} from "./ankieta-dla-studenta/ankieta-dla-st
 import {AnkietaDlaPracodawcyComponent} from "./ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component";
 import {DziennikPraktykComponent} from "./dziennik-praktyk/dziennik-praktyk.component";
 import {StudentListComponent} from "./student-list/student-list.component";
+import {GroupListComponent} from "./group-list/group-list.component";
 
 
 //tabele rutingu
@@ -58,6 +59,11 @@ const appRoutes: Routes = [
   {
     path: 'sl',
     component: StudentListComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'gl',
+    component: GroupListComponent,
     canActivate: [AuthGuardService]
   },
   {

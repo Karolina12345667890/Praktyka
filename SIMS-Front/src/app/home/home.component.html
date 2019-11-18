@@ -33,16 +33,34 @@
   <tr *ngFor="let document of myDocumentList">
     <td  >
      {{document.type}}
-      <button type="button" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
+      <div *ngIf="document.status != null">
+        <button type="button" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
+      </div>
     </td>
     <td class="docs"
         [ngStyle]="document.status == 'NEW' && {'background-color':'#2196F3'} ||
       document.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
       document.status == 'DECLINED' && {'background-color':'#dc3545'}">
 
-      {{document.status}}
+      <ng-container *ngIf="document.status === null;else NEW">
+        Brak
+      </ng-container>
+      <ng-template #NEW>
+        <ng-container *ngIf="document.status === 'NEW';else ACCEPTED">
+          Nie Sprawdzony
+        </ng-container>
+      </ng-template>
+      <ng-template #ACCEPTED>
+        <ng-container *ngIf="document.status === 'ACCEPTED';else DECLINED">
+          Zaakceptowany
+        </ng-container>
+      </ng-template>
+        <ng-template #DECLINED>
+          Odrzucony
+        </ng-template>
 
-      <button type="button"  class="btn btn-warning warning" *ngIf="document.comment != ''" (click)="showWarning(document.comment)" >Uwaga!</button>
+
+      <button type="button"  class="btn btn-warning warning" *ngIf="document.comment != ''" (click)="showWarning(document.comment)" style="margin-left: 50%" >Uwaga!</button>
 
 <!--    <div *ngIf="document.comment != null">-->
 <!--      {{document.comment}}-->
@@ -60,3 +78,5 @@
   </div>
 
 </div>
+
+

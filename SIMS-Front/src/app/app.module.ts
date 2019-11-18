@@ -21,6 +21,9 @@ import { StudentListComponent } from './student-list/student-list.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {CookieService} from 'ngx-cookie-service';
+import { AddAndEditGroupDialog, GroupListComponent} from './group-list/group-list.component';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -77,6 +80,8 @@ const customNotifierOptions: NotifierOptions = {
     AnkietaDlaPracodawcyComponent,
     DziennikPraktykComponent,
     StudentListComponent,
+    GroupListComponent,
+    AddAndEditGroupDialog,
   ],
   imports: [
     BrowserModule,
@@ -86,7 +91,10 @@ const customNotifierOptions: NotifierOptions = {
     OAuthModule.forRoot(),
     HttpClientModule,
     NotifierModule.withConfig(customNotifierOptions),
+    MatDialogModule,
+    BrowserAnimationsModule,
   ],
+  entryComponents: [ GroupListComponent, AddAndEditGroupDialog, ],
   providers: [LoginServiceService, AuthGuardService, CookieService],
   bootstrap: [AppComponent]
 })

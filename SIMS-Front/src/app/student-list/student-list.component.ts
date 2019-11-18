@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NotifierService } from 'angular-notifier';
+import {ActivatedRoute} from "@angular/router";
+import {LoginServiceService} from "../login-service.service";
 
 @Component({
   selector: 'app-student-list',
@@ -13,12 +15,13 @@ export class StudentListComponent implements OnInit {
   studentList: FormArray;
   private readonly notifier: NotifierService;
 
-  constructor(private fb: FormBuilder, notifierService: NotifierService ) {
+  constructor(private fb: FormBuilder, notifierService: NotifierService,private router: ActivatedRoute,private authService: LoginServiceService ) {
 
     this.notifier = notifierService;
     this.studentList= this.fb.array([]);
+
     this.fill();
-    console.log(this.studentList)
+    //console.log(this.studentList)
   }
 
 
@@ -119,6 +122,20 @@ export class StudentListComponent implements OnInit {
   }
 
   ngOnInit() {
+    let groupId :number;
+    this.router.queryParams.subscribe( v =>
+      groupId = v.groupId
+    );
+
+    this.authService.getResource('http://localhost:8080/api/group/'+groupId).subscribe(
+      value => {
+        console.log(value);
+
+      },
+      error => console.log(error),
+    );
+
+
   }
 
 
