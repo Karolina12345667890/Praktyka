@@ -25,12 +25,12 @@ public class GroupController {
         return userFacade.getGroupById(id);
     }
     
-    @PostMapping("/api/group/{id}")
-    public void modifyGroup(@PathVariable Long id, @RequestBody GroupModifyDto dto){
-        userFacade.persistGroup(dto);
-    }
+//    @PostMapping("/api/group/{id}")
+//    public void modifyGroup(@PathVariable Long id, @RequestBody GroupModifyDto dto){
+//        userFacade.persistGroup(dto);
+//    }
     
-    @PostMapping("/api/group")
+    @PostMapping("/api/groups")
     public void modifyGroup(@RequestBody GroupModifyDto dto){
         userFacade.persistGroup(dto);
     }

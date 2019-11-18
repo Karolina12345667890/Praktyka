@@ -54,10 +54,11 @@ export class LoginServiceService {
   }
 
   postResource(resourceUrl: string, body: any, httpHeader = new HttpHeaders()): Observable<any> {
+    console.log('1234');
     const newHeaders = httpHeader
-      .append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8')
+      .append('Content-type', 'application/json')
+      .append('Accept', 'application/json')
       .append('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
-
     return this.http.post(resourceUrl, body, {headers: newHeaders});
   }
 
