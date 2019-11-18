@@ -5,29 +5,31 @@ import {GroupDto} from '../models/GroupDto';
 import {isUndefined} from 'util';
 import {Router} from '@angular/router';
 import {LoginServiceService} from '../login-service.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-group-list',
   templateUrl: './group-list.component.html',
-  styleUrls: ['./group-list.component.css']
+  styleUrls: ['./group-list.component.css'],
+  providers: [DatePipe]
 })
 export class GroupListComponent implements OnInit {
 
-  //groupListForm: FormGroup;
-  // groupList: FormArray;
+
   private groupList = new Array<GroupDto>();
 
-  constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, private authService: LoginServiceService) {
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, private authService: LoginServiceService, private datePipe: DatePipe) {
 
   }
 
   ngOnInit() {
-    //this.groupList= this.fb.array([]);
-    //zadmiast fill pobranie z servera
+
     this.authService.getResource('http://localhost:8080/api/groups').subscribe(
       value => {
         this.groupList = value;
-
+        this.groupList.forEach( v => {
+          v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd').toString();
+        })
       },
       error => console.log(error),
     );
@@ -57,8 +59,12 @@ export class GroupListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
       if (!isUndefined(result)) {
-        this.authService.postResource('http://localhost:8080/api/groups', result.value);
-        console.log(result.value);
+        let body = result.value;
+        this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
+          value => console.log(value),
+          error => console.log(error)
+        );
+        location.reload();
       }
     });
   }
@@ -82,7 +88,7 @@ export class GroupListComponent implements OnInit {
           value => console.log(value),
           error => console.log(error)
         );
-
+        location.reload();
       }
     });
   }

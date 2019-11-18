@@ -5,6 +5,6 @@ export interface StudentDto {
   name: string;
   surname: string;
   email: string;
-  albumNumber:number;
+  album: number;
   documents: DocumentDto [];
 }
