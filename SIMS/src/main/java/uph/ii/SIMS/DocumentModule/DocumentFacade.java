@@ -111,6 +111,10 @@ public class DocumentFacade {
         oswiadczenieFacade.save(oswiadczenieDto);
     }
     
+    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) throws Exception {
+        oswiadczenieFacade.save(oswiadczenieDto, studentId, groupId);
+    }
+    
     /**
      * Zwraca Dto porozumienia o podanym id, wywołuje {@link PorozumienieFacade#find(Long)}
      *
@@ -132,15 +136,28 @@ public class DocumentFacade {
         porozumienieFacade.save(porozumienieDto);
     }
     
+    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId) throws Exception {
+        porozumienieFacade.save(porozumienieDto, studentId, groupId);
+    }
+    
     public List<DocumentDto> listMyDocuments() {
         UserDto currentUser = userFacade.getCurrentUser();
         return documentRepository.getAllByOwnerId(currentUser.getId()).stream()
-            .map(document ->
-                new DocumentDto(
-                    document.getComment(),
-                    document.getStatus(),
-                    document.getUrl(),
-                    document.getType().toUpperCase()))
+            .map(Document::dto)
             .collect(Collectors.toList());
     }
+    
+    public List<DocumentDto> listStudentsDocuments(Long id) {
+        return documentRepository.getAllByOwnerId(id).stream()
+            .map(Document::dto)
+            .collect(Collectors.toList());
+    }
+    
+    public List<DocumentDto> listGroupDocuments(Long id) {
+        return documentRepository.getAllByGroupId(id).stream()
+            .map(Document::dto)
+            .collect(Collectors.toList());
+    }
+    
+    
 }

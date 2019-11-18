@@ -1,6 +1,7 @@
 package uph.ii.SIMS.DocumentModule;
 
 import lombok.*;
+import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
 
 import javax.persistence.*;
 
@@ -22,7 +23,9 @@ abstract public class Document {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
     protected Long ownerId;
+    protected Long groupId;
     protected String comment;
+    
     
     protected Document(Long owner) {
         this.ownerId = owner;
@@ -34,5 +37,9 @@ abstract public class Document {
     
     public String getUrl() {
         return URL + getType() + "/" + id;
+    }
+    
+    public DocumentDto dto(){
+        return new DocumentDto(getComment(), getStatus(), getUrl(), getType(), getGroupId(), getOwnerId());
     }
 }

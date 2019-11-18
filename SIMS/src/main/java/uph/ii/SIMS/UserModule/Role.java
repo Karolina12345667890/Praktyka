@@ -7,11 +7,12 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name = "roles")
 @NoArgsConstructor
 public class Role implements GrantedAuthority {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     public Role(String name) {

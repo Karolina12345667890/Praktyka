@@ -1,5 +1,6 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,6 +12,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode
+@AllArgsConstructor
 public class PorozumienieDto {
     private Long id;
     private String comment;

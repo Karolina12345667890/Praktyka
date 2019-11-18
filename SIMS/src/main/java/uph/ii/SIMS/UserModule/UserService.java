@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,27 +26,38 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
     
-    public void createNewUser(String username, String password, List<Role> roles) {
+    public User createNewUser(UserDto userDto, String username, String password, List<Role> roles) {
         System.out.println(username);
         System.out.println(password);
         User user = new User();
         user.setLogin(username);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(roles);
+        user.setName(userDto.getName());
+        user.setSurname(userDto.getSurname());
+        user.setEmail(userDto.getEmail());
+        user.setAlbum(userDto.getAlbum());
         
         System.out.println(user + " created!");
         
         userRepository.save(user);
+        return user;
     }
     
-    public void createNewUser(String username, String password) {
-        createNewUser(username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
+    public User createNewUser(UserDto userDto, String username, String password) {
+       return createNewUser(userDto, username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
     }
+    
+    
     
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByLogin(username).orElseThrow(() -> new UsernameNotFoundException("invalid username or password"));
+    }
+    
+    public User loadUserById(Long id) {
+        return userRepository.getOne(id);
     }
     
     public UserDetails loadCurrentUser() {

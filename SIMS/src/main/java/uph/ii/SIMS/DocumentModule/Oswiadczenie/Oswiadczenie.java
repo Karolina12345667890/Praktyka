@@ -41,7 +41,7 @@ class Oswiadczenie extends Document {
      *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie oswiadczenia, na którym wołana jest metoda
      */
-    OswiadczenieDto dto() {
+    OswiadczenieDto oswiadczenieDto() {
         return OswiadczenieDto.builder()
             .id(this.id)
             .opiekunI(this.opiekunI)

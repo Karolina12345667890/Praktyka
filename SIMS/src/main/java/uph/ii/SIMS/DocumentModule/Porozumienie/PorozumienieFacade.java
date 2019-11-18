@@ -2,8 +2,6 @@ package uph.ii.SIMS.DocumentModule.Porozumienie;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 import uph.ii.SIMS.UserModule.UserFacade;
 
@@ -34,13 +32,18 @@ public class PorozumienieFacade {
     //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
     public void save(PorozumienieDto porozumienieDto) throws Exception {
         Long ownerId = userFacade.getCurrentUser().getId();
-    
+        save(porozumienieDto, ownerId, 1L);
+    }
+    public void save(PorozumienieDto porozumienieDto, Long studentId, Long groupId) throws Exception {
         Porozumienie porozumienie = new Porozumienie(
-            ownerId
+            studentId
         );
         porozumienie.setComment(porozumienieDto.getComment());
+        porozumienie.setGroupId(groupId);
         porozumienieRepository.save(porozumienie);
     }
+    
+    
     
     /**
      *
@@ -50,6 +53,6 @@ public class PorozumienieFacade {
      * @return DTO z danymi porozumienia o podanym id
      */
     public PorozumienieDto find(Long id) {
-        return porozumienieRepository.findById(id).dto();
+        return porozumienieRepository.findById(id).porozumienieDto();
     }
 }

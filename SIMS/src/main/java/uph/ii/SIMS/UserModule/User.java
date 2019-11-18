@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uph.ii.SIMS.UserModule.Dto.UserDto;
+import uph.ii.SIMS.UserModule.Dto.UserWithDocumentsDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,6 +28,8 @@ public class User implements UserDetails {
     private String password;
     private String name;
     private String surname;
+    private String email;
+    private String album;
     
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -35,6 +39,15 @@ public class User implements UserDetails {
         inverseJoinColumns = @JoinColumn(
             name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+    
+    @ManyToMany
+    @JoinTable(
+        name = "users_groups",
+        joinColumns = @JoinColumn(
+            name = "user_id", referencedColumnName = "id"),
+        inverseJoinColumns = @JoinColumn(
+            name = "group_id", referencedColumnName = "id"))
+    private Collection<Group> groups = new ArrayList<>();
     
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -70,4 +83,15 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+    
+    UserDto dto() {
+        return UserDto.builder()
+            .name(getName())
+            .surname(getSurname())
+            .email(getUsername())
+            .id(getId())
+            .album(getAlbum())
+            .build();
+    }
+    
 }

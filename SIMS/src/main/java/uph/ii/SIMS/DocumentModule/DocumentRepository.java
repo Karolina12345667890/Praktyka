@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DocumentRepository extends Repository<Document, Long> {
     List<Document> getAllByOwnerId(Long ownerId);
+    List<Document> getAllByGroupId(Long groupId);
 }

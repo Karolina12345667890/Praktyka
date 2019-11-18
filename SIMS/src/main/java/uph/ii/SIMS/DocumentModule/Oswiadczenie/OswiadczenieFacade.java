@@ -34,14 +34,18 @@ public class OswiadczenieFacade {
     //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
     public void save(OswiadczenieDto dto) throws Exception {
         Long ownerId = userFacade.getCurrentUser().getId();
-        
+        save(dto, ownerId, 1L);
+    }
+    
+    public void save(OswiadczenieDto dto, Long studentId, Long groupId) throws Exception {
         Oswiadczenie oswiadczenie = new Oswiadczenie(
-            ownerId,
+            studentId,
             dto.getOpiekunI(),
             dto.getOpiekunN(),
             dto.getOpiekunMail(),
             dto.getOpiekunTel());
         oswiadczenie.setComment(dto.getComment());
+        oswiadczenie.setGroupId(groupId);
         
         oswiadczenieRepository.save(oswiadczenie);
     }
@@ -54,7 +58,7 @@ public class OswiadczenieFacade {
      * @return DTO z danymi oświadczenia o podanym id
      */
     public OswiadczenieDto find(Long id) {
-        return oswiadczenieRepository.findById(id).dto();
+        return oswiadczenieRepository.findById(id).oswiadczenieDto();
     }
     
     /**
@@ -70,6 +74,13 @@ public class OswiadczenieFacade {
         PageRequest pageRequest = PageRequest.of(0, 10);
         
         return oswiadczenieRepository.findAllByOwnerId(ownerId, pageRequest)
-            .map(Oswiadczenie::dto);
+            .map(Oswiadczenie::oswiadczenieDto);
+    }
+    
+    public Page<OswiadczenieDto> findUsersDocuments(Long ownerId) throws Exception {
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        
+        return oswiadczenieRepository.findAllByOwnerId(ownerId, pageRequest)
+            .map(Oswiadczenie::oswiadczenieDto);
     }
 }

@@ -34,7 +34,7 @@ class Porozumienie extends Document {
      *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie porozumienia, na którym wołana jest metoda
      */
-    PorozumienieDto dto() {
+    PorozumienieDto porozumienieDto() {
         return PorozumienieDto.builder()
             .id(id)
             .build();

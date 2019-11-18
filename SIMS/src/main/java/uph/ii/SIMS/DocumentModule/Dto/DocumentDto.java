@@ -12,4 +12,6 @@ public class DocumentDto {
     private String status;
     private String link;
     private String type;
+    private Long groupId;
+    private Long ownerId;
 }
