@@ -45,7 +45,7 @@ public class GroupService {
                 group.getDurationInWeeks(),
                 group.getIsOpen(),
                 group.getDateStart(),
-                "api/group/" + group.getId()
+                "/api/group/" + group.getId()
             ));
         
         if(userService.currentUserIsStudent()){
@@ -127,7 +127,7 @@ public class GroupService {
                     usersApplying.get(e.getStudentId()).getSurname(),
                     usersApplying.get(e.getStudentId()).getAlbum(),
                     e.getId(),
-                    "api/group/" + e.getGroupId() + "/applications/" + e.getId(),
+                    "/api/group/" + e.getGroupId() + "/applications/" + e.getId(),
                     e.getDate()))
             .collect(Collectors.toList());
     }
