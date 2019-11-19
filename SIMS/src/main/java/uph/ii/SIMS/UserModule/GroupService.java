@@ -48,7 +48,7 @@ public class GroupService {
                 "/api/group/" + group.getId()
             ));
         
-        if(userService.currentUserIsStudent()){
+        if (userService.currentUserIsStudent()) {
             groupDtoStream = groupDtoStream.filter(groupDto -> groupDto.getIsOpen());
         }
         
@@ -82,7 +82,7 @@ public class GroupService {
     }
     
     
-    public void addUserToGroup(Long groupId, Long studentId)  {
+    public void addUserToGroup(Long groupId, Long studentId) {
         User user = userService.loadUserById(studentId);
         Group group = groupRepository.getOne(groupId);
         Collection<Group> groups = user.getGroups();
@@ -118,7 +118,7 @@ public class GroupService {
             .collect(Collectors.toMap(
                 user -> user.getId(),
                 user -> user));
-    
+        
         return applicationsByGroupId
             .stream()
             .map(e ->
@@ -133,11 +133,16 @@ public class GroupService {
     }
     
     public void addGroupApplication(Long studentId, Long groupId) {
-        boolean alreadyPresent = groupApplicationRepository.getByStudentIdAndGroupId(studentId, groupId).isPresent();
-        if(alreadyPresent){
-            throw new GroupApplicationDuplicationException("Exception");
+        boolean applicationAlreadyPresent = groupApplicationRepository.getByStudentIdAndGroupId(studentId, groupId).isPresent();
+        boolean studentAlreadyPresentInTheGroup = groupRepository.findById(groupId)
+            .get()
+            .getUsers()
+            .stream()
+            .anyMatch(s -> s.getId().equals(studentId));
+        if (applicationAlreadyPresent || studentAlreadyPresentInTheGroup) {
+            throw new GroupApplicationDuplicationException("Can't have multiples of the same student in a group");
         }
-    
+        
         GroupApplication groupApplication = new GroupApplication(null, groupId, studentId, new Date());
         groupApplicationRepository.save(groupApplication);
     }
@@ -145,7 +150,7 @@ public class GroupService {
     public void acceptGroupApplication(Long groupApplicationId) {
         Optional<GroupApplication> groupApplication = groupApplicationRepository.findById(groupApplicationId);
         groupApplication.ifPresent(
-            app ->  {
+            app -> {
                 addUserToGroup(app.getGroupId(), app.getStudentId());
                 groupApplicationRepository.delete(app);
             }
