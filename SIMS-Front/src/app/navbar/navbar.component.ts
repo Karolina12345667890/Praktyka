@@ -22,12 +22,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    let tmp : string = this.auth.getRoles()
-    if(tmp.includes("ROLE_ADMIN")){
-      this.isAdmin = true;
-      return;
-    }
-    this.isAdmin = false;
+    this.isAdmin = this.auth.isAdmin();
   }
 
   login() {

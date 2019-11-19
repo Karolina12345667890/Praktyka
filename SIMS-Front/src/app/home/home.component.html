@@ -9,8 +9,9 @@
 </div>
 
 
-<div *ngIf="authService.isLoggedIn()">
 
+<div *ngIf="authService.isLoggedIn()">
+<hr>
 
 
 <button (click)="test123()">test123</button>
@@ -72,8 +73,8 @@
 
 <!--<h1>{{authService.isLoggedIn()}}</h1>-->
 
-</div>
-  <div  *ngIf="myDocumentList.length === 0">
+</div >
+  <div  style="margin-left: 10%" *ngIf="myDocumentList.length === 0">
     <h1>Brak Dokumentów</h1>
   </div>
 

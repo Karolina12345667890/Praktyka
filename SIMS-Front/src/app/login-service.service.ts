@@ -79,6 +79,9 @@ export class LoginServiceService {
     }
     this.isLogged.next(true);
     return true;
+
+
+
   }
 
   logout() {
@@ -131,5 +134,13 @@ export class LoginServiceService {
     const decodedToken = jwt_decode(this.oauthService.getAccessToken());
     const roles = decodedToken.roles;
    return roles;
+  }
+
+  isAdmin(){
+    let tmp : string = this.getRoles();
+    if(tmp.includes("ROLE_ADMIN"))
+     return true;
+    else
+     return false;
   }
 }

@@ -17,12 +17,14 @@ export class GroupListComponent implements OnInit {
 
 
   private groupList = new Array<GroupDto>();
-
+  isAdmin:boolean = false;
   constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, private authService: LoginServiceService, private datePipe: DatePipe) {
 
   }
 
   ngOnInit() {
+
+
 
     this.authService.getResource('http://localhost:8080/api/groups').subscribe(
       value => {
@@ -34,63 +36,75 @@ export class GroupListComponent implements OnInit {
       error => console.log(error),
     );
 
+    this.isAdmin = this.authService.isAdmin();
 
   }
 
 
   openStudentList(id: number) {
     //  this.router.navigate(['/sl', {group : id}])
+    if(this.isAdmin)
     this.router.navigate(['/sl'], {queryParams: {groupId: id}});
   }
 
+
+  joinGroup(id:number){
+    console.log(id);
+  }
+
+
   openEditDialog(item: GroupDto) {
-    const dialogRef = this.dialog.open(AddAndEditGroupDialog, {
-      width: '400px',
-      data: this.fb.group({
-        id: item.id,
-        groupName: new FormControl(item.groupName, [Validators.required,]),
-        startDate: new FormControl(item.startDate, [Validators.required,]),
-        durationInWeeks: new FormControl(item.durationInWeeks, [Validators.required,]),
-        isOpen: item.isOpen,
-      })
-    });
+    if(this.isAdmin) {
+      const dialogRef = this.dialog.open(AddAndEditGroupDialog, {
+        width: '400px',
+        data: this.fb.group({
+          id: item.id,
+          groupName: new FormControl(item.groupName, [Validators.required,]),
+          startDate: new FormControl(item.startDate, [Validators.required,]),
+          durationInWeeks: new FormControl(item.durationInWeeks, [Validators.required,]),
+          isOpen: item.isOpen,
+        })
+      });
 
 
-    dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(result => {
 
-      if (!isUndefined(result)) {
-        let body = result.value;
-        this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
-          value => console.log(value),
-          error => console.log(error)
-        );
-        location.reload();
-      }
-    });
+        if (!isUndefined(result)) {
+          let body = result.value;
+          this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
+            value => console.log(value),
+            error => console.log(error)
+          );
+          location.reload();
+        }
+      });
+    }
   }
 
   openAddDialog() {
-    const dialogRef = this.dialog.open(AddAndEditGroupDialog, {
-      width: '400px',
-      data: this.fb.group({
-        id: null,
-        groupName: new FormControl('', [Validators.required,]),
-        startDate: new FormControl('', [Validators.required,]),
-        durationInWeeks: new FormControl('', [Validators.required,]),
-        isOpen: false,
-      })
-    });
+    if (this.isAdmin) {
+      const dialogRef = this.dialog.open(AddAndEditGroupDialog, {
+        width: '400px',
+        data: this.fb.group({
+          id: null,
+          groupName: new FormControl('', [Validators.required,]),
+          startDate: new FormControl('', [Validators.required,]),
+          durationInWeeks: new FormControl('', [Validators.required,]),
+          isOpen: false,
+        })
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (!isUndefined(result)) {
-        let body = result.value;
-        this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
-          value => console.log(value),
-          error => console.log(error)
-        );
-        location.reload();
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (!isUndefined(result)) {
+          let body = result.value;
+          this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
+            value => console.log(value),
+            error => console.log(error)
+          );
+          location.reload();
+        }
+      });
+    }
   }
 }
 

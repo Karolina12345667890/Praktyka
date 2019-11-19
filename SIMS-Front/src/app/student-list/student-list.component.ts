@@ -16,6 +16,7 @@ export class StudentListComponent implements OnInit {
   group: GroupDto;
   studentList = new Array<StudentDto>()
   private readonly notifier: NotifierService;
+  isAdmin:boolean = false;
 
   constructor(private fb: FormBuilder, notifierService: NotifierService,private router: ActivatedRoute,private authService: LoginServiceService ) {
 
@@ -131,21 +132,24 @@ export class StudentListComponent implements OnInit {
   }
 
   ngOnInit() {
-    let groupId :number;
-    this.router.queryParams.subscribe( v =>
-      groupId = v.groupId
-    );
+    this.isAdmin = this.authService.isAdmin();
 
-    this.authService.getResource('http://localhost:8080/api/group/'+groupId).subscribe(
-      value => {
-        this.studentList=value.students;
-        this.group = value;
+    if(this.isAdmin) {
+      let groupId: number;
+      this.router.queryParams.subscribe(v =>
+        groupId = v.groupId
+      );
+
+      this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
+        value => {
+          this.studentList = value.students;
+          this.group = value;
 
 
-      },
-      error => console.log(error),
-    );
-
+        },
+        error => console.log(error),
+      );
+    }
 
   }
 
