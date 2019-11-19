@@ -5,7 +5,7 @@ import {GroupDto} from '../models/GroupDto';
 import {isUndefined} from 'util';
 import {Router} from '@angular/router';
 import {LoginServiceService} from '../login-service.service';
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-group-list',
@@ -29,9 +29,9 @@ export class GroupListComponent implements OnInit {
     this.authService.getResource('http://localhost:8080/api/groups').subscribe(
       value => {
         this.groupList = value;
-        this.groupList.forEach( v => {
+        this.groupList.forEach(v => {
           v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd').toString();
-        })
+        });
       },
       error => console.log(error),
     );

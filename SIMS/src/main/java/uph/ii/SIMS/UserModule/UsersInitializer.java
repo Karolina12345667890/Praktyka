@@ -22,6 +22,8 @@ public class UsersInitializer {
     GroupRepository groupRepository;
     @Autowired
     GroupService groupService;
+    @Autowired
+    GroupApplicationRepository groupApplicationRepository;
     
     @Bean
     @Transactional
@@ -46,6 +48,13 @@ public class UsersInitializer {
             "user2", "user");
         User user3 = userService.createNewUser(new UserDto(null, "12345", "Danuta", "Dddd", "test4@gmai.com"),
             "user3", "user");
+        User user4 = userService.createNewUser(new UserDto(null, "536563", "eeeee", "eeee", "teffst5@gmai.com"),
+            "user4", "user");
+        User user5 = userService.createNewUser(new UserDto(null, "123213", "fffff", "fffff", "test455@gmai.com"),
+            "user5", "user");
+    
+        groupService.addGroupApplication(user4.getId(), group.getId());
+        groupService.addGroupApplication(user5.getId(), group.getId());
         
         groupService.addUserToGroup(group.getId(), user1.getId());
         groupService.addUserToGroup(group.getId(), user2.getId());

@@ -34,7 +34,7 @@ public class PorozumienieFacade {
         Long ownerId = userFacade.getCurrentUser().getId();
         save(porozumienieDto, ownerId, 1L);
     }
-    public void save(PorozumienieDto porozumienieDto, Long studentId, Long groupId) throws Exception {
+    public void save(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {
         Porozumienie porozumienie = new Porozumienie(
             studentId
         );

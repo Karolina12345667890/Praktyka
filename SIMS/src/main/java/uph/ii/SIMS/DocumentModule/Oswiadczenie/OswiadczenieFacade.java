@@ -37,7 +37,7 @@ public class OswiadczenieFacade {
         save(dto, ownerId, 1L);
     }
     
-    public void save(OswiadczenieDto dto, Long studentId, Long groupId) throws Exception {
+    public void save(OswiadczenieDto dto, Long studentId, Long groupId) {
         Oswiadczenie oswiadczenie = new Oswiadczenie(
             studentId,
             dto.getOpiekunI(),

@@ -111,7 +111,7 @@ public class DocumentFacade {
         oswiadczenieFacade.save(oswiadczenieDto);
     }
     
-    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) throws Exception {
+    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
         oswiadczenieFacade.save(oswiadczenieDto, studentId, groupId);
     }
     
@@ -136,7 +136,7 @@ public class DocumentFacade {
         porozumienieFacade.save(porozumienieDto);
     }
     
-    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId) throws Exception {
+    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {
         porozumienieFacade.save(porozumienieDto, studentId, groupId);
     }
     

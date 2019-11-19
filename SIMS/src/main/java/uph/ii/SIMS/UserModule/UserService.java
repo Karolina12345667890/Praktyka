@@ -1,6 +1,7 @@
 package uph.ii.SIMS.UserModule;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,6 +65,35 @@ public class UserService implements UserDetailsService {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User currentUser = userRepository.findUserByLogin(principal).orElseThrow(() -> new RuntimeException());
         return loadUserByUsername(currentUser.getUsername());
+    }
+    
+    public boolean currentUserIsAdmin(){
+        UserDetails userDetails = loadCurrentUser();
+        boolean isAdmin = false;
+        for(GrantedAuthority role: userDetails.getAuthorities()){
+            if ("ROLE_ADMIN".equals(role.getAuthority())) {
+                isAdmin = true;
+            }
+        }
+        return isAdmin;
+    }
+    public boolean currentUserIsStudent(){
+        UserDetails userDetails = loadCurrentUser();
+        boolean isAdmin = false;
+        boolean isUser = false;
+        for(GrantedAuthority role: userDetails.getAuthorities()){
+            switch (role.getAuthority()){
+                case "ROLE_ADMIN": isAdmin = true;
+                break;
+                case "ROLE_USER": isUser = true;
+                break;
+            }
+        }
+        return isUser && !isAdmin;
+    }
+    
+    public List<User> listUsersWithIdInList(List<Long> ids){
+        return userRepository.findAllByIdIn(ids);
     }
 
 
