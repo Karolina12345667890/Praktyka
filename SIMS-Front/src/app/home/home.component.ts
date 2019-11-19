@@ -37,18 +37,10 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  test1234() {
-    this.authService.postResource('http://localhost:8080/api/group/1/applications/new', {}).subscribe(
-      value => console.log(value),
-      error => alert(error.error)
-    );
-  }
+
 
   test12345() {
-    this.authService.postResource('http://localhost:8080/api/group/1/applications/3', {}).subscribe(
-      value => console.log(value),
-      error => console.log(error)
-    );
+
   }
 
   onClick(path:string,documentType:string){

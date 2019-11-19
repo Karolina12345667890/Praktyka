@@ -5,7 +5,9 @@ import {GroupDto} from '../models/GroupDto';
 import {isUndefined} from 'util';
 import {Router} from '@angular/router';
 import {LoginServiceService} from '../login-service.service';
-import {DatePipe} from '@angular/common';
+
+import { DatePipe } from '@angular/common';
+import {NotifierService} from "angular-notifier";
 
 @Component({
   selector: 'app-group-list',
@@ -15,11 +17,12 @@ import {DatePipe} from '@angular/common';
 })
 export class GroupListComponent implements OnInit {
 
-
+  private readonly notifier: NotifierService;
   private groupList = new Array<GroupDto>();
   isAdmin:boolean = false;
-  constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, private authService: LoginServiceService, private datePipe: DatePipe) {
 
+  constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router, private authService: LoginServiceService, private datePipe: DatePipe, notifierService: NotifierService) {
+    this.notifier = notifierService;
   }
 
   ngOnInit() {
@@ -49,7 +52,14 @@ export class GroupListComponent implements OnInit {
 
 
   joinGroup(id:number){
-    console.log(id);
+    this.authService.postResource('http://localhost:8080/api/group/'+id+'/applications/new', {}).subscribe(
+      value => {console.log(value)
+        this.notifier.notify("success","Pomyślnie dołączono do grupy",)
+      },
+      error =>{ console.log(error)
+        this.notifier.notify("error",error.error,)
+      }
+    );
   }
 
 
@@ -72,8 +82,12 @@ export class GroupListComponent implements OnInit {
         if (!isUndefined(result)) {
           let body = result.value;
           this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
-            value => console.log(value),
-            error => console.log(error)
+            value => {console.log(value)
+              this.notifier.notify("success","Pomyślnie edytowano grupe",)
+            },
+            error =>{ console.log(error)
+              this.notifier.notify("error","Coś poszło nietak",)
+            }
           );
           location.reload();
         }
@@ -98,8 +112,12 @@ export class GroupListComponent implements OnInit {
         if (!isUndefined(result)) {
           let body = result.value;
           this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
-            value => console.log(value),
-            error => console.log(error)
+            value => {console.log(value)
+              this.notifier.notify("success","Pomyślnie dodano nową grupe",)
+            },
+            error =>{ console.log(error)
+              this.notifier.notify("error","Coś poszło nietak",)
+            }
           );
           location.reload();
         }

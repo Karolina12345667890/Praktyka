@@ -63,3 +63,48 @@
 
 </table>
 
+<div *ngIf="studentApplicationList.length != 0">
+<div class="container text-center" >
+  <div class="display-4">Lista aplikujących do tej grupy</div>
+  <br>
+</div>
+<table class="table table-hover table-striped " >
+
+  <thead class="thead-dark">
+
+  <tr>
+    <th> Imie</th>
+    <th> Nazwisko</th>
+    <th> Numer Albumu</th>
+    <th> Data dołączenia</th>
+    <th> </th>
+
+  </tr>
+  </thead>
+  <tbody >
+
+  <tr *ngFor="let item of studentApplicationList " >
+    <td>
+      {{item.studentName}}
+    </td>
+    <td>
+      {{item.studentSurname}}
+    </td>
+    <td>
+      {{item.studentAlbum}}
+    </td>
+    <td>
+      {{item.date}}
+    </td>
+  <td>
+      <button type="button" class="btn btn-success float-right" (click)="onAcceptClick(item.acceptLink)"  >Akceptuj</button>
+
+    </td>
+
+
+
+  </tr>
+  </tbody>
+
+</table>
+</div>
