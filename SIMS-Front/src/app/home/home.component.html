@@ -34,7 +34,24 @@
   <tbody>
   <tr *ngFor="let document of myDocumentList">
     <td  >
-     {{document.type}}
+      <ng-container *ngIf="document.type === 'oswiadczenie';else POR">
+        Oświadczenie
+      </ng-container>
+      <ng-template #POR>
+        <ng-container *ngIf="document.type === 'porozumienie';else ZAS">
+          Porozumienie
+        </ng-container>
+      </ng-template>
+      <ng-template #ZAS>
+        <ng-container *ngIf="document.type === 'zaswiadczenie';else DZI">
+          Zaświadczenie
+        </ng-container>
+      </ng-template>
+      <ng-template #DZI>
+          Dziennik
+      </ng-template>
+
+<!--     {{document.type}}-->
       <div *ngIf="document.status != null">
         <button type="button" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
       </div>
