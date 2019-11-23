@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
 import {DocumentDto} from '../models/DocumentDto';
+import {isUndefined} from "util";
+import {MatDialog} from "@angular/material/dialog";
+import {ShowCommentDialogComponent} from "../show-comment-dialog/show-comment-dialog.component";
 
 @Component({
   selector: 'app-home-component',
@@ -13,7 +16,7 @@ export class HomeComponent implements OnInit {
   private myDocumentList = new Array<DocumentDto>();
 
 
-  constructor(private authService: LoginServiceService) {
+  constructor(private authService: LoginServiceService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -68,10 +71,25 @@ export class HomeComponent implements OnInit {
   //
   // }
 
-  showWarning(warning:string){
-    alert( warning );
+  showWarning(message: string) {
+
+      const dialogRef = this.dialog.open(ShowCommentDialogComponent, {
+        width: '400px',
+        data: message,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (!isUndefined(result)) {
+          //zmiana komentarza do dokumentu
+          alert(result);
+        }
+      });
+
 
   }
+
+
+
 
 }
 

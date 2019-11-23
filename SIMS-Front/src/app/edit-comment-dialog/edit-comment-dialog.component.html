@@ -1,0 +1,11 @@
+
+
+<h1  mat-dialog-title class="text-center" >Uwaga!</h1>
+
+<textarea cols="47" [(ngModel)]="data"> </textarea>
+
+<div mat-dialog-content>
+
+  <button  class="btn btn-danger " mat-button [mat-dialog-close]>Zamknij</button>
+  <button  class="btn btn-success " mat-button [mat-dialog-close]="data" style="margin-left: 41%" >Zapisz zmiany</button>
+</div>

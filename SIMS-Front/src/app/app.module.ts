@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {AppRoutingModule} from './app-routing.module';
 import {FileUploadComponent} from './file-upload/file-upload.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { OswiadczenieComponent } from './oswiadczenie/oswiadczenie.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -17,13 +17,16 @@ import { ZaswiadczenieComponent } from './zaswiadczenie/zaswiadczenie.component'
 import { AnkietaDlaStudentaComponent } from './ankieta-dla-studenta/ankieta-dla-studenta.component';
 import { AnkietaDlaPracodawcyComponent } from './ankieta-dla-pracodawcy/ankieta-dla-pracodawcy.component';
 import { DziennikPraktykComponent } from './dziennik-praktyk/dziennik-praktyk.component';
-import { StudentListComponent } from './student-list/student-list.component';
+import { StudentListComponent} from './student-list/student-list.component';
 import { NotifierModule, NotifierOptions } from 'angular-notifier';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {CookieService} from 'ngx-cookie-service';
-import { AddAndEditGroupDialog, GroupListComponent} from './group-list/group-list.component';
+import {  GroupListComponent} from './group-list/group-list.component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShowCommentDialogComponent } from './show-comment-dialog/show-comment-dialog.component';
+import { EditCommentDialogComponent } from './edit-comment-dialog/edit-comment-dialog.component';
+import { EditGroupDialogComponent } from './edit-group-dialog/edit-group-dialog.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -81,7 +84,9 @@ const customNotifierOptions: NotifierOptions = {
     DziennikPraktykComponent,
     StudentListComponent,
     GroupListComponent,
-    AddAndEditGroupDialog,
+    ShowCommentDialogComponent,
+    EditCommentDialogComponent,
+    EditGroupDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,8 +98,9 @@ const customNotifierOptions: NotifierOptions = {
     NotifierModule.withConfig(customNotifierOptions),
     MatDialogModule,
     BrowserAnimationsModule,
+    FormsModule,
   ],
-  entryComponents: [ GroupListComponent, AddAndEditGroupDialog, ],
+  entryComponents: [ GroupListComponent, EditGroupDialogComponent, StudentListComponent , EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent],
   providers: [LoginServiceService, AuthGuardService, CookieService],
   bootstrap: [AppComponent]
 })

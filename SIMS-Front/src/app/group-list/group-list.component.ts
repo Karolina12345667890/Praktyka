@@ -8,6 +8,7 @@ import {LoginServiceService} from '../login-service.service';
 
 import { DatePipe } from '@angular/common';
 import {NotifierService} from "angular-notifier";
+import {EditGroupDialogComponent} from "../edit-group-dialog/edit-group-dialog.component";
 
 @Component({
   selector: 'app-group-list',
@@ -28,6 +29,11 @@ export class GroupListComponent implements OnInit {
   ngOnInit() {
 
 
+    this.isAdmin = this.authService.isAdmin();
+  this.load();
+  }
+
+  load(){
 
     this.authService.getResource('http://localhost:8080/api/groups').subscribe(
       value => {
@@ -36,12 +42,8 @@ export class GroupListComponent implements OnInit {
           v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd').toString();
         });
       },
-      error => console.log(error),
-    );
-
-    this.isAdmin = this.authService.isAdmin();
-
-  }
+    error => console.log(error),
+  );}
 
 
   openStudentList(id: number) {
@@ -65,7 +67,7 @@ export class GroupListComponent implements OnInit {
 
   openEditDialog(item: GroupDto) {
     if(this.isAdmin) {
-      const dialogRef = this.dialog.open(AddAndEditGroupDialog, {
+      const dialogRef = this.dialog.open(EditGroupDialogComponent, {
         width: '400px',
         data: this.fb.group({
           id: item.id,
@@ -82,14 +84,16 @@ export class GroupListComponent implements OnInit {
         if (!isUndefined(result)) {
           let body = result.value;
           this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
-            value => {console.log(value)
+            value => {
+              console.log(value);
+              this.load();
               this.notifier.notify("success","Pomyślnie edytowano grupe",)
             },
-            error =>{ console.log(error)
+            error =>{ console.log(error);
               this.notifier.notify("error","Coś poszło nietak",)
             }
           );
-          location.reload();
+
         }
       });
     }
@@ -97,7 +101,7 @@ export class GroupListComponent implements OnInit {
 
   openAddDialog() {
     if (this.isAdmin) {
-      const dialogRef = this.dialog.open(AddAndEditGroupDialog, {
+      const dialogRef = this.dialog.open(EditGroupDialogComponent, {
         width: '400px',
         data: this.fb.group({
           id: null,
@@ -112,14 +116,17 @@ export class GroupListComponent implements OnInit {
         if (!isUndefined(result)) {
           let body = result.value;
           this.authService.postResource('http://localhost:8080/api/groups', body).subscribe(
-            value => {console.log(value)
+            value => {
+              console.log(value);
+              this.load();
               this.notifier.notify("success","Pomyślnie dodano nową grupe",)
             },
-            error =>{ console.log(error)
+            error =>{
+              console.log(error);
               this.notifier.notify("error","Coś poszło nietak",)
             }
           );
-          location.reload();
+
         }
       });
     }
@@ -127,19 +134,3 @@ export class GroupListComponent implements OnInit {
 }
 
 
-@Component({
-  selector: 'group-list.addAndEditGroupDialog.component',
-  templateUrl: 'group-list.addAndEditGroupDialog.component.html',
-  styleUrls: ['./group-list.component.css']
-})
-export class AddAndEditGroupDialog {
-
-  constructor(public dialogRef: MatDialogRef<AddAndEditGroupDialog>, @Inject(MAT_DIALOG_DATA) public data: FormGroup, private fb: FormBuilder) {
-
-
-  }
-
-  onNoClick() {
-    this.dialogRef.close();
-  }
-}
