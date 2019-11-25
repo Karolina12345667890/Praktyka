@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.Transactional;
+import uph.ii.SIMS.UserModule.Dto.FormOfStudyEnum;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 import java.util.Arrays;
@@ -36,7 +37,12 @@ public class UsersInitializer {
         roleRepository.save(role_admin);
         
         Group group = new Group("grupa1_19/20", 40, new Date());
+        group.setFormOfStudy(FormOfStudyEnum.FULL_TIME);
+        group.setFieldOfStudy("Informatyka");
         Group group2 = new Group("grupa2_19/20", 40, new Date());
+        group2.setFormOfStudy(FormOfStudyEnum.FULL_TIME);
+        group2.setFieldOfStudy("Informatyka");
+        
         groupRepository.save(group);
         groupRepository.save(group2);
         
@@ -56,7 +62,7 @@ public class UsersInitializer {
             "user4", "user", rolesUser);
         User user5 = userService.createNewUser(new UserDto(null, "123213", "fffff", "fffff", "test455@gmai.com"),
             "user5", "user", rolesUser);
-    
+        
         groupService.addGroupApplication(user4.getId(), group.getId());
         groupService.addGroupApplication(user5.getId(), group.getId());
         

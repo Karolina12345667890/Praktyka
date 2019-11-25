@@ -15,7 +15,7 @@ public class GroupController {
     UserFacade userFacade;
     
     @GetMapping("/api/groups")
-    public List<GroupDto> a(){
+    public List<GroupDto> getAllGroups(){
        return userFacade.getAllGroups();
     }
     
