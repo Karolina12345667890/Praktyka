@@ -51,7 +51,7 @@ class PorozumienieController {
     }
     
     @PostMapping(value = "/{id}/comment")
-    void setPorozumienieComment(@PathVariable Long id, String newComment) {
+    void setPorozumienieComment(@PathVariable Long id, @RequestBody  String newComment) {
         documentFacade.setPorozumienieComment(id, newComment);
     }
     
