@@ -61,6 +61,7 @@ export class StudentListComponent implements OnInit {
          this.studentList.push(value.students);
          this.studentList = value.students;
          this.group = value;
+         console.log(this.studentList);
 
        },
        error => console.log(error),

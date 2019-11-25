@@ -25,7 +25,8 @@ abstract public class Document {
     protected Long id;
     protected Long ownerId;
     protected Long groupId;
-    protected String comment;
+    protected String comment = "";
+    @Enumerated(EnumType.STRING)
     protected StatusEnum statusEnum = StatusEnum.NEW;
     
     protected Document(Long owner) {

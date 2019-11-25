@@ -59,10 +59,6 @@ class Porozumienie extends Document {
         );
     }
     
-    @Override
-    public String getStatusString() {
-        return null;
-    }
     
     @Override
     public String getType() {
