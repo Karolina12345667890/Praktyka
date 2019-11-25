@@ -25,6 +25,7 @@ class Oswiadczenie extends Document {
     private String opiekunN;
     private String opiekunMail;
     private String opiekunTel;
+    private String studentDuties;
     
     Oswiadczenie(Long owner) {
         super(owner);
@@ -44,6 +45,7 @@ class Oswiadczenie extends Document {
             opiekunN,
             opiekunMail,
             opiekunTel,
+            studentDuties,
             comment,
             getStatusString()
         );

@@ -37,6 +37,7 @@ public class OswiadczenieFacade {
         oswiadczenie.setOpiekunN(oswiadczenieDto.getOpiekunN());
         oswiadczenie.setOpiekunMail(oswiadczenieDto.getOpiekunMail());
         oswiadczenie.setOpiekunTel(oswiadczenieDto.getOpiekunTel());
+        oswiadczenie.setStudentDuties(oswiadczenieDto.getStudentDuties());
         
         oswiadczenie.setStatus(StatusEnum.NEW);
     }

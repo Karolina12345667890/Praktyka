@@ -24,7 +24,7 @@ trait SampleDocuments {
             "123456789")
 
     def createOswiadczenieDto(Long id, Long groupId, Long ownerId, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
-        return new OswiadczenieDto(id, groupId, ownerId,  opiekunI, opiekunN, opiekunMail, opiekunTel, "", "")
+        return new OswiadczenieDto(id, groupId, ownerId,  opiekunI, opiekunN, opiekunMail, opiekunTel, "", "", "")
     }
 
 }

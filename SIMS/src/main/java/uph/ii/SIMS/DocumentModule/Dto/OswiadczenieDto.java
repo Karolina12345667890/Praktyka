@@ -18,6 +18,7 @@ public class OswiadczenieDto {
     private String opiekunN = "";
     private String opiekunMail = "";
     private String opiekunTel = "";
+    private String studentDuties = "";
     private String comment = "";
     private String status = "";
     
