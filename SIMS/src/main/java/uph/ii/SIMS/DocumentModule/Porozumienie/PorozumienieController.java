@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 
 /**
  *
@@ -15,8 +16,8 @@ import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 @RequestMapping(value = Document.URL + Porozumienie.DOCUMENT_TYPE )
 @AllArgsConstructor
 class PorozumienieController {
-    private DocumentFacade documentFacade;
     
+    private DocumentFacade documentFacade;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     PorozumienieDto fetchPorozumienieDto(@PathVariable Long id) {
@@ -27,6 +28,27 @@ class PorozumienieController {
     @ResponseBody
     byte[] createPorozumieniePdf(@PathVariable Long id) throws Exception {
         return documentFacade.printPorozumienieToPdf(id);
+    }
+    
+    @PostMapping(value = "/{id}")
+    void storePorozumienie(@PathVariable Long id, PorozumienieDto porozumienieDto){
+        documentFacade.storePorozumienie(porozumienieDto);
+        
+    }
+    
+    @PostMapping(value = "/{id}/comment")
+    void setPorozumienieComment(@PathVariable Long id, String newComment){
+        documentFacade.setPorozumienieComment(id, newComment);
+    }
+    
+    @PostMapping(value = "/{id}/accept")
+    void acceptPorozumienie(@PathVariable Long id) {
+        documentFacade.setPorozumienieStatus(id, StatusEnum.ACCEPTED);
+    }
+    
+    @PostMapping(value = "/{id}/decline")
+    void declinePorozumienie(@PathVariable Long id) {
+        documentFacade.setPorozumienieStatus(id, StatusEnum.DECLINED);
     }
     
 }

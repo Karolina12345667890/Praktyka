@@ -40,9 +40,9 @@ class DocumentConfiguration {
      */
     DocumentFacade documentFacadeInMemoryIO(PdfBuilder pdfBuilder, UserFacade userFacade) {
         OswiadczenieFacade oswiadczenieFacadeInMemoryIO =
-            new OswiadczenieConfiguration(userFacade).oswiadczenieFacadeInMemoryIO();
+            new OswiadczenieConfiguration().oswiadczenieFacadeInMemoryIO();
         
-        PorozumienieFacade porozumienieFacadeInMemoryIO = new PorozumienieConfiguration(userFacade)
+        PorozumienieFacade porozumienieFacadeInMemoryIO = new PorozumienieConfiguration()
             .porozumienieFacadeInMemoryIO();
         
         

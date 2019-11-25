@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
+import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,12 +33,24 @@ class OswiadczenieController {
         return documentFacade.printOswiadczenieToPdf(id);
     }
     
-    @PostMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    List<Object> postOswiadczenie(@PathVariable Long id, @RequestBody OswiadczenieDto dto) throws Exception {
-        System.out.println(dto);
-        documentFacade.storeOswiadczenie(dto);
-        return documentFacade.oswiadczenieFacade.findMyDocuments().stream().collect(Collectors.toList());
+    @PostMapping(value = "/{id}")
+    void storeOswiadczenie(@PathVariable Long id, OswiadczenieDto oswiadczenieDto) {
+        documentFacade.storeOswiadczenie(oswiadczenieDto);
+        
     }
     
+    @PostMapping(value = "/{id}/comment")
+    void setOswiadczenieComment(@PathVariable Long id, String newComment) {
+        documentFacade.setOswiadczenieComment(id, newComment);
+    }
     
+    @PostMapping(value = "/{id}/accept")
+    void acceptOswiadczenie(@PathVariable Long id) {
+        documentFacade.setOswiadczenieStatus(id, StatusEnum.ACCEPTED);
+    }
+    
+    @PostMapping(value = "/{id}/decline")
+    void declineOswiadczenie(@PathVariable Long id) {
+        documentFacade.setOswiadczenieStatus(id, StatusEnum.DECLINED);
+    }
 }

@@ -23,32 +23,9 @@ class DocumentController {
     
     private DocumentFacade documentFacade;
     
-    /**
-     *
-     * Tworzy przykładowe dane i zapisuje je do BD
-     */
-    // TODO delete this, used to fill the DB
-    @GetMapping("/test12")
-    void fillValues() throws Exception {
-        documentFacade.storeOswiadczenie(OswiadczenieDto.builder()
-            .opiekunI("Adam")
-            .opiekunN("Nowak")
-            .opiekunMail("adam.nowak@gmail.com")
-            .opiekunTel("123456789")
-            .comment("komentarz1")
-            .build()
-        );
-        documentFacade.storePorozumienie(PorozumienieDto.builder()
-            .comment("komentarz2")
-            .build()
-        );
-        
-    }
-    
-    @GetMapping("/test123")
+    @GetMapping(Document.URL + "list")
     List<DocumentDto> listMyDocuments(){
         return documentFacade.listMyDocuments();
     }
-    
     
 }

@@ -6,12 +6,12 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
-import uph.ii.SIMS.UserModule.Dto.UserWithDocumentsDto;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -85,13 +85,14 @@ public class User implements UserDetails {
     }
     
     UserDto dto() {
-        return UserDto.builder()
-            .name(getName())
-            .surname(getSurname())
-            .email(getUsername())
-            .id(getId())
-            .album(getAlbum())
-            .build();
+        return new UserDto(
+            id,
+            album,
+            name,
+            surname,
+            email,
+            getRoles().stream().map(Role::getAuthority).collect(Collectors.toList())
+        );
     }
     
 }

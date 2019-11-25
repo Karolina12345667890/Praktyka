@@ -5,14 +5,17 @@ import lombok.AllArgsConstructor;
 import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
+import uph.ii.SIMS.UserModule.GroupService;
 import uph.ii.SIMS.UserModule.UserFacade;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,10 +50,10 @@ public class DocumentFacade {
      */
     public byte[] printOswiadczenieToPdf(Long id) throws Exception {
         var oswiadczenieDto = oswiadczenieFacade.find(id);
-        var currentUserDto = userFacade.getCurrentUser();
+        var userDto = userFacade.getUserById(oswiadczenieDto.getId());
         var pdfDto = OswiadczeniePdfDto.builder()
-            .studentName(currentUserDto.getName())
-            .studentSurname(currentUserDto.getSurname())
+            .studentName(userDto.getName())
+            .studentSurname(userDto.getSurname())
             .carerName(oswiadczenieDto.getOpiekunI())
             .carerSurname(oswiadczenieDto.getOpiekunN())
             .carerEmail(oswiadczenieDto.getOpiekunMail())
@@ -70,20 +73,26 @@ public class DocumentFacade {
     public byte[] printPorozumienieToPdf(Long id) throws Exception {
         var porozumienieDto = porozumienieFacade.find(id);
         var currentUserDto = userFacade.getCurrentUser();
+        var groupDuration = userFacade.getGroupDurationFromId(porozumienieDto.getGroupId());
+    
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String dateStartFormatted = dateFormat.format(porozumienieDto.getStudentInternshipStart());
+        String dateEndFormatted = dateFormat.format(porozumienieDto.getStudentInternshipEnd());
+    
         var pdfDto = PorozumieniePdfDto.builder()
             .studentName(currentUserDto.getName())
             .studentSurname(currentUserDto.getSurname())
-            .studentSpecialization("SPECJALIZACJA")
-            .studentInternshipDuration("40 tyg")
-            .studentInternshipStart("01-09-2019")
-            .studentInternshipEnd("30-09-2019")
+            .studentSpecialization("")
+            .studentInternshipDuration( groupDuration +  " tyg.")
+            .studentInternshipStart(dateStartFormatted)
+            .studentInternshipEnd(dateEndFormatted)
             
-            .companyName("NAZWA FIRMY")
-            .companyLocationCity("MIASTO")
-            .companyLocationStreet("ULICA")
+            .companyName(porozumienieDto.getCompanyName())
+            .companyLocationCity(porozumienieDto.getCompanyLocationCity())
+            .companyLocationStreet(porozumienieDto.getCompanyLocationStreet())
             
-            .companyRepresentantName("IMIE REPREZENTANTA")
-            .companyRepresentantSurname("NAZWISKO REPREZENTANTA")
+            .companyRepresentantName(porozumienieDto.getCompanyRepresentantName())
+            .companyRepresentantSurname(porozumienieDto.getCompanyRepresentantSurname())
             .build();
         
         return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
@@ -107,12 +116,14 @@ public class DocumentFacade {
      * @param oswiadczenieDto oswiadczenie do zapisania
      * @throws Exception
      */
-    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto) throws Exception {
-        oswiadczenieFacade.save(oswiadczenieDto);
+    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        oswiadczenieFacade.storeChanges(oswiadczenieDto, currentUser, userIsAdmin);
     }
     
     public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
-        oswiadczenieFacade.save(oswiadczenieDto, studentId, groupId);
+        oswiadczenieFacade.createNew(oswiadczenieDto, studentId, groupId);
     }
     
     /**
@@ -132,12 +143,14 @@ public class DocumentFacade {
      * @param porozumienieDto oswiadczenie do zapisania
      * @throws Exception
      */
-    public void storePorozumienie(PorozumienieDto porozumienieDto) throws Exception {
-        porozumienieFacade.save(porozumienieDto);
+    public void storePorozumienie(PorozumienieDto porozumienieDto) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        porozumienieFacade.storeChanges(porozumienieDto, currentUser, userIsAdmin);
     }
     
-    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {
-        porozumienieFacade.save(porozumienieDto, studentId, groupId);
+    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId) {
+        porozumienieFacade.createNew(porozumienieDto, studentId, groupId);
     }
     
     public List<DocumentDto> listMyDocuments() {
@@ -159,5 +172,24 @@ public class DocumentFacade {
             .collect(Collectors.toList());
     }
     
+    public void setPorozumienieComment(Long id, String newComment) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        porozumienieFacade.setComment(id, newComment, userIsAdmin);
+    }
     
+    
+    public void setOswiadczenieComment(Long id, String newComment) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        oswiadczenieFacade.setComment(id, newComment, userIsAdmin);
+    }
+    
+    public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        oswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
+    }
+    
+    public void setPorozumienieStatus(Long id, StatusEnum statusEnum) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        porozumienieFacade.setStatus(id, statusEnum, userIsAdmin);
+    }
 }

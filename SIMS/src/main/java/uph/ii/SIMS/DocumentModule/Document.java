@@ -2,6 +2,7 @@ package uph.ii.SIMS.DocumentModule;
 
 import lombok.*;
 import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 
 import javax.persistence.*;
 
@@ -25,13 +26,19 @@ abstract public class Document {
     protected Long ownerId;
     protected Long groupId;
     protected String comment;
-    
+    protected StatusEnum statusEnum = StatusEnum.NEW;
     
     protected Document(Long owner) {
         this.ownerId = owner;
     }
     
-    public abstract String getStatus();
+    public String getStatusString() {
+        return statusEnum.name();
+    }
+    
+    public void setStatus(StatusEnum statusEnum) {
+        this.statusEnum = statusEnum;
+    }
     
     public abstract String getType();
     
@@ -40,6 +47,6 @@ abstract public class Document {
     }
     
     public DocumentDto dto(){
-        return new DocumentDto(getComment(), getStatus(), getUrl(), getType(), getGroupId(), getOwnerId());
+        return new DocumentDto(getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId());
     }
 }

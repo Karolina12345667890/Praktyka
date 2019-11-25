@@ -12,8 +12,6 @@ import uph.ii.SIMS.UserModule.UserFacade;
 @AllArgsConstructor
 public class PorozumienieConfiguration {
     
-    UserFacade userFacade;
-    
     /**
      * Metoda oznaczona adnotacją {@link Bean}, wykorzystywana przez Spring, nie używać ręcznie
      *
@@ -22,7 +20,7 @@ public class PorozumienieConfiguration {
      */
     @Bean
     PorozumienieFacade PorozumienieFacade(PorozumienieRepository porozumienieRepository) {
-        return new PorozumienieFacade(porozumienieRepository, userFacade);
+        return new PorozumienieFacade(porozumienieRepository);
     }
     
     /**
@@ -32,7 +30,7 @@ public class PorozumienieConfiguration {
      */
     public PorozumienieFacade porozumienieFacadeInMemoryIO() {
         PorozumienieRepository PorozumienieInMemoryRepository = new PorozumienieInMemoryRepository();
-        return new PorozumienieFacade(PorozumienieInMemoryRepository, userFacade);
+        return new PorozumienieFacade(PorozumienieInMemoryRepository);
     }
     
 }

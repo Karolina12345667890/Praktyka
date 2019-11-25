@@ -2,13 +2,12 @@ package uph.ii.SIMS.DocumentModule.Oswiadczenie;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import uph.ii.SIMS.DocumentModule.Dto.AccessDeniedException;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
-import uph.ii.SIMS.UserModule.UserFacade;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
+import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 /**
- *
  * <p>
  * Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
  * </p>
@@ -22,36 +21,39 @@ import uph.ii.SIMS.UserModule.UserFacade;
 public class OswiadczenieFacade {
     
     private OswiadczenieRepository oswiadczenieRepository;
-    private UserFacade userFacade;
     
-    /**
-     *
-     * Persystuje oświadczenie utworzone na podstawie przekazanego DTO. Właścicielem oświadczenia staje się aktualny użytkownik.
-     *
-     * @param dto Dane potrzebne do zapisania oświaczenia
-     * @throws Exception
-     */
-    //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
-    public void save(OswiadczenieDto dto) throws Exception {
-        Long ownerId = userFacade.getCurrentUser().getId();
-        save(dto, ownerId, 1L);
+    public void storeChanges(OswiadczenieDto oswiadczenieDto, UserDto userDto, Boolean userIsAdmin) {
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(oswiadczenieDto.getId());
+        boolean userOwnsDocument = userDto.getId().equals(oswiadczenie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        oswiadczenie.setOpiekunI(oswiadczenieDto.getOpiekunI());
+        oswiadczenie.setOpiekunN(oswiadczenieDto.getOpiekunN());
+        oswiadczenie.setOpiekunMail(oswiadczenieDto.getOpiekunMail());
+        oswiadczenie.setOpiekunTel(oswiadczenieDto.getOpiekunTel());
     }
     
-    public void save(OswiadczenieDto dto, Long studentId, Long groupId) {
-        Oswiadczenie oswiadczenie = new Oswiadczenie(
-            studentId,
-            dto.getOpiekunI(),
-            dto.getOpiekunN(),
-            dto.getOpiekunMail(),
-            dto.getOpiekunTel());
-        oswiadczenie.setComment(dto.getComment());
-        oswiadczenie.setGroupId(groupId);
+    public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
+        Oswiadczenie porozumienie = new Oswiadczenie(studentId);
         
-        oswiadczenieRepository.save(oswiadczenie);
+        porozumienie.setComment(oswiadczenieDto.getComment());
+        porozumienie.setGroupId(groupId);
+        oswiadczenieRepository.save(porozumienie);
     }
     
+    
+    public void setComment(Long id, String newComment, Boolean userIsAdmin) {
+        if(!userIsAdmin){
+            throw new AccessDeniedException("Only admin can set comments on documents");
+        }
+    
+        oswiadczenieRepository.findById(id).setComment(newComment);
+    }
+    
+    
     /**
-     *
      * Zwraca dane oświadczenia o podanym id
      *
      * @param id id szukanego oświadczenia
@@ -61,26 +63,11 @@ public class OswiadczenieFacade {
         return oswiadczenieRepository.findById(id).oswiadczenieDto();
     }
     
-    /**
-     *
-     * Zwraca listę (z paginacją) dokumentów aktualnie zalogowanego użytkownika
-     *
-     * @return dokumentów aktualnie zalogowanego użytkownika
-     * @throws Exception
-     */
-    //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
-    public Page<OswiadczenieDto> findMyDocuments() throws Exception {
-        Long ownerId = userFacade.getCurrentUser().getId();
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        
-        return oswiadczenieRepository.findAllByOwnerId(ownerId, pageRequest)
-            .map(Oswiadczenie::oswiadczenieDto);
-    }
+    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
+        if(!userIsAdmin){
+            throw new AccessDeniedException("Only admin can set comments on documents");
+        }
     
-    public Page<OswiadczenieDto> findUsersDocuments(Long ownerId) throws Exception {
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        
-        return oswiadczenieRepository.findAllByOwnerId(ownerId, pageRequest)
-            .map(Oswiadczenie::oswiadczenieDto);
+        oswiadczenieRepository.findById(id).setStatus(status);
     }
 }

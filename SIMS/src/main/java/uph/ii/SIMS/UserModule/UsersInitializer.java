@@ -8,6 +8,7 @@ import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 @Configuration
 public class UsersInitializer {
@@ -40,18 +41,21 @@ public class UsersInitializer {
         groupRepository.save(group2);
         
         userRepository.deleteAll();
+        List<Role> rolesAdmin = Arrays.asList(role_admin, role_user);
+        List<Role> rolesUser = Arrays.asList(role_user);
+        
         User user = userService.createNewUser(new UserDto(null, "332211", "Andrzej", "Aaa", "test@gmai.com"),
-            "admin", "admin", Arrays.asList(role_admin, role_user));
+            "admin", "admin", rolesAdmin);
         User user1 = userService.createNewUser(new UserDto(null, "221133", "Barbara", "Bbb", "test2@gmai.com"),
-            "user1", "user");
+            "user1", "user", rolesUser);
         User user2 = userService.createNewUser(new UserDto(null, "54321", "Cezary", "Ccc", "test3@gmai.com"),
-            "user2", "user");
+            "user2", "user", rolesUser);
         User user3 = userService.createNewUser(new UserDto(null, "12345", "Danuta", "Dddd", "test4@gmai.com"),
-            "user3", "user");
+            "user3", "user", rolesUser);
         User user4 = userService.createNewUser(new UserDto(null, "536563", "eeeee", "eeee", "teffst5@gmai.com"),
-            "user4", "user");
+            "user4", "user", rolesUser);
         User user5 = userService.createNewUser(new UserDto(null, "123213", "fffff", "fffff", "test455@gmai.com"),
-            "user5", "user");
+            "user5", "user", rolesUser);
     
         groupService.addGroupApplication(user4.getId(), group.getId());
         groupService.addGroupApplication(user5.getId(), group.getId());

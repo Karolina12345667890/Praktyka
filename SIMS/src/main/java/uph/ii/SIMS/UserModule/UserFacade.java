@@ -11,17 +11,10 @@ public class UserFacade {
     
     private UserService userService;
     private GroupService groupService;
-    private DocumentFacade documentFacade;
     
     public UserFacade(UserService userService, GroupService groupService) {
         this.userService = userService;
         this.groupService = groupService;
-    }
-    
-    @Autowired
-    @Lazy
-    public void setDocumentFacade(DocumentFacade documentFacade) {
-        this.documentFacade = documentFacade;
     }
     
     
@@ -30,11 +23,20 @@ public class UserFacade {
         return user.dto();
     }
     
+    public Boolean currentUserIsAdmin(){
+        return userService.currentUserIsAdmin();
+    }
+    
+    public UserDto getUserById(Long id) {
+        User user = userService.loadUserById(id);
+        return user.dto();
+    }
+    
     public List<GroupDto> getAllGroups() {
         return groupService.getAllGroups();
     }
     
-    public void persistGroup(GroupModifyDto dto){
+    public void persistGroup(GroupModifyDto dto) {
         groupService.persistGroup(dto);
     }
     
@@ -46,7 +48,7 @@ public class UserFacade {
         return groupService.groupApplications(groupId);
     }
     
-    public void applyToGroup(Long groupId){
+    public void applyToGroup(Long groupId) {
         UserDto user = getCurrentUser();
         groupService.addGroupApplication(user.getId(), groupId);
     }
@@ -55,7 +57,11 @@ public class UserFacade {
         groupService.addUserToGroup(groupId, studentId);
     }
     
-    public void acceptGroupApplication(Long groupApplicationId){
+    public void acceptGroupApplication(Long groupApplicationId) {
         groupService.acceptGroupApplication(groupApplicationId);
+    }
+    
+    public int getGroupDurationFromId(Long groupId) {
+        return groupService.getGroupDurationFromId(groupId);
     }
 }

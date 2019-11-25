@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
+import uph.ii.SIMS.UserModule.Dto.UserNotFoundException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,12 +46,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
     
-    public User createNewUser(UserDto userDto, String username, String password) {
-       return createNewUser(userDto, username, password, Arrays.asList(roleRepository.findByName("ROLE_USER")));
-    }
-    
-    
-    
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -61,9 +56,13 @@ public class UserService implements UserDetailsService {
         return userRepository.getOne(id);
     }
     
-    public UserDetails loadCurrentUser() {
+    public UserDetails loadCurrentUser() throws UserNotFoundException {
         String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User currentUser = userRepository.findUserByLogin(principal).orElseThrow(() -> new RuntimeException());
+        User currentUser = userRepository
+            .findUserByLogin(principal)
+            .orElseThrow(
+                () -> new UserNotFoundException("User " + principal + " does not exist")
+            );
         return loadUserByUsername(currentUser.getUsername());
     }
     

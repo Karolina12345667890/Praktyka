@@ -20,39 +20,37 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 class Oswiadczenie extends Document {
     
+    public static final String DOCUMENT_TYPE = "oswiadczenie";
     private String opiekunI;
     private String opiekunN;
     private String opiekunMail;
     private String opiekunTel;
     
-    public static final String DOCUMENT_TYPE = "oswiadczenie";
-    
-    Oswiadczenie(Long owner, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
+    Oswiadczenie(Long owner) {
         super(owner);
-        this.opiekunI = opiekunI;
-        this.opiekunN = opiekunN;
-        this.opiekunMail = opiekunMail;
-        this.opiekunTel = opiekunTel;
     }
     
     /**
-     *
      * Metoda tworząca obiekt klasy {@link OswiadczenieDto}
      *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie oswiadczenia, na którym wołana jest metoda
      */
     OswiadczenieDto oswiadczenieDto() {
-        return OswiadczenieDto.builder()
-            .id(this.id)
-            .opiekunI(this.opiekunI)
-            .opiekunN(this.opiekunN)
-            .opiekunMail(this.opiekunMail)
-            .opiekunTel(this.opiekunTel)
-            .build();
+        return new OswiadczenieDto(
+            id,
+            groupId,
+            ownerId,
+            opiekunI,
+            opiekunN,
+            opiekunMail,
+            opiekunTel,
+            comment,
+            getStatusString()
+        );
     }
     
     @Override
-    public String getStatus() {
+    public String getStatusString() {
         return null;
     }
     

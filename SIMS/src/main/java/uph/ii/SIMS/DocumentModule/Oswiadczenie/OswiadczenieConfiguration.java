@@ -13,8 +13,6 @@ import uph.ii.SIMS.UserModule.UserFacade;
 @AllArgsConstructor
 public class OswiadczenieConfiguration {
     
-    UserFacade userFacade;
-    
     /**
      *
      * Metoda oznaczona adnotacją {@link Bean}, wykorzystywana przez Spring, nie używać ręcznie
@@ -24,7 +22,7 @@ public class OswiadczenieConfiguration {
      */
     @Bean
     OswiadczenieFacade oswiadczenieFacade(OswiadczenieRepository oswiadczenieRepository) {
-        return new OswiadczenieFacade(oswiadczenieRepository, userFacade);
+        return new OswiadczenieFacade(oswiadczenieRepository);
     }
     
     /**
@@ -35,6 +33,6 @@ public class OswiadczenieConfiguration {
      */
     public OswiadczenieFacade oswiadczenieFacadeInMemoryIO() {
         OswiadczenieRepository oswiadczenieInMemoryRepository = new OswiadczenieInMemoryRepository();
-        return new OswiadczenieFacade(oswiadczenieInMemoryRepository, userFacade);
+        return new OswiadczenieFacade(oswiadczenieInMemoryRepository);
     }
 }

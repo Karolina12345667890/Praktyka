@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor
-@Builder
 @Setter
 public class UserDto {
     private Long id;
@@ -20,4 +19,13 @@ public class UserDto {
     private String name;
     private String surname;
     private String email;
+    private List<String> roles;
+    
+    public UserDto(Long id, String album, String name, String surname, String email) {
+        this.id = id;
+        this.album = album;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+    }
 }

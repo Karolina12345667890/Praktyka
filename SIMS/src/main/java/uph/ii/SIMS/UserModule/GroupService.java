@@ -16,8 +16,6 @@ import java.util.stream.Stream;
 
 @Service
 public class GroupService {
-    @Autowired
-    EntityManager entityManager;
     private GroupRepository groupRepository;
     private UserService userService;
     private GroupApplicationRepository groupApplicationRepository;
@@ -81,6 +79,10 @@ public class GroupService {
         return groupWithStudentsDto;
     }
     
+    int getGroupDurationFromId(Long id){
+        return groupRepository.getOne(id).getDurationInWeeks();
+    }
+    
     
     public void addUserToGroup(Long groupId, Long studentId) {
         User user = userService.loadUserById(studentId);
@@ -89,8 +91,15 @@ public class GroupService {
         groups.add(group);
         user.setGroups(groups);
         
-        documentFacade.storeOswiadczenie(new OswiadczenieDto(null, "", "", "", "", "", ""), studentId, groupId);
-        documentFacade.storePorozumienie(new PorozumienieDto(null, "", ""), studentId, groupId);
+        documentFacade.storeOswiadczenie(
+            new OswiadczenieDto(null, groupId, studentId),
+            studentId,
+            groupId);
+        documentFacade.storePorozumienie(
+            new PorozumienieDto(null, groupId, studentId, new Date(), new Date()),
+            studentId,
+            groupId
+        );
     }
     
     public void persistGroup(GroupModifyDto dto) {
@@ -110,13 +119,13 @@ public class GroupService {
     public List<GroupApplicationDto> groupApplications(Long groupId) {
         List<GroupApplication> applicationsByGroupId = groupApplicationRepository.getAllByGroupId(groupId);
         List<Long> userIdList = applicationsByGroupId.stream()
-            .map(e -> e.getStudentId())
+            .map(GroupApplication::getStudentId)
             .distinct()
             .collect(Collectors.toList());
         
         Map<Long, User> usersApplying = userService.listUsersWithIdInList(userIdList).stream()
             .collect(Collectors.toMap(
-                user -> user.getId(),
+                User::getId,
                 user -> user));
         
         return applicationsByGroupId

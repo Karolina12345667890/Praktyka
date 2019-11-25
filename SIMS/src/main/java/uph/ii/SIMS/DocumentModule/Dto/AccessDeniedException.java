@@ -1,4 +1,7 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
-public class AccessDeniedException {
+public class AccessDeniedException extends RuntimeException {
+    public AccessDeniedException(String message) {
+        super(message);
+    }
 }
