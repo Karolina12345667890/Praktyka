@@ -18,6 +18,7 @@ public class GroupDto {
     private Integer durationInWeeks;
     private String fieldOfStudy;
     private String formOfStudy;
+    private String speciality;
     private Boolean isOpen;
     private Date startDate;
     private String link;

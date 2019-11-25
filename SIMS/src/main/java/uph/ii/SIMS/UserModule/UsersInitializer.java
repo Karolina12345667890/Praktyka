@@ -39,9 +39,12 @@ public class UsersInitializer {
         Group group = new Group("grupa1_19/20", 40, new Date());
         group.setFormOfStudy(FormOfStudyEnum.FULL_TIME);
         group.setFieldOfStudy("Informatyka");
+        group.setSpeciality("Programowanie systemów i baz danych");
+        
         Group group2 = new Group("grupa2_19/20", 40, new Date());
         group2.setFormOfStudy(FormOfStudyEnum.FULL_TIME);
         group2.setFieldOfStudy("Informatyka");
+        group2.setSpeciality("Programowanie systemów i baz danych");
         
         groupRepository.save(group);
         groupRepository.save(group2);
