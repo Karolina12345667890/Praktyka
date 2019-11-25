@@ -15,15 +15,18 @@
 
 
 
-<button (click)="test123()">test123</button>
 
   <div  *ngIf="myDocumentList.length != 0">
+    <h1 style="margin-left: 10%">Moje Dokumenty</h1>
 <table class="table table-hover table-striped ">
 
   <thead class="thead-dark">
-  <h1>Moje Dokumenty</h1>
+
   <tr>
-    <th width="60%">
+    <th width="20%">
+      Grupa
+    </th>
+    <th width="40%">
       Dokument
     </th>
     <th >
@@ -33,22 +36,25 @@
   </thead>
   <tbody>
   <tr *ngFor="let document of myDocumentList">
+    <td>
+      {{document.groupName}}
+    </td>
     <td  >
       <ng-container *ngIf="document.type === 'oswiadczenie';else POR">
         Oświadczenie
-        <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.id,document.type)">Wypełnij</button>
+        <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
 
       </ng-container>
       <ng-template #POR>
         <ng-container *ngIf="document.type === 'porozumienie';else ZAS">
           Porozumienie
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.id,document.type)">Wypełnij</button>
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"  (click)="openDoc(document.id,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>
       <ng-template #ZAS>
         <ng-container *ngIf="document.type === 'zaswiadczenie';else DZI">
           Zaświadczenie
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.id,document.type)">Wypełnij</button>
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>
       <ng-template #DZI>
@@ -56,9 +62,9 @@
       </ng-template>
 
 <!--     {{document.type}}-->
-      <div *ngIf="document.status != 'EMPTY'">
-        <button type="button" style="margin-left: 90%" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
-      </div>
+
+        <button *ngIf="document.status != 'EMPTY'" type="button"   class="btn btn-primary float-right" (click)="onClick(document.link,document.type)"> Pobierz</button>
+
     </td>
     <td class="docs"
         [ngStyle]="document.status == 'NEW' && {'background-color':'#2196F3'} ||
@@ -83,7 +89,7 @@
         </ng-template>
 
 
-      <button type="button"  class="btn btn-warning warning" *ngIf="document.comment != '' && document.comment != null"  (click)="showWarning(document.comment)" style="margin-left: 50%" >Uwaga!</button>
+      <button type="button"  class="btn btn-warning warning float-right" *ngIf="document.comment != '' && document.comment != null" style="margin-left: 1%" (click)="showWarning(document.comment)"  >Uwaga!</button>
 
 <!--    <div *ngIf="document.comment != null">-->
 <!--      {{document.comment}}-->

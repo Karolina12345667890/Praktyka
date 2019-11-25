@@ -13,7 +13,7 @@
   <tr>
     <th width="10%"> Imie</th>
     <th width="10%"> Nazwisko</th>
-    <th width="16%"> Nazwa Firmy</th>
+<!--    <th width="16%"> Nazwa Firmy</th>-->
 
     <th  width="16%" class="docs"> Oświadczenie</th>
     <th  width="16%"  class="docs"> Porozumienie</th>
@@ -30,13 +30,7 @@
     <td>
       {{ item.surname }}
     </td>
-    <td>
-      <ng-container *ngIf="item.documents[1].status === 'ACCEPTED'">
 
-<!--   company name jesli porozumienie jest zaakceptowane     -->
-        {{ item.documents[1].companyName}}
-      </ng-container>
-    </td>
     <td class="docs" *ngFor="let doc of item.documents " [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
      doc.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
       doc.status == 'DECLINED' && {'background-color':'#dc3545'}">

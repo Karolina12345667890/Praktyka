@@ -33,13 +33,6 @@ export class HomeComponent implements OnInit {
 
   }
 
-  test123() {
-    this.authService.getResource('http://localhost:8080/test12').subscribe(
-      value => this.myDocumentList = value,
-      error => console.log(error),
-      () => console.log('error')
-    );
-  }
 
 
 

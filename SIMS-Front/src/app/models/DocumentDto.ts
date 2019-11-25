@@ -5,4 +5,5 @@ export interface DocumentDto {
   link: string;
   type: string;
   groupId: number;
+  groupName: string;
 }
