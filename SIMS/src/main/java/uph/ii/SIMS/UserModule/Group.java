@@ -27,6 +27,7 @@ public class Group {
     @Enumerated(EnumType.STRING)
     private String speciality;
     private FormOfStudyEnum formOfStudy;
+    private String speciality;
     private Date dateStart;
     private Boolean isOpen = false;
     
