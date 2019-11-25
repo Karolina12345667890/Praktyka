@@ -42,14 +42,14 @@ public class PorozumienieFacade {
             throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
         }
         porozumienie.setCompanyName(porozumienieDto.getCompanyName());
-        porozumienie.setCompanyLocationCity(porozumienie.getCompanyLocationCity());
-        porozumienie.setCompanyLocationStreet(porozumienie.getCompanyLocationStreet());
+        porozumienie.setCompanyLocationCity(porozumienieDto.getCompanyLocationCity());
+        porozumienie.setCompanyLocationStreet(porozumienieDto.getCompanyLocationStreet());
         
-        porozumienie.setCompanyRepresentantName(porozumienie.getCompanyRepresentantName());
-        porozumienie.setCompanyRepresentantSurname(porozumienie.getCompanyRepresentantSurname());
+        porozumienie.setCompanyRepresentantName(porozumienieDto.getCompanyRepresentantName());
+        porozumienie.setCompanyRepresentantSurname(porozumienieDto.getCompanyRepresentantSurname());
         
-        porozumienie.setStudentInternshipStart(porozumienie.getStudentInternshipStart());
-        porozumienie.setStudentInternshipEnd(porozumienie.getStudentInternshipEnd());
+        porozumienie.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
+        porozumienie.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
         
         porozumienie.setStatus(StatusEnum.NEW);
         porozumienieRepository.save(porozumienie);
