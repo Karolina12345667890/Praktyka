@@ -36,19 +36,19 @@
     <td  >
       <ng-container *ngIf="document.type === 'oswiadczenie';else POR">
         Oświadczenie
-        <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.link,document.type)">Wypełnij</button>
+        <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.id,document.type)">Wypełnij</button>
 
       </ng-container>
       <ng-template #POR>
         <ng-container *ngIf="document.type === 'porozumienie';else ZAS">
           Porozumienie
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.link,document.type)">Wypełnij</button>
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.id,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>
       <ng-template #ZAS>
         <ng-container *ngIf="document.type === 'zaswiadczenie';else DZI">
           Zaświadczenie
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.link,document.type)">Wypełnij</button>
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.id,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>
       <ng-template #DZI>
@@ -56,7 +56,7 @@
       </ng-template>
 
 <!--     {{document.type}}-->
-      <div *ngIf="document.status != null">
+      <div *ngIf="document.status != 'EMPTY'">
         <button type="button" style="margin-left: 90%" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
       </div>
     </td>

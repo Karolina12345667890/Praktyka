@@ -15,6 +15,8 @@ import {MatDialog} from "@angular/material/dialog";
   styleUrls: ['./oswiadczenie.component.css']
 })
 export class OswiadczenieComponent implements OnInit {
+
+  id : number;
   private readonly notifier: NotifierService;
   oswiadczenieForm:FormGroup;
   oswiadczenie: oswiadczenieDto;
@@ -44,7 +46,7 @@ export class OswiadczenieComponent implements OnInit {
     this.authService.getResource('http://localhost:8080/api/document/oswiadczenie/'+id).subscribe(
       value => {
         this.oswiadczenie = value;
-
+        this.id = value.id;
         this.oswiadczenieForm = this.fb.group({
           studentName: new FormControl('', [Validators.required,]),
           studentSurname: new FormControl('', [Validators.required,]),
@@ -68,17 +70,20 @@ export class OswiadczenieComponent implements OnInit {
 // metoda wysyłająca nasz obiekt oswiadczenieForm na server
   onSubmit() {
 
+    let body: oswiadczenieDto = {
+      opiekunI : this.oswiadczenieForm.value.opiekunI,
+     opiekunN :this.oswiadczenieForm.value.opiekunN,
+    opiekunTel : this.oswiadczenieForm.value.opiekunTel,
+   opiekunMail : this.oswiadczenieForm.value.opiekunMail,
+    studentDuties : this.oswiadczenieForm.value.studentDuties,
+    };
 
-    this.oswiadczenie.opiekunI = this.oswiadczenieForm.value.opiekunI;
-    this.oswiadczenie.opiekunN = this.oswiadczenieForm.value.opiekunN;
-    this.oswiadczenie.opiekunTel = this.oswiadczenieForm.value.opiekunTel;
-    this.oswiadczenie.opiekunMail = this.oswiadczenieForm.value.opiekunMail;
-    this.oswiadczenie.studentDuties = this.oswiadczenieForm.value.studentDuties;
 
-    this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.oswiadczenie.id, {}).subscribe(
+    console.log(body);
+    this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id, body).subscribe(
       value => {console.log(value)
         this.notifier.notify("success","Pomyślnie wysłąno dokument Oświadczenie",)
-        //this.router.navigate(["/home"]);
+        this.router.navigate(["/home"]);
       },
       error =>{ console.log(error)
         this.notifier.notify("error",error.error,)

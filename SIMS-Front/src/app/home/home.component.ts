@@ -43,9 +43,8 @@ export class HomeComponent implements OnInit {
 
 
 
-  openDoc(id:string,docType:string) {
-    console.log(docType);
-    this.router.navigate(['/'+docType], {queryParams: {id: 1}});
+  openDoc(id:number,docType:string) {
+    this.router.navigate(['/'+docType], {queryParams: {id: id}});
   }
 
   onClick(path:string,documentType:string){
