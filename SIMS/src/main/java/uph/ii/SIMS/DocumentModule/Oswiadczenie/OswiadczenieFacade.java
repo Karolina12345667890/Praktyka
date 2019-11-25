@@ -57,7 +57,9 @@ public class OswiadczenieFacade {
             throw new AccessDeniedException("Only admin can set comments on documents");
         }
     
-        oswiadczenieRepository.findById(id).setComment(newComment);
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        oswiadczenie.setComment(newComment);
+        oswiadczenieRepository.save(oswiadczenie);
     }
     
     
@@ -79,9 +81,11 @@ public class OswiadczenieFacade {
     
     public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
         if(!userIsAdmin){
-            throw new AccessDeniedException("Only admin can set comments on documents");
+            throw new AccessDeniedException("Only admin can change status of documents");
         }
     
-        oswiadczenieRepository.findById(id).setStatus(status);
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        oswiadczenie.setStatus(status);
+        oswiadczenieRepository.save(oswiadczenie);
     }
 }

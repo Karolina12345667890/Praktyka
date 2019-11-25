@@ -87,13 +87,17 @@ public class PorozumienieFacade {
         if(!userIsAdmin){
             throw new AccessDeniedException("Only admin can set comments on documents");
         }
-        porozumienieRepository.findById(id).setComment(newComment);
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        porozumienie.setComment(newComment);
+        porozumienieRepository.save(porozumienie);
     }
     
     public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
         if(!userIsAdmin){
-            throw new AccessDeniedException("Only admin can set comments on documents");
+            throw new AccessDeniedException("Only admin can change status of documents");
         }
-        porozumienieRepository.findById(id).setStatus(status);
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        porozumienie.setStatus(status);
+        porozumienieRepository.save(porozumienie);
     }
 }
