@@ -40,6 +40,7 @@ public class OswiadczenieFacade {
         oswiadczenie.setStudentDuties(oswiadczenieDto.getStudentDuties());
         
         oswiadczenie.setStatus(StatusEnum.NEW);
+        oswiadczenieRepository.save(oswiadczenie);
     }
     
     public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {

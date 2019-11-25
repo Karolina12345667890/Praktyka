@@ -31,9 +31,9 @@ class PorozumienieController {
     }
     
     @PostMapping(value = "/{id}")
-    void storePorozumienie(@PathVariable Long id, PorozumienieFillDto fillDto) {
+    void storePorozumienie(@PathVariable Long id, @RequestBody PorozumienieFillDto fillDto) {
         PorozumienieDto porozumienieDto = new PorozumienieDto(
-            null,
+            id,
             null,
             null,
             fillDto.getCompanyName(),

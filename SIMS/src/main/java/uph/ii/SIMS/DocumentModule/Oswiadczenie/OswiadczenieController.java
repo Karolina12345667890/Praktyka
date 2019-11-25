@@ -31,9 +31,9 @@ class OswiadczenieController {
     }
     
     @PostMapping(value = "/{id}")
-    void storeOswiadczenie(@PathVariable Long id, OswiadczenieFillDto fillDto) {
+    void storeOswiadczenie(@PathVariable Long id, @RequestBody OswiadczenieFillDto fillDto) {
         OswiadczenieDto oswiadczenieDto = new OswiadczenieDto(
-            null,
+            id,
             null,
             null,
             fillDto.getOpiekunI(),

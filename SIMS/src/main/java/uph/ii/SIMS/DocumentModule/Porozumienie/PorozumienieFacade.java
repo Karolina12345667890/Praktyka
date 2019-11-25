@@ -52,6 +52,7 @@ public class PorozumienieFacade {
         porozumienie.setStudentInternshipEnd(porozumienie.getStudentInternshipEnd());
         
         porozumienie.setStatus(StatusEnum.NEW);
+        porozumienieRepository.save(porozumienie);
     }
     
     public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {
