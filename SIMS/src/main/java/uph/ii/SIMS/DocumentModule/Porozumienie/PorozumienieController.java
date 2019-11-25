@@ -6,19 +6,19 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Dto.PorozumienieFillDto;
 import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 
 /**
- *
  * Kontroler odpowiedzialny za dokument porozumienia
  */
 @RestController
-@RequestMapping(value = Document.URL + Porozumienie.DOCUMENT_TYPE )
+@RequestMapping(value = Document.URL + Porozumienie.DOCUMENT_TYPE)
 @AllArgsConstructor
 class PorozumienieController {
     
     private DocumentFacade documentFacade;
-
+    
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     PorozumienieDto fetchPorozumienieDto(@PathVariable Long id) {
         return documentFacade.fetchPorozumienie(id);
@@ -31,13 +31,27 @@ class PorozumienieController {
     }
     
     @PostMapping(value = "/{id}")
-    void storePorozumienie(@PathVariable Long id, PorozumienieDto porozumienieDto){
+    void storePorozumienie(@PathVariable Long id, PorozumienieFillDto fillDto) {
+        PorozumienieDto porozumienieDto = new PorozumienieDto(
+            null,
+            null,
+            null,
+            fillDto.getCompanyName(),
+            fillDto.getCompanyLocationCity(),
+            fillDto.getCompanyLocationStreet(),
+            fillDto.getCompanyRepresentantName(),
+            fillDto.getCompanyRepresentantSurname(),
+            fillDto.getStudentInternshipStart(),
+            fillDto.getStudentInternshipEnd(),
+            null,
+            null
+        );
         documentFacade.storePorozumienie(porozumienieDto);
         
     }
     
     @PostMapping(value = "/{id}/comment")
-    void setPorozumienieComment(@PathVariable Long id, String newComment){
+    void setPorozumienieComment(@PathVariable Long id, String newComment) {
         documentFacade.setPorozumienieComment(id, newComment);
     }
     
