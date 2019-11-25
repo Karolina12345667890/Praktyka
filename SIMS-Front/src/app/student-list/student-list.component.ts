@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { NotifierService } from 'angular-notifier';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LoginServiceService} from "../login-service.service";
 import {StudentDto} from "../models/StudentDto";
 import {GroupDto} from "../models/GroupDto";
@@ -34,7 +34,7 @@ export class StudentListComponent implements OnInit {
   private readonly notifier: NotifierService;
   isAdmin:boolean = false;
 
-  constructor(private fb: FormBuilder, notifierService: NotifierService,private router: ActivatedRoute,private authService: LoginServiceService, private datePipe: DatePipe , public dialog: MatDialog) {
+  constructor(private fb: FormBuilder, notifierService: NotifierService,private activatedroute: ActivatedRoute,private authService: LoginServiceService, private datePipe: DatePipe , public dialog: MatDialog ,private router: Router) {
     this.notifier = notifierService;
 
     this.studentForm = this.fb.group({
@@ -52,7 +52,7 @@ export class StudentListComponent implements OnInit {
  load() {
    if (this.isAdmin) {
      let groupId: number;
-     this.router.queryParams.subscribe(v =>
+     this.activatedroute.queryParams.subscribe(v =>
        groupId = v.groupId
      );
 
@@ -98,15 +98,8 @@ export class StudentListComponent implements OnInit {
 
 
 
-  onClick(path:string,document:string){
- //   console.log(path+" "+ document);
-    this.authService.getResource('http://localhost:8080'+path).subscribe(
-      value => {
-        console.log(value);
-      },
-      error => console.log(error),
-    );
-
+  openDoc(id:number,docType:string) {
+    this.router.navigate(['/'+docType], {queryParams: {id: id}});
   }
 
 

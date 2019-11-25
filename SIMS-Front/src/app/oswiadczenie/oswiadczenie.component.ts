@@ -7,6 +7,8 @@ import {LoginServiceService} from "../login-service.service";
 import {NotifierService} from "angular-notifier";
 import {DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
+import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
+import {isUndefined} from "util";
 // import {OAuthService} from
 
 @Component({
@@ -16,7 +18,9 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class OswiadczenieComponent implements OnInit {
 
+  isAdmin:boolean = false;
   id : number;
+  comment : string;
   private readonly notifier: NotifierService;
   oswiadczenieForm:FormGroup;
   oswiadczenie: oswiadczenieDto;
@@ -25,7 +29,9 @@ export class OswiadczenieComponent implements OnInit {
 
   // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private fb: FormBuilder,
-              private httpClient: HttpClient, private authService: LoginServiceService,private activatedroute: ActivatedRoute, notifierService: NotifierService, private router: Router) {
+              private httpClient: HttpClient, private authService: LoginServiceService,
+              private activatedroute: ActivatedRoute, notifierService: NotifierService,
+              private router: Router , public dialog: MatDialog) {
     this.notifier = notifierService;
 
     this.oswiadczenieForm = this.fb.group({
@@ -43,10 +49,14 @@ export class OswiadczenieComponent implements OnInit {
      id = v.id
     );
 
+
+
+
     this.authService.getResource('http://localhost:8080/api/document/oswiadczenie/'+id).subscribe(
       value => {
         this.oswiadczenie = value;
         this.id = value.id;
+        this.comment = value.comment;
         this.oswiadczenieForm = this.fb.group({
           studentName: new FormControl('', [Validators.required,]),
           studentSurname: new FormControl('', [Validators.required,]),
@@ -57,6 +67,16 @@ export class OswiadczenieComponent implements OnInit {
           opiekunMail: new FormControl(value.opiekunMail, [Validators.required,]),
         });
 
+        this.authService.getResource('http://localhost:8080/api/user/'+value.ownerId).subscribe(
+          value => {
+            this.oswiadczenieForm.get("studentName").setValue(value.name);
+            this.oswiadczenieForm.get("studentSurname").setValue(value.surname);
+            console.log(value);
+          },
+          error => console.log(error),
+        );
+
+
         console.log(value);
       },
       error => console.log(error),
@@ -65,6 +85,7 @@ export class OswiadczenieComponent implements OnInit {
 
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
   }
 
 // metoda wysyłająca nasz obiekt oswiadczenieForm na server
@@ -137,10 +158,57 @@ export class OswiadczenieComponent implements OnInit {
     // );
   }
 
+  accept(){
+    this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/accept', {}).subscribe(
+      value => { console.log(value)
+        this.notifier.notify("success","Pomyślnie za akceptowano dokument Oświadczenie",)
+      },
+      error =>{ console.log(error)
+        this.notifier.notify("error",error.error,)
+      }
+    );
+  }
+  decline(){
+    this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/decline', {}).subscribe(
+      value => { console.log(value)
+        this.notifier.notify("success","Pomyślnie odrzucono dokument Oświadczenie",)
+      },
+      error =>{ console.log(error)
+        this.notifier.notify("error",error.error,)
+      }
+    );
+  }
+
+
+
   check(){
     if(this.oswiadczenieForm.invalid){
       alert("disabled");
     }
   }
+
+  warning() {
+    if(this.isAdmin) {
+      const dialogRef = this.dialog.open(EditCommentDialogComponent, {
+        width: '400px',
+        data: this.comment,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (!isUndefined(result)) {
+          this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/comment', result).subscribe(
+            value => { console.log(value)
+              this.notifier.notify("success","Pomyślnie zmieniono uwage",)
+            },
+            error =>{ console.log(error)
+              this.notifier.notify("error",error.error,)
+            }
+          );
+        }
+      });
+    }
+
+  }
+
 
 }

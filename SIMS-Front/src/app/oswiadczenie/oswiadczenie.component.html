@@ -39,11 +39,17 @@
   -->
 
 
-    <div>
+    <div *ngIf="!isAdmin">
       <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="oswiadczenieForm.invalid"><div (click)="check()"><div class="example">
         <h3 > Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
       </div></div></div> <div *ngIf="oswiadczenieForm.valid"> Wyślij </div> </button>
     </div>
+  <div *ngIf="isAdmin">
+    <button  class="btn btn-success " type="button" (click)="accept()">Akceptuj</button>
+    <button  class="btn btn-danger " type="button" (click)="decline()">Odrzuć</button>
+    <button  class="btn btn-warning " type="button" (click)="warning()">Dodaj uwage</button>
+  </div>
+
 
   <body class="a4">
 
@@ -203,7 +209,7 @@
 
   </body>
 
-    <div>
+  <div *ngIf="!isAdmin">
       <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="oswiadczenieForm.invalid"><div (click)="check()"><div class="example">
         <h3 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
       </div></div></div> <div > Wyślij </div> </button>

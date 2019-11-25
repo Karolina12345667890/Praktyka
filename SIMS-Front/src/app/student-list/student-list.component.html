@@ -57,7 +57,7 @@
       <ng-template #empty>
         Brak
       </ng-template>
-      <button type="button" class="btn btn-primary float-right" *ngIf="doc.status != 'EMPTY' " (click)="onClick(doc.link,doc.type)"  > Zobacz</button>
+      <button type="button" class="btn btn-primary float-right" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)"  > Zobacz</button>
       <button type="button"  class="btn btn-warning float-right" *ngIf="doc.comment != '' " (click)="showWarning(doc.comment)"  >Uwaga!</button>
 
     </td>
