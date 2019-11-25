@@ -83,7 +83,7 @@
         </ng-template>
 
 
-      <button type="button"  class="btn btn-warning warning" *ngIf="document.comment != ''" (click)="showWarning(document.comment)" style="margin-left: 50%" >Uwaga!</button>
+      <button type="button"  class="btn btn-warning warning" *ngIf="document.comment != '' && document.comment != null"  (click)="showWarning(document.comment)" style="margin-left: 50%" >Uwaga!</button>
 
 <!--    <div *ngIf="document.comment != null">-->
 <!--      {{document.comment}}-->

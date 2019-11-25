@@ -108,7 +108,7 @@ export class StudentListComponent implements OnInit {
 
 
 
-  showWarning(message: string,id :number) {
+  showWarning(message: string,id :number,docType:string) {
     if(this.isAdmin) {
       const dialogRef = this.dialog.open(EditCommentDialogComponent, {
         width: '400px',
@@ -117,7 +117,8 @@ export class StudentListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
-          this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+id+'/comment', result).subscribe(
+          console.log(result);
+          this.authService.postResource('http://localhost:8080/api/document/'+docType+'/'+id+'/comment', result).subscribe(
             value => { console.log(value);
               this.notifier.notify("success","Pomyślnie zmieniono uwage",);
               this.load();
