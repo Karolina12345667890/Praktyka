@@ -96,15 +96,13 @@
         Pracownikiem naszego zakładu pracy bezpośrednio nadzorującym i odpowiedzialnym za przebieg
         praktyk będzie:
         <div class="highLetters inline">
-          <input type="text" formControlName="carerName" placeholder="First name" required/> <input type="text"
-                                                                                                    formControlName="carerSurname"
-                                                                                                    placeholder="Last name"
-                                                                                                    required/>
+          <input type="text" formControlName="opiekunI" placeholder="First name" required/>
+          <input type="text"   formControlName="opiekunN" placeholder="Last name"  required/>
         </div>
 
         <div class="highLetters">
-          <span>tel.: <input type="number" formControlName="carerPhone" placeholder="Phone Number" required/></span>
-          <span>e-mail:  <input type="email" formControlName="carerEmail" placeholder="Email" required/></span>
+          <span>tel.: <input type="number" formControlName="opiekunTel" placeholder="Phone Number" required/></span>
+          <span>e-mail:  <input type="email" formControlName="opiekunMail" placeholder="Email" required/></span>
         </div>
       </div>
 
@@ -208,6 +206,6 @@
     <div>
       <button [disabled]="oswiadczenieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="oswiadczenieForm.invalid"><div (click)="check()"><div class="example">
         <h3 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
-      </div></div></div> <div *ngIf="oswiadczenieForm.valid"> Wyślij </div> </button>
+      </div></div></div> <div > Wyślij </div> </button>
     </div>
   </form>

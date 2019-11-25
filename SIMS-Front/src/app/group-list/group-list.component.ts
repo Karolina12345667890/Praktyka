@@ -43,7 +43,8 @@ export class GroupListComponent implements OnInit {
         });
       },
     error => console.log(error),
-  );}
+  );
+  }
 
 
   openStudentList(id: number) {

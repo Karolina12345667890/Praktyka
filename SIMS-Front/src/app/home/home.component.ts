@@ -4,6 +4,7 @@ import {DocumentDto} from '../models/DocumentDto';
 import {isUndefined} from "util";
 import {MatDialog} from "@angular/material/dialog";
 import {ShowCommentDialogComponent} from "../show-comment-dialog/show-comment-dialog.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-component',
@@ -16,15 +17,15 @@ export class HomeComponent implements OnInit {
   private myDocumentList = new Array<DocumentDto>();
 
 
-  constructor(private authService: LoginServiceService, public dialog: MatDialog) {
+  constructor(private authService: LoginServiceService, public dialog: MatDialog,private router: Router) {
   }
 
   ngOnInit() {
     if(this.authService.isLoggedIn()) {
-      this.authService.getResource('http://localhost:8080/test123').subscribe(
+      this.authService.getResource('http://localhost:8080/api/document/list').subscribe(
         value => {
           this.myDocumentList = value;
-          //  console.log(value);
+            console.log(value);
         },
         error => console.log(error),
       );
@@ -42,8 +43,9 @@ export class HomeComponent implements OnInit {
 
 
 
-  test12345() {
-
+  openDoc(id:string,docType:string) {
+    console.log(docType);
+    this.router.navigate(['/'+docType], {queryParams: {id: 1}});
   }
 
   onClick(path:string,documentType:string){

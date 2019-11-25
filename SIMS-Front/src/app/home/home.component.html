@@ -36,15 +36,19 @@
     <td  >
       <ng-container *ngIf="document.type === 'oswiadczenie';else POR">
         Oświadczenie
+        <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.link,document.type)">Wypełnij</button>
+
       </ng-container>
       <ng-template #POR>
         <ng-container *ngIf="document.type === 'porozumienie';else ZAS">
           Porozumienie
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.link,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>
       <ng-template #ZAS>
         <ng-container *ngIf="document.type === 'zaswiadczenie';else DZI">
           Zaświadczenie
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success"  style="margin-left: 75%" (click)="openDoc(document.link,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>
       <ng-template #DZI>
@@ -53,7 +57,7 @@
 
 <!--     {{document.type}}-->
       <div *ngIf="document.status != null">
-        <button type="button" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
+        <button type="button" style="margin-left: 90%" class="btn btn-primary" (click)="onClick(document.link,document.type)"> Pobierz</button>
       </div>
     </td>
     <td class="docs"
@@ -61,8 +65,8 @@
       document.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
       document.status == 'DECLINED' && {'background-color':'#dc3545'}">
 
-      <ng-container *ngIf="document.status === null;else NEW">
-        Brak
+      <ng-container *ngIf="document.status === 'DECLINED';else NEW">
+      Odrzucony
       </ng-container>
       <ng-template #NEW>
         <ng-container *ngIf="document.status === 'NEW';else ACCEPTED">
@@ -70,12 +74,12 @@
         </ng-container>
       </ng-template>
       <ng-template #ACCEPTED>
-        <ng-container *ngIf="document.status === 'ACCEPTED';else DECLINED">
+        <ng-container *ngIf="document.status === 'ACCEPTED';else empty">
           Zaakceptowany
         </ng-container>
       </ng-template>
-        <ng-template #DECLINED>
-          Odrzucony
+        <ng-template #empty>
+          Brak
         </ng-template>
 
 

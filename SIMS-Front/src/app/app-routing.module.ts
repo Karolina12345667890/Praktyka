@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'osw',
+    path: 'oswiadczenie',
     component: OswiadczenieComponent,
     canActivate: [AuthGuardService]
   },
@@ -32,7 +32,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'por',
+    path: 'porozumienie',
     component: PorozumienieComponent,
     canActivate: [AuthGuardService]
   },
