@@ -25,6 +25,7 @@ public class Group {
     private Integer durationInWeeks;
     private String fieldOfStudy;
     @Enumerated(EnumType.STRING)
+    private String speciality;
     private FormOfStudyEnum formOfStudy;
     private Date dateStart;
     private Boolean isOpen = false;
@@ -50,6 +51,7 @@ public class Group {
             durationInWeeks,
             fieldOfStudy,
             formOfStudy.name(),
+            speciality,
             isOpen,
             dateStart,
             "/api/group/" + id
