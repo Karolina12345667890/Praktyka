@@ -3,6 +3,7 @@ package uph.ii.SIMS.DocumentModule.Porozumienie;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import uph.ii.SIMS.DocumentModule.Dto.AccessDeniedException;
+import uph.ii.SIMS.DocumentModule.Dto.CantModifyAcceptedDocumentException;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
@@ -37,6 +38,9 @@ public class PorozumienieFacade {
         if (!userCanAccessDocument ) {
             throw new AccessDeniedException("You can't access this document");
         }
+        if(porozumienie.getStatusEnum().equals(StatusEnum.ACCEPTED)){
+            throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
+        }
         porozumienie.setCompanyName(porozumienieDto.getCompanyName());
         porozumienie.setCompanyLocationCity(porozumienie.getCompanyLocationCity());
         porozumienie.setCompanyLocationStreet(porozumienie.getCompanyLocationStreet());
@@ -46,6 +50,8 @@ public class PorozumienieFacade {
         
         porozumienie.setStudentInternshipStart(porozumienie.getStudentInternshipStart());
         porozumienie.setStudentInternshipEnd(porozumienie.getStudentInternshipEnd());
+        
+        porozumienie.setStatus(StatusEnum.NEW);
     }
     
     public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {

@@ -3,6 +3,7 @@ package uph.ii.SIMS.DocumentModule.Oswiadczenie;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import uph.ii.SIMS.DocumentModule.Dto.AccessDeniedException;
+import uph.ii.SIMS.DocumentModule.Dto.CantModifyAcceptedDocumentException;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
@@ -29,10 +30,15 @@ public class OswiadczenieFacade {
         if (!userCanAccessDocument ) {
             throw new AccessDeniedException("You can't access this document");
         }
+        if(oswiadczenie.getStatusEnum().equals(StatusEnum.ACCEPTED)){
+            throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
+        }
         oswiadczenie.setOpiekunI(oswiadczenieDto.getOpiekunI());
         oswiadczenie.setOpiekunN(oswiadczenieDto.getOpiekunN());
         oswiadczenie.setOpiekunMail(oswiadczenieDto.getOpiekunMail());
         oswiadczenie.setOpiekunTel(oswiadczenieDto.getOpiekunTel());
+        
+        oswiadczenie.setStatus(StatusEnum.NEW);
     }
     
     public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
