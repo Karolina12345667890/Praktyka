@@ -51,6 +51,7 @@ class Oswiadczenie extends Document {
         );
     }
     
+    
     @Override
     public String getType() {
         return DOCUMENT_TYPE;

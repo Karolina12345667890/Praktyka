@@ -94,6 +94,10 @@ public class UserService implements UserDetailsService {
     public List<User> listUsersWithIdInList(List<Long> ids){
         return userRepository.findAllByIdIn(ids);
     }
+    
+    public UserDto getUserById(Long id) {
+        return userRepository.findById(id).get().dto();
+    }
 
 
 //    @Bean

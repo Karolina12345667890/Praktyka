@@ -48,6 +48,6 @@ abstract public class Document {
     }
     
     public DocumentDto dto(){
-        return new DocumentDto(getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId());
+        return new DocumentDto(getId(), getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId());
     }
 }

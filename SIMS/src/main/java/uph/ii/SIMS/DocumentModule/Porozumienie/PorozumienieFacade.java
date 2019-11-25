@@ -68,9 +68,17 @@ public class PorozumienieFacade {
      * Zwraca dane porozumienia o podanym id
      *
      * @param id id szukanego porozumienia
+     * @param userDto
+     * @param userIsAdmin
      * @return DTO z danymi porozumienia o podanym id
      */
-    public PorozumienieDto find(Long id) {
+    public PorozumienieDto find(Long id, UserDto userDto, Boolean userIsAdmin) {
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        boolean userOwnsDocument = userDto.getId().equals(porozumienie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
         return porozumienieRepository.findById(id).porozumienieDto();
     }
     

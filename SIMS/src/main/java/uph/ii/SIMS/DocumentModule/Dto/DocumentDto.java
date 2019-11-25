@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class DocumentDto {
+    private Long id;
     private String comment;
     private String status;
     private String link;

@@ -66,8 +66,14 @@ public class OswiadczenieFacade {
      * @param id id szukanego oświadczenia
      * @return DTO z danymi oświadczenia o podanym id
      */
-    public OswiadczenieDto find(Long id) {
-        return oswiadczenieRepository.findById(id).oswiadczenieDto();
+    public OswiadczenieDto find(Long id, UserDto userDto, Boolean userIsAdmin) {
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        boolean userOwnsDocument = userDto.getId().equals(oswiadczenie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return oswiadczenie.oswiadczenieDto();
     }
     
     public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){

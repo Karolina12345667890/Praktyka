@@ -12,7 +12,6 @@ import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
-import uph.ii.SIMS.UserModule.GroupService;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 import java.text.SimpleDateFormat;
@@ -49,7 +48,9 @@ public class DocumentFacade {
      * @throws Exception
      */
     public byte[] printOswiadczenieToPdf(Long id) throws Exception {
-        var oswiadczenieDto = oswiadczenieFacade.find(id);
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        var oswiadczenieDto = oswiadczenieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(oswiadczenieDto.getId());
         var pdfDto = OswiadczeniePdfDto.builder()
             .studentName(userDto.getName())
@@ -71,7 +72,9 @@ public class DocumentFacade {
      * @throws Exception
      */
     public byte[] printPorozumienieToPdf(Long id) throws Exception {
-        var porozumienieDto = porozumienieFacade.find(id);
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        var porozumienieDto = porozumienieFacade.find(id, currentUser, isAdmin);
         var currentUserDto = userFacade.getCurrentUser();
         var groupDuration = userFacade.getGroupDurationFromId(porozumienieDto.getGroupId());
     
@@ -98,15 +101,10 @@ public class DocumentFacade {
         return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
     }
     
-    
-    /**
-     * Zwraca Dto oswiadczenia o podanym id, wywołuje {@link OswiadczenieFacade#find(Long)}
-     *
-     * @param id Id oswiadczenia
-     * @return Dto oswiadczenia
-     */
     public OswiadczenieDto fetchOswiadczenie(Long id) {
-        return oswiadczenieFacade.find(id);
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        return oswiadczenieFacade.find(id, currentUser, isAdmin);
     }
     
     /**
@@ -127,13 +125,15 @@ public class DocumentFacade {
     }
     
     /**
-     * Zwraca Dto porozumienia o podanym id, wywołuje {@link PorozumienieFacade#find(Long)}
+     * Zwraca Dto porozumienia o podanym id, wywołuje {@link PorozumienieFacade#find(Long, UserDto, Boolean)}
      *
      * @param id Id porozumienia
      * @return Dto porozumienia
      */
     public PorozumienieDto fetchPorozumienie(Long id) {
-        return porozumienieFacade.find(id);
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        return porozumienieFacade.find(id, currentUser, isAdmin);
     }
     
     /**
