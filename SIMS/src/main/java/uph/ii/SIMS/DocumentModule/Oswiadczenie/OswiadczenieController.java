@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
-import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieFillDto;
 import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Kontroler odpowiedzialny za dokument oświadczenia
@@ -34,7 +31,19 @@ class OswiadczenieController {
     }
     
     @PostMapping(value = "/{id}")
-    void storeOswiadczenie(@PathVariable Long id, OswiadczenieDto oswiadczenieDto) {
+    void storeOswiadczenie(@PathVariable Long id, OswiadczenieFillDto fillDto) {
+        OswiadczenieDto oswiadczenieDto = new OswiadczenieDto(
+            null,
+            null,
+            null,
+            fillDto.getOpiekunI(),
+            fillDto.getOpiekunN(),
+            fillDto.getOpiekunMail(),
+            fillDto.getOpiekunTel(),
+            fillDto.getStudentDuties(),
+            null,
+            null
+        );
         documentFacade.storeOswiadczenie(oswiadczenieDto);
         
     }
