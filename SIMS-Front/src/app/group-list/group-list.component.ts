@@ -38,6 +38,7 @@ export class GroupListComponent implements OnInit {
     this.authService.getResource('http://localhost:8080/api/groups').subscribe(
       value => {
         this.groupList = value;
+        console.log(value);
         this.groupList.forEach(v => {
           v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd').toString();
         });
@@ -69,12 +70,15 @@ export class GroupListComponent implements OnInit {
   openEditDialog(item: GroupDto) {
     if(this.isAdmin) {
       const dialogRef = this.dialog.open(EditGroupDialogComponent, {
-        width: '400px',
+        width: '600px',
         data: this.fb.group({
           id: item.id,
           groupName: new FormControl(item.groupName, [Validators.required,]),
           startDate: new FormControl(item.startDate, [Validators.required,]),
           durationInWeeks: new FormControl(item.durationInWeeks, [Validators.required,]),
+          fieldOfStudy : new FormControl(item.fieldOfStudy, [Validators.required,]),
+          formOfStudy :new FormControl(item.formOfStudy, [Validators.required,]),
+          speciality : new FormControl(item.speciality, [Validators.required,]),
           isOpen: item.isOpen,
         })
       });
@@ -103,12 +107,15 @@ export class GroupListComponent implements OnInit {
   openAddDialog() {
     if (this.isAdmin) {
       const dialogRef = this.dialog.open(EditGroupDialogComponent, {
-        width: '400px',
+        width: '600px',
         data: this.fb.group({
           id: null,
           groupName: new FormControl('', [Validators.required,]),
           startDate: new FormControl('', [Validators.required,]),
           durationInWeeks: new FormControl('', [Validators.required,]),
+          fieldOfStudy : new FormControl('', [Validators.required,]),
+          formOfStudy :new FormControl('FULL_TIME', [Validators.required,]),
+          speciality : new FormControl('', [Validators.required,]),
           isOpen: false,
         })
       });

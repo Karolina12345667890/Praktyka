@@ -25,7 +25,6 @@ public class Group {
     private Integer durationInWeeks;
     private String fieldOfStudy;
     @Enumerated(EnumType.STRING)
-    private String speciality;
     private FormOfStudyEnum formOfStudy;
     private String speciality;
     private Date dateStart;

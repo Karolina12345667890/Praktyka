@@ -45,11 +45,36 @@
       </div></div></div> <div *ngIf="oswiadczenieForm.valid"> Wyślij </div> </button>
     </div>
   <div *ngIf="isAdmin">
+  <div  class="btn-group btn-group-lg btn-block">
+
     <button  class="btn btn-success " type="button" (click)="accept()">Akceptuj</button>
     <button  class="btn btn-danger " type="button" (click)="decline()">Odrzuć</button>
-    <button  class="btn btn-warning " type="button" (click)="warning()">Dodaj uwage</button>
+    <button  class="btn btn-warning " type="button" (click)="warning()">Dodaj uwage i odrzuć</button>
+
   </div>
 
+  <div class="text-center" [ngStyle]="status == 'NEW' && {'background-color':'#2196F3'} ||
+     status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+      status == 'DECLINED' && {'background-color':'#dc3545'}">
+
+    <ng-container *ngIf="status === 'DECLINED';else NEW">
+      Odrzucony
+    </ng-container>
+    <ng-template #NEW>
+      <ng-container *ngIf="status === 'NEW';else ACCEPTED">
+        Nowy
+      </ng-container>
+    </ng-template>
+    <ng-template #ACCEPTED>
+      <ng-container *ngIf="status === 'ACCEPTED';else empty">
+        Zaakceptowany
+      </ng-container>
+    </ng-template>
+    <ng-template #empty>
+      Brak
+    </ng-template>
+  </div>
+  </div>
 
   <body class="a4">
 
@@ -84,10 +109,8 @@
       <div>
         Niniejszym wyrażam zgodę na przyjęcie studenta(ki):<br/>
         <div class="highLetters">
-          <input type="text" formControlName="studentName" placeholder="First name" required/> <input type="text"
-                                                                                                      formControlName="studentSurname"
-                                                                                                      placeholder="Last name"
-                                                                                                      required/>
+          <input type="text" formControlName="studentName" placeholder="First name" required disabled/>
+          <input type="text" formControlName="studentSurname" placeholder="Last name" required disabled/>
         </div>
       </div>
       <div>
@@ -95,7 +118,7 @@
         charakter wykonywanej pracy będzie zgodny z programem praktyki i będzie obejmował
         następujące obszary działalności:
         <ul id="activities">
-          <li><span><textarea rows="5" cols="90" formControlName="studentDuties" required></textarea></span></li>
+          <li><span><textarea rows="5" cols="90" formControlName="studentDuties" required ></textarea></span></li>
         </ul>
       </div>
       <div>

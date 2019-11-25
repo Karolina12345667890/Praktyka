@@ -11,6 +11,28 @@
     </div>
     <div class="input-group ">
       <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text "> Kierunek</label>
+      </div>
+      <input formControlName="fieldOfStudy" type="text" class="form-control">
+    </div>
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text "> Specialność</label>
+      </div>
+      <input formControlName="speciality" type="text" class="form-control">
+    </div>
+    <br>
+    <label class="container">
+      <input type="radio" name="formOfStudy" value="FULL_TIME" formControlName="formOfStudy"> Stacjonarne
+      <span class="checkmark"></span>
+    </label>
+    <label class="container">
+      <input type="radio" name="formOfStudy" value="PART_TIME" formControlName="formOfStudy"> Niestacjonarne
+      <span class="checkmark"></span>
+    </label>
+    <br>
+    <div class="input-group ">
+      <div class="input-group-prepend">
         <label  style="width: 120px;" class="input-group-text ">   Data startu:</label>
       </div>
       <input formControlName="startDate" type="date" class="form-control">
@@ -21,7 +43,7 @@
       </div>
       <input formControlName="durationInWeeks" type="number" class="form-control">
     </div>
-    <br>
+<br>
     <label class="container">
       <input type="radio" name="isOpen" [value]="false" formControlName="isOpen"> Zamknięta
       <span class="checkmark"></span>
@@ -37,6 +59,6 @@
 </div>
 <div mat-dialog-actions>
   <button class="btn btn-danger" (click)="onNoClick()">Anuluj</button>
-  <button class="btn btn-success" [disabled]="data.invalid" [mat-dialog-close]="data" style=" margin-left: 200px" >Wstaw</button>
+  <button class="btn btn-success" [disabled]="data.invalid" [mat-dialog-close]="data" style=" margin-left: 400px" >Wstaw</button>
 
 </div>

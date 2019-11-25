@@ -14,11 +14,18 @@
      Nazwa
    </th>
     <th>
+      Forma studiów
+    </th>
+    <th>
+      Kierunek
+    </th>
+    <th>
       Data startu
     </th>
     <th>
       Czas trwania w tygodniach
     </th>
+
     <th>
       Status
     </th>
@@ -33,11 +40,22 @@
       {{ item.groupName}}
     </td>
     <td>
+      <div *ngIf="item.formOfStudy === 'FULL_TIME'; then ft else pt"></div>
+      <ng-template #ft>  Stacjonarne </ng-template>
+      <ng-template #pt>  Niestacjonarne </ng-template>
+
+    </td>
+    <td>
+      {{ item.fieldOfStudy}}
+    </td>
+    <td>
       {{  item.startDate}}
     </td>
     <td>
       {{ item.durationInWeeks}}
     </td>
+
+
 
     <td class="docs"
         [ngStyle]="item.isOpen == true && {'background-color':'#42A948'} " >

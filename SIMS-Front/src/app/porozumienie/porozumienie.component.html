@@ -5,12 +5,42 @@
 <!--  <div class="example">-->
 <!--    <h3 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> gdy są zielone znaczy że wsyztko ok <input class=" example-valid" disabled  size="4"/></h3>-->
 <!--  </div>-->
-  <div>
+  <div *ngIf="!isAdmin">
     <button [disabled]="porozumienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="porozumienieForm.invalid"><div (click)="check()"><div class="example">
       <h3 > Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
     </div></div></div> <div *ngIf="porozumienieForm.valid"> Wyślij </div> </button>
   </div>
+  <div *ngIf="isAdmin">
+    <div  class="btn-group btn-group-lg btn-block">
 
+      <button  class="btn btn-success " type="button" (click)="accept()">Akceptuj</button>
+      <button  class="btn btn-danger " type="button" (click)="decline()">Odrzuć</button>
+      <button  class="btn btn-warning " type="button" (click)="warning()">Dodaj uwage i odrzuć</button>
+
+    </div>
+
+    <div class="text-center" [ngStyle]="status == 'NEW' && {'background-color':'#2196F3'} ||
+     status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+      status == 'DECLINED' && {'background-color':'#dc3545'}">
+
+      <ng-container *ngIf="status === 'DECLINED';else NEW">
+        Odrzucony
+      </ng-container>
+      <ng-template #NEW>
+        <ng-container *ngIf="status === 'NEW';else ACCEPTED">
+          Nowy
+        </ng-container>
+      </ng-template>
+      <ng-template #ACCEPTED>
+        <ng-container *ngIf="status === 'ACCEPTED';else empty">
+          Zaakceptowany
+        </ng-container>
+      </ng-template>
+      <ng-template #empty>
+        Brak
+      </ng-template>
+    </div>
+  </div>
 
   <body class="a4">
 
@@ -63,9 +93,9 @@
 
       Uniwersytet kieruje niżej wymienionych studentów kierunku Informatyka
       specjalności <span> <input type="text" formControlName="studentSpecialization"
-                                 placeholder="Student Specialization" required/> </span>
+                                 placeholder="Student Specialization" required disabled/> </span>
       na <span> <input type="number" formControlName="studentInternshipDuration" placeholder="Internship Duration"
-                       required/> </span> -tygodniową praktykę zawodową:
+                       required disabled/> </span> -tygodniową praktykę zawodową:
 
     <br><br>
     <table style="width: 100%; border: 1px solid black">
@@ -75,8 +105,8 @@
         <td>Okres praktyki</td>
       </tr>
       <tr>
-        <td><input type="text" formControlName="studentName" placeholder="First Name" required/><input type="text" formControlName="studentSurname" placeholder="Surname" required/></td>
-        <td ><input type="text" formControlName="studentStudyForm" placeholder="Study Form" required/></td>
+        <td><input type="text" formControlName="studentName" placeholder="First Name" required disabled/><input type="text" formControlName="studentSurname" placeholder="Surname" required disabled/></td>
+        <td ><input type="text" formControlName="studentStudyForm" placeholder="Study Form" required disabled/></td>
         <td ><input type="date" formControlName="studentInternshipStart" placeholder="Internship Start" required/> - <input type="date" formControlName="studentInternshipEnd" placeholder="InternshipEnd" required/></td>
       </tr>
     </table>
@@ -143,9 +173,14 @@
     </div>
 <br>
     <div style="float: none; margin-top: 4em">
-      <div class="toSignLeft">
-        <div>
-          ........................................................
+      <div>
+        <div class="toSignLeft">
+          <div>
+            ........................................................
+          </div>
+          <div>
+            (podpis i pieczątka Dziekana)
+          </div>
         </div>
 
         <div class="toSignRight">
@@ -154,16 +189,33 @@
           </div>
           <div>
             (podpis i pieczątka przedstawiciela
-            podmiotu przyjmującego na praktykę zawodową)
+                     podmiotu przyjmującego na praktykę zawodową)
           </div>
         </div>
       </div>
-    </div>
+<!--      <div class="toSignLeft">-->
+<!--        <div>-->
+<!--        <div>-->
+<!--          ........................................................-->
+<!--        </div>-->
+
+<!--        <div class="toSignRight">-->
+<!--          <div>-->
+<!--            ........................................................-->
+<!--          </div>-->
+<!--          <div>-->
+<!--            (podpis i pieczątka przedstawiciela-->
+<!--            podmiotu przyjmującego na praktykę zawodową)-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  </div>
   </div>
 
   </body>
 
-  <div>
+  <div *ngIf="!isAdmin">
     <button [disabled]="porozumienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="porozumienieForm.invalid"><div (click)="check()"><div class="example">
       <h3 > Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h3>
     </div></div></div> <div *ngIf="porozumienieForm.valid"> Wyślij </div> </button>

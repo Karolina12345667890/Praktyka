@@ -10,6 +10,7 @@ import {DatePipe} from "@angular/common";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {isUndefined} from "util";
 import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
+import {isEmpty} from "rxjs/operators";
 
 @Component({
   selector: 'app-student-list',
@@ -25,6 +26,9 @@ export class StudentListComponent implements OnInit {
   durationInWeeks: 0,
   startDate: "",
   isOpen: false,
+  fieldOfStudy : "",
+  formOfStudy :"",
+  speciality : "",
   students : []
 };
   studentList = new Array<StudentDto>();
@@ -104,7 +108,7 @@ export class StudentListComponent implements OnInit {
 
 
 
-  showWarning(message: string) {
+  showWarning(message: string,id :number) {
     if(this.isAdmin) {
       const dialogRef = this.dialog.open(EditCommentDialogComponent, {
         width: '400px',
@@ -113,9 +117,15 @@ export class StudentListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
-          //zmiana komentarza do dokumentu
-          this.notifier.notify("success","Pomyślnie zmieniono uwage",)
-         console.log(result);
+          this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+id+'/comment', result).subscribe(
+            value => { console.log(value);
+              this.notifier.notify("success","Pomyślnie zmieniono uwage",);
+              this.load();
+            },
+            error =>{ console.log(error)
+              this.notifier.notify("error",error.error,)
+            }
+          );
         }
     });
   }

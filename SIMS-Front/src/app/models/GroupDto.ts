@@ -7,5 +7,8 @@ export interface GroupDto {
   durationInWeeks: number;
   startDate: string;
   isOpen:boolean;
+  fieldOfStudy : string;
+  formOfStudy :string;
+  speciality : string;
   students : StudentDto [];
 }

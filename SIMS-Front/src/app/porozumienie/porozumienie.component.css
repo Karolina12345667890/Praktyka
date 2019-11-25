@@ -24,6 +24,11 @@ br {
 }
 
 
+.toSignLeft {
+  float: left;
+}
+
+
 .toSignRight {
   margin-left: 70%;
 }

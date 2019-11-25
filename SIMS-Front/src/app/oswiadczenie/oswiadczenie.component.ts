@@ -21,6 +21,8 @@ export class OswiadczenieComponent implements OnInit {
   isAdmin:boolean = false;
   id : number;
   comment : string;
+  status : string = "";
+
   private readonly notifier: NotifierService;
   oswiadczenieForm:FormGroup;
   oswiadczenie: oswiadczenieDto;
@@ -44,19 +46,21 @@ export class OswiadczenieComponent implements OnInit {
       opiekunMail: new FormControl('', [Validators.required,]),
     });
 
+  this.load();
+  }
+
+  load(){
     let id: number;
     this.activatedroute.queryParams.subscribe(v =>
-     id = v.id
+      id = v.id
     );
-
-
-
 
     this.authService.getResource('http://localhost:8080/api/document/oswiadczenie/'+id).subscribe(
       value => {
         this.oswiadczenie = value;
         this.id = value.id;
         this.comment = value.comment;
+        this.status = value.status;
         this.oswiadczenieForm = this.fb.group({
           studentName: new FormControl('', [Validators.required,]),
           studentSurname: new FormControl('', [Validators.required,]),
@@ -82,7 +86,6 @@ export class OswiadczenieComponent implements OnInit {
       error => console.log(error),
     );
   }
-
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
@@ -160,8 +163,9 @@ export class OswiadczenieComponent implements OnInit {
 
   accept(){
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/accept', {}).subscribe(
-      value => { console.log(value)
-        this.notifier.notify("success","Pomyślnie za akceptowano dokument Oświadczenie",)
+      value => { console.log(value);
+        this.notifier.notify("success","Pomyślnie za akceptowano dokument Oświadczenie",);
+        this.load();
       },
       error =>{ console.log(error)
         this.notifier.notify("error",error.error,)
@@ -171,7 +175,8 @@ export class OswiadczenieComponent implements OnInit {
   decline(){
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/decline', {}).subscribe(
       value => { console.log(value)
-        this.notifier.notify("success","Pomyślnie odrzucono dokument Oświadczenie",)
+        this.notifier.notify("success","Pomyślnie odrzucono dokument Oświadczenie",);
+        this.load();
       },
       error =>{ console.log(error)
         this.notifier.notify("error",error.error,)
@@ -179,13 +184,6 @@ export class OswiadczenieComponent implements OnInit {
     );
   }
 
-
-
-  check(){
-    if(this.oswiadczenieForm.invalid){
-      alert("disabled");
-    }
-  }
 
   warning() {
     if(this.isAdmin) {
@@ -197,8 +195,9 @@ export class OswiadczenieComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/comment', result).subscribe(
-            value => { console.log(value)
-              this.notifier.notify("success","Pomyślnie zmieniono uwage",)
+            value => { console.log(value);
+              this.notifier.notify("success","Pomyślnie dodano uwage",);
+              this.decline();
             },
             error =>{ console.log(error)
               this.notifier.notify("error",error.error,)
@@ -209,6 +208,14 @@ export class OswiadczenieComponent implements OnInit {
     }
 
   }
+
+  check(){
+    if(this.oswiadczenieForm.invalid){
+      alert("disabled");
+    }
+  }
+
+
 
 
 }
