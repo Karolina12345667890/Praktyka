@@ -49,7 +49,7 @@ class OswiadczenieController {
     }
     
     @PostMapping(value = "/{id}/comment")
-    void setOswiadczenieComment(@PathVariable Long id, @RequestBody String newComment) {
+    void setOswiadczenieComment(@PathVariable Long id, @RequestBody(required = false) String newComment) {
         documentFacade.setOswiadczenieComment(id, newComment);
     }
     

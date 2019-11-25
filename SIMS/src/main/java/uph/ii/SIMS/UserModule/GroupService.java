@@ -37,23 +37,16 @@ public class GroupService {
         Stream<GroupDto> groupDtoStream = groupRepository
             .findAll()
             .stream()
-            .map(group -> new GroupDto(
-                group.getId(),
-                group.getGroupName(),
-                group.getDurationInWeeks(),
-                group.getIsOpen(),
-                group.getDateStart(),
-                "/api/group/" + group.getId()
-            ));
+            .map(Group::dto);
         
         if (userService.currentUserIsStudent()) {
-            groupDtoStream = groupDtoStream.filter(groupDto -> groupDto.getIsOpen());
+            groupDtoStream = groupDtoStream.filter(GroupDto::getIsOpen);
         }
         
         return groupDtoStream.collect(Collectors.toList());
     }
     
-    public GroupWithStudentsDto getGroupById(Long id) {
+    public GroupWithStudentsDto getGroupByIdWithStudents(Long id) {
         Group group = groupRepository
             .getOne(id);
         
@@ -79,8 +72,14 @@ public class GroupService {
         return groupWithStudentsDto;
     }
     
+    
+    
     int getGroupDurationFromId(Long id){
         return groupRepository.getOne(id).getDurationInWeeks();
+    }
+    
+    GroupDto getGroupById(Long id){
+        return groupRepository.getOne(id).dto();
     }
     
     
@@ -113,6 +112,8 @@ public class GroupService {
         group.setDateStart(dto.getStartDate());
         group.setDurationInWeeks(dto.getDurationInWeeks());
         group.setIsOpen(dto.getIsOpen());
+        group.setFormOfStudy(dto.getFormOfStudy());
+        group.setFieldOfStudy(dto.getFieldOfStudy());
         groupRepository.save(group);
     }
     

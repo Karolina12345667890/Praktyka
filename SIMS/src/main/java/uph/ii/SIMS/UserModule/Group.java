@@ -3,6 +3,8 @@ package uph.ii.SIMS.UserModule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uph.ii.SIMS.UserModule.Dto.FormOfStudyEnum;
+import uph.ii.SIMS.UserModule.Dto.GroupDto;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,6 +23,9 @@ public class Group {
     private Long id;
     private String groupName;
     private Integer durationInWeeks;
+    private String fieldOfStudy;
+    @Enumerated(EnumType.STRING)
+    private FormOfStudyEnum formOfStudy;
     private Date dateStart;
     private Boolean isOpen = false;
     
@@ -36,5 +41,18 @@ public class Group {
     public void addStudent(User user) {
         user.getGroups().add(this);
         users.add(user);
+    }
+    
+    public GroupDto dto() {
+        return new GroupDto(
+            id,
+            groupName,
+            durationInWeeks,
+            fieldOfStudy,
+            formOfStudy.name(),
+            isOpen,
+            dateStart,
+            "/api/group/" + id
+        );
     }
 }

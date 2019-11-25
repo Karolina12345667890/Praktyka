@@ -1,8 +1,5 @@
 package uph.ii.SIMS.UserModule;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.UserModule.Dto.*;
 
 import java.util.List;
@@ -32,6 +29,10 @@ public class UserFacade {
         return user.dto();
     }
     
+    public GroupDto getGroupById(Long id) {
+        return groupService.getGroupById(id);
+    }
+    
     public List<GroupDto> getAllGroups() {
         return groupService.getAllGroups();
     }
@@ -40,8 +41,8 @@ public class UserFacade {
         groupService.persistGroup(dto);
     }
     
-    public GroupWithStudentsDto getGroupById(Long id) {
-        return groupService.getGroupById(id);
+    public GroupWithStudentsDto getGroupByIdWithStudents(Long id) {
+        return groupService.getGroupByIdWithStudents(id);
     }
     
     public List<GroupApplicationDto> getApplicationToGroup(Long groupId) {
@@ -61,7 +62,5 @@ public class UserFacade {
         groupService.acceptGroupApplication(groupApplicationId);
     }
     
-    public int getGroupDurationFromId(Long groupId) {
-        return groupService.getGroupDurationFromId(groupId);
-    }
+
 }

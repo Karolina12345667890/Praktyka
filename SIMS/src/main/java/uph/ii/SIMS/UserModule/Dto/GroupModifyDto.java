@@ -14,6 +14,8 @@ public class GroupModifyDto {
     private Long id;
     private String groupName;
     private Integer durationInWeeks;
+    private String fieldOfStudy;
+    private FormOfStudyEnum formOfStudy;
     private Boolean isOpen;
     private Date startDate;
 }

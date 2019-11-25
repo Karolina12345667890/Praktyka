@@ -51,7 +51,7 @@ public class DocumentFacade {
         UserDto currentUser = userFacade.getCurrentUser();
         Boolean isAdmin = userFacade.currentUserIsAdmin();
         var oswiadczenieDto = oswiadczenieFacade.find(id, currentUser, isAdmin);
-        var userDto = userFacade.getUserById(oswiadczenieDto.getId());
+        var userDto = userFacade.getUserById(oswiadczenieDto.getOwnerId());
         var pdfDto = OswiadczeniePdfDto.builder()
             .studentName(userDto.getName())
             .studentSurname(userDto.getSurname())
@@ -75,16 +75,16 @@ public class DocumentFacade {
         UserDto currentUser = userFacade.getCurrentUser();
         Boolean isAdmin = userFacade.currentUserIsAdmin();
         var porozumienieDto = porozumienieFacade.find(id, currentUser, isAdmin);
-        var currentUserDto = userFacade.getCurrentUser();
-        var groupDuration = userFacade.getGroupDurationFromId(porozumienieDto.getGroupId());
+        var userDto = userFacade.getUserById(porozumienieDto.getOwnerId());
+        var groupDuration = userFacade.getGroupById(porozumienieDto.getGroupId()).getDurationInWeeks();
     
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String dateStartFormatted = dateFormat.format(porozumienieDto.getStudentInternshipStart());
         String dateEndFormatted = dateFormat.format(porozumienieDto.getStudentInternshipEnd());
     
         var pdfDto = PorozumieniePdfDto.builder()
-            .studentName(currentUserDto.getName())
-            .studentSurname(currentUserDto.getSurname())
+            .studentName(userDto.getName())
+            .studentSurname(userDto.getSurname())
             .studentSpecialization("")
             .studentInternshipDuration( groupDuration +  " tyg.")
             .studentInternshipStart(dateStartFormatted)
