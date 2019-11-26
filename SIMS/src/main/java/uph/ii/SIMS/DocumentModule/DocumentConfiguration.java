@@ -11,15 +11,18 @@ import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 /**
- * Klasa odpowiedzialna za utworzenie fasady modułu dokumentów
  *
+ * Klasa odpowiedzialna za utworzenie fasady modułu dokumentów
  */
 @Configuration
 @AllArgsConstructor
 class DocumentConfiguration {
     
+    private DocumentRepository documentRepository;
+    
     /**
      * Metoda oznaczona adnotacją {@link Bean}, wykorzystywana przez Spring, nie używać ręcznie. Kontener IoC springa zajmie się wstrzyknięciem wszystkich zależności
+     *
      * @return Fasada modułu działająca na bazie danych
      */
     @Bean
@@ -27,22 +30,23 @@ class DocumentConfiguration {
                                   PorozumienieFacade porozumienieFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(pdfBuilder, oswiadczenieFacade, porozumienieFacade, userFacade);
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade);
     }
     
     /**
      * Metoda tworząca fasadę podmodułu działającą na repozytorium w pamięci wykorzystywana w testach
+     *
      * @return Fasada modułu na potrzeby testów, działająca w pamięci
      */
     DocumentFacade documentFacadeInMemoryIO(PdfBuilder pdfBuilder, UserFacade userFacade) {
         OswiadczenieFacade oswiadczenieFacadeInMemoryIO =
-            new OswiadczenieConfiguration(userFacade).oswiadczenieFacadeInMemoryIO();
+            new OswiadczenieConfiguration().oswiadczenieFacadeInMemoryIO();
         
-        PorozumienieFacade porozumienieFacadeInMemoryIO = new PorozumienieConfiguration(userFacade)
+        PorozumienieFacade porozumienieFacadeInMemoryIO = new PorozumienieConfiguration()
             .porozumienieFacadeInMemoryIO();
         
         
-        return new DocumentFacade(pdfBuilder, oswiadczenieFacadeInMemoryIO, porozumienieFacadeInMemoryIO, userFacade);
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade);
     }
 }
     

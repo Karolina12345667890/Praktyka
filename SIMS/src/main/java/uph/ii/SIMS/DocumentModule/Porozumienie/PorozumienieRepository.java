@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
 /**
+ *
  * <p>
  * Interfejs zawierający metody związane z persystencją dla encji {@link Porozumienie porozumienia}
  * </p>
@@ -14,6 +15,7 @@ import org.springframework.data.repository.Repository;
  */
 interface PorozumienieRepository extends Repository<Porozumienie, Long> {
     /**
+     *
      * Zapisuje Porozumienie do repozytorium
      *
      * @param porozumienie do zapisania
@@ -22,6 +24,7 @@ interface PorozumienieRepository extends Repository<Porozumienie, Long> {
     Porozumienie save(Porozumienie porozumienie);
     
     /**
+     *
      * Wyszukuje Porozumienie o podanym Id
      *
      * @param id Id Porozumienie
@@ -30,6 +33,7 @@ interface PorozumienieRepository extends Repository<Porozumienie, Long> {
     Porozumienie findById(Long id);
     
     /**
+     *
      * Wyszukuje wszystkie Porozumienia i dzieli je odpowiednio na strony
      *
      * @param pageable Obiekt klasy implementującej interfejs {@link org.springframework.data.domain.Pageable},
@@ -40,6 +44,7 @@ interface PorozumienieRepository extends Repository<Porozumienie, Long> {
     Page<Porozumienie> findAll(Pageable pageable);
     
     /**
+     *
      * Wyszukuje wszystkie Porozumienia danego użytkownika i dzieli je odpowiednio na strony
      *
      * @param ownerId  Id użytkownika, którego oświadczenia chcemy znaleźć

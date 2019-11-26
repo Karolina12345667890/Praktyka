@@ -1,8 +1,65 @@
-<ul>
-  <li><a routerLink="/home">Home</a></li>
-  <li><a *ngIf="loggedIn" routerLink="/osw">Oświadczenie</a></li>
-  <li><a *ngIf="loggedIn" routerLink="/por">Porozumienie</a></li>
-  <li><a *ngIf="loggedIn" routerLink="/upload">Upload</a></li>
-  <li><a *ngIf="!loggedIn" routerLink="/login">Login</a></li>
-  <li><a *ngIf="loggedIn" (click)="logOut()">Logout</a></li>
-</ul>
+<!--
+<div class="navbar navbar-expand-lg bg-dark" >
+  <div class="container">
+   <div class="navbar-collapse collapse">
+    <ul class="navbar-nav mr-auto">
+  <li class="nav-item"><a class="nav-link" routerLink="/home">Home</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/osw">Oświadczenie</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/por">Porozumienie</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/zas">Zaświadczenie</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/ankietastudent">Ankieta dla studenta</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/ankietaprac">Ankieta dla pracodawcy</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/upload">Upload</a></li>
+     </ul>
+     <ul class="nav navbar-nav float-right">
+  <li class="nav-item"><a class="nav-link" *ngIf="!loggedIn" routerLink="/login">Login</a></li>
+  <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" (click)="logOut()">Logout</a></li>
+   </ul>
+  </div>
+ </div>
+</div>
+
+-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+  <div class="container">
+
+
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="navbar-brand" routerLink="/home">Strona główna</a></li>
+
+<!--      <li *ngIf="loggedIn" class="nav-item dropdown">-->
+<!--        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >-->
+<!--          Dokumenty-->
+<!--        </a>-->
+<!--        <div class="dropdown-menu bg-dark" >-->
+<!--          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/osw">Oświadczenie</a>-->
+<!--          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/por">Porozumienie</a>-->
+<!--          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/zas">Zaświadczenie</a>-->
+<!--        </div>-->
+<!--      </li>-->
+<!--      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/osw">Oświadczenie</a></li>-->
+<!--      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/por">Porozumienie</a></li>-->
+<!--      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/zas">Zaświadczenie</a></li>-->
+      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/dziennik">Dziennik Praktyk</a></li>
+      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/upload">Wyślij dokumenty</a></li>
+      <li *ngIf="loggedIn" class="nav-item dropdown ">
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" >
+          Ankiety
+        </a>
+        <div class="dropdown-menu bg-dark" >
+          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietastudent">dla studenta</a>
+          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietaprac">dla pracodawcy</a>
+        </div>
+      </li>
+<!--      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/ankietastudent">Ankieta dla studenta</a></li>-->
+<!--      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/ankietaprac">Ankieta dla pracodawcy</a></li>-->
+<!--      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn && isAdmin" routerLink="/sl">Lista Studentów</a></li>-->
+      <li class="nav-item"><a class="nav-link" *ngIf="loggedIn" routerLink="/gl">Lista Grup</a></li>
+    </ul>
+    <ul class="nav navbar-nav float-right">
+      <li class="nav-item"><a class="nav-link" *ngIf="!loggedIn" (click)="login()" >Zaloguj</a></li>
+      <li class="nav-item"><a class="nav-link" style="cursor: pointer" *ngIf="loggedIn" (click)="logout()" href="http://localhost:4200/home">Wyloguj</a></li>
+    </ul>
+  </div>
+</nav>
+

@@ -1,32 +1,66 @@
 package uph.ii.SIMS.UserModule;
 
-import lombok.AllArgsConstructor;
-import uph.ii.SIMS.UserModule.Dto.UserDto;
+import uph.ii.SIMS.UserModule.Dto.*;
 
+import java.util.List;
 
-/**
- * Klasa zawiera wszystkie metody związane z użytkownikami. Odpowiada za komunikację z innymi modułami
- */
-//TODO Spring security
-@AllArgsConstructor
 public class UserFacade {
     
-    private UserRepository userRepository;
+    private UserService userService;
+    private GroupService groupService;
     
-    /**
-     * Zwraca dane aktualnie zalogowanego użytkownika
-     *
-     * @return dane aktualnie zalogowanego użytkownika
-     * @throws Exception
-     */
-    //TODO Obsluga błędów
-    public UserDto getCurrentUser() throws Exception {
-        return new UserDto(1L, "Maciej", "Nazarczuk", "abc@gmail.com");
-
-
-//        return userRepository.getUserById(1L)
-//            .map(user -> user.dto())
-//            .orElseThrow(() -> new Exception());
+    public UserFacade(UserService userService, GroupService groupService) {
+        this.userService = userService;
+        this.groupService = groupService;
     }
     
+    
+    public UserDto getCurrentUser() {
+        User user = (User) userService.loadCurrentUser();
+        return user.dto();
+    }
+    
+    public Boolean currentUserIsAdmin(){
+        return userService.currentUserIsAdmin();
+    }
+    
+    public UserDto getUserById(Long id) {
+        User user = userService.loadUserById(id);
+        return user.dto();
+    }
+    
+    public GroupDto getGroupById(Long id) {
+        return groupService.getGroupById(id);
+    }
+    
+    public List<GroupDto> getAllGroups() {
+        return groupService.getAllGroups();
+    }
+    
+    public void persistGroup(GroupModifyDto dto) {
+        groupService.persistGroup(dto);
+    }
+    
+    public GroupWithStudentsDto getGroupByIdWithStudents(Long id) {
+        return groupService.getGroupByIdWithStudents(id);
+    }
+    
+    public List<GroupApplicationDto> getApplicationToGroup(Long groupId) {
+        return groupService.groupApplications(groupId);
+    }
+    
+    public void applyToGroup(Long groupId) {
+        UserDto user = getCurrentUser();
+        groupService.addGroupApplication(user.getId(), groupId);
+    }
+    
+    public void addUserToGroup(Long groupId, Long studentId) throws Exception {
+        groupService.addUserToGroup(groupId, studentId);
+    }
+    
+    public void acceptGroupApplication(Long groupApplicationId) {
+        groupService.acceptGroupApplication(groupApplicationId);
+    }
+    
+
 }

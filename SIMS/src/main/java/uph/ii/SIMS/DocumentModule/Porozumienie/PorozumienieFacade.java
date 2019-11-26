@@ -2,12 +2,14 @@ package uph.ii.SIMS.DocumentModule.Porozumienie;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import uph.ii.SIMS.DocumentModule.Dto.AccessDeniedException;
+import uph.ii.SIMS.DocumentModule.Dto.CantModifyAcceptedDocumentException;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
-import uph.ii.SIMS.UserModule.UserFacade;
-
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
+import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 /**
+ *
  * <p>
  *     Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
  * </p>
@@ -17,33 +19,85 @@ import uph.ii.SIMS.UserModule.UserFacade;
  * @see PorozumienieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  *
  */
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class PorozumienieFacade {
     
     private PorozumienieRepository porozumienieRepository;
-    private UserFacade userFacade;
     
     /**
+     *
      * Persystuje oświadczenie utworzone na podstawie przekazanego DTO. Właścicielem oświadczenia staje się aktualny użytkownik.
      *
      * @param porozumienieDto Dane potrzebne do zapisania porozumienia
      * @throws Exception
      */
-    //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
-    public void save(PorozumienieDto porozumienieDto) throws Exception {
-        Long ownerId = userFacade.getCurrentUser().getId();
+    public void storeChanges(PorozumienieDto porozumienieDto, UserDto userDto, Boolean userIsAdmin) {
+        Porozumienie porozumienie = porozumienieRepository.findById(porozumienieDto.getId());
+        boolean userOwnsDocument = userDto.getId().equals(porozumienie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        if(porozumienie.getStatusEnum().equals(StatusEnum.ACCEPTED)){
+            throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
+        }
+        porozumienie.setCompanyName(porozumienieDto.getCompanyName());
+        porozumienie.setCompanyLocationCity(porozumienieDto.getCompanyLocationCity());
+        porozumienie.setCompanyLocationStreet(porozumienieDto.getCompanyLocationStreet());
         
-        porozumienieRepository.save(new Porozumienie(
-            ownerId
-        ));
+        porozumienie.setCompanyRepresentantName(porozumienieDto.getCompanyRepresentantName());
+        porozumienie.setCompanyRepresentantSurname(porozumienieDto.getCompanyRepresentantSurname());
+        
+        porozumienie.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
+        porozumienie.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
+        
+        porozumienie.setStatus(StatusEnum.NEW);
+        porozumienieRepository.save(porozumienie);
+    }
+    
+    public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {
+        Porozumienie porozumienie = new Porozumienie(
+            studentId
+        );
+        porozumienie.setComment(porozumienieDto.getComment());
+        porozumienie.setGroupId(groupId);
+        porozumienieRepository.save(porozumienie);
     }
     
     /**
+     *
      * Zwraca dane porozumienia o podanym id
      *
      * @param id id szukanego porozumienia
+     * @param userDto
+     * @param userIsAdmin
      * @return DTO z danymi porozumienia o podanym id
      */
-    public PorozumienieDto find(Long id) {
-        return porozumienieRepository.findById(id).dto();
+    public PorozumienieDto find(Long id, UserDto userDto, Boolean userIsAdmin) {
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        boolean userOwnsDocument = userDto.getId().equals(porozumienie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return porozumienieRepository.findById(id).porozumienieDto();
+    }
+    
+    public void setComment(Long id, String newComment, Boolean userIsAdmin) {
+        if(!userIsAdmin){
+            throw new AccessDeniedException("Only admin can set comments on documents");
+        }
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        porozumienie.setComment(newComment);
+        porozumienieRepository.save(porozumienie);
+    }
+    
+    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
+        if(!userIsAdmin){
+            throw new AccessDeniedException("Only admin can change status of documents");
+        }
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        porozumienie.setStatus(status);
+        porozumienieRepository.save(porozumienie);
     }
 }

@@ -1,0 +1,79 @@
+<h1 mat-dialog-title class="text-center" >Dodaj/Edytuj Grupe</h1>
+<hr>
+<div mat-dialog-content>
+
+  <div [formGroup]="data" >
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text ">   Nazwa Grupy:</label>
+      </div>
+      <input formControlName="groupName" class="form-control">
+    </div>
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text "> Kierunek:</label>
+      </div>
+      <input formControlName="fieldOfStudy" type="text" class="form-control">
+    </div>
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text "> Specialność:</label>
+      </div>
+      <input formControlName="speciality" type="text" class="form-control">
+    </div>
+
+
+    <div class="input-group" >
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text ">  Forma Studiów:</label>
+      </div>
+<div class="form-control" style="height: 45px">
+    <label class="container d-inline" >
+      <input type="radio" name="formOfStudy" value="FULL_TIME" formControlName="formOfStudy"> Stacjonarne
+      <span class="checkmark" ></span>
+    </label>
+    <label class="container d-inline" >
+      <input type="radio" name="formOfStudy" value="PART_TIME" formControlName="formOfStudy"> Niestacjonarne
+      <span class="checkmark"></span>
+    </label>
+    </div>
+
+    </div>
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text ">   Data startu:</label>
+      </div>
+      <input formControlName="startDate" type="date" class="form-control">
+    </div>
+    <div class="input-group ">
+      <div class="input-group-prepend">
+        <label  style="width: 120px; height: 60px;" class="input-group-text "> Czas trwania
+        <br> w tygodniach:
+        </label>
+      </div>
+      <input formControlName="durationInWeeks" type="number" class="form-control" style="height: 60px">
+    </div>
+    <div class="input-group" >
+      <div class="input-group-prepend">
+        <label  style="width: 120px;" class="input-group-text ">  Status:</label>
+      </div>
+      <div class="form-control" style="height: 45px">
+    <label class="container d-inline">
+      <input type="radio" name="isOpen" [value]="false" formControlName="isOpen"> Zamknięta
+      <span class="checkmark"></span>
+    </label>
+    <label class="container d-inline" style="margin-left: 10%">
+      <input type="radio" name="isOpen" [value]="true" formControlName="isOpen"> Otwarta
+      <span class="checkmark"></span>
+    </label>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button class="btn btn-danger" (click)="onNoClick()">Anuluj</button>
+  <button class="btn btn-success" [disabled]="data.invalid" [mat-dialog-close]="data" style=" margin-left: 400px" >Wstaw</button>
+
+</div>

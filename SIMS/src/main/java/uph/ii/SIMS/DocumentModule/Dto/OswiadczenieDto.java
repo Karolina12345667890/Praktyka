@@ -1,20 +1,30 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.*;
 
 /**
  * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu oswiadczenie
  */
 @Getter
-@Builder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 public class OswiadczenieDto {
     private Long id;
-    private String opiekunI;
-    private String opiekunN;
-    private String opiekunMail;
-    private String opiekunTel;
+    private Long groupId;
+    private Long ownerId;
+    private String opiekunI = "";
+    private String opiekunN = "";
+    private String opiekunMail = "";
+    private String opiekunTel = "";
+    private String studentDuties = "";
+    private String comment = "";
+    private String status = "";
     
+    public OswiadczenieDto(Long id, Long groupId, Long ownerId) {
+        this.id = id;
+        this.groupId = groupId;
+        this.ownerId = ownerId;
+    }
 }

@@ -1,0 +1,421 @@
+<div class="container" style="margin-top: 100px">
+
+  <h3 class="text-center">Wydziałowa ankieta oceny efektów praktyk przez studentów</h3>
+  {{questionNumber}}/{{totalQuestions}} <br><br>
+
+  <button *ngIf="questionNumber!=totalQuestions" (click)="nextQuestion()" class="btn btn-primary ">Następne</button>
+  <div class="float-right">
+    <button (click)="peviousQuestion()" class="btn btn-warning ">Wstecz</button>
+  </div>
+
+  <form [formGroup]="ankietaStudentForm" (ngSubmit)="onSubmit()">
+
+    <div class="toLeft " *ngIf="questionNumber==totalQuestions">
+      <button type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
+
+    </div>
+    <br *ngIf="questionNumber==totalQuestions">
+    <hr>
+    <div id="question1" *ngIf="questionNumber==0" class="cross-validation">
+      <div class="example text-center" >
+        <h4 class="text-danger"> Wypełnij wysztykie pola zaznaczone Czerwoną kreską  <input class="example-invalid" disabled  size="4" /> aż zmienią sie na zielone <input class=" example-valid" disabled  size="4"/></h4>
+      </div>
+
+
+      <div>Imię i nazwisko<br>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control" formControlName="studentName" placeholder="First name" required/>
+          </div>
+          <div class="form-group col-md-3">
+            <input type="text" class="form-control" formControlName="studentSurname" placeholder="Last name" required/>
+          </div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div *ngIf="getstudentName.invalid && (getstudentName.dirty || getstudentName.touched)"
+             class="alert alert-danger form-group col-md-3">
+          <div *ngIf="getstudentName.errors.required"  class="text-center  fontSize">
+            Imie jest wymagane!
+          </div>
+        </div>
+        <div  *ngIf="getstudentSurname.invalid && (getstudentSurname.dirty || getstudentSurname.touched)"
+              class=" form-group col-md-3 alert alert-danger">
+          <div *ngIf="getstudentSurname.errors.required" class="text-center fontSize">
+            Nazwisko jest wymagane!
+          </div>
+        </div>
+      </div>
+
+
+      <div>Kierunek studiów<br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <input type="text" formControlName="studentSpecialization" class="form-control"
+                   placeholder="Informatyka" required/>
+          </div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div  *ngIf="getstudentSpecialization.invalid && (getstudentSpecialization.dirty || getstudentSpecialization.touched)"
+              class=" form-group col-md-6 alert alert-danger">
+          <div *ngIf="getstudentSpecialization.errors.required" class="text-center fontSize">
+            Kierunek studiów jest wymagany!
+          </div>
+        </div>
+      </div>
+
+
+      <div>Rodzaj instytucji, w której była readivzowana praktyka (np. finansowa, urząd, zakład produkcyjny,
+        laboratorium)<br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <input type="text" formControlName="instytutionType" class="form-control"
+                   placeholder="finansowa, urząd, zakład produkcyjny, laboratorium" required/>
+          </div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div  *ngIf="getinstytutionType.invalid && (getinstytutionType.dirty || getinstytutionType.touched)"
+              class=" form-group col-md-6 alert alert-danger">
+          <div *ngIf="getinstytutionType.errors.required" class="text-center fontSize">
+            Rodzaj instytucji jest wymagany!
+          </div>
+        </div>
+      </div>
+
+      <div>Nazwa i adres zakładu pracy, w którym odbywał Pan(i) praktykę<br>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <textarea rows="2" cols="50" class="form-control" formControlName="companyNameAndLocation" placeholder=""
+                      required></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div  *ngIf="getcompanyNameAndLocation.invalid && (getcompanyNameAndLocation.dirty || getcompanyNameAndLocation.touched)"
+              class=" form-group col-md-6 alert alert-danger">
+          <div *ngIf="getcompanyNameAndLocation.errors.required" class="text-center fontSize">
+            Nazwa i adres zakładu pracy jest wymagane!
+          </div>
+        </div>
+      </div>
+
+      <div>Termin odbywania praktyki <br>
+        <div class="form-row">
+          <div class="form-group col-md-3">
+            <input type="date" class="form-control" formControlName="periodFrom" required/>
+          </div>
+          -
+          <div class="form-group col-md-3">
+            <input type="date" class="form-control" formControlName="periodTo" required/>
+          </div>
+        </div>
+      </div>
+
+      <div class=" form-row">
+        <div *ngIf="getperiodFrom.invalid && (getperiodFrom.dirty || getperiodFrom.touched)"
+             class="alert alert-danger form-group col-md-3">
+          <div *ngIf="getperiodFrom.errors.required"  class="text-center fontSize">
+            Termin od jest wymagany!
+          </div>
+        </div>
+        <div  *ngIf="getperiodTo.invalid && (getperiodTo.dirty || getperiodTo.touched)"
+              class=" form-group col-md-3 alert alert-danger">
+          <div *ngIf="getperiodTo.errors.required" class="text-center fontSize">
+            Termin do jest wymagany!
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="question2" *ngIf="questionNumber==1">Praktykę odbywał(a) Pan(i) w miejscu zamieszkania: <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo1" value="a" formControlName="answerTo1"> tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo1" value="b" formControlName="answerTo1"> nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question3" *ngIf="questionNumber==2">Atmosferę w miejscu odbywania praktyki ocenia Pan(i) jako:<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo2" value="a" formControlName="answerTo2"> bardzo dobrą
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="b" formControlName="answerTo2"> dobrą
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo2" value="c" formControlName="answerTo2"> niewłaściwą
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question4" *ngIf="questionNumber==3">Czy Zakładowy Opiekun Praktyk służył Panu(i) pomocą? <br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo3" value="a" formControlName="answerTo3"> tak, zawsze
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="b" formControlName="answerTo3"> tak, ale sporadycznie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="c" formControlName="answerTo3"> nie mogłe(a)m na pomoc divczyć
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo3" value="d" formControlName="answerTo3"> nie potrzebowałe(a)m pomocy, ale na
+        pewno by mi nie odmówił
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question5" *ngIf="questionNumber==4">Czy program praktyki był zreadivzowany?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo4" value="a" formControlName="answerTo4"> tak, całkowicie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo4" value="b" formControlName="answerTo4"> tak, w dużej części
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo4" value="c" formControlName="answerTo4"> tylko w nieznacznym stopniu
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question6" *ngIf="questionNumber==5">Czy miał Pan(i) problemy z przystosowaniem się do warunków pracy w
+      miejscu odbywania praktyki?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo5" value="a" formControlName="answerTo5"> tak (jakie?)
+        <span class="checkmark"></span>
+      </label>
+      <textarea class="form-control" formControlName="answerTo5atext" placeholder="...." rows="2"
+                cols="80"></textarea><br>
+      <label class="container">
+        <input type="radio" name="answerTo5" value="b" formControlName="answerTo5"> nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question7" *ngIf="questionNumber==6">Czy potrafił(a) Pan(i) pracować w zespole?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo6" value="a" formControlName="answerTo6"> zdecydowanie tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="b" formControlName="answerTo6"> raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="c" formControlName="answerTo6"> raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo6" value="d" formControlName="answerTo6">nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question8" *ngIf="questionNumber==7"> Czy readivzacja zadań stawianych przed Panem/ią na praktyce wymagała
+      od Pana(i) dodatkowego przygotowania się do niej?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo7" value="a" formControlName="answerTo7"> tak (na czym ono polegało?)
+        <span class="checkmark"></span>
+      </label>
+      <textarea class="form-control" formControlName="answerTo7atext" placeholder="...." rows="2"
+                cols="80"></textarea><br>
+      <label class="container">
+        <input type="radio" name="answerTo7" value="b" formControlName="answerTo7"> nie
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question9" *ngIf="questionNumber==8">Czy w trakcie praktyki wykorzystywał Pan(i) wiedzę i umiejętności
+      nabyte podczas zajęć na Uczelni?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo8" value="a" formControlName="answerTo8"> tak, w dużym stopniu
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="b" formControlName="answerTo8"> tak, w niewielkim stopniu
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo8" value="c" formControlName="answerTo8"> nie były mi one przydatne
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question10" *ngIf="questionNumber==9">Czy odbyta praktyka pozwodivła Panu(i) na podniesienie
+      poziomu:<br><br>
+      <div class="toLeft">
+        - wiedzy:
+      </div>
+      <div class="toRight">
+
+        <label class="container">
+          <input type="radio" name="answerTo91" value="a" formControlName="answerTo91"> zdecydowanie tak
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo91" value="b" formControlName="answerTo91"> raczej tak
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo91" value="c" formControlName="answerTo91"> raczej nie
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo91" value="d" formControlName="answerTo91"> nie
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+      <div class="toLeft">
+        - umiejętności:
+      </div>
+      <div class="toRight">
+
+        <label class="container">
+          <input type="radio" name="answerTo92" value="a" formControlName="answerTo92"> zdecydowanie tak
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo92" value="b" formControlName="answerTo92"> raczej tak
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo92" value="c" formControlName="answerTo92"> raczej nie
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo92" value="d" formControlName="answerTo92"> nie
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="toLeft">
+        - kompetencji społecznych:
+      </div>
+      <div class="toRight">
+
+        <label class="container">
+          <input type="radio" name="answerTo93" value="a" formControlName="answerTo93"> zdecydowanie tak
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo93" value="b" formControlName="answerTo93"> raczej tak
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo93" value="c" formControlName="answerTo93"> raczej nie
+          <span class="checkmark"></span>
+        </label>
+        <label class="container">
+          <input type="radio" name="answerTo93" value="d" formControlName="answerTo93"> nie
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+    </div>
+    <div id="question11" *ngIf="questionNumber==10">Czy i w jakim stopniu umiejętności nabyte podczas praktyk mogą
+      okazać się przydatne w dalszych studiach i/lub pracy zawodowej?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo10" value="a" formControlName="answerTo10"> tak, w dużym stopniu
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo10" value="b" formControlName="answerTo10"> tak, w niewielkim stopniu
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo10" value="c" formControlName="answerTo10"> nie będą mi one przydatne
+        <span class="checkmark"></span>
+      </label>
+
+    </div>
+    <div id="question12" *ngIf="questionNumber==11">Czy przebyta praktyka zachęciła Pana(ią) do wykonywania zawodu
+      związanego z wybranym kierunkiem studiów?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo11" value="a" formControlName="answerTo11"> zdecydowanie tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo11" value="b" formControlName="answerTo11"> raczej tak
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo11" value="c" formControlName="answerTo11"> raczej nie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo11" value="d" formControlName="answerTo11"> nie
+        <span class="checkmark"></span>
+      </label>
+
+
+      Proszę uzasadnić swój wybór
+      <textarea class="form-control" rows="2" cols="60" formControlName="answerTo11text" placeholder="...."></textarea>
+
+
+    </div>
+    <div id="question13" *ngIf="questionNumber==12">Czy jest Pan(i) zadowolony z odbytej praktyki?<br><br>
+      <label class="container">
+        <input type="radio" name="answerTo12" value="a" formControlName="answerTo12"> tak (dlaczego?)
+        <span class="checkmark"></span>
+      </label>
+      <textarea class="form-control" rows="2" cols="60" formControlName="answerTo12atext" placeholder="...."></textarea><br>
+      <label class="container">
+        <input type="radio" name="answerTo12" value="b" formControlName="answerTo12"> nie (dlaczego?)
+        <span class="checkmark"></span>
+      </label>
+      <textarea class="form-control" rows="2" cols="60" formControlName="answerTo12btext" placeholder="...."></textarea>
+    </div>
+    <div id="question14" *ngIf="questionNumber==13">Czy praktyki zawodowe są Pana(i) zdaniem potrzebne?<br><br>
+
+      <label class="container">
+        <input type="radio" name="answerTo13" value="a" formControlName="answerTo13"> tak, są niezbędne
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo13" value="b" formControlName="answerTo13"> nie mam zdania
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="answerTo13" value="c" formControlName="answerTo13"> są niepotrzebne
+        <span class="checkmark"></span>
+      </label>
+      Proszę uzasadnić swój wybór
+      <textarea class="form-control" rows="2" cols="60" formControlName="answerTo13text" placeholder="...."></textarea>
+
+    </div>
+    <div id="question15" *ngIf="questionNumber==14">Inne uwagi, wnioski, propozycje dotyczące praktyki zawodowej
+      ciągłej:<br><br>
+
+      <textarea class="form-control" rows="5" cols="60" formControlName="answerTo14text" placeholder="...."></textarea>
+
+
+    </div>
+  </form>
+
+</div>

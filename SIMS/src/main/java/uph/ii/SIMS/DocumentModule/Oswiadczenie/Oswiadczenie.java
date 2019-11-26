@@ -1,8 +1,6 @@
 package uph.ii.SIMS.DocumentModule.Oswiadczenie;
 
 import lombok.*;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 
@@ -22,30 +20,40 @@ import javax.persistence.Table;
 @EqualsAndHashCode(callSuper = true)
 class Oswiadczenie extends Document {
     
+    public static final String DOCUMENT_TYPE = "oswiadczenie";
     private String opiekunI;
     private String opiekunN;
     private String opiekunMail;
     private String opiekunTel;
+    private String studentDuties;
     
-    Oswiadczenie(Long owner, String opiekunI, String opiekunN, String opiekunMail, String opiekunTel) {
+    Oswiadczenie(Long owner) {
         super(owner);
-        this.opiekunI = opiekunI;
-        this.opiekunN = opiekunN;
-        this.opiekunMail = opiekunMail;
-        this.opiekunTel = opiekunTel;
     }
     
     /**
      * Metoda tworząca obiekt klasy {@link OswiadczenieDto}
+     *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie oswiadczenia, na którym wołana jest metoda
      */
-    OswiadczenieDto dto() {
-        return OswiadczenieDto.builder()
-            .id(this.id)
-            .opiekunI(this.opiekunI)
-            .opiekunN(this.opiekunN)
-            .opiekunMail(this.opiekunMail)
-            .opiekunTel(this.opiekunTel)
-            .build();
+    OswiadczenieDto oswiadczenieDto() {
+        return new OswiadczenieDto(
+            id,
+            groupId,
+            ownerId,
+            opiekunI,
+            opiekunN,
+            opiekunMail,
+            opiekunTel,
+            studentDuties,
+            comment,
+            getStatusString()
+        );
+    }
+    
+    
+    @Override
+    public String getType() {
+        return DOCUMENT_TYPE;
     }
 }

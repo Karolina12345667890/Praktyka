@@ -1,11 +1,41 @@
-<div>
+
+
+<div class="container" style="margin-top: 100px">
+
+
+
   <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">
-    <div>
-      <input type="file" name="file" (change)="onFileSelect($event)" />
+    <div class="row justify-content-center align-items-center">
+    <div class="custom-control-inline ">
+      <label class="container ">
+        <input type="radio" name="documentType" value="Oswiadczenie" formControlName="documentType"> Oświadczenie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="documentType" value="Porozumienie" formControlName="documentType"> Porozumienie
+        <span class="checkmark"></span>
+      </label>
+      <label class="container">
+        <input type="radio" name="documentType" value="Zaswiadczenie" formControlName="documentType"> Zaświadczenie
+        <span class="checkmark"></span>
+      </label>
+
     </div>
-    <div>
-      <button type="submit">Upload</button>
+    </div>
+    <br>
+<!--    <div>-->
+<!--      <input type="file" name="file" formControlName="file"/>-->
+<!--    </div>-->
+
+    <div class="custom-file">
+      <label class="custom-file-label" for="customFile">Wybierz plik</label>
+      <input type="file" formControlName="file" class="custom-file-input" id="customFile" lang="pl-Pl">
+    </div>
+
+    <div><br>
+      <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="uploadForm.invalid">Wyślij</button>
     </div>
   </form>
 </div>
+
 

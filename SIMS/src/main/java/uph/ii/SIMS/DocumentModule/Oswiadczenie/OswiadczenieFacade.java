@@ -2,65 +2,90 @@ package uph.ii.SIMS.DocumentModule.Oswiadczenie;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import uph.ii.SIMS.DocumentModule.Dto.AccessDeniedException;
+import uph.ii.SIMS.DocumentModule.Dto.CantModifyAcceptedDocumentException;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
-import uph.ii.SIMS.UserModule.UserFacade;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
+import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 /**
  * <p>
- *     Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
+ * Klasa udostępniająca wszystkie operacje na dokumencie oświadczenia
  * </p>
  * <p>
- *     Wykorzystywana przez {@link uph.ii.SIMS.DocumentModule.DocumentFacade}.
+ * Wykorzystywana przez {@link uph.ii.SIMS.DocumentModule.DocumentFacade}.
  * </p>
- * @see OswiadczenieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  *
+ * @see OswiadczenieConfiguration klasa odpowiedzialna za tworzenie instancji fasady
  */
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
 public class OswiadczenieFacade {
     
     private OswiadczenieRepository oswiadczenieRepository;
-    private UserFacade userFacade;
     
-    /**
-     * Persystuje oświadczenie utworzone na podstawie przekazanego DTO. Właścicielem oświadczenia staje się aktualny użytkownik.
-     * @param dto Dane potrzebne do zapisania oświaczenia
-     * @throws Exception
-     */
-    //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
-    public void save(OswiadczenieDto dto) throws Exception {
-        Long ownerId = userFacade.getCurrentUser().getId();
-        oswiadczenieRepository.save(
-            new Oswiadczenie(
-                ownerId,
-                dto.getOpiekunI(),
-                dto.getOpiekunN(),
-                dto.getOpiekunMail(),
-                dto.getOpiekunTel())
-        );
+    public void storeChanges(OswiadczenieDto oswiadczenieDto, UserDto userDto, Boolean userIsAdmin) {
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(oswiadczenieDto.getId());
+        boolean userOwnsDocument = userDto.getId().equals(oswiadczenie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        if(oswiadczenie.getStatusEnum().equals(StatusEnum.ACCEPTED)){
+            throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
+        }
+        oswiadczenie.setOpiekunI(oswiadczenieDto.getOpiekunI());
+        oswiadczenie.setOpiekunN(oswiadczenieDto.getOpiekunN());
+        oswiadczenie.setOpiekunMail(oswiadczenieDto.getOpiekunMail());
+        oswiadczenie.setOpiekunTel(oswiadczenieDto.getOpiekunTel());
+        oswiadczenie.setStudentDuties(oswiadczenieDto.getStudentDuties());
+        
+        oswiadczenie.setStatus(StatusEnum.NEW);
+        oswiadczenieRepository.save(oswiadczenie);
     }
+    
+    public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
+        Oswiadczenie porozumienie = new Oswiadczenie(studentId);
+        
+        porozumienie.setComment(oswiadczenieDto.getComment());
+        porozumienie.setGroupId(groupId);
+        oswiadczenieRepository.save(porozumienie);
+    }
+    
+    
+    public void setComment(Long id, String newComment, Boolean userIsAdmin) {
+        if(!userIsAdmin){
+            throw new AccessDeniedException("Only admin can set comments on documents");
+        }
+    
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        oswiadczenie.setComment(newComment);
+        oswiadczenieRepository.save(oswiadczenie);
+    }
+    
     
     /**
      * Zwraca dane oświadczenia o podanym id
+     *
      * @param id id szukanego oświadczenia
      * @return DTO z danymi oświadczenia o podanym id
      */
-    public OswiadczenieDto find(Long id) {
-        return oswiadczenieRepository.findById(id).dto();
+    public OswiadczenieDto find(Long id, UserDto userDto, Boolean userIsAdmin) {
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        boolean userOwnsDocument = userDto.getId().equals(oswiadczenie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return oswiadczenie.oswiadczenieDto();
     }
     
-    /**
-     * Zwraca listę (z paginacją) dokumentów aktualnie zalogowanego użytkownika
-     * @return dokumentów aktualnie zalogowanego użytkownika
-     * @throws Exception
-     */
-    //TODO Zająć się obsługą wyjątku (dodać controller advice, doprecyzować klasę/klasy wyjątków1)
-    public Page<OswiadczenieDto> findMyDocuments() throws Exception {
-        Long ownerId = userFacade.getCurrentUser().getId();
-        PageRequest pageRequest = PageRequest.of(0, 10);
-        
-        return oswiadczenieRepository.findAllByOwnerId(ownerId, pageRequest)
-            .map(Oswiadczenie::dto);
+    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
+        if(!userIsAdmin){
+            throw new AccessDeniedException("Only admin can change status of documents");
+        }
+    
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        oswiadczenie.setStatus(status);
+        oswiadczenieRepository.save(oswiadczenie);
     }
 }

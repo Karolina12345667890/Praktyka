@@ -1,11 +1,44 @@
-<form [formGroup]="loginForm" (ngSubmit)="login()">
+<!--<div class="container">-->
+<!--  <div class="row justify-content-center align-items-center" style="height:500px">-->
+<!--    <div class="col-4">-->
+<!--      <h3>Zaloguj się.</h3>-->
+<!--      <div class="card">-->
+<!--        <div class="card-body">-->
+<!--          <form [formGroup]="loginForm" (ngSubmit)="login()">-->
+<!--            <div class="form-group">-->
+<!--              Email:<input type="text" class="form-control" formControlName="login" required>-->
+<!--            </div>-->
 
-  <input type="text" formControlName="login" placeholder="admin"/>
+<!--            <div *ngIf="getlogin.invalid && (getlogin.dirty || getlogin.touched)"-->
+<!--                 class=" form-control  alert-danger">-->
+<!--              <div *ngIf="getlogin.errors.required" class="text-center">-->
+<!--                Email jest wymagany!-->
+<!--              </div>-->
+<!--            </div>-->
 
-<br>
-  <input type="text" formControlName="password" placeholder="admin"/>
+<!--            <div class="form-group">-->
+<!--              Hasło:<input type="password" class="form-control" formControlName="password" required>-->
+<!--            </div>-->
 
-<br>
-    <button type="submit">login</button>
+<!--            <div *ngIf="getpassword.invalid && (getpassword.dirty || getpassword.touched)"-->
+<!--                 class=" form-control  alert-danger">-->
+<!--              <div *ngIf="getpassword.errors.required" class="text-center">-->
+<!--                Hasło jest wymagane!-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <br>-->
+<!--            <button type="submit" class="btn btn-primary form-control" [disabled]="loginForm.invalid">Zaloguj</button>-->
 
-</form>
+<!--          </form>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<button *ngIf="!isLoggedIn" (click)="login()" type="submit">Login</button>
+<div *ngIf="isLoggedIn">
+  <span>Welcome !!</span>
+  <a (click)="logout()" href="http://localhost:4200/home">Logout</a>
+  <br/>
+</div>
