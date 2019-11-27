@@ -201,6 +201,6 @@ export class StudentListComponent implements OnInit {
     this.studentList = this.studentList.filter( v =>
      v.surname.includes(this.foilterSurname)
     )
-    this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+
   }
 }
