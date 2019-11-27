@@ -41,7 +41,7 @@ export class StudentListComponent implements OnInit {
   isAdmin: boolean = false;
   pager: any = {};
   pagedItems: any[];
-  rememberSort:string = "";
+  rememberSort:string = "surname";
 
   constructor(private fb: FormBuilder, notifierService: NotifierService, private activatedroute: ActivatedRoute,
               private authService: LoginServiceService, private datePipe: DatePipe, public dialog: MatDialog,
@@ -54,7 +54,7 @@ export class StudentListComponent implements OnInit {
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
-    this.load();
+    this.load(false);
   }
 
   setPage(page: number) {
@@ -65,7 +65,7 @@ export class StudentListComponent implements OnInit {
     this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  load() {
+  load(filter:boolean) {
     if (this.isAdmin) {
       let groupId: number;
       this.activatedroute.queryParams.subscribe(v =>
@@ -91,6 +91,13 @@ export class StudentListComponent implements OnInit {
           });
           //
           this.group = value;
+          if(filter == true){
+            this.studentList = this.studentList.filter( v =>
+              v.surname.includes(this.foilterSurname)
+            );
+            this.setPage(1);
+          }
+
           if(this.rememberSort == 'surname'){
             this.sortOrderSurname = !this.sortOrderSurname;
             this.sortSurname();
@@ -122,7 +129,7 @@ export class StudentListComponent implements OnInit {
 
     this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
-        this.load();
+        this.load(false);
         this.notifier.notify("success", "Pomyślnie zaakceptowano studenta",)
       },
       error => {
@@ -154,7 +161,7 @@ export class StudentListComponent implements OnInit {
             value => {
               console.log(value);
               this.notifier.notify("success", "Pomyślnie zmieniono uwage",);
-              this.load();
+              this.load(false);
             },
             error => {
               console.log(error)
@@ -196,11 +203,10 @@ export class StudentListComponent implements OnInit {
 
   findSurname(){
     if(this.foilterSurname == ""){
-      this.load();
+      this.load(false);
+      return;
     }
-    this.studentList = this.studentList.filter( v =>
-     v.surname.includes(this.foilterSurname)
-    )
+    this.load(true);
 
   }
 }

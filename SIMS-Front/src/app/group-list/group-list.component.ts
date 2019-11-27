@@ -34,7 +34,7 @@ export class GroupListComponent implements OnInit {
 
 
     this.isAdmin = this.authService.isAdmin();
-  this.load();
+    this.load();
 
   }
 
@@ -43,23 +43,24 @@ export class GroupListComponent implements OnInit {
     this.authService.getResource('http://localhost:8080/api/groups').subscribe(
       value => {
         this.groupList = value;
+        this.groupList = value.reverse();
         this.setPage(this.pager.currentPage);
         this.groupList.forEach(v => {
           v.startDate = this.datePipe.transform(v.startDate, 'yyyy-MM-dd').toString();
         });
-       if(this.rememberSort == "data") {
-         this.sortOrderStartDate = !this.sortOrderStartDate;
-         this.sortStartDate()
-         // this.groupList.sort((a:GroupDto,b:GroupDto) => b.startDate.localeCompare(a.startDate));
-       }
-       else if(this.rememberSort == "status") {
-         this.soerOrderStatus = !this.soerOrderStatus;
-         this.sortStatus();
-       }
+        if(this.rememberSort == "data") {
+          this.sortOrderStartDate = !this.sortOrderStartDate;
+          this.sortStartDate()
+          // this.groupList.sort((a:GroupDto,b:GroupDto) => b.startDate.localeCompare(a.startDate));
+        }
+        else if(this.rememberSort == "status") {
+          this.soerOrderStatus = !this.soerOrderStatus;
+          this.sortStatus();
+        }
 
       },
-    error => console.log(error),
-  );
+      error => console.log(error),
+    );
   }
 
   setPage(page: number) {
@@ -73,7 +74,7 @@ export class GroupListComponent implements OnInit {
   openStudentList(id: number) {
     //  this.router.navigate(['/sl', {group : id}])
     if(this.isAdmin)
-    this.router.navigate(['/sl'], {queryParams: {groupId: id}});
+      this.router.navigate(['/sl'], {queryParams: {groupId: id}});
   }
 
 
@@ -90,7 +91,7 @@ export class GroupListComponent implements OnInit {
   soerOrderStatus: boolean = false;
   sortStatus(){
     if(this.soerOrderStatus)
-    this.groupList.sort((a:GroupDto,b:GroupDto) =>  (a.isOpen === b.isOpen)? 0 : a.isOpen? -1 : 1);
+      this.groupList.sort((a:GroupDto,b:GroupDto) =>  (a.isOpen === b.isOpen)? 0 : a.isOpen? -1 : 1);
     else
       this.groupList.sort((a:GroupDto,b:GroupDto) =>  (a.isOpen === b.isOpen)? 0 : a.isOpen? 1 : -1);
     this.soerOrderStatus = !this.soerOrderStatus;
@@ -102,7 +103,7 @@ export class GroupListComponent implements OnInit {
   sortOrderStartDate : boolean = false;
   sortStartDate(){
     if(this.sortOrderStartDate)
-     this.groupList.sort((a:GroupDto,b:GroupDto) => b.startDate.localeCompare(a.startDate));
+      this.groupList.sort((a:GroupDto,b:GroupDto) => b.startDate.localeCompare(a.startDate));
     else
       this.groupList.sort((a:GroupDto,b:GroupDto) => a.startDate.localeCompare(b.startDate))
     this.sortOrderStartDate = !this.sortOrderStartDate;
