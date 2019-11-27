@@ -66,3 +66,12 @@
 .container input:checked ~ .checkmark:after {
   display: block;
 }
+
+
+.changed{
+  position: relative;
+
+  border: 5px solid red;
+  background-color: red;
+  color: white;
+}

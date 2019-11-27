@@ -4,16 +4,28 @@
   <div class="display-4">Lista Studentów grupy: {{group.groupName}}</div>
   <br>
 </div>
-
-
-
+<div class="form-row" >
+<div class="form-group col-md-2">
+<input  class="form-control" type="text" [(ngModel)]="foilterSurname" placeholder="Nazwisko">
+</div>
+  <div class="form-group col-md-2">
+  <button class="btn btn-success" (click)="findSurname()" >Wyszukaj</button>
+  </div>
+</div>
+<div *ngIf="pager.pages && pager.pages.length"  class="btn-group  " role="group">
+  <button type="button" class="btn btn-secondary" (click)="setPage(1)">Pierwsza</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
+  <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
+</div>
 <table class="table table-hover table-striped ">
 
   <thead class="thead-dark">
   <tr>
-    <th width="10%"> Imie</th>
-    <th width="10%"> Nazwisko</th>
-<!--    <th width="16%"> Nazwa Firmy</th>-->
+    <th width="10%" > Imie</th>
+    <th width="10%" (click)="sortSurname()"> Nazwisko</th>
+    <th width="16%" (click)="sortCompanyName()"> Nazwa Firmy</th>
 
     <th  width="16%" class="docs"> Oświadczenie</th>
     <th  width="16%"  class="docs"> Porozumienie</th>
@@ -23,13 +35,16 @@
   </thead>
   <tbody >
 
-  <tr *ngFor="let item of studentList " >
+  <tr *ngFor="let item of pagedItems  " >
     <td>
       {{ item.name}}
     </td>
     <td>
       {{ item.surname }}
     </td>
+<td>
+  {{item.companyName}}
+</td>
 
     <td class="docs" *ngFor="let doc of item.documents " [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
      doc.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
@@ -62,7 +77,13 @@
   </tbody>
 
 </table>
-
+<div *ngIf="pager.pages && pager.pages.length"  class="btn-group  " role="group">
+  <button type="button" class="btn btn-secondary" (click)="setPage(1)">Pierwsza</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
+  <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
+</div>
 <div *ngIf="studentApplicationList.length != 0">
 <div class="container text-center" >
   <div class="display-4">Lista aplikujących do tej grupy</div>
@@ -107,4 +128,7 @@
   </tbody>
 
 </table>
+
+
 </div>
+

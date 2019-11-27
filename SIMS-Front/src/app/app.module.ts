@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShowCommentDialogComponent } from './show-comment-dialog/show-comment-dialog.component';
 import { EditCommentDialogComponent } from './edit-comment-dialog/edit-comment-dialog.component';
 import { EditGroupDialogComponent } from './edit-group-dialog/edit-group-dialog.component';
+import { PagerService} from "./pager-service.service";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -101,7 +102,7 @@ const customNotifierOptions: NotifierOptions = {
     FormsModule,
   ],
   entryComponents: [ GroupListComponent, EditGroupDialogComponent, StudentListComponent , EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent],
-  providers: [LoginServiceService, AuthGuardService, CookieService],
+  providers: [LoginServiceService, AuthGuardService, CookieService, PagerService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

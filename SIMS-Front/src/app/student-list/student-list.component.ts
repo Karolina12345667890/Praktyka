@@ -8,9 +8,10 @@ import {GroupDto} from "../models/GroupDto";
 import {GroupApplicationDto} from "../models/GroupApplicationDto";
 import {DatePipe} from "@angular/common";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {isUndefined} from "util";
+import {isNull, isUndefined} from "util";
 import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
 import {isEmpty} from "rxjs/operators";
+import {PagerService} from "../pager-service.service";
 
 @Component({
   selector: 'app-student-list',
@@ -22,96 +23,125 @@ export class StudentListComponent implements OnInit {
 
   group: GroupDto = {
     id: 0,
-  groupName: "",
-  durationInWeeks: 0,
-  startDate: "",
-  isOpen: false,
-  fieldOfStudy : "",
-  formOfStudy :"",
-  speciality : "",
-  students : []
-};
+    groupName: "",
+    durationInWeeks: 0,
+    startDate: "",
+    isOpen: false,
+    fieldOfStudy: "",
+    formOfStudy: "",
+    speciality: "",
+    changed:false,
+    students: []
+  };
   studentList = new Array<StudentDto>();
-  studentForm: FormGroup;
+
 
   studentApplicationList = new Array<GroupApplicationDto>();
   private readonly notifier: NotifierService;
-  isAdmin:boolean = false;
+  isAdmin: boolean = false;
+  pager: any = {};
+  pagedItems: any[];
+  rememberSort:string = "";
 
-  constructor(private fb: FormBuilder, notifierService: NotifierService,private activatedroute: ActivatedRoute,private authService: LoginServiceService, private datePipe: DatePipe , public dialog: MatDialog ,private router: Router) {
+  constructor(private fb: FormBuilder, notifierService: NotifierService, private activatedroute: ActivatedRoute,
+              private authService: LoginServiceService, private datePipe: DatePipe, public dialog: MatDialog,
+              private router: Router, private pagerService: PagerService) {
     this.notifier = notifierService;
 
-    this.studentForm = this.fb.group({
-      studentArray: this.fb.array([])
-    });
+
   }
 
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
-    this.studentList = [];
     this.load();
   }
 
- load() {
-   if (this.isAdmin) {
-     let groupId: number;
-     this.activatedroute.queryParams.subscribe(v =>
-       groupId = v.groupId
-     );
+  setPage(page: number) {
+    // get pager object from service
+    this.pager = this.pagerService.getPager(this.studentList.length, page);
 
-     this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
-       value => {
-         this.studentList.push(value.students);
-         this.studentList = value.students;
-         this.group = value;
-         console.log(this.studentList);
+    // get current page of items
+    this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+  }
 
-       },
-       error => console.log(error),
-     );
+  load() {
+    if (this.isAdmin) {
+      let groupId: number;
+      this.activatedroute.queryParams.subscribe(v =>
+        groupId = v.groupId
+      );
 
-     this.authService.getResource('http://localhost:8080/api/group/' + groupId + '/applications').subscribe(
-       value => {
-         this.studentApplicationList = value;
-         this.studentApplicationList.forEach(v => {
-           v.date = this.datePipe.transform(v.date, 'yyyy-MM-dd').toString();
-         })
-       },
-       error => console.log(error),
-     );
+      this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
+        value => {
+          this.studentList.push(value.students);
+          this.studentList = value.students;
+          this.setPage(this.pager.currentPage);
+          //do student companyName
+          this.studentList.forEach(v => {
+
+            this.authService.getResource('http://localhost:8080' + v.documents[1].link).subscribe(
+              value => {
+                if (!isNull(value.companyName) && value.status == "ACCEPTED") {
+                  v.companyName = value.companyName;
+                }else{
+                  v.companyName = "";
+                }
+              })
+          });
+          //
+          this.group = value;
+          if(this.rememberSort == 'surname'){
+            this.sortOrderSurname = !this.sortOrderSurname;
+            this.sortSurname();
+          }else if(this.rememberSort == 'companyname'){
+            this.sortOrderCompanyName = ! this.sortOrderCompanyName;
+            this.sortCompanyName();
+          }
+
+        },
+        error => console.log(error),
+      );
+
+      this.authService.getResource('http://localhost:8080/api/group/' + groupId + '/applications').subscribe(
+        value => {
+          this.studentApplicationList = value;
+          this.studentApplicationList.forEach(v => {
+            v.date = this.datePipe.transform(v.date, 'yyyy-MM-dd').toString();
+          })
+        },
+        error => console.log(error),
+      );
 
 
-   }
- }
+    }
+  }
 
 
-  onAcceptClick(path:string){
+  onAcceptClick(path: string) {
 
-    this.authService.postResource('http://localhost:8080'+path, {}).subscribe(
+    this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
-           this.load();
-            this.notifier.notify("success","Pomyślnie zaakceptowano studenta",)
-          },
-          error => { console.log(error)
-            this.notifier.notify("error","Coś poszło nietak",)
-          },
+        this.load();
+        this.notifier.notify("success", "Pomyślnie zaakceptowano studenta",)
+      },
+      error => {
+        console.log(error)
+        this.notifier.notify("error", "Coś poszło nietak",)
+      },
     );
 
 
-
   }
 
 
-
-  openDoc(id:number,docType:string) {
-    this.router.navigate(['/'+docType], {queryParams: {id: id}});
+  openDoc(id: number, docType: string) {
+    this.router.navigate(['/' + docType], {queryParams: {id: id}});
   }
 
 
-
-  showWarning(message: string,id :number,docType:string) {
-    if(this.isAdmin) {
+  showWarning(message: string, id: number, docType: string) {
+    if (this.isAdmin) {
       const dialogRef = this.dialog.open(EditCommentDialogComponent, {
         width: '400px',
         data: message,
@@ -120,19 +150,57 @@ export class StudentListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
           console.log(result);
-          this.authService.postResource('http://localhost:8080/api/document/'+docType+'/'+id+'/comment', result).subscribe(
-            value => { console.log(value);
-              this.notifier.notify("success","Pomyślnie zmieniono uwage",);
+          this.authService.postResource('http://localhost:8080/api/document/' + docType + '/' + id + '/comment', result).subscribe(
+            value => {
+              console.log(value);
+              this.notifier.notify("success", "Pomyślnie zmieniono uwage",);
               this.load();
             },
-            error =>{ console.log(error)
-              this.notifier.notify("error",error.error,)
+            error => {
+              console.log(error)
+              this.notifier.notify("error", error.error,)
             }
           );
         }
-    });
+      });
+    }
+
   }
 
-}
-}
+  sortOrderSurname: boolean = true;
 
+  sortSurname() {
+    if (this.sortOrderSurname) {
+      this.studentList.sort((a: StudentDto, b: StudentDto) => b.surname.localeCompare(a.surname))
+    } else {
+      this.studentList.sort((a: StudentDto, b: StudentDto) => a.surname.localeCompare(b.surname))
+    }
+    this.sortOrderSurname = !this.sortOrderSurname;
+    this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    this.rememberSort = "surname";
+  }
+
+  sortOrderCompanyName: boolean = true;
+  sortCompanyName() {
+    if (this.sortOrderCompanyName) {
+      this.studentList.sort((a: StudentDto, b: StudentDto) => b.companyName.localeCompare(a.companyName))
+    } else {
+      this.studentList.sort((a: StudentDto, b: StudentDto) => a.companyName.localeCompare(b.companyName))
+    }
+    this.sortOrderCompanyName = !this.sortOrderCompanyName;
+    this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
+    this.rememberSort = "companyname"
+  }
+
+  foilterSurname:string = "";
+
+  findSurname(){
+    if(this.foilterSurname == ""){
+      this.load();
+    }
+    this.studentList = this.studentList.filter( v =>
+     v.surname.includes(this.foilterSurname)
+    )
+
+  }
+}
