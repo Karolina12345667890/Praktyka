@@ -114,6 +114,7 @@ public class GroupService {
         group.setIsOpen(dto.getIsOpen());
         group.setFormOfStudy(dto.getFormOfStudy());
         group.setFieldOfStudy(dto.getFieldOfStudy());
+        group.setSpeciality(dto.getSpeciality());
         groupRepository.save(group);
     }
     
