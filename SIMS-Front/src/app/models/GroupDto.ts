@@ -10,5 +10,6 @@ export interface GroupDto {
   fieldOfStudy : string;
   formOfStudy :string;
   speciality : string;
+  changed : boolean;
   students : StudentDto [];
 }

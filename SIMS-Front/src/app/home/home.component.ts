@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 export class HomeComponent implements OnInit {
 
   private myDocumentList = new Array<DocumentDto>();
-
+  isAdmin:boolean = false;
 
   constructor(private authService: LoginServiceService, public dialog: MatDialog,private router: Router) {
   }
@@ -30,7 +30,10 @@ export class HomeComponent implements OnInit {
         error => console.log(error),
       );
     }
-
+    this.isAdmin = this.authService.isAdmin();
+    if(this.isAdmin){
+      this.router.navigate(['/gl']);
+    }
   }
 
 

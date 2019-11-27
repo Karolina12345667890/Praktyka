@@ -7,4 +7,6 @@ export interface StudentDto {
   email: string;
   album: number;
   documents: DocumentDto [];
+  // nie ma w baziedanych tego pola u studenta
+  companyName : string;
 }

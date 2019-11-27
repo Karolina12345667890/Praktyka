@@ -6,27 +6,36 @@
 <button *ngIf="isAdmin" class="btn btn-success" (click)="openAddDialog()">Dodaj Nowa Grupe </button>
   <br>  <br>
 </div>
+
+<div *ngIf="pager.pages && pager.pages.length" style="margin-left: 5%" class="btn-group  " role="group">
+    <button type="button" class="btn btn-secondary" (click)="setPage(1)">Pierwsza</button>
+    <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
+    <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
+    <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
+    <button type="button" class="btn btn-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
+</div>
+
 <table class="table table-hover table-striped ">
 
   <thead class="thead-dark">
   <tr>
-   <th>
+   <th style="width: 15%">
      Nazwa
    </th>
-    <th>
+    <th style="width: 10%">
       Forma studiów
     </th>
-    <th>
+    <th style="width: 15%">
       Kierunek
     </th>
-    <th>
+    <th (click)="sortStartDate()" style="width: 10%">
       Data startu
     </th>
-    <th>
+    <th style="width: 10%">
       Czas trwania w tygodniach
     </th>
 
-    <th>
+    <th (click)="sortStatus()" style="width: 15%">
       Status
     </th>
     <th>
@@ -35,12 +44,12 @@
   </tr>
   </thead>
   <tbody >
-  <tr *ngFor="let item of groupList ">
+  <tr *ngFor="let item of pagedItems ">
     <td>
       {{ item.groupName}}
     </td>
     <td>
-      <div *ngIf="item.formOfStudy === 'FULL_TIME'; then ft else pt"></div>
+      <div *ngIf="item.formOfStudy === 'FdivL_TIME'; then ft else pt"></div>
       <ng-template #ft>  Stacjonarne </ng-template>
       <ng-template #pt>  Niestacjonarne </ng-template>
 
@@ -72,6 +81,7 @@
       <div *ngIf="isAdmin">
       <button class="btn btn-warning" (click)="openEditDialog(item)">Edytuj </button>
       <button class="btn btn-primary" (click)="openStudentList(item.id)">Zobacz </button>
+        <div class="changed d-inline float-right" *ngIf="item.changed">!</div>
     </div>
       <div *ngIf="!isAdmin">
         <button class="btn btn-success" (click)="joinGroup(item.id)">Dołącz </button>
@@ -83,3 +93,11 @@
   </tbody>
 
 </table>
+<div *ngIf="pager.pages && pager.pages.length" style="margin-left: 5%" class="btn-group  " role="group">
+  <button type="button" class="btn btn-secondary" (click)="setPage(1)">Pierwsza</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
+  <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
+  <button type="button" class="btn btn-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
+</div>
+
