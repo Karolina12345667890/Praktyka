@@ -34,6 +34,7 @@ export class StudentListComponent implements OnInit {
     students: []
   };
   studentList = new Array<StudentDto>();
+  savedstudentList = new Array<StudentDto>();
 
 
   studentApplicationList = new Array<GroupApplicationDto>();
@@ -54,7 +55,7 @@ export class StudentListComponent implements OnInit {
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
-    this.load(false);
+    this.load();
   }
 
   setPage(page: number) {
@@ -65,7 +66,7 @@ export class StudentListComponent implements OnInit {
     this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
   }
 
-  load(filter:boolean) {
+  load() {
     if (this.isAdmin) {
       let groupId: number;
       this.activatedroute.queryParams.subscribe(v =>
@@ -74,8 +75,9 @@ export class StudentListComponent implements OnInit {
 
       this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
         value => {
-          this.studentList.push(value.students);
+          //this.studentList.push(value.students);
           this.studentList = value.students;
+          this.savedstudentList = value.students;
           this.setPage(this.pager.currentPage);
           //do student companyName
           this.studentList.forEach(v => {
@@ -91,12 +93,7 @@ export class StudentListComponent implements OnInit {
           });
           //
           this.group = value;
-          if(filter == true){
-            this.studentList = this.studentList.filter( v =>
-              v.surname.includes(this.foilterSurname)
-            );
-            this.setPage(1);
-          }
+
 
           if(this.rememberSort == 'surname'){
             this.sortOrderSurname = !this.sortOrderSurname;
@@ -129,7 +126,7 @@ export class StudentListComponent implements OnInit {
 
     this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
-        this.load(false);
+        this.load();
         this.notifier.notify("success", "Pomyślnie zaakceptowano studenta",)
       },
       error => {
@@ -161,7 +158,7 @@ export class StudentListComponent implements OnInit {
             value => {
               console.log(value);
               this.notifier.notify("success", "Pomyślnie zmieniono uwage",);
-              this.load(false);
+              this.load();
             },
             error => {
               console.log(error)
@@ -203,10 +200,13 @@ export class StudentListComponent implements OnInit {
 
   findSurname(){
     if(this.foilterSurname == ""){
-      this.load(false);
+      this.studentList = this.savedstudentList;
+      this.setPage(1);
       return;
     }
-    this.load(true);
-
+    this.studentList = this.savedstudentList.filter( v =>
+      v.surname.includes(this.foilterSurname)
+    );
+    this.setPage(1);
   }
 }
