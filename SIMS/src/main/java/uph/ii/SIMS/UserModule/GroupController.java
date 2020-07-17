@@ -35,7 +35,7 @@ public class GroupController {
     }
     
     @PostMapping("/api/groups")
-    public void modifyGroup(@RequestBody GroupModifyDto dto){
+    public void addGroup(@RequestBody GroupModifyDto dto){
         userFacade.persistGroup(dto);
     }
     
@@ -52,5 +52,10 @@ public class GroupController {
     @PostMapping("/api/group/{groupId}/applications/{appId}")
     public void acceptApplication(@PathVariable Long groupId, @PathVariable Long appId){
         userFacade.acceptGroupApplication(appId);
+    }
+
+    @PostMapping("/api/group/{groupId}/applications/decline/{appId}")
+    public void declineApplication(@PathVariable Long groupId, @PathVariable Long appId){
+        userFacade.declineGroupApplication(appId);
     }
 }

@@ -55,7 +55,11 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getRoles();
     }
-    
+
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String getPassword() {
         return password;
@@ -85,7 +89,9 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
+
+
+
     UserDto dto() {
         return new UserDto(
             id,

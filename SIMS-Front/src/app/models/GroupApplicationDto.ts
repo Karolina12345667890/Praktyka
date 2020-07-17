@@ -4,5 +4,6 @@ export interface GroupApplicationDto {
   studentSurname: string;
   studentAlbum: string;
   acceptLink: string;
+  declineLink: string;
   date : string;
 }

@@ -120,8 +120,8 @@ public class DocumentFacade {
         oswiadczenieFacade.storeChanges(oswiadczenieDto, currentUser, userIsAdmin);
     }
     
-    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
-        oswiadczenieFacade.createNew(oswiadczenieDto, studentId, groupId);
+    public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId, String groupName) {
+        oswiadczenieFacade.createNew(oswiadczenieDto, studentId, groupId, groupName);
     }
     
     /**
@@ -149,8 +149,8 @@ public class DocumentFacade {
         porozumienieFacade.storeChanges(porozumienieDto, currentUser, userIsAdmin);
     }
     
-    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId) {
-        porozumienieFacade.createNew(porozumienieDto, studentId, groupId);
+    public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId, String groupName) {
+        porozumienieFacade.createNew(porozumienieDto, studentId, groupId,groupName);
     }
     
     public List<DocumentDto> listMyDocuments() {

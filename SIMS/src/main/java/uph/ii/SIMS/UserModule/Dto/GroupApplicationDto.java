@@ -15,5 +15,6 @@ public class GroupApplicationDto {
     private String studentAlbum;
     private Long id;
     private String acceptLink;
+    private String declineLink;
     private Date date;
 }

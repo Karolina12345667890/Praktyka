@@ -43,12 +43,13 @@ public class OswiadczenieFacade {
         oswiadczenieRepository.save(oswiadczenie);
     }
     
-    public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId) {
-        Oswiadczenie porozumienie = new Oswiadczenie(studentId);
-        
-        porozumienie.setComment(oswiadczenieDto.getComment());
-        porozumienie.setGroupId(groupId);
-        oswiadczenieRepository.save(porozumienie);
+    public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId,String groupName) {
+        Oswiadczenie oswiadczenie = new Oswiadczenie(studentId);
+
+        oswiadczenie.setComment(oswiadczenieDto.getComment());
+        oswiadczenie.setGroupId(groupId);
+        oswiadczenie.setGroupName(groupName);
+        oswiadczenieRepository.save(oswiadczenie);
     }
     
     

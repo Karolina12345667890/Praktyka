@@ -51,7 +51,18 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findUserByLogin(username).orElseThrow(() -> new UsernameNotFoundException("invalid username or password"));
     }
-    
+
+    public User getCurrentUser() throws UsernameNotFoundException {
+        String principal = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userRepository
+                .findUserByLogin(principal)
+                .orElseThrow(
+                        () -> new UserNotFoundException("User " + principal + " does not exist")
+                );
+
+        return userRepository.findUserByLogin(currentUser.getUsername()).get();
+    }
+
     public User loadUserById(Long id) {
         return userRepository.getOne(id);
     }
@@ -80,15 +91,29 @@ public class UserService implements UserDetailsService {
         UserDetails userDetails = loadCurrentUser();
         boolean isAdmin = false;
         boolean isUser = false;
+        boolean isGroupAdmin = false;
         for(GrantedAuthority role: userDetails.getAuthorities()){
             switch (role.getAuthority()){
                 case "ROLE_ADMIN": isAdmin = true;
                 break;
-                case "ROLE_USER": isUser = true;
+                case "ROLE_GROUP_ADMIN": isGroupAdmin = true;
                 break;
+                case "ROLE_USER": isUser = true;
+                    break;
             }
         }
-        return isUser && !isAdmin;
+        return isUser && !isAdmin && !isGroupAdmin ;
+    }
+
+    public boolean currentUserIsGroupAdmin(){
+        UserDetails userDetails = loadCurrentUser();
+        boolean isGroupAdmin = false;
+        for(GrantedAuthority role: userDetails.getAuthorities()){
+            if ("ROLE_GROUP_ADMIN".equals(role.getAuthority())) {
+                isGroupAdmin = true;
+            }
+        }
+        return isGroupAdmin;
     }
     
     public List<User> listUsersWithIdInList(List<Long> ids){

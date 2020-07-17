@@ -20,8 +20,12 @@ public class GroupDto {
     private String formOfStudy;
     private String speciality;
     private Boolean isOpen;
+    private Boolean changed;
     private Date startDate;
     private String link;
+    private Long groupAdminId;
+    private String groupAdminName;
+    private String groupAdminSurname;
 }
 
 

@@ -55,12 +55,13 @@ public class PorozumienieFacade {
         porozumienieRepository.save(porozumienie);
     }
     
-    public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId)  {
+    public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId,String groupName)  {
         Porozumienie porozumienie = new Porozumienie(
             studentId
         );
         porozumienie.setComment(porozumienieDto.getComment());
         porozumienie.setGroupId(groupId);
+        porozumienie.setGroupName(groupName);
         porozumienieRepository.save(porozumienie);
     }
     

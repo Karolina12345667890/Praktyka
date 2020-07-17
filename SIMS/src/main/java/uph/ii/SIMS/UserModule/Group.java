@@ -29,6 +29,10 @@ public class Group {
     private String speciality;
     private Date dateStart;
     private Boolean isOpen = false;
+    private Boolean changed;
+    private Long groupAdminId;
+    private String groupAdminName;
+    private String groupAdminSurname;
     
     @ManyToMany(mappedBy = "groups")
     private Collection<User> users = new ArrayList<>();
@@ -53,8 +57,12 @@ public class Group {
             formOfStudy.name(),
             speciality,
             isOpen,
+            changed,
             dateStart,
-            "/api/group/" + id
+            "/api/group/" + id,
+                groupAdminId,
+                groupAdminName,
+                groupAdminSurname
         );
     }
 }

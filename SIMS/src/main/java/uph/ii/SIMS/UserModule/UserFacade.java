@@ -61,6 +61,10 @@ public class UserFacade {
     public void acceptGroupApplication(Long groupApplicationId) {
         groupService.acceptGroupApplication(groupApplicationId);
     }
+
+    public void declineGroupApplication(Long groupApplicationId) {
+        groupService.declineGroupApplication(groupApplicationId);
+    }
     
 
 }

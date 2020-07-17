@@ -7,6 +7,7 @@ import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 import uph.ii.SIMS.UserModule.Dto.*;
 
 import javax.persistence.EntityManager;
@@ -34,15 +35,40 @@ public class GroupService {
     }
     
     public List<GroupDto> getAllGroups() {
-        Stream<GroupDto> groupDtoStream = groupRepository
-            .findAll()
-            .stream()
-            .map(Group::dto);
-        
+        List<Group> groupDto = groupRepository
+            .findAll();
+        groupDto.forEach(group-> {
+                    if (group.getIsOpen()) {
+                        List<DocumentDto> documentDtos = documentFacade.listGroupDocuments(group.getId());
+                        for (int i = 0; i < documentDtos.size(); i++) {
+                           if(documentDtos.get(i).getStatus().equals(StatusEnum.NEW.toString())){
+                           group.setChanged(true);
+                           break;
+                        }
+                        };
+                    }
+            if(groupApplicationRepository.getAllByGroupId(group.getId()).size() > 0){
+                group.setChanged(true);
+            }
+
+                }
+        );
+
+
+
+        Stream<GroupDto> groupDtoStream = groupDto
+                .stream()
+                .map(Group::dto);
+
         if (userService.currentUserIsStudent()) {
             groupDtoStream = groupDtoStream.filter(GroupDto::getIsOpen);
         }
-        
+
+        if(userService.currentUserIsGroupAdmin()){
+            groupDtoStream = groupDtoStream.filter(GroupDto -> GroupDto.getGroupAdminId().equals(userService.getCurrentUser().getId()));
+        }
+
+
         return groupDtoStream.collect(Collectors.toList());
     }
     
@@ -93,11 +119,14 @@ public class GroupService {
         documentFacade.storeOswiadczenie(
             new OswiadczenieDto(null, groupId, studentId),
             studentId,
-            groupId);
+            groupId,
+                group.getGroupName()
+        );
         documentFacade.storePorozumienie(
             new PorozumienieDto(null, groupId, studentId, new Date(), new Date()),
             studentId,
-            groupId
+            groupId,
+                group.getGroupName()
         );
     }
     
@@ -115,6 +144,9 @@ public class GroupService {
         group.setFormOfStudy(dto.getFormOfStudy());
         group.setFieldOfStudy(dto.getFieldOfStudy());
         group.setSpeciality(dto.getSpeciality());
+        group.setGroupAdminId(userService.getCurrentUser().getId());
+        group.setGroupAdminName(userService.getCurrentUser().getName());
+        group.setGroupAdminSurname(userService.getCurrentUser().getSurname());
         groupRepository.save(group);
     }
     
@@ -129,7 +161,7 @@ public class GroupService {
             .collect(Collectors.toMap(
                 User::getId,
                 user -> user));
-        
+
         return applicationsByGroupId
             .stream()
             .map(e ->
@@ -139,6 +171,7 @@ public class GroupService {
                     usersApplying.get(e.getStudentId()).getAlbum(),
                     e.getId(),
                     "/api/group/" + e.getGroupId() + "/applications/" + e.getId(),
+                        "/api/group/" + e.getGroupId() + "/applications/decline/" + e.getId(),
                     e.getDate()))
             .collect(Collectors.toList());
     }
@@ -167,6 +200,16 @@ public class GroupService {
             }
         );
         
+    }
+
+    public void declineGroupApplication(Long groupApplicationId) {
+        Optional<GroupApplication> groupApplication = groupApplicationRepository.findById(groupApplicationId);
+        groupApplication.ifPresent(
+                app -> {
+                    groupApplicationRepository.delete(app);
+                }
+        );
+
     }
     
     

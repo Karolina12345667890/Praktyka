@@ -15,4 +15,5 @@ public class DocumentDto {
     private String type;
     private Long groupId;
     private Long ownerId;
+    private String groupName;
 }

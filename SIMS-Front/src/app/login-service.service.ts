@@ -138,7 +138,7 @@ export class LoginServiceService {
 
   isAdmin(){
     let tmp : string = this.getRoles();
-    if(tmp.includes("ROLE_ADMIN"))
+    if(tmp.includes("ROLE_ADMIN") || tmp.includes("ROLE_GROUP_ADMIN"))
      return true;
     else
      return false;

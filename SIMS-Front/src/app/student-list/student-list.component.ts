@@ -31,8 +31,12 @@ export class StudentListComponent implements OnInit {
     formOfStudy: "",
     speciality: "",
     changed:false,
-    students: []
-  };
+    students: [],
+    groupAdminId : 0,
+  groupAdminName : "",
+  groupAdminSurname : "",
+
+};
   studentList = new Array<StudentDto>();
   savedstudentList = new Array<StudentDto>();
 
@@ -138,6 +142,21 @@ export class StudentListComponent implements OnInit {
 
   }
 
+  onDeclineClick(path: string) {
+
+    this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
+      value => {
+        this.load();
+        this.notifier.notify("success", "Pomyślnie odrzucono studenta",)
+      },
+      error => {
+        console.log(error)
+        this.notifier.notify("error", "Coś poszło nietak",)
+      },
+    );
+
+
+  }
 
   openDoc(id: number, docType: string) {
     this.router.navigate(['/' + docType], {queryParams: {id: id}});

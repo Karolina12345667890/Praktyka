@@ -26,6 +26,7 @@ abstract public class Document {
     protected Long ownerId;
     protected Long groupId;
     protected String comment = "";
+    protected String groupName = "";
     @Enumerated(EnumType.STRING)
     protected StatusEnum statusEnum = StatusEnum.EMPTY;
     
@@ -48,6 +49,6 @@ abstract public class Document {
     }
     
     public DocumentDto dto(){
-        return new DocumentDto(getId(), getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId());
+        return new DocumentDto(getId(), getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId(),getGroupName());
     }
 }

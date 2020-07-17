@@ -11,5 +11,9 @@ export interface GroupDto {
   formOfStudy :string;
   speciality : string;
   changed : boolean;
+  groupAdminId : number;
+  groupAdminName : string;
+  groupAdminSurname : string;
+
   students : StudentDto [];
 }
