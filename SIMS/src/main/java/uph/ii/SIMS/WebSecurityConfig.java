@@ -37,7 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
-		http.authorizeRequests().antMatchers("/login").permitAll()
+		http.authorizeRequests()
+//                .antMatchers("/login").permitAll()
 		.antMatchers("/oauth/token/revokeById/**").permitAll()
 		.antMatchers("/tokens/**").permitAll()
 		.antMatchers("/public").permitAll()

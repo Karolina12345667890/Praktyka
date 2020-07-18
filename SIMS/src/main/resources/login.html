@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <style>
+        .navbar-text:hover {
+            filter: brightness(115%);
+        }
+    </style>
+
+</head>
+<body>
+
+<nav class="navbar navbar-light bg-light row" style="padding-top: 0">
+        <span id="nav-login" class="col navbar-text text-center bg-primary" style="padding: 16px">
+        Logowanie
+        </span>
+    <span id="nav-register" class="col navbar-text text-center bg-secondary" style="padding: 16px">
+        Rejestracja
+        </span>
+</nav>
+
+<br>
+<div id="container" class="container">
+</div>
+
+
+<script>
+    const nav_login = document.getElementById("nav-login");
+    const nav_register = document.getElementById("nav-register");
+    const container = document.getElementById("container");
+
+    const login_form = (function createLoginForm() {
+        const login_form = document.createElement("form");
+        login_form.action = "/login"
+        login_form.method = "post"
+
+        const login_form_submit_button = document.createElement("button");
+        login_form_submit_button.type = "submit";
+        login_form_submit_button.classList.add("btn", "btn-primary");
+        login_form_submit_button.innerText = "Zaloguj się";
+
+        const login_fields = [{name: "username", label: "Login", type: "text"},
+            {name: "password", label: "Hasło", type: "password"},
+        ]
+        const loginFieldsElements = login_fields.map(value => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("form-group");
+            const label = document.createElement("label");
+            label.htmlFor = value.name;
+            label.innerText = value.label;
+
+            const input = document.createElement("input");
+            input.id = value.name;
+            input.classList.add("form-control");
+            input.type = value.type;
+            input.name = value.name;
+
+            wrapper.appendChild(label);
+            wrapper.appendChild(input);
+
+            return wrapper;
+        });
+        loginFieldsElements.forEach(value => login_form.appendChild(value));
+        login_form.appendChild(login_form_submit_button);
+
+        return login_form;
+    })();
+
+    const register_form = (function createRegisterForm() {
+        const register_form = document.createElement("form");
+
+        const register_form_submit_button = document.createElement("button");
+        register_form_submit_button.type = "button";
+        register_form_submit_button.classList.add("btn", "btn-primary");
+        register_form_submit_button.innerText = "Zarejestruj się";
+
+        function ajax_register() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const album = document.getElementById("album").value;
+            const name = document.getElementById("name").value;
+            const surname = document.getElementById("surname").value;
+            const email = document.getElementById("email").value;
+            const body = {
+                username, password, userDto: {
+                    // id: null,
+                    album,
+                    name,
+                    surname,
+                    email
+                }
+            }
+            $.postJSON = function (url, data, callback) {
+                return jQuery.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    'type': 'POST',
+                    'url': url,
+                    'data': JSON.stringify(data),
+                    'dataType': 'json',
+                    'success': callback
+                });
+            };
+            $.postJSON("/api/user", body, (data, status) => {
+                alert(status);
+                if (status === "success") {
+                    alert("rejestracja powiodla sie");
+                    switch_to_login_form();
+                    document.getElementById("username").value = username;
+                }
+                console.log(data)
+                console.log(status)
+            });
+        }
+
+        register_form_submit_button.onclick = ajax_register;
+
+        const register_fields = [{name: "username", label: "Login", type: "text"},
+            {name: "password", label: "Hasło", type: "password"},
+            {name: "album", label: "Nr albumu", type: "text"},
+            {name: "name", label: "Imię", type: "text"},
+            {name: "surname", label: "Nazwisko", type: "text"},
+            {name: "email", label: "Adres email", type: "email"},
+        ]
+        const loginFieldsElements = register_fields.map(value => {
+            const wrapper = document.createElement("div");
+            wrapper.classList.add("form-group");
+            const label = document.createElement("label");
+            label.htmlFor = value.name;
+            label.innerText = value.label;
+
+            const input = document.createElement("input");
+            input.id = value.name;
+            input.classList.add("form-control");
+            input.type = value.type;
+            input.name = value.name;
+
+            wrapper.appendChild(label);
+            wrapper.appendChild(input);
+
+            return wrapper;
+        });
+        loginFieldsElements.forEach(value => register_form.appendChild(value));
+        register_form.appendChild(register_form_submit_button);
+
+        return register_form;
+    })();
+
+    const switch_to_login_form = function () {
+        if (container.contains(register_form)) {
+            container.removeChild(register_form)
+            container.appendChild(login_form)
+
+            nav_login.classList.remove("bg-secondary")
+            nav_login.classList.add("bg-primary")
+
+            nav_register.classList.add("bg-secondary")
+            nav_register.classList.remove("bg-primary")
+        }
+    }
+    nav_login.onclick = switch_to_login_form;
+
+    const switch_to_register_form = function () {
+        if (container.contains(login_form)) {
+            container.removeChild(login_form)
+            container.appendChild(register_form)
+
+            nav_register.classList.remove("bg-secondary")
+            nav_register.classList.add("bg-primary")
+
+            nav_login.classList.add("bg-secondary")
+            nav_login.classList.remove("bg-primary")
+
+        }
+    };
+    nav_register.onclick = switch_to_register_form;
+
+    (function f() {
+        container.appendChild(login_form)
+    })();
+
+
+</script>
+</body>
+</html>

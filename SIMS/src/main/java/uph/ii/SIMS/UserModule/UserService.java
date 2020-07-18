@@ -45,6 +45,11 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
         return user;
     }
+
+    public User createNewStudentUser(UserDto userDto, String username, String password){
+        Role role_user = roleRepository.findByName("ROLE_USER");
+        return createNewUser(userDto, username, password, List.of(role_user));
+    }
     
     
     @Override

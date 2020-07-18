@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 @Setter
 public class UserDto {
     private Long id;
@@ -28,4 +29,5 @@ public class UserDto {
         this.surname = surname;
         this.email = email;
     }
+
 }

@@ -22,14 +22,18 @@ public class OAuth2ResourceServerConfigJwt extends ResourceServerConfigurerAdapt
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
-                http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                    .and()
-                    .authorizeRequests().anyRequest().permitAll()
-                    .antMatchers("/public").permitAll()
-                    .antMatchers("/login").permitAll()
-                    .and().formLogin().permitAll()
-                    .and().csrf().disable();
-    
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED);
+        http
+                .authorizeRequests().anyRequest().permitAll()
+                .antMatchers("/oauth/token/revokeById/**").permitAll()
+                .antMatchers("/tokens/**").permitAll()
+//                .and().authorizeRequests().anyRequest().anonymous()
+//                    .antMatchers("/public").permitAll()
+//                    .antMatchers("/register").permitAll()
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().csrf().disable();
+
+
         // @formatter:on
     }
 
