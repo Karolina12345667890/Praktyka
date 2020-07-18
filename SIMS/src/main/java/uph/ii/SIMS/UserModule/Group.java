@@ -29,7 +29,7 @@ public class Group {
     private String speciality;
     private Date dateStart;
     private Boolean isOpen = false;
-    private Boolean changed;
+    private Boolean changed = false;
     private Long groupAdminId;
     private String groupAdminName;
     private String groupAdminSurname;

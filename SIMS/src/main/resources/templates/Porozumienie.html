@@ -66,8 +66,8 @@
                 <td>Okres praktyki</td>
             </tr>
             <tr>
-                <td th:text="${dto.studentName}">Maciej Nazarczuk</td>
-                <td th:text="${dto.studentSurname}">Stacjonarne</td>
+                <td th:text="${dto.studentName} +' ' + ${dto.studentSurname}"></td>
+                <td th:text="${dto.studentStudyForm}"></td>
                 <td th:text="${dto.studentInternshipStart} + ' ' + ${dto.studentInternshipEnd}">01.01.2000 - 01.02.2000</td>
             </tr>
         </table>

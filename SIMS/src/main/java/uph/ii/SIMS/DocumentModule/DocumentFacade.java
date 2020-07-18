@@ -2,16 +2,16 @@ package uph.ii.SIMS.DocumentModule;
 
 
 import lombok.AllArgsConstructor;
-import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
-import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
-import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
-import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
+import uph.ii.SIMS.DocumentModule.Dto.*;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
+import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieFacade;
 import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
+import uph.ii.SIMS.PdfCreationService.Dto.ZaswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
+import uph.ii.SIMS.UserModule.GroupRepository;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 import java.text.SimpleDateFormat;
@@ -31,7 +31,8 @@ public class DocumentFacade {
     private PorozumienieFacade porozumienieFacade;
     private DocumentRepository documentRepository;
     private UserFacade userFacade;
-    
+    private ZaswiadczenieFacade zaswiadczenieFacade;
+
     byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
@@ -39,7 +40,10 @@ public class DocumentFacade {
     byte[] createPdf(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
-    
+
+    byte[] createPdf(String templateName, ZaswiadczeniePdfDto pdfDto) throws Exception {
+        return pdfBuilder.getPdfFromObject(templateName, pdfDto);
+    }
     /**
      * Tworzy pdf oświadczenia, wypełnia wszystkie pola wartościami pobranymi z BD
      *
@@ -89,6 +93,8 @@ public class DocumentFacade {
             .studentInternshipDuration( groupDuration +  " tyg.")
             .studentInternshipStart(dateStartFormatted)
             .studentInternshipEnd(dateEndFormatted)
+                .studentStudyForm(porozumienieDto.getStudentStudyForm())
+                .studentSpecialization(porozumienieDto.getStudentSpecialization())
             
             .companyName(porozumienieDto.getCompanyName())
             .companyLocationCity(porozumienieDto.getCompanyLocationCity())
@@ -100,7 +106,36 @@ public class DocumentFacade {
         
         return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
     }
-    
+
+    public byte[] printZaswiadczenieToPdf(Long id) throws Exception {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        var zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
+        var userDto = userFacade.getUserById(zaswiadczenieDto.getOwnerId());
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String dateStartFormatted = dateFormat.format(zaswiadczenieDto.getStudentInternshipStart());
+        String dateEndFormatted = dateFormat.format(zaswiadczenieDto.getStudentInternshipEnd());
+
+
+        var pdfDto = ZaswiadczeniePdfDto.builder()
+                .studentName(userDto.getName())
+                .studentSurname(userDto.getSurname())
+                .studentWorks("")
+                .studentInternshipStart(dateStartFormatted)
+                .studentInternshipEnd(dateEndFormatted)
+
+                .studentRating1(zaswiadczenieDto.getStudentRating1())
+                .studentRating2(zaswiadczenieDto.getStudentRating2())
+                .studentRating3(zaswiadczenieDto.getStudentRating3())
+
+                .studentRating(zaswiadczenieDto.getStudentRating())
+                .studentInterests(zaswiadczenieDto.getStudentInterests())
+                .build();
+
+        return pdfBuilder.getPdfFromObject("Zaswiadczenie", pdfDto);
+    }
+
     public OswiadczenieDto fetchOswiadczenie(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
         Boolean isAdmin = userFacade.currentUserIsAdmin();
@@ -152,6 +187,38 @@ public class DocumentFacade {
     public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId, String groupName) {
         porozumienieFacade.createNew(porozumienieDto, studentId, groupId,groupName);
     }
+
+    public ZaswiadczenieDto fetchZaswiadczenie(Long id) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+
+
+        ZaswiadczenieDto zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
+        PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser,isAdmin,zaswiadczenieDto.getGroupId());
+        if(porozumienieDto.getStatus() == StatusEnum.ACCEPTED.toString()){
+            zaswiadczenieDto.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
+            zaswiadczenieDto.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
+        }
+        return zaswiadczenieDto;
+    }
+
+    /**
+     * Persystuje przekazane porozumienie, jesli w bazie danych nie ma porozumienie z id takim, jak w przekazanym dto zostaje utworzone nowe porozumienie,
+     * w przeciwnym razie aktualizowany jest już istniejący dokument
+     *
+     * @param zaswiadczenieDto oswiadczenie do zapisania
+     * @throws Exception
+     */
+    public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieFacade.storeChanges(zaswiadczenieDto, currentUser, userIsAdmin);
+    }
+
+    public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto, Long studentId, Long groupId, String groupName) {
+        zaswiadczenieFacade.createNew(zaswiadczenieDto, studentId, groupId, groupName);
+    }
+
     
     public List<DocumentDto> listMyDocuments() {
         UserDto currentUser = userFacade.getCurrentUser();
@@ -176,7 +243,11 @@ public class DocumentFacade {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         porozumienieFacade.setComment(id, newComment, userIsAdmin);
     }
-    
+
+    public void setZaswiadczenieComment(Long id, String newComment) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieFacade.setComment(id, newComment, userIsAdmin);
+    }
     
     public void setOswiadczenieComment(Long id, String newComment) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
@@ -187,9 +258,14 @@ public class DocumentFacade {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         oswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
     }
-    
+
     public void setPorozumienieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         porozumienieFacade.setStatus(id, statusEnum, userIsAdmin);
+    }
+
+    public void setZaswiadczenieStatus(Long id, StatusEnum statusEnum) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
     }
 }

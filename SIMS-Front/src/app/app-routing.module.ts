@@ -37,7 +37,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'zas',
+    path: 'zaswiadczenie',
     component: ZaswiadczenieComponent,
     canActivate: [AuthGuardService]
   },

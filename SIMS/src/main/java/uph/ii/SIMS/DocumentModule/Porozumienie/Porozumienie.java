@@ -32,6 +32,8 @@ class Porozumienie extends Document {
     private String companyRepresentantSurname;
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
+    private String studentStudyForm;
+    private String studentSpecialization;
     
     public Porozumienie(Long owner) {
         super(owner);
@@ -54,6 +56,8 @@ class Porozumienie extends Document {
             companyRepresentantSurname,
             studentInternshipStart,
             studentInternshipEnd,
+                studentStudyForm,
+            studentSpecialization,
             comment,
             getStatusString()
         );

@@ -6,6 +6,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
+import uph.ii.SIMS.PdfCreationService.Dto.ZaswiadczeniePdfDto;
 
 import java.io.ByteArrayOutputStream;
 
@@ -51,9 +52,23 @@ public class PdfBuilder {
     //TODO Klasa zawierajaca nazwy wszystkich uzywanych szablonow i uzywanie stalych, a nie "golych" stringow
     public byte[] getPdfFromObject(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
         String processedHtml = processHtmlWithObject(templateName, pdfDto);
+        System.out.println(pdfDto.toString());
         return renderPdf(processedHtml);
     }
 
+    /**
+     * Tworzy dokument pdf na podstawie szablonu i danych
+     *
+     * @param templateName nazwa szablonu
+     * @param pdfDto       dane, którymi zostanie wypełniony szablon
+     * @return
+     * @throws Exception
+     */
+    //TODO Klasa zawierajaca nazwy wszystkich uzywanych szablonow i uzywanie stalych, a nie "golych" stringow
+    public byte[] getPdfFromObject(String templateName, ZaswiadczeniePdfDto pdfDto) throws Exception {
+        String processedHtml = processHtmlWithObject(templateName, pdfDto);
+        return renderPdf(processedHtml);
+    }
 
 //    private Map<String, Object> processJson(String json) throws Exception {
 //        ObjectMapper mapper = new ObjectMapper();

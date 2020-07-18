@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -42,5 +43,13 @@ class PorozumienieInMemoryRepository implements PorozumienieRepository {
             .collect(Collectors.toList());
         
         return new PageImpl<>(porozumienies, pageable, map.size());
+    }
+
+    @Override
+    public Porozumienie findByOwnerIdAndGroupId(Long ownerId, Long groupId) {
+        Porozumienie porozumienies = (Porozumienie) map.values().stream()
+                .filter(porozumienie -> porozumienie.getOwnerId().equals(ownerId)&& porozumienie.getGroupId().equals(groupId));
+
+        return porozumienies;
     }
 }

@@ -8,4 +8,6 @@ export interface porozumienieDto {
   companyRepresentantSurname: string;
   studentInternshipStart: string;
   studentInternshipEnd: string;
+  studentStudyForm: string;
+  studentSpecialization: string;
 }

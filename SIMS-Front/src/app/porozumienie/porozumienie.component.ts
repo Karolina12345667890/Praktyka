@@ -134,6 +134,8 @@ export class PorozumienieComponent implements OnInit {
     companyRepresentantSurname: this.porozumienieForm.value.companyRepresentantSurname,
     studentInternshipStart: this.porozumienieForm.value.studentInternshipStart,
     studentInternshipEnd: this.porozumienieForm.value.studentInternshipEnd,
+      studentStudyForm: this.porozumienieForm.value.studentStudyForm,
+      studentSpecialization: this.porozumienieForm.value.studentSpecialization
     };
 
 

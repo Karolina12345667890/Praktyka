@@ -50,6 +50,8 @@ public class PorozumienieFacade {
         
         porozumienie.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
         porozumienie.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
+        porozumienie.setStudentStudyForm(porozumienieDto.getStudentStudyForm());
+        porozumienie.setStudentSpecialization(porozumienieDto.getStudentSpecialization());
         
         porozumienie.setStatus(StatusEnum.NEW);
         porozumienieRepository.save(porozumienie);
@@ -100,5 +102,15 @@ public class PorozumienieFacade {
         Porozumienie porozumienie = porozumienieRepository.findById(id);
         porozumienie.setStatus(status);
         porozumienieRepository.save(porozumienie);
+    }
+
+    public PorozumienieDto find2(UserDto userDto, Boolean userIsAdmin, Long groupId) {
+        Porozumienie porozumienie = porozumienieRepository.findByOwnerIdAndGroupId(userDto.getId(),groupId);
+        boolean userOwnsDocument = userDto.getId().equals(porozumienie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return porozumienie.porozumienieDto();
     }
 }

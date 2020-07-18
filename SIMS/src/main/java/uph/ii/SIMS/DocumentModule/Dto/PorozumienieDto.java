@@ -9,6 +9,7 @@ import java.util.Date;
  * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu porozumienia
  */
 @Getter
+@Setter
 @EqualsAndHashCode
 @AllArgsConstructor
 public class PorozumienieDto {
@@ -23,7 +24,9 @@ public class PorozumienieDto {
     private String companyRepresentantSurname = "";
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
-    
+    private String studentStudyForm;
+    private String studentSpecialization;
+
     private String comment = "";
     private String status = "NEW";
     

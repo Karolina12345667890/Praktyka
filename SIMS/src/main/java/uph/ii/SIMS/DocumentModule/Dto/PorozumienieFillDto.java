@@ -15,4 +15,6 @@ public class PorozumienieFillDto {
     private String companyRepresentantSurname = "";
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
+    private String studentStudyForm = "";
+    private String studentSpecialization = "";
 }

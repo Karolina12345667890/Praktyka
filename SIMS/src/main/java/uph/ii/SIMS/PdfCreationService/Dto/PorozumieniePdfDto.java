@@ -8,6 +8,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
+
 public class PorozumieniePdfDto {
     private String companyName;
     private String companyLocationCity;
@@ -20,4 +21,23 @@ public class PorozumieniePdfDto {
     private String studentSurname;
     private String studentInternshipStart;
     private String studentInternshipEnd;
+    private String studentStudyForm;
+
+    @Override
+    public String toString() {
+        return "PorozumieniePdfDto{" +
+                "companyName='" + companyName + '\'' +
+                ", companyLocationCity='" + companyLocationCity + '\'' +
+                ", companyLocationStreet='" + companyLocationStreet + '\'' +
+                ", companyRepresentantName='" + companyRepresentantName + '\'' +
+                ", companyRepresentantSurname='" + companyRepresentantSurname + '\'' +
+                ", studentSpecialization='" + studentSpecialization + '\'' +
+                ", studentInternshipDuration='" + studentInternshipDuration + '\'' +
+                ", studentName='" + studentName + '\'' +
+                ", studentSurname='" + studentSurname + '\'' +
+                ", studentInternshipStart='" + studentInternshipStart + '\'' +
+                ", studentInternshipEnd='" + studentInternshipEnd + '\'' +
+                ", studentStudyForm='" + studentStudyForm + '\'' +
+                '}';
+    }
 }

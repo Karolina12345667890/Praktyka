@@ -43,6 +43,8 @@ class PorozumienieController {
             fillDto.getCompanyRepresentantSurname(),
             fillDto.getStudentInternshipStart(),
             fillDto.getStudentInternshipEnd(),
+            fillDto.getStudentStudyForm(),
+            fillDto.getStudentSpecialization(),
             null,
             null
         );

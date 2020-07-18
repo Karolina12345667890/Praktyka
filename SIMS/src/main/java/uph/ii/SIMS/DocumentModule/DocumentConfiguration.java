@@ -7,6 +7,9 @@ import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieConfiguration;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieConfiguration;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
+import uph.ii.SIMS.DocumentModule.Zaswiadczenie.Zaswiadczenie;
+import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieConfiguration;
+import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieFacade;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.UserFacade;
 
@@ -28,9 +31,10 @@ class DocumentConfiguration {
     @Bean
     DocumentFacade documentFacade(OswiadczenieFacade oswiadczenieFacade,
                                   PorozumienieFacade porozumienieFacade,
+                                  ZaswiadczenieFacade zaswiadczenieFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade);
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade);
     }
     
     /**
@@ -44,9 +48,11 @@ class DocumentConfiguration {
         
         PorozumienieFacade porozumienieFacadeInMemoryIO = new PorozumienieConfiguration()
             .porozumienieFacadeInMemoryIO();
+
+        ZaswiadczenieFacade zaswiadczenieFacadeInMemoryIO = new ZaswiadczenieConfiguration()
+                .zaswiadczenieFacadeInMemoryIO();
         
-        
-        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade);
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO);
     }
 }
     

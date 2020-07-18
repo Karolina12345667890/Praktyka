@@ -4,14 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
-import uph.ii.SIMS.DocumentModule.Dto.DocumentDto;
-import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
-import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
-import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
+import uph.ii.SIMS.DocumentModule.Dto.*;
 import uph.ii.SIMS.UserModule.Dto.*;
 
-import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -46,11 +43,11 @@ public class GroupService {
                            break;
                         }
                         };
-                    }
+
             if(groupApplicationRepository.getAllByGroupId(group.getId()).size() > 0){
                 group.setChanged(true);
             }
-
+                    }
                 }
         );
 
@@ -113,21 +110,38 @@ public class GroupService {
         User user = userService.loadUserById(studentId);
         Group group = groupRepository.getOne(groupId);
         Collection<Group> groups = user.getGroups();
-        groups.add(group);
-        user.setGroups(groups);
-        
-        documentFacade.storeOswiadczenie(
-            new OswiadczenieDto(null, groupId, studentId),
-            studentId,
-            groupId,
-                group.getGroupName()
-        );
-        documentFacade.storePorozumienie(
-            new PorozumienieDto(null, groupId, studentId, new Date(), new Date()),
-            studentId,
-            groupId,
-                group.getGroupName()
-        );
+        AtomicBoolean czy = new AtomicBoolean(false);
+        group.getUsers().forEach(stud -> {
+            if(stud.getId() == studentId){
+                czy.set(true);
+            }
+        });
+        if(!czy.get()) {
+            groups.add(group);
+            user.setGroups(groups);
+
+            documentFacade.storeOswiadczenie(
+                    new OswiadczenieDto(null, groupId, studentId),
+                    studentId,
+                    groupId,
+                    group.getGroupName()
+            );
+            documentFacade.storePorozumienie(
+                    new PorozumienieDto(null, groupId, studentId, new Date(), new Date()),
+                    studentId,
+                    groupId,
+                    group.getGroupName()
+            );
+            documentFacade.storeZaswiadczenie(
+                    new ZaswiadczenieDto(null, groupId, studentId, new Date(), new Date()),
+                    studentId,
+                    groupId,
+                    group.getGroupName()
+            );
+
+        }else{
+            throw new GroupApplicationDuplicationException("Can't have multiples of the same student in a group");
+        }
     }
     
     public void persistGroup(GroupModifyDto dto) {

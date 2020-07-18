@@ -1,0 +1,122 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Zaswiadczenie</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="styles/shared.css"/>
+    <link rel="stylesheet" href="styles/porozumienie.css"/>
+</head>
+<body>
+
+<h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
+<br/>
+
+<div id="content">
+    <div>
+        <div class="toSignLeft">
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (Pięczeć zakładu pracy)
+            </div>
+        </div>
+
+        <div class="toSignRight">
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (Miejscowość, data)
+            </div>
+        </div>
+    </div>
+    <br/> <br/> <br/>
+
+    <h3>ZAŚWIADCZENIE</h3>
+    <br/> <br/>
+    <div>
+
+
+        <div>
+            Pan(i) <span th:text="${dto.studentName}"></span>
+            <span th:text="${dto.studentSurname}"></span> student(ka)
+            kierunku Informatyka
+        </div>
+
+
+        Przebywał(a) na praktyce w naszym przedsiębiorstwie w okresie
+
+        <div>
+            od <span th:text="${dto.studentInternshipStart}"></span>  do <span th:text="${dto.studentInternshipEnd}"></span>
+        </div>
+        <br><br>
+
+        <div class="toSignLeft" style="width: 70%">
+
+            Praktykant(ka) otrzymał(a) następujące oceny:
+
+
+            <ol>
+                <li> za przestrzeganie dyscypliny pracy</li>
+                <li> merytoryczna ocena pracy (wykonanie przydzielonych zadań)</li>
+                <li>umiejętność współpracy z pracownikami przedsiębiorstwa</li>
+
+            </ol>
+
+        </div>
+
+        <div class="toSignRight">
+            <div><br>
+                <span th:text="${dto.studentRating1}"></span>
+                <span th:text="${dto.studentRating2}"></span>
+                <span th:text="${dto.studentRating3}"></span>
+            </div>
+        </div>
+
+        <br>
+        <div>
+            Ogólna ocena praktyki:  <span th:text="${dto.studentRating}"></span>
+        </div>
+        <br>
+        <div>
+            Praktykant(ka) w trakcie praktyki wykonywała następujące zadania:
+        </div>
+        <div>
+            <span th:text="${dto.studentWorks}"></span>
+        </div>
+        <br>
+        <div>
+            Praktykant(ka) szczególne zainteresowania/umiejętności wykazała w dziedzinie:
+        </div>
+        <div>
+            <span th:text="${dto.studentInterests}"></span>
+        </div>
+
+        <br/> <br/>
+        <div>
+            <div class="toSignLeft">
+                <div>
+                    Pracownik nadzorujący przebieg praktyk <br/> <br/> <br/>
+                </div>
+                <div>
+                    ........................................................
+                </div>
+
+            </div>
+            <div class="toSignRight">
+                <div>
+                    Dyrektor/kierownik <br/> <br/> <br/> <br/>
+                </div>
+                <div>
+                    ........................................................
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

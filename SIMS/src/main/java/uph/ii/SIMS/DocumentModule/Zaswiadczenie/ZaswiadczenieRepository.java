@@ -1,39 +1,37 @@
-package uph.ii.SIMS.DocumentModule.Porozumienie;
+package uph.ii.SIMS.DocumentModule.Zaswiadczenie;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.Repository;
 
-import java.util.Optional;
-
 /**
  *
  * <p>
- * Interfejs zawierający metody związane z persystencją dla encji {@link Porozumienie porozumienia}
+ * Interfejs zawierający metody związane z persystencją dla encji {@link Zaswiadczenie porozumienia}
  * </p>
  * <p>
  * Spring automatycznie generuje klasę implementującą ten interfejs
  * </p>
  */
-interface PorozumienieRepository extends Repository<Porozumienie, Long> {
+interface ZaswiadczenieRepository extends Repository<Zaswiadczenie, Long> {
     /**
      *
-     * Zapisuje Porozumienie do repozytorium
+     * Zapisuje Zaswiadczenie do repozytorium
      *
-     * @param porozumienie do zapisania
+     * @param Zaswiadczenie do zapisania
      * @return Zapisane oswiadczenie
      */
-    Porozumienie save(Porozumienie porozumienie);
-    
+    Zaswiadczenie save(Zaswiadczenie Zaswiadczenie);
+
     /**
      *
-     * Wyszukuje Porozumienie o podanym Id
+     * Wyszukuje Zaswiadczenie o podanym Id
      *
-     * @param id Id Porozumienie
-     * @return Szukane Porozumienie
+     * @param id Id Zaswiadczenie
+     * @return Szukane Zaswiadczenie
      */
-    Porozumienie findById(Long id);
-    
+    Zaswiadczenie findById(Long id);
+
     /**
      *
      * Wyszukuje wszystkie Porozumienia i dzieli je odpowiednio na strony
@@ -43,8 +41,8 @@ interface PorozumienieRepository extends Repository<Porozumienie, Long> {
      *                 Obiekt taki można uzyskać korzystając np. ze statycznej metody {@link org.springframework.data.domain.PageRequest#of(int, int)}
      * @return
      */
-    Page<Porozumienie> findAll(Pageable pageable);
-    
+    Page<Zaswiadczenie> findAll(Pageable pageable);
+
     /**
      *
      * Wyszukuje wszystkie Porozumienia danego użytkownika i dzieli je odpowiednio na strony
@@ -55,8 +53,7 @@ interface PorozumienieRepository extends Repository<Porozumienie, Long> {
      *                 Obiekt taki można uzyskać korzystając np. ze statycznej metody {@link org.springframework.data.domain.PageRequest#of(int, int)}
      * @return
      */
-    Page<Porozumienie> findAllByOwnerId(Long ownerId, Pageable pageable);
+    Page<Zaswiadczenie> findAllByOwnerId(Long ownerId, Pageable pageable);
 
-    Porozumienie findByOwnerIdAndGroupId(Long ownerId, Long groupId);
-    
 }
+
