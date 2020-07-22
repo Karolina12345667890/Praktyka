@@ -45,6 +45,7 @@ class PorozumienieController {
             fillDto.getStudentInternshipEnd(),
             fillDto.getStudentStudyForm(),
             fillDto.getStudentSpecialization(),
+            fillDto.getDepartment(),
             null,
             null
         );

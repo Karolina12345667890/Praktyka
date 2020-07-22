@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
+<h6>Załącznik nr 3 do Regulaminu praktyk zawodowych</h6>
 <br/>
 
 <div id="content">
@@ -50,7 +50,7 @@
         <div>
             od <span th:text="${dto.studentInternshipStart}"></span>  do <span th:text="${dto.studentInternshipEnd}"></span>
         </div>
-        <br><br>
+        <br/><br/>
 
         <div class="toSignLeft" style="width: 70%">
 
@@ -67,25 +67,27 @@
         </div>
 
         <div class="toSignRight">
-            <div><br>
-                <span th:text="${dto.studentRating1}"></span>
-                <span th:text="${dto.studentRating2}"></span>
-                <span th:text="${dto.studentRating3}"></span>
-            </div>
+            <br/>
+            <ol>
+                <li> <span th:text="${dto.studentRating1}"></span></li>
+                <li> <span th:text="${dto.studentRating2}"></span></li>
+                <li><span th:text="${dto.studentRating3}"></span></li>
+
+            </ol>
         </div>
 
-        <br>
+        <br/>
         <div>
             Ogólna ocena praktyki:  <span th:text="${dto.studentRating}"></span>
         </div>
-        <br>
+        <br/>
         <div>
             Praktykant(ka) w trakcie praktyki wykonywała następujące zadania:
         </div>
         <div>
             <span th:text="${dto.studentWorks}"></span>
         </div>
-        <br>
+        <br/>
         <div>
             Praktykant(ka) szczególne zainteresowania/umiejętności wykazała w dziedzinie:
         </div>

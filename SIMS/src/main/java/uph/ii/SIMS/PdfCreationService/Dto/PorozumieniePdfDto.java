@@ -22,22 +22,8 @@ public class PorozumieniePdfDto {
     private String studentInternshipStart;
     private String studentInternshipEnd;
     private String studentStudyForm;
+    private String groupAdminName;
+    private String groupAdminSurname;
+    private String department;
 
-    @Override
-    public String toString() {
-        return "PorozumieniePdfDto{" +
-                "companyName='" + companyName + '\'' +
-                ", companyLocationCity='" + companyLocationCity + '\'' +
-                ", companyLocationStreet='" + companyLocationStreet + '\'' +
-                ", companyRepresentantName='" + companyRepresentantName + '\'' +
-                ", companyRepresentantSurname='" + companyRepresentantSurname + '\'' +
-                ", studentSpecialization='" + studentSpecialization + '\'' +
-                ", studentInternshipDuration='" + studentInternshipDuration + '\'' +
-                ", studentName='" + studentName + '\'' +
-                ", studentSurname='" + studentSurname + '\'' +
-                ", studentInternshipStart='" + studentInternshipStart + '\'' +
-                ", studentInternshipEnd='" + studentInternshipEnd + '\'' +
-                ", studentStudyForm='" + studentStudyForm + '\'' +
-                '}';
-    }
 }

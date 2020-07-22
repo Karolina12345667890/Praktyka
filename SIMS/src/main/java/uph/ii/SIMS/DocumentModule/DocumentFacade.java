@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @AllArgsConstructor
 public class DocumentFacade {
-    
+
     public OswiadczenieFacade oswiadczenieFacade;
     private PdfBuilder pdfBuilder;
     private PorozumienieFacade porozumienieFacade;
@@ -36,7 +36,7 @@ public class DocumentFacade {
     byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
-    
+
     byte[] createPdf(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
@@ -44,6 +44,7 @@ public class DocumentFacade {
     byte[] createPdf(String templateName, ZaswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
+
     /**
      * Tworzy pdf oświadczenia, wypełnia wszystkie pola wartościami pobranymi z BD
      *
@@ -57,17 +58,17 @@ public class DocumentFacade {
         var oswiadczenieDto = oswiadczenieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(oswiadczenieDto.getOwnerId());
         var pdfDto = OswiadczeniePdfDto.builder()
-            .studentName(userDto.getName())
-            .studentSurname(userDto.getSurname())
-            .carerName(oswiadczenieDto.getOpiekunI())
-            .carerSurname(oswiadczenieDto.getOpiekunN())
-            .carerEmail(oswiadczenieDto.getOpiekunMail())
-            .carerPhone(oswiadczenieDto.getOpiekunTel())
-            .build();
-        
+                .studentName(userDto.getName())
+                .studentSurname(userDto.getSurname())
+                .carerName(oswiadczenieDto.getOpiekunI())
+                .carerSurname(oswiadczenieDto.getOpiekunN())
+                .carerEmail(oswiadczenieDto.getOpiekunMail())
+                .carerPhone(oswiadczenieDto.getOpiekunTel())
+                .build();
+
         return pdfBuilder.getPdfFromObject("Oswiadczenie", pdfDto);
     }
-    
+
     /**
      * Tworzy pdf porozumienia, wypełnia wszystkie pola wartościami pobranymi z BD
      *
@@ -80,30 +81,33 @@ public class DocumentFacade {
         Boolean isAdmin = userFacade.currentUserIsAdmin();
         var porozumienieDto = porozumienieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(porozumienieDto.getOwnerId());
-        var groupDuration = userFacade.getGroupById(porozumienieDto.getGroupId()).getDurationInWeeks();
-    
+        var group = userFacade.getGroupById(porozumienieDto.getGroupId());
+
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String dateStartFormatted = dateFormat.format(porozumienieDto.getStudentInternshipStart());
         String dateEndFormatted = dateFormat.format(porozumienieDto.getStudentInternshipEnd());
-    
+
         var pdfDto = PorozumieniePdfDto.builder()
-            .studentName(userDto.getName())
-            .studentSurname(userDto.getSurname())
-            .studentSpecialization("")
-            .studentInternshipDuration( groupDuration +  " tyg.")
-            .studentInternshipStart(dateStartFormatted)
-            .studentInternshipEnd(dateEndFormatted)
+                .studentName(userDto.getName())
+                .studentSurname(userDto.getSurname())
+
+                .studentInternshipDuration(group.getDurationInWeeks() + " tyg.")
+                .studentInternshipStart(dateStartFormatted)
+                .studentInternshipEnd(dateEndFormatted)
                 .studentStudyForm(porozumienieDto.getStudentStudyForm())
                 .studentSpecialization(porozumienieDto.getStudentSpecialization())
-            
-            .companyName(porozumienieDto.getCompanyName())
-            .companyLocationCity(porozumienieDto.getCompanyLocationCity())
-            .companyLocationStreet(porozumienieDto.getCompanyLocationStreet())
-            
-            .companyRepresentantName(porozumienieDto.getCompanyRepresentantName())
-            .companyRepresentantSurname(porozumienieDto.getCompanyRepresentantSurname())
-            .build();
-        
+                .groupAdminName(group.getGroupAdminName())
+                .groupAdminSurname(group.getGroupAdminSurname())
+                .companyName(porozumienieDto.getCompanyName())
+                .companyLocationCity(porozumienieDto.getCompanyLocationCity())
+                .companyLocationStreet(porozumienieDto.getCompanyLocationStreet())
+                .department("Nauk ścisłych i przyrodniczych")
+
+                .companyRepresentantName(porozumienieDto.getCompanyRepresentantName())
+                .companyRepresentantSurname(porozumienieDto.getCompanyRepresentantSurname())
+                .build();
+
         return pdfBuilder.getPdfFromObject("Porozumienie", pdfDto);
     }
 
@@ -121,7 +125,7 @@ public class DocumentFacade {
         var pdfDto = ZaswiadczeniePdfDto.builder()
                 .studentName(userDto.getName())
                 .studentSurname(userDto.getSurname())
-                .studentWorks("")
+                .studentWorks(zaswiadczenieDto.getStudentWorks())
                 .studentInternshipStart(dateStartFormatted)
                 .studentInternshipEnd(dateEndFormatted)
 
@@ -141,7 +145,7 @@ public class DocumentFacade {
         Boolean isAdmin = userFacade.currentUserIsAdmin();
         return oswiadczenieFacade.find(id, currentUser, isAdmin);
     }
-    
+
     /**
      * Persystuje przekazane oświadczenie, jesli w bazie danych nie ma oświadczenia z id takim, jak w przekazanym dto zostaje utworzone nowe oświadczenie,
      * w przeciwnym razie aktualizowany jest już istniejący dokument
@@ -154,11 +158,11 @@ public class DocumentFacade {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         oswiadczenieFacade.storeChanges(oswiadczenieDto, currentUser, userIsAdmin);
     }
-    
+
     public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId, String groupName) {
         oswiadczenieFacade.createNew(oswiadczenieDto, studentId, groupId, groupName);
     }
-    
+
     /**
      * Zwraca Dto porozumienia o podanym id, wywołuje {@link PorozumienieFacade#find(Long, UserDto, Boolean)}
      *
@@ -170,7 +174,7 @@ public class DocumentFacade {
         Boolean isAdmin = userFacade.currentUserIsAdmin();
         return porozumienieFacade.find(id, currentUser, isAdmin);
     }
-    
+
     /**
      * Persystuje przekazane porozumienie, jesli w bazie danych nie ma porozumienie z id takim, jak w przekazanym dto zostaje utworzone nowe porozumienie,
      * w przeciwnym razie aktualizowany jest już istniejący dokument
@@ -183,9 +187,9 @@ public class DocumentFacade {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         porozumienieFacade.storeChanges(porozumienieDto, currentUser, userIsAdmin);
     }
-    
+
     public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId, String groupName) {
-        porozumienieFacade.createNew(porozumienieDto, studentId, groupId,groupName);
+        porozumienieFacade.createNew(porozumienieDto, studentId, groupId, groupName);
     }
 
     public ZaswiadczenieDto fetchZaswiadczenie(Long id) {
@@ -194,8 +198,8 @@ public class DocumentFacade {
 
 
         ZaswiadczenieDto zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
-        PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser,isAdmin,zaswiadczenieDto.getGroupId());
-        if(porozumienieDto.getStatus() == StatusEnum.ACCEPTED.toString()){
+        PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, zaswiadczenieDto.getGroupId());
+        if (porozumienieDto.getStatus() == StatusEnum.ACCEPTED.toString()) {
             zaswiadczenieDto.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
             zaswiadczenieDto.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
         }
@@ -219,26 +223,26 @@ public class DocumentFacade {
         zaswiadczenieFacade.createNew(zaswiadczenieDto, studentId, groupId, groupName);
     }
 
-    
+
     public List<DocumentDto> listMyDocuments() {
         UserDto currentUser = userFacade.getCurrentUser();
         return documentRepository.getAllByOwnerId(currentUser.getId()).stream()
-            .map(Document::dto)
-            .collect(Collectors.toList());
+                .map(Document::dto)
+                .collect(Collectors.toList());
     }
-    
+
     public List<DocumentDto> listStudentsDocuments(Long id) {
         return documentRepository.getAllByOwnerId(id).stream()
-            .map(Document::dto)
-            .collect(Collectors.toList());
+                .map(Document::dto)
+                .collect(Collectors.toList());
     }
-    
+
     public List<DocumentDto> listGroupDocuments(Long id) {
         return documentRepository.getAllByGroupId(id).stream()
-            .map(Document::dto)
-            .collect(Collectors.toList());
+                .map(Document::dto)
+                .collect(Collectors.toList());
     }
-    
+
     public void setPorozumienieComment(Long id, String newComment) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         porozumienieFacade.setComment(id, newComment, userIsAdmin);
@@ -248,12 +252,12 @@ public class DocumentFacade {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         zaswiadczenieFacade.setComment(id, newComment, userIsAdmin);
     }
-    
+
     public void setOswiadczenieComment(Long id, String newComment) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         oswiadczenieFacade.setComment(id, newComment, userIsAdmin);
     }
-    
+
     public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         oswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);

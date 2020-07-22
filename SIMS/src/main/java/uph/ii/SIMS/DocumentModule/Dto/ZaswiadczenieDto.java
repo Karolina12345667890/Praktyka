@@ -35,5 +35,22 @@ public class ZaswiadczenieDto {
         this.studentInternshipEnd = studentInternshipEnd;
     }
 
-
+    @Override
+    public String toString() {
+        return "ZaswiadczenieDto{" +
+                "id=" + id +
+                ", groupId=" + groupId +
+                ", ownerId=" + ownerId +
+                ", studentInternshipStart=" + studentInternshipStart +
+                ", studentInternshipEnd=" + studentInternshipEnd +
+                ", studentRating1='" + studentRating1 + '\'' +
+                ", studentRating2='" + studentRating2 + '\'' +
+                ", studentRating3='" + studentRating3 + '\'' +
+                ", studentRating='" + studentRating + '\'' +
+                ", studentWorks='" + studentWorks + '\'' +
+                ", studentInterests='" + studentInterests + '\'' +
+                ", comment='" + comment + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

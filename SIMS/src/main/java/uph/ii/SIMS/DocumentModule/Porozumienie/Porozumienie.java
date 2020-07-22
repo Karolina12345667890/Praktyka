@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- *
  * Klasa reprezentująca porozumienie. Posiada adnotację {@link javax.persistence.Entity}, przez co posiada również reprezentację w bazie danych
  */
 @Entity
@@ -22,9 +21,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 class Porozumienie extends Document {
-    
+
     public static final String DOCUMENT_TYPE = "porozumienie";
-    
+
     private String companyName;
     private String companyLocationCity;
     private String companyLocationStreet;
@@ -34,36 +33,39 @@ class Porozumienie extends Document {
     private Date studentInternshipEnd;
     private String studentStudyForm;
     private String studentSpecialization;
-    
+    private String department;
+
     public Porozumienie(Long owner) {
         super(owner);
     }
+
     /**
-     *
      * Metoda tworząca obiekt klasy {@link OswiadczenieDto}
      *
      * @return Obiekt klasy {@link OswiadczenieDto}, powstały na podstawie porozumienia, na którym wołana jest metoda
      */
     PorozumienieDto porozumienieDto() {
         return new PorozumienieDto(
-            id,
-            groupId,
-            ownerId,
-            companyName,
-            companyLocationCity,
-            companyLocationStreet,
-            companyRepresentantName,
-            companyRepresentantSurname,
-            studentInternshipStart,
-            studentInternshipEnd,
+                id,
+                groupId,
+                ownerId,
+                companyName,
+                companyLocationCity,
+                companyLocationStreet,
+                companyRepresentantName,
+                companyRepresentantSurname,
+                studentInternshipStart,
+                studentInternshipEnd,
                 studentStudyForm,
-            studentSpecialization,
-            comment,
-            getStatusString()
+                studentSpecialization,
+                department,
+                comment,
+                getStatusString()
+
         );
     }
-    
-    
+
+
     @Override
     public String getType() {
         return DOCUMENT_TYPE;

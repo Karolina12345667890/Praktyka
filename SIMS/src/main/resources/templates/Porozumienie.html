@@ -21,32 +21,49 @@
     <div>
         <div>
             <div>
-                zawarte dnia …………………………….. w Siedlcach, pomiędzy Uniwersytetem Przyrodniczo-Humanistycznym w
-                Siedlcach z siedzibą przy ul. Konarskiego 2, zwanym dalej Uniwersytetem, reprezentowanym na podstawie
-                udzielonego przez Rektora UPH pełnomocnictwa przez Dziekana Wydziału Nauk Ścisłych a
-                <div class="highLetters inline">
-                    <span th:text="${dto.companyName}">nazwa firmy sp. z o. o.</span>
-                </div>
+                zawarte dnia …………………………….. w Siedlcach, pomiędzy Uniwersytetem Przyrodniczo-Humanistycznym w Siedlcach, z siedzib przy ul. Konarskiego 2 w
+                Siedlcach (08-110), NIP 821-001-44-90, REGON 000001471, zwanym dalej „Uniwersytetem”,
+                reprezentowanym na podstawie udzielonego przez Rektora Uniwersytetu pełnomocnictwa, przez:
             </div>
+                <div class="highLetters" >
+                    <span style="width: 30%">
+
+                        <span style="font-family: 'arialbd'"
+                                th:text="${dto.groupAdminName} + ' ' + ${dto.groupAdminSurname}"></span>
+                    </span>
+                    <span style="width: 70%">
+                        <span style="font-family: 'arial'">- Dziekan Wydziału</span>
+                        <span style="font-family: 'arialbd'"
+                              th:text="${dto.department}">Nauk ścisłych i przyrodniczych</span>
+                    </span>
+                </div>
+
+
+
+
+
             <div>
+                <span style="font-family: 'arial'"> a </span>
+                <span style="font-family: 'arialbd'" th:text="${dto.companyName}">nazwa firmy sp. z o. o.</span>
                 <div class="highLetters">
+
                     <span>
-                        <span style="font-family: 'arial'; width: 30%">z siedzibą w: </span>
-                        <span style="font-family: 'arialbd';  width: 70% "
+                        <span style="font-family: 'arial'">z siedzibą w: </span>
+                        <span style="font-family: 'arialbd' "
                               th:text="${dto.companyLocationCity}">Siedlce</span>
                     </span>
                     <span>
-                        <span style="font-family: 'arial';width: 18% ">przy ul.</span>
-                        <span style="font-family: 'arialbd';width: 82%"
+                        <span style="font-family: 'arial'">przy ul.</span>
+                        <span style="font-family: 'arialbd'"
                               th:text="${dto.companyLocationStreet}">3-go maja</span>
                     </span>
                 </div>
 
-                której reprezentantem/tką jest:
+                zwaną/-ym dalej „Jednostką przyjmującą”, reprezentowaną/-ym przez:
                 <div class="highLetters inline"><span style="width: auto"
-                                                      th:text="${dto.companyRepresentantName} + ' ' + ${dto.companyRepresentantSurname}">Imie Nazwisko</span>
+                                                      th:text="'- '+${dto.companyRepresentantName} + ' - ' + ${dto.companyRepresentantSurname}">Imie Nazwisko</span>
                 </div>
-                zwanym dalej Zakładem Pracy, o następującej treści:
+                o następującej treści:
             </div>
         </div>
     </div>
@@ -73,38 +90,62 @@
         </table>
 
         <h4>§2</h4>
-        <p>Zakład pracy zobowiązuje się do:</p>
+        <p>Jednostka przyjmująca zobowiązuje si do:</p>
         <ol>
-            <li>powołania opiekuna(ów), pod kierunkiem których student będzie realizować program praktyki;</li>
-            <li>zaplanowania odpowiedniej ilości zajęć, aby umożliwić studentowi wykonanie zadań ustalonych w
-                programie praktyki;
+            <li>zapoznania się z programem praktyki w celu zapewnienia właściwej realizacji zadań przez
+                studenta odbywającego praktykę; </li>
+            <li>powołania opiekuna/-ów, pod kierunkiem którego/-ych student będzie realizował program
+                praktyki;
             </li>
-            <li>zapoznanie studentów z regulaminem pracy, przepisami o bezpieczeństwie i higienie pracy oraz o
-                ochronie tajemnicy służbowej;
+            <li>zaplanowania odpowiedniej ilości zajęć, aby umożliwić studentowi wykonanie zadań ustalonych
+                w programie praktyki;
             </li>
-            <li>zapewnienia nauczycielowi akademickiemu - opiekunowi praktyki z ramienia Uniwersytetu sprawowania
-                nadzoru merytorycznego nad przebiegiem praktyki.
+            <li>współdziałania z opiekunem praktyk z ramienia Uniwersytetu;
+            </li>
+            <li>umożliwienia nauczycielowi akademickiemu – opiekunowi praktyki z ramienia Uniwersytetu,
+                sprawowania nadzoru merytorycznego nad przebiegiem praktyki;
+            </li>
+            <li>potwierdzenia i oceny praktyki studenta w dokumentacji praktyki według zasad określonych
+                w programie praktyk;
+            </li>
+            <li>zapoznania studentów z regulaminem pracy, przepisami o bezpieczeństwie i higienie pracy oraz
+                o ochronie tajemnicy służbowej;
+            </li>
+            <li>zachowania w tajemnicy wszelkich informacji, danych, materiałów, dokumentów i danych
+                osobowych otrzymanych od Administratora danych UPH w Siedlcach i od współpracujących
+                z nim osób oraz danych uzyskanych w jakikolwiek inny sposób, zamierzony czy przypadkowy
+                w formie ustnej, pisemnej lub elektronicznej.
             </li>
         </ol>
+            Jednostka przyjmująca oświadcza,że w związku ze zobowiązaniem do zachowania w tajemnicy
+            danych osobowych nie będą one wykorzystywane, ujawniane ani udostępniane bez pisemnej
+            zgody Administratora danych w innym celu niż wykonanie Porozumienia, chyba że konieczno
+            ujawnienia posiadanych informacji wynika z obowiązujących przepisów prawa lub Porozumienia.
+
+
 
         <h4>§3</h4>
         <p>Uniwersytet zobowiązuje się do:</p>
         <ol>
             <li>opracowania programu praktyki i zapoznania z nim studentów,</li>
-            <li>sprawowania nadzoru dydaktyczno-wychowawczego i organizacyjnego nad przebiegiem praktyki oraz
-                kontroli i oceny praktyki.
+            <li>współdziałania z opiekunem praktyk z ramienia jednostki przyjmującej studenta na praktykę;
+            </li>
+            <li>sprawowania nadzoru dydaktyczno-wychowawczego i organizacyjnego nad przebiegiem praktyki
+                oraz kontroli i oceny praktyki.
             </li>
         </ol>
 
         <h4>§4</h4>
-        <p>Uniwersytet nie ponosi kosztów związanych z odbyciem praktyki.</p>
+        <p>Strony zgodnie oświadczają, że Uniwersytet nie będzie ponosił żadnych kosztów związanych z
+            realizowaną w jednostce przyjmującej praktyką studencką.</p>
 
         <h4>§5</h4>
-        <p>Zakład pracy może żądać od Uniwersytetu odwołania z praktyki zawodowej studenta w przypadku naruszenia
-            w sposób rażący dyscypliny pracy.</p>
+        <p>Jednostka przyjmująca może żądać od Uniwersytetu odwołania z praktyki zawodowej studenta,
+            w przypadku naruszenia przez niego, w sposób rażący, dyscypliny pracy. </p>
 
         <h4>§6</h4>
-        <p>Sprawy nie uregulowane niniejszym Porozumieniem strony będą rozstrzygać w negocjacjach bezpośrednich.</p>
+        <p>Sprawy nieuregulowane niniejszym porozumieniem strony będą rozstrzygać w ramach wzajemnych
+            negocjacji i uzgodnień. </p>
 
         <h4>§7</h4>
         <p>Niniejsze porozumienie sporządzone zostało w dwóch jednobrzmiących egzemplarzach po jednym dla każdej ze

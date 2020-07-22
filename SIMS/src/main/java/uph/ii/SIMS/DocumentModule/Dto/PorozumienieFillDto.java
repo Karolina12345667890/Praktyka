@@ -17,4 +17,5 @@ public class PorozumienieFillDto {
     private Date studentInternshipEnd;
     private String studentStudyForm = "";
     private String studentSpecialization = "";
+    private String department ="";
 }
