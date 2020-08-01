@@ -4,6 +4,8 @@ import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import lombok.AllArgsConstructor;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktyk;
+import uph.ii.SIMS.PdfCreationService.Dto.DziennikPraktykPdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.ZaswiadczeniePdfDto;
@@ -83,7 +85,19 @@ public class PdfBuilder {
 //        context.setVariable("dto", dataToBind);
 //        return templateEngine.process(templateName, context);
 //    }
-    
+    /**
+     * Tworzy dokument pdf na podstawie szablonu i danych
+     *
+     * @param templateName nazwa szablonu
+     * @param pdfDto       dane, którymi zostanie wypełniony szablon
+     * @return
+     * @throws Exception
+     */
+    //TODO Klasa zawierajaca nazwy wszystkich uzywanych szablonow i uzywanie stalych, a nie "golych" stringow
+    public byte[] getPdfFromObject(String templateName, DziennikPraktykPdfDto pdfDto) throws Exception {
+        String processedHtml = processHtmlWithObject(templateName, pdfDto);
+        return renderPdf(processedHtml);
+    }
     /**
      * Przetwarza szablon na czysty html, uzupelnia wszystkie luki danymi z przekazanego dto
      *

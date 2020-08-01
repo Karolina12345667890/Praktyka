@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
 
   openDoc(id:number,docType:string) {
-    this.router.navigate(['/'+docType], {queryParams: {id: id}});
+   this.router.navigate(['/'+docType], {queryParams: {id: id}});
   }
 
   onClick(path:string,documentType:string){

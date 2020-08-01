@@ -3,9 +3,12 @@ package uph.ii.SIMS.DocumentModule;
 
 import lombok.AllArgsConstructor;
 import uph.ii.SIMS.DocumentModule.Dto.*;
+import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktyk;
+import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykFacade;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieFacade;
+import uph.ii.SIMS.PdfCreationService.Dto.DziennikPraktykPdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.OswiadczeniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.PorozumieniePdfDto;
 import uph.ii.SIMS.PdfCreationService.Dto.ZaswiadczeniePdfDto;
@@ -32,6 +35,7 @@ public class DocumentFacade {
     private DocumentRepository documentRepository;
     private UserFacade userFacade;
     private ZaswiadczenieFacade zaswiadczenieFacade;
+    private DziennikPraktykFacade dziennikPraktykFacade;
 
     byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
@@ -42,6 +46,10 @@ public class DocumentFacade {
     }
 
     byte[] createPdf(String templateName, ZaswiadczeniePdfDto pdfDto) throws Exception {
+        return pdfBuilder.getPdfFromObject(templateName, pdfDto);
+    }
+
+    byte[] createPdf(String templateName, DziennikPraktykPdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
 
@@ -102,7 +110,7 @@ public class DocumentFacade {
                 .companyName(porozumienieDto.getCompanyName())
                 .companyLocationCity(porozumienieDto.getCompanyLocationCity())
                 .companyLocationStreet(porozumienieDto.getCompanyLocationStreet())
-                .department("Nauk ścisłych i przyrodniczych")
+                .department(porozumienieDto.getDepartment())
 
                 .companyRepresentantName(porozumienieDto.getCompanyRepresentantName())
                 .companyRepresentantSurname(porozumienieDto.getCompanyRepresentantSurname())
@@ -145,6 +153,26 @@ public class DocumentFacade {
         Boolean isAdmin = userFacade.currentUserIsAdmin();
         return oswiadczenieFacade.find(id, currentUser, isAdmin);
     }
+
+
+    public byte[] printDziennikPraktykToPdf(Long id) throws Exception {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        var oswiadczenieDto = dziennikPraktykFacade.find(id, currentUser, isAdmin);
+        var userDto = userFacade.getUserById(oswiadczenieDto.getOwnerId());
+        var pdfDto = DziennikPraktykPdfDto.builder()
+                .studentName(userDto.getName())
+                .studentSurname(userDto.getSurname())
+                .companyName(oswiadczenieDto.getCompanyName())
+                .periodFrom(oswiadczenieDto.getPeriodFrom())
+                .periodTo(oswiadczenieDto.getPeriodTo())
+                .studentAlbumNumber(oswiadczenieDto.getStudentAlbumNumber())
+                .diary(oswiadczenieDto.getDiary())
+                .build();
+
+        return pdfBuilder.getPdfFromObject("DziennikPraktyk", pdfDto);
+    }
+
 
     /**
      * Persystuje przekazane oświadczenie, jesli w bazie danych nie ma oświadczenia z id takim, jak w przekazanym dto zostaje utworzone nowe oświadczenie,
@@ -213,15 +241,42 @@ public class DocumentFacade {
      * @param zaswiadczenieDto oswiadczenie do zapisania
      * @throws Exception
      */
+
     public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto) {
         UserDto currentUser = userFacade.getCurrentUser();
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         zaswiadczenieFacade.storeChanges(zaswiadczenieDto, currentUser, userIsAdmin);
     }
-
     public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto, Long studentId, Long groupId, String groupName) {
         zaswiadczenieFacade.createNew(zaswiadczenieDto, studentId, groupId, groupName);
     }
+
+    public DziennikPraktykDto fetchDziennikPraktyk(Long id) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+
+        DziennikPraktykDto dziennikPraktykDto = dziennikPraktykFacade.find(id, currentUser, isAdmin);
+        dziennikPraktykDto.setStudentAlbumNumber(currentUser.getAlbum());
+        if(dziennikPraktykDto.getStatus().equals(StatusEnum.EMPTY.toString())) {
+            PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, dziennikPraktykDto.getGroupId());
+            if (porozumienieDto.getStatus().equals(StatusEnum.ACCEPTED.toString())) {
+                dziennikPraktykDto.setCompanyName(porozumienieDto.getCompanyName());
+                dziennikPraktykDto.setPeriodFrom(porozumienieDto.getStudentInternshipStart());
+                dziennikPraktykDto.setPeriodTo(porozumienieDto.getStudentInternshipEnd());
+            }
+        }
+        return dziennikPraktykDto;
+    }
+
+    public void storeDziennikPraktyk(DziennikPraktykDto dziennikPraktykDto) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        dziennikPraktykFacade.storeChanges(dziennikPraktykDto, currentUser, userIsAdmin);
+    }
+    public void storeDziennikPraktyk(DziennikPraktykDto dziennikPraktykDto, Long studentId, Long groupId, String groupName) {
+        dziennikPraktykFacade.createNew(dziennikPraktykDto, studentId, groupId, groupName);
+    }
+
 
 
     public List<DocumentDto> listMyDocuments() {
@@ -258,6 +313,11 @@ public class DocumentFacade {
         oswiadczenieFacade.setComment(id, newComment, userIsAdmin);
     }
 
+    public void setDziennikPraktykComment(Long id, String newComment) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        dziennikPraktykFacade.setComment(id, newComment, userIsAdmin);
+    }
+
     public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         oswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
@@ -272,4 +332,12 @@ public class DocumentFacade {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
         zaswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
     }
+
+    public void setDziennikPraktykStatus(Long id, StatusEnum statusEnum) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        dziennikPraktykFacade.setStatus(id, statusEnum, userIsAdmin);
+    }
+
+
+
 }

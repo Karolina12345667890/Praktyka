@@ -138,6 +138,12 @@ public class GroupService {
                     groupId,
                     group.getGroupName()
             );
+            documentFacade.storeDziennikPraktyk(
+                    new DziennikPraktykDto(null, groupId, studentId),
+                    studentId,
+                    groupId,
+                    group.getGroupName()
+            );
 
         }else{
             throw new GroupApplicationDuplicationException("Can't have multiples of the same student in a group");

@@ -1,6 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import { NotifierService } from 'angular-notifier';
+import {NotifierService} from 'angular-notifier';
+import {HttpClient} from "@angular/common/http";
+import {LoginServiceService} from "../login-service.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {oswiadczenieDto} from "../models/oswiadczenieDto";
+import {dziennikPraktykDto} from "../models/DziennikPraktykDto";
+import {diaryDto} from "../models/DiaryDto";
+import {DatePipe} from "@angular/common";
+import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
+import {isUndefined} from "util";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-dziennik-praktyk',
@@ -9,10 +19,12 @@ import { NotifierService } from 'angular-notifier';
 })
 export class DziennikPraktykComponent implements OnInit {
 
+  id: number;
+  isAdmin: boolean = false;
   periodFrom: Date;
   periodTo: Date;
   days: Date;
-
+  comment: string = "";
   diary: FormArray;
   dateFrom: boolean = false;
   dateTo: boolean = false;
@@ -29,17 +41,65 @@ export class DziennikPraktykComponent implements OnInit {
   ];
   diaryGroup: FormGroup;
 
-  constructor(private fb: FormBuilder, notifierService: NotifierService) {
-    this.notifier = notifierService;
+  constructor(private fb: FormBuilder, notifierService: NotifierService, private authService: LoginServiceService, private router: Router, private httpClient: HttpClient, private activatedroute: ActivatedRoute, private datePipe: DatePipe, public dialog: MatDialog) {
+    this.activatedroute.queryParams.subscribe(v =>
+      this.id = v.id
+    );
+
+
     this.diaryGroup = this.fb.group({
-      studentName: new FormControl('', [Validators.required,]),
-      studentSurname: new FormControl('', [Validators.required,]),
-      studentAlbumNumber: new FormControl('', [Validators.required,]),
-      companyName: new FormControl('', [Validators.required,]),
-      periodFrom: new FormControl('', [Validators.required,]),
-      periodTo: new FormControl('', [Validators.required,]),
+      studentName: '',
+      studentSurname: '',
+      studentAlbumNumber: '',
+      companyName: '',
+      periodFrom: '',
+      periodTo: '',
       diary: this.fb.array([])
     });
+
+
+    this.authService.getResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id).subscribe(
+      value => {
+
+console.log(value)
+        this.diaryGroup = this.fb.group({
+          studentName: '',
+          studentSurname: '',
+          studentAlbumNumber: new FormControl(value.studentAlbumNumber, [Validators.required,]),
+          companyName: new FormControl(value.companyName, [Validators.required,]),
+          periodFrom: new FormControl(this.datePipe.transform(value.periodFrom, 'yyyy-MM-dd').toString(), [Validators.required,]),
+          periodTo: new FormControl(this.datePipe.transform(value.periodTo, 'yyyy-MM-dd').toString(), [Validators.required,]),
+          diary: this.fb.array([])
+
+        });
+
+        value.diary.forEach(d => {
+          this.addExistingItem(d.date, d.text);
+        });
+
+        this.periodFrom = new Date(value.periodFrom );
+        this.periodTo = new Date(value.periodTo);
+        this.days = this.periodFrom;
+        this.dateFrom = true;
+        this.dateTo = true;
+
+        if (value.diary[0] == null)
+          this.createTable(true);
+        else
+        this.createTable(false);
+
+        this.authService.getResource('http://localhost:8080/api/user/' + value.ownerId).subscribe(
+          value => {
+            this.diaryGroup.get("studentName").setValue(value.name);
+            this.diaryGroup.get("studentSurname").setValue(value.surname);
+          });
+      },
+      error => console.log(error),
+    );
+
+
+    this.notifier = notifierService;
+
   }
 
 
@@ -69,14 +129,29 @@ export class DziennikPraktykComponent implements OnInit {
 
 
   ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
   }
 
   createItem(date: string, dayName: string) {
     return this.fb.group({
-      date: new FormControl({value: date, disabled: true}, Validators.required),
+      date: this.datePipe.transform(date, 'yyyy-MM-dd').toString(),
       text: '',
       dayName: new FormControl({value: dayName, disabled: true}, Validators.required),
     });
+  }
+
+  loadItem(date: Date, text: string) {
+    return this.fb.group({
+      date: this.datePipe.transform(date, 'yyyy-MM-dd').toString(),
+      text: text,
+      dayName: new FormControl({value: this.daysName[date.getDay()].text, disabled: true}, Validators.required),
+    });
+  }
+
+  addExistingItem(date: Date, text: string) {
+    this.diary = this.diaryGroup.get('diary') as FormArray;
+    this.diary.push(this.loadItem(new Date(date), text));
+
   }
 
   addItem(date: string, dayName: string) {
@@ -96,14 +171,14 @@ export class DziennikPraktykComponent implements OnInit {
           for (let i: number = 0; i < newDays; i++) {
             this.diary.removeAt(0);
           }
-          this.notifier.notify( 'info', 'Tabela zmieniona' );
+          this.notifier.notify('info', 'Tabela zmieniona');
         } else if (this.periodFrom > new Date(value)) {
           let newDays = (this.periodFrom.getTime() - new Date(value).getTime()) / (1000 * 3600 * 24);
           for (let i: number = 0; i < newDays; i++) {
             this.periodFrom = new Date(this.periodFrom.getTime() - (1000 * 3600 * 24));
             this.diary.insert(0, this.createItem(this.periodFrom.toLocaleDateString(), this.daysName[this.periodFrom.getDay()].text));
           }
-          this.notifier.notify( 'info', 'Tabela zmieniona' );
+          this.notifier.notify('info', 'Tabela zmieniona');
         }
       }
       this.periodFrom = new Date(value);
@@ -111,7 +186,7 @@ export class DziennikPraktykComponent implements OnInit {
     }
     if (this.dateFrom == false) {
       this.days = this.periodFrom;
-      this.createTable();
+      this.createTable(true);
     }
     this.dateFrom = true;
 
@@ -129,7 +204,7 @@ export class DziennikPraktykComponent implements OnInit {
 
         }
         this.periodTo = new Date(value);
-        this.notifier.notify( 'info', 'Tabela zmieniona' );
+        this.notifier.notify('info', 'Tabela zmieniona');
       } else if (this.periodTo > new Date(value)) {
         let newDays = (this.periodTo.getTime() - new Date(value).getTime()) / (1000 * 3600 * 24);
         this.periodTo = new Date(value);
@@ -137,25 +212,26 @@ export class DziennikPraktykComponent implements OnInit {
           this.days = new Date(this.days.getTime() - (1000 * 3600 * 24));
           this.diary.removeAt(this.diary.length - 1);
         }
-        this.notifier.notify( 'info', 'Tabela zmieniona' );
+        this.notifier.notify('info', 'Tabela zmieniona');
       }
 
 
       this.periodTo = new Date(value);
     }
     if (this.dateFrom == true && this.dateTo == false) {
-      this.createTable();
+      this.createTable(true);
     }
     this.dateTo = true;
 
   }
 
 
-  private createTable() {
+  private createTable(additems : boolean) {
     if (this.periodFrom != null && this.periodTo != null) {
-      this.notifier.notify( 'info', 'Tabela stworzona' );
+      this.notifier.notify('info', 'Tabela stworzona');
       let daysNumber = (this.periodTo.getTime() - this.periodFrom.getTime()) / (1000 * 3600 * 24) + 1;
       for (let i: number = daysNumber; i > 0; i--) {
+        if(additems)
         this.addItem(this.days.toLocaleDateString(), this.daysName[this.days.getDay()].text);
         this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
       }
@@ -164,8 +240,85 @@ export class DziennikPraktykComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.diaryGroup);
-    this.notifier.notify( 'success', 'Pomyślnie wysłano dziennik' );
+
+    let body: dziennikPraktykDto = {
+      periodFrom: this.datePipe.transform(this.diaryGroup.value.periodFrom, 'yyyy-MM-dd').toString(),
+      periodTo: this.datePipe.transform(this.diaryGroup.value.periodTo, 'yyyy-MM-dd').toString(),
+      companyName: this.diaryGroup.value.companyName,
+      studentAlbumNumber: this.diaryGroup.value.studentAlbumNumber,
+      diary: this.diaryGroup.value.diary,
+    };
+
+
+    this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id, body).subscribe(
+      value => {
+        console.log(value)
+        this.notifier.notify("success", "Pomyślnie wysłąno dokument Dziennik Praktyk",)
+        this.router.navigate(["/home"]);
+      },
+      error => {
+        console.log(error)
+        this.notifier.notify("error", error.error,)
+      }
+    );
+
+
   }
+
+  accept() {
+    this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/accept', {}).subscribe(
+      value => {
+        console.log(value);
+        this.notifier.notify("success", "Pomyślnie za akceptowano dokument Dziennik Praktyk",);
+
+      },
+      error => {
+        console.log(error)
+        this.notifier.notify("error", error.error,)
+      }
+    );
+  }
+
+  decline() {
+    this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/decline', {}).subscribe(
+      value => {
+        console.log(value)
+        this.notifier.notify("success", "Pomyślnie odrzucono dokument Dziennik Praktyk",);
+
+      },
+      error => {
+        console.log(error)
+        this.notifier.notify("error", error.error,)
+      }
+    );
+  }
+
+
+  warning() {
+    if (this.isAdmin) {
+      const dialogRef = this.dialog.open(EditCommentDialogComponent, {
+        width: '400px',
+        data: this.comment,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (!isUndefined(result)) {
+          this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/comment', result).subscribe(
+            value => {
+              console.log(value);
+              this.notifier.notify("success", "Pomyślnie dodano uwage",);
+              this.decline();
+            },
+            error => {
+              console.log(error)
+              this.notifier.notify("error", error.error,)
+            }
+          );
+        }
+      });
+    }
+
+  }
+
 
 }

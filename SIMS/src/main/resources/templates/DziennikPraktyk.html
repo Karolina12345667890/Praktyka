@@ -1,0 +1,82 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>DziennikPraktyk</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="styles/shared.css"/>
+
+    <link rel="stylesheet" href="styles/dziennikpraktyk.css"/>
+</head>
+<body>
+
+<div id="content">
+    <div>
+
+        <h6>Załącznik nr 2 do Regulaminu praktyk zawodowych</h6>
+        <br/>
+
+        <h2>Uniwersytet Przyrodniczo-Humanistyczny w Siedlcach </h2>
+        <h2> Wydział Nauk Ścisłych i Przyrodniczych</h2>
+        <h2> Instytut Informatyki</h2>
+
+        <br/>
+
+        <h2>DZIENNIK PRAKTYK</h2>
+        <br/> <br/>
+
+        <p th:text="${dto.studentName} + ' ' + ${dto.studentSurname}"></p>
+        <h3>Imię i nazwisko studenta </h3>
+        <br/>
+        <p th:text="${dto.studentAlbumNumber}"></p>
+        <h3>NR ALBUMU </h3>
+        <br/>
+
+
+        <p th:text="${#dates.format(dto.periodFrom, 'dd.MM.yyyy')} + ' - ' + ${#dates.format(dto.periodTo, 'dd.MM.yyyy')}"></p>
+        <h3>Termin odbytej praktyki </h3>
+        <br/>
+        <p th:text="${dto.companyName}"></p>
+        <h3>NAZWA ZAKŁADU PRACY</h3>
+        <br/>
+        <p>
+            ..........................................................................................................</p>
+        <h3>pieczęć zakładu i podpis zakładowego opiekuna praktyk</h3>
+
+        <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
+        <h2>KARTA PRZEBIEGU PRAKTYK</h2>
+
+
+        <table>
+            <tr>
+                <td style="width: 5%"> Lp.</td>
+                <td style="width: 10%"> Data</td>
+                <td style="width: 58%"> Opis wykonywanych prac, powierzonych obowiązków i pełnionych funkcji</td>
+                <td style="width: 17%"> Podpis i pieczęć zakładowego opiekuna praktyk</td>
+                <td style="width: 10%"> Uwagi</td>
+            </tr>
+            <tr>
+                <td> 1</td>
+                <td> 2</td>
+                <td> 3</td>
+                <td> 4</td>
+                <td> 5</td>
+            </tr>
+            <tbody th:each="diar,iter: ${dto.diary}">
+            <tr th:if="${diar.text} != ''">
+                <td th:text="${iter.index} +1"/>
+                <td th:text="${#dates.format(diar.date, 'dd.MM.yyyy')}"/>
+                <td style="width: 58%" th:text="${diar.text}"/>
+                <td/>
+                <td/>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

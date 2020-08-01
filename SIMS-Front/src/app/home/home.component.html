@@ -58,7 +58,10 @@
         </ng-container>
       </ng-template>
       <ng-template #DZI>
-          Dziennik
+        <ng-container *ngIf="document.type === 'dziennikpraktyk'">
+          Dziennik Praktyk
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
+        </ng-container>
       </ng-template>
 
 <!--     {{document.type}}-->

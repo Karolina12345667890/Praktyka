@@ -3,6 +3,8 @@ package uph.ii.SIMS.DocumentModule;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykConfiguration;
+import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykFacade;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieConfiguration;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieConfiguration;
@@ -32,9 +34,10 @@ class DocumentConfiguration {
     DocumentFacade documentFacade(OswiadczenieFacade oswiadczenieFacade,
                                   PorozumienieFacade porozumienieFacade,
                                   ZaswiadczenieFacade zaswiadczenieFacade,
+                                  DziennikPraktykFacade dziennikPraktykFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade);
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade );
     }
     
     /**
@@ -51,8 +54,11 @@ class DocumentConfiguration {
 
         ZaswiadczenieFacade zaswiadczenieFacadeInMemoryIO = new ZaswiadczenieConfiguration()
                 .zaswiadczenieFacadeInMemoryIO();
+
+        DziennikPraktykFacade dziennikPraktykFacadeInMemoryIO = new DziennikPraktykConfiguration()
+                .dziennikPraktykFacadeInMemoryIO();
         
-        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO);
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO);
     }
 }
     

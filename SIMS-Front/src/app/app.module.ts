@@ -28,6 +28,7 @@ import { ShowCommentDialogComponent } from './show-comment-dialog/show-comment-d
 import { EditCommentDialogComponent } from './edit-comment-dialog/edit-comment-dialog.component';
 import { EditGroupDialogComponent } from './edit-group-dialog/edit-group-dialog.component';
 import { PagerService} from "./pager-service.service";
+import { DatePipe } from '@angular/common';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -102,7 +103,7 @@ const customNotifierOptions: NotifierOptions = {
     FormsModule,
   ],
   entryComponents: [ GroupListComponent, EditGroupDialogComponent, StudentListComponent , EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent],
-  providers: [LoginServiceService, AuthGuardService, CookieService, PagerService],
+  providers: [LoginServiceService, AuthGuardService, CookieService, PagerService,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {

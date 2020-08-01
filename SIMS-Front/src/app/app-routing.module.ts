@@ -42,7 +42,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'dziennik',
+    path: 'dziennikpraktyk',
     component: DziennikPraktykComponent,
     canActivate: [AuthGuardService]
   },
