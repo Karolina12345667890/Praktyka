@@ -1,15 +1,23 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.persistence.Lob;
 import java.util.Date;
+
+/**
+ *
+ * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu planu praktyk
+ */
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode
-public class ZaswiadczenieDto {
+@AllArgsConstructor
+public class PlanPraktykiDto {
 
     private Long id;
     private Long groupId;
@@ -17,22 +25,19 @@ public class ZaswiadczenieDto {
 
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
-    private String studentRating1;
-    private String studentRating2;
-    private String studentRating3;
-    private String studentRating;
-    private String studentWorks;
-    private String studentInterests;
+    @Lob
+    private String studentTasks;
+    private String studentPesel;
 
     private String comment = "";
     private String status = "NEW";
 
-    public ZaswiadczenieDto(Long id, Long groupId, Long ownerId, Date studentInternshipStart, Date studentInternshipEnd) {
+
+    public PlanPraktykiDto(Long id, Long groupId, Long ownerId, Date studentInternshipStart, Date studentInternshipEnd) {
         this.id = id;
         this.groupId = groupId;
         this.ownerId = ownerId;
         this.studentInternshipStart = studentInternshipStart;
         this.studentInternshipEnd = studentInternshipEnd;
     }
-
 }

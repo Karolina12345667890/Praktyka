@@ -5,7 +5,7 @@
   <div class="fontSize"> System wspierający zarządzanie, wypełnianie oraz przesyłanie dokumentów do praktyk</div>
   <hr>
   <div class="fontSize">  Czysta niewypełnina wersja dostępna pod linkiem:</div><br>
-  <a class="btn btn-primary" href="https://ii.uph.edu.pl/images/PDFs/praktyki/2019/regulamin_praktyk_2017_18.pdf">Czysta wersja dokumentów PDF</a>
+  <a class="btn btn-primary" href="https://ii.uph.edu.pl/studenci/praktyki-zawodowe">Strona Instytutu Informatyki, praktyki Zawodowe</a>
 </div>
 
 
@@ -58,8 +58,14 @@
         </ng-container>
       </ng-template>
       <ng-template #DZI>
-        <ng-container *ngIf="document.type === 'dziennikpraktyk'">
+        <ng-container *ngIf="document.type === 'dziennikpraktyk';else PLA">
           Dziennik Praktyk
+          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
+        </ng-container>
+      </ng-template>
+      <ng-template #PLA>
+        <ng-container *ngIf="document.type === 'planpraktyki'">
+          Plan Praktyki Zawodowej
           <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
         </ng-container>
       </ng-template>

@@ -7,6 +7,8 @@ import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykConfiguration;
 import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykFacade;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieConfiguration;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
+import uph.ii.SIMS.DocumentModule.PlanPraktyki.PlanPraktykiConfiguration;
+import uph.ii.SIMS.DocumentModule.PlanPraktyki.PlanPraktykiFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieConfiguration;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.Zaswiadczenie;
@@ -35,9 +37,10 @@ class DocumentConfiguration {
                                   PorozumienieFacade porozumienieFacade,
                                   ZaswiadczenieFacade zaswiadczenieFacade,
                                   DziennikPraktykFacade dziennikPraktykFacade,
+                                  PlanPraktykiFacade planPraktykiFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade );
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade, planPraktykiFacade );
     }
     
     /**
@@ -57,8 +60,11 @@ class DocumentConfiguration {
 
         DziennikPraktykFacade dziennikPraktykFacadeInMemoryIO = new DziennikPraktykConfiguration()
                 .dziennikPraktykFacadeInMemoryIO();
+
+        PlanPraktykiFacade planPraktykiFacadeInMemoryIO = new PlanPraktykiConfiguration()
+                .PlanPraktykiFacadeInMemoryIO();
         
-        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO);
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO,planPraktykiFacadeInMemoryIO );
     }
 }
     

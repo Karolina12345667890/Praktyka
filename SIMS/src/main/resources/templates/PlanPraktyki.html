@@ -1,0 +1,72 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>PlanPraktyki</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="styles/shared.css"/>
+
+</head>
+<body>
+<h6>Załącznik nr 4 do Regulaminu praktyk zawodowych</h6>
+<br/>
+<div id="content">
+
+    <div>
+        <div class="toSignLeft">
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (Pięczeć zakładu pracy)
+            </div>
+        </div>
+
+        <div class="toSignRight">
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (Miejscowość, data)
+            </div>
+        </div>
+    </div>
+
+    <br/> <br/> <br/>
+
+    <h3>PLAN PRAKTYKI ZAWODOWEJ</h3>
+    <br/> <br/>
+
+    <br/>
+
+
+    <div style="line-height: 25px">
+        Niniejszym oświadczam, że Pan/i <span th:text="${dto.studentName}"></span>
+        <span th:text="${dto.studentSurname}"></span> student(ka)
+        nr PESEL <span th:text="${dto.studentPesel}"></span>
+    </div>
+    <div>
+        student/ka kierunku Informatyka UPH w Siedlcach w ramach praktyki zawodowej zorganizowanej w naszym zakładzie
+        pracy w okresie od dnia
+        <span th:text="${#dates.format(dto.studentInternshipStart, 'dd.MM.yyyy')}"></span> do dnia
+        <span th:text="${#dates.format(dto.studentInternshipEnd, 'dd.MM.yyyy')}"></span> będzie realizować następujące
+        zadania:
+    </div>
+    <br/>
+    <div>
+        <span th:text="${dto.studentTasks}"></span>
+    </div>
+    <br/><br/><br/>
+    <div class="toSignLeft">
+        <div>
+            ........................................................
+        </div>
+        <div>
+            (imię i nazwisko osoby upoważnionej)
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

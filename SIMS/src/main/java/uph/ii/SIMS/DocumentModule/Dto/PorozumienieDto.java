@@ -39,25 +39,4 @@ public class PorozumienieDto {
         this.studentInternshipStart = studentInternshipStart;
         this.studentInternshipEnd = studentInternshipEnd;
     }
-
-    @Override
-    public String toString() {
-        return "PorozumienieDto{" +
-                "id=" + id +
-                ", groupId=" + groupId +
-                ", ownerId=" + ownerId +
-                ", companyName='" + companyName + '\'' +
-                ", companyLocationCity='" + companyLocationCity + '\'' +
-                ", companyLocationStreet='" + companyLocationStreet + '\'' +
-                ", companyRepresentantName='" + companyRepresentantName + '\'' +
-                ", companyRepresentantSurname='" + companyRepresentantSurname + '\'' +
-                ", studentInternshipStart=" + studentInternshipStart +
-                ", studentInternshipEnd=" + studentInternshipEnd +
-                ", studentStudyForm='" + studentStudyForm + '\'' +
-                ", studentSpecialization='" + studentSpecialization + '\'' +
-                ", department='" + department + '\'' +
-                ", comment='" + comment + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
 }

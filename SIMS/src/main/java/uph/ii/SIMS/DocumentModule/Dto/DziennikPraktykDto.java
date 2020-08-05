@@ -6,6 +6,10 @@ import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DiaryLog;
 import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.Date;
+/**
+ *
+ * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu dziennika Praktyk
+ */
 @Getter
 @Setter
 @NoArgsConstructor

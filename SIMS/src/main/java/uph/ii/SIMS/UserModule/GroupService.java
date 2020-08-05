@@ -132,14 +132,20 @@ public class GroupService {
                     groupId,
                     group.getGroupName()
             );
-            documentFacade.storeZaswiadczenie(
-                    new ZaswiadczenieDto(null, groupId, studentId, new Date(), new Date()),
+            documentFacade.storePlanPraktyki(
+                    new PlanPraktykiDto(null, groupId, studentId, new Date(), new Date()),
                     studentId,
                     groupId,
                     group.getGroupName()
             );
             documentFacade.storeDziennikPraktyk(
                     new DziennikPraktykDto(null, groupId, studentId),
+                    studentId,
+                    groupId,
+                    group.getGroupName()
+            );
+            documentFacade.storeZaswiadczenie(
+                    new ZaswiadczenieDto(null, groupId, studentId, new Date(), new Date()),
                     studentId,
                     groupId,
                     group.getGroupName()
