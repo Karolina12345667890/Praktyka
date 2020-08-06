@@ -1,7 +1,5 @@
-
-
-<div class="container text-center" style="margin-top: 100px">
-<h1>Witaj na Stronie "Student Internship Management System"</h1>
+<div class="container text-center mt-4">
+  <h1>Witaj na Stronie "Student Internship Management System"</h1>
   <div class="fontSize"> System wspierający zarządzanie, wypełnianie oraz przesyłanie dokumentów do praktyk</div>
   <hr>
   <div class="fontSize">  Czysta niewypełnina wersja dostępna pod linkiem:</div><br>
@@ -10,108 +8,114 @@
 
 
 
-<div *ngIf="authService.isLoggedIn()">
-<hr>
+<div class="container" *ngIf="authService.isLoggedIn()">
+  <hr>
+
+  <div *ngIf="myDocumentList.length != 0">
+    <h3 class="mb-3">Moje dokumenty</h3>
+
+    <div *ngIf="myGroupedDocuments.size != 0" class="mb-5">
+      <div *ngFor="let myGroup of myGroupsStatus">
+        <hr class="my-4">
+        <button class="btn btn-outline-primary btn-lg mb-2" (click)="showHideGroup(myGroup.id)">{{ myGroup.name }}</button> <span class="fontSize ml-2 text-success font-weight-bold" *ngIf="myGroup.isOpen == true">(otwarta)</span><span class="fontSize ml-2 text-danger font-weight-bold" *ngIf="myGroup.isOpen == false">(zamknięta)</span>
+
+          <div #groupTable id="{{ myGroup.id }}" [ngStyle]="{'display': myGroup.isOpen ? '' : 'none' }" class="table-holder">
+
+            <table class="table table-hover table-striped">
+
+              <thead class="thead-dark">
+                <tr>
+                  <th style="width: 70%;">
+                    Dokument
+                  </th>
+                  <th >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let myDocumentData of myGroupedDocuments.get(myGroup.id)">
+                  <td>
+                    <ng-container *ngIf="myDocumentData.type === 'oswiadczenie';else POR">
+                      Oświadczenie
+                      <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                    </ng-container>
+
+                    <ng-template #POR>
+                      <ng-container *ngIf="myDocumentData.type === 'porozumienie';else ZAS">
+                        Porozumienie
+                        <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"  (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                      </ng-container>
+                    </ng-template>
+
+                    <ng-template #ZAS>
+                      <ng-container *ngIf="myDocumentData.type === 'zaswiadczenie';else DZI">
+                        Zaświadczenie
+                        <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                      </ng-container>
+                    </ng-template>
+
+                    <ng-template #DZI>
+                      <ng-container *ngIf="myDocumentData.type === 'dziennikpraktyk';else PLA">
+                        Dziennik Praktyk
+                        <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                      </ng-container>
+                    </ng-template>
+
+                    <ng-template #PLA>
+                      <ng-container *ngIf="myDocumentData.type === 'planpraktyki'">
+                        Plan Praktyki Zawodowej
+                        <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                      </ng-container>
+                    </ng-template>
+
+                    <button *ngIf="myDocumentData.status != 'EMPTY'" type="button"   class="btn btn-primary float-right mx-1" (click)="onClick(myDocumentData.link,myDocumentData.type)"> Pobierz</button>
+                  </td>
+
+                  <td class="docs"
+                      [ngStyle]="myDocumentData.status == 'NEW' && {'background-color':'#2196F3'} ||
+                      myDocumentData.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+                      myDocumentData.status == 'DECLINED' && {'background-color':'#dc3545'}">
+
+                    <ng-container *ngIf="myDocumentData.status === 'DECLINED';else NEW">
+                      Odrzucony
+                    </ng-container>
+
+                    <ng-template #NEW>
+                      <ng-container *ngIf="myDocumentData.status === 'NEW';else ACCEPTED">
+                        Niesprawdzony
+                      </ng-container>
+                    </ng-template>
+
+                    <ng-template #ACCEPTED>
+                      <ng-container *ngIf="myDocumentData.status === 'ACCEPTED';else empty">
+                        Zaakceptowany
+                      </ng-container>
+                    </ng-template>
+
+                    <ng-template #empty>
+                      Brak
+                    </ng-template>
+
+                    <button type="button"  class="btn btn-warning warning float-right mx-1" *ngIf="myDocumentData.comment != '' && myDocumentData.comment != null" style="margin-left: 1%" (click)="showWarning(myDocumentData.comment)"  >Uwaga!</button>
+
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
 
 
 
-
-  <div  *ngIf="myDocumentList.length != 0">
-    <h1 style="margin-left: 10%">Moje Dokumenty</h1>
-<table class="table table-hover table-striped ">
-
-  <thead class="thead-dark">
-
-  <tr>
-    <th width="20%">
-      Grupa
-    </th>
-    <th width="40%">
-      Dokument
-    </th>
-    <th >
-      Status
-    </th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let document of myDocumentList">
-    <td>
-      {{document.groupName}}
-    </td>
-    <td  >
-      <ng-container *ngIf="document.type === 'oswiadczenie';else POR">
-        Oświadczenie
-        <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
-
-      </ng-container>
-      <ng-template #POR>
-        <ng-container *ngIf="document.type === 'porozumienie';else ZAS">
-          Porozumienie
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"  (click)="openDoc(document.id,document.type)">Wypełnij</button>
-        </ng-container>
-      </ng-template>
-      <ng-template #ZAS>
-        <ng-container *ngIf="document.type === 'zaswiadczenie';else DZI">
-          Zaświadczenie
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
-        </ng-container>
-      </ng-template>
-      <ng-template #DZI>
-        <ng-container *ngIf="document.type === 'dziennikpraktyk';else PLA">
-          Dziennik Praktyk
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
-        </ng-container>
-      </ng-template>
-      <ng-template #PLA>
-        <ng-container *ngIf="document.type === 'planpraktyki'">
-          Plan Praktyki Zawodowej
-          <button *ngIf="document.status != 'ACCEPTED'" type="button" class="btn btn-success float-right"   (click)="openDoc(document.id,document.type)">Wypełnij</button>
-        </ng-container>
-      </ng-template>
-
-<!--     {{document.type}}-->
-
-        <button *ngIf="document.status != 'EMPTY'" type="button"   class="btn btn-primary float-right" (click)="onClick(document.link,document.type)"> Pobierz</button>
-
-    </td>
-    <td class="docs"
-        [ngStyle]="document.status == 'NEW' && {'background-color':'#2196F3'} ||
-      document.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
-      document.status == 'DECLINED' && {'background-color':'#dc3545'}">
-
-      <ng-container *ngIf="document.status === 'DECLINED';else NEW">
-      Odrzucony
-      </ng-container>
-      <ng-template #NEW>
-        <ng-container *ngIf="document.status === 'NEW';else ACCEPTED">
-          Nie Sprawdzony
-        </ng-container>
-      </ng-template>
-      <ng-template #ACCEPTED>
-        <ng-container *ngIf="document.status === 'ACCEPTED';else empty">
-          Zaakceptowany
-        </ng-container>
-      </ng-template>
-        <ng-template #empty>
-          Brak
-        </ng-template>
-
-
-      <button type="button"  class="btn btn-warning warning float-right" *ngIf="document.comment != '' && document.comment != null" style="margin-left: 1%" (click)="showWarning(document.comment)"  >Uwaga!</button>
-
-<!--    <div *ngIf="document.comment != null">-->
-<!--      {{document.comment}}-->
-<!--    </div>-->
-    </td>
-  </tr>
-  </tbody>
-</table>
 
 <!--<h1>{{authService.isLoggedIn()}}</h1>-->
 
-</div >
-  <div  style="margin-left: 10%" *ngIf="myDocumentList.length === 0">
+  <div class="container" *ngIf="myDocumentList.length === 0">
     <h1>Brak Dokumentów</h1>
   </div>
 

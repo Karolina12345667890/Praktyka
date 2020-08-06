@@ -1,11 +1,13 @@
+.table-holder {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+
 .fontSize{
   font-size: 22px;
 }
-table{
-  margin-left:10%;
-  margin-right:10%;
-  width: 70%;
-}
+
 
 .docs{
   border-right: 1px solid #f8f9fa;
@@ -19,7 +21,6 @@ table{
 td:hover{
   outline: 1px dashed #fff;
   outline-offset: -5px;
-
 }
 
 .warning {
@@ -27,9 +28,7 @@ td:hover{
 }
 
 .square:hover {
-
   background-color: yellow;
-
 }
 
 

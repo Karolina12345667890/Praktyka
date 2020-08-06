@@ -1,5 +1,5 @@
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { NotifierService } from 'angular-notifier';
 
@@ -8,11 +8,16 @@ import { NotifierService } from 'angular-notifier';
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css']
 })
-export class FileUploadComponent implements OnInit {
+export class FileUploadComponent implements OnInit, AfterContentInit {
+
+
+  @ViewChild('inputFile', { static: true }) fileInput: ElementRef;
+  @ViewChild('labelFileName', { static: true }) labelFileName: ElementRef;
 
   SERVER_URL = 'http://localhost:8080/upload';
   uploadForm: FormGroup;
   private readonly notifier: NotifierService;
+
 
   constructor(private formBuilder: FormBuilder,
               private httpClient: HttpClient,
@@ -27,12 +32,12 @@ export class FileUploadComponent implements OnInit {
     });
   }
 
-  // onFileSelect(event) {
-  //    if (event.target.files.length > 0) {
-  //      const file = event.target.files[0];
-  //      this.uploadForm.get('file').setValue(file);
-  //    }
-  // }
+
+  ngAfterContentInit() {
+    this.fileInput.nativeElement.addEventListener('change', () => {
+      this.labelFileName.nativeElement.innerHTML = this.fileInput.nativeElement.files[0].name;
+    })
+  }
 
 
   onSubmit() {

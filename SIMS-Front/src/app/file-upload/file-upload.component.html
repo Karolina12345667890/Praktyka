@@ -1,41 +1,44 @@
 
 
-<div class="container" style="margin-top: 100px">
+<div class="container mt-5">
 
-
-
-  <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">
-    <div class="row justify-content-center align-items-center">
-    <div class="custom-control-inline ">
-      <label class="container ">
-        <input type="radio" name="documentType" value="Oswiadczenie" formControlName="documentType"> Oświadczenie
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">
-        <input type="radio" name="documentType" value="Porozumienie" formControlName="documentType"> Porozumienie
-        <span class="checkmark"></span>
-      </label>
-      <label class="container">
-        <input type="radio" name="documentType" value="Zaswiadczenie" formControlName="documentType"> Zaświadczenie
-        <span class="checkmark"></span>
-      </label>
-
-    </div>
-    </div>
-    <br>
-<!--    <div>-->
-<!--      <input type="file" name="file" formControlName="file"/>-->
-<!--    </div>-->
-
-    <div class="custom-file">
-      <label class="custom-file-label" for="customFile">Wybierz plik</label>
-      <input type="file" formControlName="file" class="custom-file-input" id="customFile" lang="pl-Pl">
+  <div class="card border-info mb-3">
+    <div class="card-header m-0 p-0">
+      <p class="text-center m-0 p-0 my-2">Wysyłanie dokumentów</p>
     </div>
 
-    <div><br>
-      <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="uploadForm.invalid">Wyślij</button>
+    <div class="card-body">
+      <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">
+        <div class="row justify-content-center align-items-center">
+          <div class="custom-control-inline ">
+            <label class="container ">
+              <input type="radio" name="documentType" value="Oswiadczenie" formControlName="documentType"> Oświadczenie
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">
+              <input type="radio" name="documentType" value="Porozumienie" formControlName="documentType"> Porozumienie
+              <span class="checkmark"></span>
+            </label>
+            <label class="container">
+              <input type="radio" name="documentType" value="Zaswiadczenie" formControlName="documentType"> Zaświadczenie
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="custom-file mb-4">
+          <label #labelFileName class="custom-file-label" for="customFile">Wybierz plik</label>
+          <input #inputFile type="file" formControlName="file" class="custom-file-input" id="customFile" lang="pl-Pl">
+        </div>
+
+        <div>
+          <button type="submit" class="btn btn-success btn-lg btn-block" [disabled]="uploadForm.invalid">Wyślij</button>
+        </div>
+      </form>
     </div>
-  </form>
+
+  </div>
+
 </div>
 
 

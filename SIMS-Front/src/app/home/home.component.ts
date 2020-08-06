@@ -1,11 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
 import {DocumentDto} from '../models/DocumentDto';
 import {isUndefined} from "util";
 import {MatDialog} from "@angular/material/dialog";
 import {ShowCommentDialogComponent} from "../show-comment-dialog/show-comment-dialog.component";
 import {Router} from "@angular/router";
-import {oswiadczenieDto} from "../models/oswiadczenieDto";
 
 @Component({
   selector: 'app-home-component',
@@ -16,7 +15,12 @@ import {oswiadczenieDto} from "../models/oswiadczenieDto";
 export class HomeComponent implements OnInit {
 
   private myDocumentList = new Array<DocumentDto>();
-  isAdmin:boolean = false;
+
+  @ViewChildren('groupTable') groupTables: QueryList<ElementRef>;
+  myGroupedDocuments: Map<Array<any>,any> = new Map<Array<any>,any>();
+  myGroups: Array<any> = new Array<any>();
+  myGroupsStatus: Array<any> = new Array<any>();
+  isAdmin: boolean = false;
 
   constructor(private authService: LoginServiceService, public dialog: MatDialog,private router: Router) {
   }
@@ -26,18 +30,47 @@ export class HomeComponent implements OnInit {
       this.authService.getResource('http://localhost:8080/api/document/list').subscribe(
         value => {
           this.myDocumentList = value;
-            console.log(value);
+
+          function groupBy(list, keyGetter) {
+            const map = new Map();
+            list.forEach((item) => {
+              const key = keyGetter(item);
+              const collection = map.get(key);
+              if (!collection) {
+                map.set(key, [item]);
+              } else {
+                collection.push(item);
+              }
+            });
+            return map;
+          }
+
+          this.myGroupedDocuments = groupBy(value, value => value.groupId);
+          this.myGroups = Array.from(this.myGroupedDocuments.keys())
+
+          this.myGroups.forEach(groupId => {
+            this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
+              value => {
+                this.myGroupsStatus.push({
+                  id: value.id,
+                  name: value.groupName,
+                  isOpen: value.isOpen
+                })
+              },
+              error => console.log(error),
+            );
+          })
         },
         error => console.log(error),
       );
     }
+
     this.isAdmin = this.authService.isAdmin();
     if(this.isAdmin){
       this.router.navigate(['/gl']);
     }
+
   }
-
-
 
 
   openDoc(id:number,docType:string) {
@@ -82,13 +115,9 @@ export class HomeComponent implements OnInit {
       error => console.log(error),
     );
   }
-  // onClick(path:string,document:string){
-  //   console.log(path+" "+ document);
-  //
-  // }
+
 
   showWarning(message: string) {
-
       const dialogRef = this.dialog.open(ShowCommentDialogComponent, {
         width: '400px',
         data: message,
@@ -100,11 +129,24 @@ export class HomeComponent implements OnInit {
           alert(result);
         }
       });
-
-
   }
 
+  showHideGroup(element) {
+    const groupTables = this.groupTables.toArray();
 
+    groupTables.forEach(groupTable => {
+      const grpTable = groupTable.nativeElement;
+      if (grpTable.id == element) {
+        if (grpTable.style.display === 'none') {
+          grpTable.removeAttribute("style");
+        }
+        else {
+          grpTable.style.display = 'none';
+        }
+      }
+    })
+
+  }
 
 
 }
