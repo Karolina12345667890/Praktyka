@@ -2,6 +2,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AfterContentInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { NotifierService } from 'angular-notifier';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-file-upload',
@@ -18,10 +19,12 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
   uploadForm: FormGroup;
   private readonly notifier: NotifierService;
 
+  selectedDocument: String = '';
+  selectedGroup: String = '';
 
   constructor(private formBuilder: FormBuilder,
               private httpClient: HttpClient,
-              notifierService: NotifierService ) {
+              notifierService: NotifierService, private currentRoute: ActivatedRoute) {
     this.notifier = notifierService;
   }
 
@@ -30,6 +33,16 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
       file: new FormControl(Array<File>(), [Validators.required,]),
       documentType: new FormControl('', [Validators.required,]),
     });
+
+    this.currentRoute.queryParams.subscribe(params => {
+      if (params.group != undefined) {
+        this.selectedGroup = params.group;
+      }
+
+      if (params.doc != undefined) {
+        this.selectedDocument = params.doc;
+      }
+    })
   }
 
 

@@ -39,7 +39,8 @@
                   <td>
                     <ng-container *ngIf="myDocumentData.type === 'oswiadczenie';else POR">
                       Oświadczenie
-                      <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                      <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1" (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                      <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" [routerLink]="['/upload']" [queryParams]="{ group: myDocumentData.groupName, doc: myDocumentData.type }">Wyślij wypełniony dokument</a>
                     </ng-container>
 
                     <ng-template #POR>

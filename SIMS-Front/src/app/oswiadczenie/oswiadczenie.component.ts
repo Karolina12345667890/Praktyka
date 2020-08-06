@@ -106,7 +106,7 @@ export class OswiadczenieComponent implements OnInit {
     console.log(body);
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id, body).subscribe(
       value => {console.log(value)
-        this.notifier.notify("success","Pomyślnie wysłąno dokument Oświadczenie",)
+        this.notifier.notify("success","Pomyślnie wysłano dokument Oświadczenie",)
         this.router.navigate(["/home"]);
       },
       error =>{ console.log(error)
@@ -164,7 +164,7 @@ export class OswiadczenieComponent implements OnInit {
   accept(){
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/accept', {}).subscribe(
       value => { console.log(value);
-        this.notifier.notify("success","Pomyślnie za akceptowano dokument Oświadczenie",);
+        this.notifier.notify("success","Pomyślnie zaakceptowano dokument Oświadczenie",);
         this.load();
       },
       error =>{ console.log(error)
@@ -196,7 +196,7 @@ export class OswiadczenieComponent implements OnInit {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/comment', result).subscribe(
             value => { console.log(value);
-              this.notifier.notify("success","Pomyślnie dodano uwage",);
+              this.notifier.notify("success","Pomyślnie dodano uwagę",);
               this.decline();
             },
             error =>{ console.log(error)

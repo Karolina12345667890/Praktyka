@@ -1,8 +1,4 @@
-.table{
-  margin-left:5%;
-  margin-right:5%;
-  width: 90%;
-}
+
 .table-hover tbody tr:hover {
   background-color: #17a2b8 /*#ced4da*/;
 }
@@ -12,19 +8,11 @@
   background: #dc3545;
 }
 
-/* The container */
-.container {
-  display: block;
-  position: relative;
-  padding-left: 35px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+.table-holder {
+  max-width: 100%;
+  overflow-x: auto;
 }
+
 
 /* Hide the browser's default checkbox */
 .container > input {
@@ -68,10 +56,3 @@
 }
 
 
-.changed{
-  position: relative;
-
-  border: 5px solid red;
-  background-color: red;
-  color: white;
-}

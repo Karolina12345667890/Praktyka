@@ -142,7 +142,7 @@ export class PorozumienieComponent implements OnInit {
     console.log(body);
     this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id, body).subscribe(
       value => {console.log(value)
-        this.notifier.notify("success","Pomyślnie wysłąno dokument Porozumienie",)
+        this.notifier.notify("success","Pomyślnie wysłano dokument Porozumienie",)
         this.router.navigate(["/home"]);
       },
       error =>{ console.log(error)
@@ -181,7 +181,7 @@ export class PorozumienieComponent implements OnInit {
   accept(){
     this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id+'/accept', {}).subscribe(
       value => { console.log(value);
-        this.notifier.notify("success","Pomyślnie za akceptowano dokument Porozumienie",);
+        this.notifier.notify("success","Pomyślnie zaakceptowano dokument Porozumienie",);
         this.load();
       },
       error =>{ console.log(error)
@@ -192,7 +192,7 @@ export class PorozumienieComponent implements OnInit {
   decline(){
     this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id+'/decline', {}).subscribe(
       value => { console.log(value)
-        this.notifier.notify("success","Pomyślnie odrzucono dokument  Porozumienie",);
+        this.notifier.notify("success","Pomyślnie odrzucono dokument Porozumienie",);
         this.load();
       },
       error =>{ console.log(error)
@@ -213,7 +213,7 @@ export class PorozumienieComponent implements OnInit {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id+'/comment', result).subscribe(
             value => { console.log(value);
-              this.notifier.notify("success","Pomyślnie dodano uwage",);
+              this.notifier.notify("success","Pomyślnie dodano uwagę",);
               this.decline();
             },
             error =>{ console.log(error)

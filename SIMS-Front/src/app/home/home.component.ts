@@ -47,6 +47,9 @@ export class HomeComponent implements OnInit {
 
           this.myGroupedDocuments = groupBy(value, value => value.groupId);
           this.myGroups = Array.from(this.myGroupedDocuments.keys())
+          this.myGroups = this.myGroups.sort((a,b) => {
+            return a - b;
+          })
 
           this.myGroups.forEach(groupId => {
             this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(

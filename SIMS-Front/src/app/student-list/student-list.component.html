@@ -1,134 +1,138 @@
+<div class="container text-center">
+  <div class="display-4 mt-4">Lista studentów grupy: {{group.groupName}}</div>
 
+  <hr class="mt-4 pb-2">
 
-<div class="container text-center" style="margin-top: 70px">
-  <div class="display-4">Lista Studentów grupy: {{group.groupName}}</div>
-  <br>
-</div>
-<div class="form-row" >
-<div class="form-group col-md-2">
-<input  class="form-control" type="text" [(ngModel)]="foilterSurname" placeholder="Nazwisko">
-</div>
-  <div class="form-group col-md-2">
-  <button class="btn btn-success" (click)="findSurname()" >Wyszukaj</button>
+  <h2 class="lead text-left">Wyszukaj studenta:</h2>
+  <div class="form-row">
+    <div class="form-group col-12 col-md-6">
+      <input  class="form-control" type="text" [(ngModel)]="foilterSurname" placeholder="Nazwisko">
+    </div>
+    <div class="form-group col-12 col-md-6">
+      <button class="btn btn-success w-100" (click)="findSurname()" >Wyszukaj</button>
+    </div>
   </div>
+
+  <hr class="my-2">
+
+  <div class="table-holder">
+    <div *ngIf="pager.pages && pager.pages.length"  class="btn-group my-2 pb-2" role="group">
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(1)">Pierwsza</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
+      <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
+    </div>
+
+    <table class="table table-hover table-striped ">
+      <thead class="thead-dark">
+        <tr>
+          <th>Imie</th>
+          <th (click)="sortSurname()">Nazwisko</th>
+          <th (click)="sortCompanyName()">Nazwa Firmy</th>
+          <th class="docs">Oświadczenie</th>
+          <th class="docs">Porozumienie</th>
+          <th class="docs">Plan Praktyki Zawodowej</th>
+          <th class="docs">Dziennik Praktyk</th>
+          <th class="docs">Zaświadczenie</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let item of pagedItems  " >
+          <td>
+            {{ item.name}}
+          </td>
+          <td>
+            {{ item.surname }}
+          </td>
+          <td>
+            {{item.companyName}}
+          </td>
+
+          <td class="docs" *ngFor="let doc of item.documents " [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
+            doc.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+            doc.status == 'DECLINED' && {'background-color':'#dc3545'}">
+
+            <ng-container *ngIf="doc.status === 'DECLINED';else NEW">
+              Odrzucony<br>
+            </ng-container>
+
+            <ng-template #NEW>
+              <ng-container *ngIf="doc.status === 'NEW';else ACCEPTED">
+                Nowy<br>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #ACCEPTED>
+              <ng-container *ngIf="doc.status === 'ACCEPTED';else empty">
+                Zaakceptowany<br>
+              </ng-container>
+            </ng-template>
+
+            <ng-template #empty>
+              Brak
+            </ng-template>
+
+            <button type="button" class="btn btn-primary my-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)"  > Zobacz</button>
+            <button type="button" class="btn btn-warning my-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)"  >Uwaga!</button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="pager.pages && pager.pages.length"  class="btn-group mb-1" role="group">
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(1)">Pierwsza</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
+      <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
+      <button type="button" class="btn btn-outline-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
+    </div>
+  </div>
+
+  <hr class="mt-2 mb-4">
+
+  <div class="table-holder mb-3">
+    <div *ngIf="studentApplicationList.length != 0">
+      <div class="container text-center" >
+        <div class="display-4">Lista aplikujących do tej grupy</div>
+        <br>
+      </div>
+
+      <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Numer albumu</th>
+            <th>Data dołączenia</th>
+            <th>Akcje</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of studentApplicationList " >
+            <td>
+              {{item.studentName}}
+            </td>
+            <td>
+              {{item.studentSurname}}
+            </td>
+            <td>
+              {{item.studentAlbum}}
+            </td>
+            <td>
+              {{item.date}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-success m-1" (click)="onAcceptClick(item.acceptLink)">Akceptuj</button>
+              <button type="button" class="btn btn-danger m-1" (click)="onDeclineClick(item.declineLink)">Odrzuć</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
-<div *ngIf="pager.pages && pager.pages.length"  class="btn-group  " role="group">
-  <button type="button" class="btn btn-secondary" (click)="setPage(1)">Pierwsza</button>
-  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
-  <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
-  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
-  <button type="button" class="btn btn-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
-</div>
-<table class="table table-hover table-striped ">
-
-  <thead class="thead-dark">
-  <tr>
-    <th width="10%" > Imie</th>
-    <th width="10%" (click)="sortSurname()"> Nazwisko</th>
-    <th width="16%" (click)="sortCompanyName()"> Nazwa Firmy</th>
-
-    <th  width="16%" class="docs"> Oświadczenie</th>
-    <th  width="16%"  class="docs"> Porozumienie</th>
-    <th  width="16%"  class="docs"> Zaświadczenie</th>
-    <th  width="16%"  class="docs"> Dziennik</th>
-  </tr>
-  </thead>
-  <tbody >
-
-  <tr *ngFor="let item of pagedItems  " >
-    <td>
-      {{ item.name}}
-    </td>
-    <td>
-      {{ item.surname }}
-    </td>
-<td>
-  {{item.companyName}}
-</td>
-
-    <td class="docs" *ngFor="let doc of item.documents " [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
-     doc.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
-      doc.status == 'DECLINED' && {'background-color':'#dc3545'}">
-
-      <ng-container *ngIf="doc.status === 'DECLINED';else NEW">
-        Odrzucony
-      </ng-container>
-      <ng-template #NEW>
-        <ng-container *ngIf="doc.status === 'NEW';else ACCEPTED">
-          Nowy
-        </ng-container>
-      </ng-template>
-      <ng-template #ACCEPTED>
-        <ng-container *ngIf="doc.status === 'ACCEPTED';else empty">
-          Zaakceptowany
-        </ng-container>
-      </ng-template>
-      <ng-template #empty>
-        Brak
-      </ng-template>
-      <button type="button" class="btn btn-primary float-right" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)"  > Zobacz</button>
-      <button type="button"  class="btn btn-warning float-right" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)"  >Uwaga!</button>
-
-    </td>
-
-
-
-  </tr>
-  </tbody>
-
-</table>
-<div *ngIf="pager.pages && pager.pages.length"  class="btn-group  " role="group">
-  <button type="button" class="btn btn-secondary" (click)="setPage(1)">Pierwsza</button>
-  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage - 1)">Poprzednia</button>
-  <button *ngFor="let page of pager.pages" type="button" class="btn btn-secondary" (click)="setPage(page)" [ngStyle]="pager.currentPage === page && {'background-color':'#0275d8'}">{{page}}</button>
-  <button type="button" class="btn btn-secondary" (click)="setPage(pager.currentPage + 1)">Następna</button>
-  <button type="button" class="btn btn-secondary" (click)="setPage(pager.totalPages)">Ostatnia</button>
-</div>
-<div *ngIf="studentApplicationList.length != 0">
-<div class="container text-center" >
-  <div class="display-4">Lista aplikujących do tej grupy</div>
-  <br>
-</div>
-<table class="table tableCustom table-hover table-striped " >
-
-  <thead class="thead-dark">
-
-  <tr>
-    <th width="20%"> Imie</th>
-    <th width="20%"> Nazwisko</th>
-    <th width="20%"> Numer Albumu</th>
-    <th width="20%"> Data dołączenia</th>
-    <th width="20%"> </th>
-
-  </tr>
-  </thead>
-  <tbody >
-
-  <tr *ngFor="let item of studentApplicationList " >
-    <td>
-      {{item.studentName}}
-    </td>
-    <td>
-      {{item.studentSurname}}
-    </td>
-    <td>
-      {{item.studentAlbum}}
-    </td>
-    <td>
-      {{item.date}}
-    </td>
-  <td>
-      <button type="button" class="btn btn-success float-left" (click)="onAcceptClick(item.acceptLink)"  >Akceptuj</button>
-    <button type="button" class="btn btn-danger float-left" (click)="onDeclineClick(item.declineLink)"  >Odrzuć</button>
-    </td>
-
-
-
-  </tr>
-  </tbody>
-
-</table>
-
-
-</div>
-

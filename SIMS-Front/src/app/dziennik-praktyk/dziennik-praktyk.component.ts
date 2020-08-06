@@ -61,16 +61,14 @@ export class DziennikPraktykComponent implements OnInit {
     this.authService.getResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id).subscribe(
       value => {
 
-console.log(value)
         this.diaryGroup = this.fb.group({
           studentName: '',
           studentSurname: '',
-          studentAlbumNumber: new FormControl(value.studentAlbumNumber, [Validators.required,]),
-          companyName: new FormControl(value.companyName, [Validators.required,]),
-          periodFrom: new FormControl(this.datePipe.transform(value.periodFrom, 'yyyy-MM-dd').toString(), [Validators.required,]),
-          periodTo: new FormControl(this.datePipe.transform(value.periodTo, 'yyyy-MM-dd').toString(), [Validators.required,]),
+          studentAlbumNumber: new FormControl(value.studentAlbumNumber, [Validators.required]),
+          companyName: new FormControl(value.companyName, [Validators.required]),
+          periodFrom: new FormControl(this.datePipe.transform(value.periodFrom, 'yyyy-MM-dd').toString(), [Validators.required]),
+          periodTo: new FormControl(this.datePipe.transform(value.periodTo, 'yyyy-MM-dd').toString(), [Validators.required]),
           diary: this.fb.array([])
-
         });
 
         value.diary.forEach(d => {
@@ -83,23 +81,19 @@ console.log(value)
         this.dateFrom = true;
         this.dateTo = true;
 
-        if (value.diary[0] == null)
-          this.createTable(true);
-        else
-        this.createTable(false);
-
         this.authService.getResource('http://localhost:8080/api/user/' + value.ownerId).subscribe(
-          value => {
-            this.diaryGroup.get("studentName").setValue(value.name);
-            this.diaryGroup.get("studentSurname").setValue(value.surname);
+          val => {
+            this.diaryGroup.get("studentName").setValue(val.name);
+            this.diaryGroup.get("studentSurname").setValue(val.surname);
           });
+
+        if (value.diary[0] == null) { this.createTable(true); }
+        else { this.createTable(false); }
       },
       error => console.log(error),
     );
 
-
     this.notifier = notifierService;
-
   }
 
 
@@ -133,96 +127,110 @@ console.log(value)
   }
 
   createItem(date: string, dayName: string) {
+    const dateElements = date.split('.');
+    const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
+
     return this.fb.group({
-      date: this.datePipe.transform(date, 'yyyy-MM-dd').toString(),
+      date: this.datePipe.transform(new Date(Date.parse(correctDate)), 'yyyy-MM-dd').toString(),
       text: '',
       dayName: new FormControl({value: dayName, disabled: true}, Validators.required),
     });
   }
 
-  loadItem(date: Date, text: string) {
+  loadItem(date: string, text: string) {
+    const dateElements = date.split('.');
+    const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
+    const usedDate = new Date(Date.parse(correctDate));
+
     return this.fb.group({
-      date: this.datePipe.transform(date, 'yyyy-MM-dd').toString(),
+      date: this.datePipe.transform(usedDate, 'yyyy-MM-dd').toString(),
       text: text,
-      dayName: new FormControl({value: this.daysName[date.getDay()].text, disabled: true}, Validators.required),
+      dayName: new FormControl({value: this.daysName[usedDate.getDay()].text, disabled: true}, Validators.required),
     });
   }
 
   addExistingItem(date: Date, text: string) {
-    this.diary = this.diaryGroup.get('diary') as FormArray;
-    this.diary.push(this.loadItem(new Date(date), text));
+    const existingDate = new Date(date).getUTCDate() + '.' + Number(new Date(date).getUTCMonth()+1) + '.' + new Date(date).getUTCFullYear();
 
+    this.diary = this.diaryGroup.get('diary') as FormArray;
+    this.diary.push(this.loadItem(existingDate, text));
   }
 
   addItem(date: string, dayName: string) {
     this.diary = this.diaryGroup.get('diary') as FormArray;
     this.diary.push(this.createItem(date, dayName));
-
   }
 
   onChange(value: string) {
-
     if (this.periodTo == null || new Date(value).getTime() < this.periodTo.getTime()) {
-
 
       if (this.periodFrom != null && this.periodTo != null) {
         if (this.periodFrom < new Date(value)) {
           let newDays = (new Date(value).getTime() - this.periodFrom.getTime()) / (1000 * 3600 * 24);
+
           for (let i: number = 0; i < newDays; i++) {
             this.diary.removeAt(0);
           }
+
           this.notifier.notify('info', 'Tabela zmieniona');
-        } else if (this.periodFrom > new Date(value)) {
+        }
+        else if (this.periodFrom > new Date(value)) {
           let newDays = (this.periodFrom.getTime() - new Date(value).getTime()) / (1000 * 3600 * 24);
+
           for (let i: number = 0; i < newDays; i++) {
             this.periodFrom = new Date(this.periodFrom.getTime() - (1000 * 3600 * 24));
             this.diary.insert(0, this.createItem(this.periodFrom.toLocaleDateString(), this.daysName[this.periodFrom.getDay()].text));
           }
+
           this.notifier.notify('info', 'Tabela zmieniona');
         }
       }
-      this.periodFrom = new Date(value);
 
+      this.periodFrom = new Date(value);
     }
+
     if (this.dateFrom == false) {
       this.days = this.periodFrom;
       this.createTable(true);
     }
-    this.dateFrom = true;
 
+    this.dateFrom = true;
   }
 
   onChange1(value: string) {
-
     if (this.periodFrom == null || this.periodFrom.getTime() < new Date(value).getTime()) {
 
       if (this.periodTo < new Date(value)) {
         let newDays = (new Date(value).getTime() - this.periodTo.getTime()) / (1000 * 3600 * 24);
+
         for (let i: number = 0; i < newDays; i++) {
           this.addItem(this.days.toLocaleDateString(), this.daysName[this.days.getDay()].text);
           this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
-
         }
+
         this.periodTo = new Date(value);
         this.notifier.notify('info', 'Tabela zmieniona');
-      } else if (this.periodTo > new Date(value)) {
+      }
+      else if (this.periodTo > new Date(value)) {
         let newDays = (this.periodTo.getTime() - new Date(value).getTime()) / (1000 * 3600 * 24);
         this.periodTo = new Date(value);
+
         for (let i: number = 0; i < newDays; i++) {
           this.days = new Date(this.days.getTime() - (1000 * 3600 * 24));
           this.diary.removeAt(this.diary.length - 1);
         }
+
         this.notifier.notify('info', 'Tabela zmieniona');
       }
 
-
       this.periodTo = new Date(value);
     }
+
     if (this.dateFrom == true && this.dateTo == false) {
       this.createTable(true);
     }
-    this.dateTo = true;
 
+    this.dateTo = true;
   }
 
 
@@ -240,7 +248,6 @@ console.log(value)
 
 
   onSubmit() {
-
     let body: dziennikPraktykDto = {
       periodFrom: this.datePipe.transform(this.diaryGroup.value.periodFrom, 'yyyy-MM-dd').toString(),
       periodTo: this.datePipe.transform(this.diaryGroup.value.periodTo, 'yyyy-MM-dd').toString(),
@@ -249,19 +256,17 @@ console.log(value)
       diary: this.diaryGroup.value.diary,
     };
 
-
     this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id, body).subscribe(
       value => {
         console.log(value)
-        this.notifier.notify("success", "Pomyślnie wysłąno dokument Dziennik Praktyk",)
+        this.notifier.notify("success", "Pomyślnie wysłano dokument Dziennik Praktyk")
         this.router.navigate(["/home"]);
       },
       error => {
         console.log(error)
-        this.notifier.notify("error", error.error,)
+        this.notifier.notify("error", error.error)
       }
     );
-
 
   }
 
@@ -269,12 +274,11 @@ console.log(value)
     this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/accept', {}).subscribe(
       value => {
         console.log(value);
-        this.notifier.notify("success", "Pomyślnie za akceptowano dokument Dziennik Praktyk",);
-
+        this.notifier.notify("success", "Pomyślnie zaakceptowano dokument Dziennik Praktyk");
       },
       error => {
         console.log(error)
-        this.notifier.notify("error", error.error,)
+        this.notifier.notify("error", error.error)
       }
     );
   }
@@ -283,12 +287,11 @@ console.log(value)
     this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/decline', {}).subscribe(
       value => {
         console.log(value)
-        this.notifier.notify("success", "Pomyślnie odrzucono dokument Dziennik Praktyk",);
-
+        this.notifier.notify("success", "Pomyślnie odrzucono dokument Dziennik Praktyk");
       },
       error => {
         console.log(error)
-        this.notifier.notify("error", error.error,)
+        this.notifier.notify("error", error.error)
       }
     );
   }
@@ -306,19 +309,17 @@ console.log(value)
           this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/comment', result).subscribe(
             value => {
               console.log(value);
-              this.notifier.notify("success", "Pomyślnie dodano uwage",);
+              this.notifier.notify("success", "Pomyślnie dodano uwagę");
               this.decline();
             },
             error => {
               console.log(error)
-              this.notifier.notify("error", error.error,)
+              this.notifier.notify("error", error.error)
             }
           );
         }
       });
     }
-
   }
-
 
 }

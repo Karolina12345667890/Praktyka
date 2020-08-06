@@ -1,5 +1,6 @@
-.table{
-
+.table-holder {
+  max-width: 100%;
+  overflow-x: auto;
 }
 
 .tableCustom{
