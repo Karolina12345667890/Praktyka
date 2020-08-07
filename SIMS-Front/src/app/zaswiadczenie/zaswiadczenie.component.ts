@@ -163,7 +163,7 @@ export class ZaswiadczenieComponent implements OnInit {
 
 
   warning() {
-    if(this.isAdmin) {
+    if (this.isAdmin) {
       const dialogRef = this.dialog.open(EditCommentDialogComponent, {
         width: '400px',
         data: this.comment,
