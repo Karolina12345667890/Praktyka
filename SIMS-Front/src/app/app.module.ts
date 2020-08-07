@@ -29,6 +29,7 @@ import { EditCommentDialogComponent } from './edit-comment-dialog/edit-comment-d
 import { EditGroupDialogComponent } from './edit-group-dialog/edit-group-dialog.component';
 import { PagerService} from "./pager-service.service";
 import { DatePipe } from '@angular/common';
+import { PlanPraktykiComponent } from './plan-praktyki/plan-praktyki.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -89,6 +90,7 @@ const customNotifierOptions: NotifierOptions = {
     ShowCommentDialogComponent,
     EditCommentDialogComponent,
     EditGroupDialogComponent,
+    PlanPraktykiComponent,
   ],
   imports: [
     BrowserModule,

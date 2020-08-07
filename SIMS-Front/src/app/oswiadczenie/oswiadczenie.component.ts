@@ -19,12 +19,12 @@ import {isUndefined} from "util";
 export class OswiadczenieComponent implements OnInit {
 
   isAdmin:boolean = false;
-  id : number;
-  comment : string;
-  status : string = "";
+  id: number;
+  comment: string;
+  status: string = "";
 
   private readonly notifier: NotifierService;
-  oswiadczenieForm:FormGroup;
+  oswiadczenieForm: FormGroup;
   oswiadczenie: oswiadczenieDto;
   SERVER_URL = 'http://localhost:8080/api/document/99';
   visibility = false;
@@ -37,25 +37,25 @@ export class OswiadczenieComponent implements OnInit {
     this.notifier = notifierService;
 
     this.oswiadczenieForm = this.fb.group({
-      studentName: new FormControl('', [Validators.required,]),
-      studentSurname: new FormControl('', [Validators.required,]),
-      studentDuties: new FormControl('', [Validators.required,]),
-      opiekunI: new FormControl('', [Validators.required,]),
-      opiekunN: new FormControl('', [Validators.required,]),
-      opiekunTel: new FormControl('', [Validators.required,]),
-      opiekunMail: new FormControl('', [Validators.required,]),
+      studentName: new FormControl('', [Validators.required]),
+      studentSurname: new FormControl('', [Validators.required]),
+      studentDuties: new FormControl('', [Validators.required]),
+      opiekunI: new FormControl('', [Validators.required]),
+      opiekunN: new FormControl('', [Validators.required]),
+      opiekunTel: new FormControl('', [Validators.required]),
+      opiekunMail: new FormControl('', [Validators.required]),
     });
 
-  this.load();
+    this.load();
   }
 
-  load(){
+  load() {
     let id: number;
     this.activatedroute.queryParams.subscribe(v =>
       id = v.id
     );
 
-    this.authService.getResource('http://localhost:8080/api/document/oswiadczenie/'+id).subscribe(
+    this.authService.getResource('http://localhost:8080/api/document/oswiadczenie/' + id).subscribe(
       value => {
         this.oswiadczenie = value;
         this.id = value.id;

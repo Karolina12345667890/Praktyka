@@ -1,6 +1,4 @@
-
 export interface porozumienieDto {
-
   companyName: string;
   companyLocationCity: string;
   companyLocationStreet: string;

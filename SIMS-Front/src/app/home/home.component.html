@@ -67,7 +67,7 @@
                     <ng-template #PLA>
                       <ng-container *ngIf="myDocumentData.type === 'planpraktyki'">
                         Plan Praktyki Zawodowej
-                        <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
+                        <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1" (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
                       </ng-container>
                     </ng-template>
 

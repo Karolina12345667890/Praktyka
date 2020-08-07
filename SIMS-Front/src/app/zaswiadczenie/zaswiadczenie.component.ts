@@ -13,31 +13,27 @@ export class ZaswiadczenieComponent implements OnInit {
 
   zaswiadczenieForm;
 
-  constructor(private fb: FormBuilder,
-              private httpClient: HttpClient,private authService: LoginServiceService,
-  private activatedroute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient,private authService: LoginServiceService, private activatedroute: ActivatedRoute) {
 
     let id: number;
     this.activatedroute.queryParams.subscribe(v =>
       id = v.id
     );
 
-    this.authService.getResource('http://localhost:8080/api/document/zaswiadczenie/'+id).subscribe(
+    this.authService.getResource('http://localhost:8080/api/document/zaswiadczenie/' + id).subscribe(
       value => console.log(value))
 
     this.zaswiadczenieForm = this.fb.group({
-
-
-      studentName: new FormControl('', [Validators.required,]),
-      studentSurname: new FormControl('', [Validators.required,]),
-      studentInternshipStart: new FormControl('', [Validators.required,]),
-      studentInternshipEnd: new FormControl('', [Validators.required,]),
-      studentRating1: new FormControl('', [Validators.required,]),
-      studentRating2: new FormControl('', [Validators.required,]),
-      studentRating3: new FormControl('', [Validators.required,]),
-      studentRating: new FormControl('', [Validators.required,]),
-      studentWorks: new FormControl('', [Validators.required,]),
-      studentInterests: new FormControl('', [Validators.required,]),
+      studentName: new FormControl('', [Validators.required]),
+      studentSurname: new FormControl('', [Validators.required]),
+      studentInternshipStart: new FormControl('', [Validators.required]),
+      studentInternshipEnd: new FormControl('', [Validators.required]),
+      studentRating1: new FormControl('', [Validators.required]),
+      studentRating2: new FormControl('', [Validators.required]),
+      studentRating3: new FormControl('', [Validators.required]),
+      studentRating: new FormControl('', [Validators.required]),
+      studentWorks: new FormControl('', [Validators.required]),
+      studentInterests: new FormControl('', [Validators.required]),
     });
   }
 
@@ -47,6 +43,7 @@ export class ZaswiadczenieComponent implements OnInit {
   onSubmit() {
     console.log(this.zaswiadczenieForm);
   }
+
   check(){
     if(this.zaswiadczenieForm.invalid){
       alert("disabled");

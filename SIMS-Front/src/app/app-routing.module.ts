@@ -13,6 +13,7 @@ import {AnkietaDlaPracodawcyComponent} from "./ankieta-dla-pracodawcy/ankieta-dl
 import {DziennikPraktykComponent} from "./dziennik-praktyk/dziennik-praktyk.component";
 import {StudentListComponent} from "./student-list/student-list.component";
 import {GroupListComponent} from "./group-list/group-list.component";
+import {PlanPraktykiComponent} from "./plan-praktyki/plan-praktyki.component";
 
 
 //tabele rutingu
@@ -44,6 +45,11 @@ const appRoutes: Routes = [
   {
     path: 'dziennikpraktyk',
     component: DziennikPraktykComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'planpraktyki',
+    component: PlanPraktykiComponent,
     canActivate: [AuthGuardService]
   },
   {

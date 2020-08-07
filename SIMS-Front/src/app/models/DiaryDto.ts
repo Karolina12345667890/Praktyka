@@ -1,6 +1,4 @@
 export interface diaryDto {
-
-  date:string;
-  text:string;
-
+  date: string;
+  text: string;
 }
