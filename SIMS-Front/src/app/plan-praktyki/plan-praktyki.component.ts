@@ -60,7 +60,6 @@ export class PlanPraktykiComponent implements OnInit {
 
     this.authService.getResource('http://localhost:8080/api/document/planpraktyki/' + id).subscribe(
       value => {
-        console.log(value)
         this.planPraktyki = value;
         this.id = value.id;
         this.comment = value.comment;

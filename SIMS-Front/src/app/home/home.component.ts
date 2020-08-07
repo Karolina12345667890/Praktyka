@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
 import {DocumentDto} from '../models/DocumentDto';
 import {isUndefined} from "util";
@@ -12,7 +12,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
 
   private myDocumentList = new Array<DocumentDto>();
 
@@ -46,10 +46,7 @@ export class HomeComponent implements OnInit {
           }
 
           this.myGroupedDocuments = groupBy(value, value => value.groupId);
-          this.myGroups = Array.from(this.myGroupedDocuments.keys())
-          this.myGroups = this.myGroups.sort((a,b) => {
-            return a - b;
-          })
+          this.myGroups = Array.from(this.myGroupedDocuments.keys());
 
           this.myGroups.forEach(groupId => {
             this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
@@ -63,6 +60,8 @@ export class HomeComponent implements OnInit {
               error => console.log(error),
             );
           })
+
+          console.log(this.myGroupsStatus)
         },
         error => console.log(error),
       );
@@ -75,6 +74,13 @@ export class HomeComponent implements OnInit {
 
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.myGroupsStatus.sort((a, b) => {
+        return b.isOpen - a.isOpen;
+      })
+    }, 100);
+  }
 
   openDoc(id:number,docType:string) {
    this.router.navigate(['/'+docType], {queryParams: {id: id}});

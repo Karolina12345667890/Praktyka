@@ -18,7 +18,7 @@ export class NavbarComponent implements OnInit {
   // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private auth: LoginServiceService) {
     //nasłuchuje status zalogowania do zmiennej loggedIn
-    this.auth.getLoginStatus().subscribe((status: boolean) => this.loggedIn = status);
+    setTimeout(() => {this.auth.getLoginStatus().subscribe((status: boolean) => this.loggedIn = status);}, 100)
   }
 
   ngOnInit() {

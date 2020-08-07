@@ -14,7 +14,10 @@
     <h3> Wypełnij wszystkie pola zaznaczone czerwoną kreską <input class="example-invalid" disabled size="4" /> aż zmienią sie na zielone <input class="example-valid" disabled size="4"/></h3>
   </div>
 
-  <div class="container" >
+  <div class="container">
+    <br/>
+    <h6>Załącznik nr 2 do Regulaminu praktyk zawodowych</h6>
+    <br/>
 
     <hr>
     <div class="cross-validation" [class.cross-validation-error]="diaryGroup.errors?.identityRevealed && (diaryGroup.touched || diaryGroup.dirty)">
@@ -62,7 +65,7 @@
           <div  *ngIf="getstudentAlbumNumber.invalid && (getstudentAlbumNumber.dirty || getstudentAlbumNumber.touched)"
                 class=" form-group col-md-6 alert alert-danger">
             <div *ngIf="getstudentAlbumNumber.errors.required" class="text-center">
-              Numer Albumu jest wymagany!
+              Numer albumu jest wymagany!
             </div>
           </div>
         </div>

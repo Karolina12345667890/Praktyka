@@ -107,7 +107,7 @@
   <div *ngIf="!isAdmin">
     <button [disabled]="planPraktykiForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="planPraktykiForm.invalid"><div (click)="check()"><div class="example">
       <h3> Wypełnij wszystkie pola zaznaczone czerwoną kreską <input class="example-invalid" disabled size="4" /> aż zmienią sie na zielone <input class="example-valid" disabled size="4"/></h3>
-    </div></div></div> <div > Wyślij </div> </button>
+    </div></div></div> <div *ngIf="planPraktykiForm.valid"> Wyślij </div> </button>
   </div>
 
 </form>

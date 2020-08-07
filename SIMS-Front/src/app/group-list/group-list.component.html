@@ -79,9 +79,9 @@
           </td>
           <td>
             <div *ngIf="isAdmin">
+              <p class="alert alert-danger m-1 p-1" *ngIf="item.changed">Wymagana akcja!</p>
               <button class="btn btn-warning m-1" (click)="openEditDialog(item)">Edytuj</button>
               <button class="btn btn-primary m-1" (click)="openStudentList(item.id)">Zobacz</button>
-              <p class="alert alert-danger m-1 p-1" *ngIf="item.changed">Wymagana akcja!</p>
             </div>
             <div *ngIf="!isAdmin">
               <button class="btn btn-success" (click)="joinGroup(item.id)">Dołącz</button>

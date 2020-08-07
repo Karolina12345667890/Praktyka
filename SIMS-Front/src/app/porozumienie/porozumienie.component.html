@@ -44,58 +44,58 @@
 
   <body class="a4">
 
-  <h6>Załącznik nr 2 do Regulaminu praktyk zawodowych</h6>
-  <br/>
 
-  <div class="multiLineTitle">
-    <h3>Porozumienie</h3>
-    <h3>w sprawie organizacji zawodowej praktyki studenckiej ciągłej</h3>
-  </div>
-
-  <br/>
   <div id="content">
+    <h6 style="float: right; text-align: right;">Załącznik nr 1<br/>do Zarządzenia Rektora nr 58/2018</h6>
+    <br/>
+
+    <div class="multiLineTitle">
+      <h3>Porozumienie</h3>
+      <h4>w sprawie organizacji obowiązkowej praktyki zawodowej studenckiej (ciągłej kierunkowej)</h4>
+    </div>
+
+    <br/>
+
     <div>
       <div>
-        zawarte dnia …………………………….. w Siedlcach, pomiędzy Uniwersytetem Przyrodniczo-Humanistycznym w
-        Siedlcach z siedzibą przy ul. Konarskiego 2, zwanym dalej Uniwersytetem, reprezentowanym na podstawie
-        udzielonego przez Rektora UPH pełnomocnictwa przez Dziekana Wydziału Nauk Ścisłych a
+        <p style="text-align: center">zawarte dnia …………………………….. w Siedlcach, pomiędzy</p>
+        Uniwersytetem Przyrodniczo-Humanistycznym w Siedlcach, z siedzib przy ul. Konarskiego 2 w
+        Siedlcach (08-110), NIP 821-001-44-90, REGON 000001471, zwanym dalej „Uniwersytetem”,
+        reprezentowanym na podstawie udzielonego przez Rektora Uniwersytetu pełnomocnictwa, przez Dziekana Wydziału Nauk Ścisłych a
         <div class="highLetters inline">
-          <span ><input type="text" formControlName="companyName" placeholder="Company name" style="width: 500px" required/></span>
+          <span ><input type="text" formControlName="companyName" placeholder="Company name" class="my-1 mr-1" style="width: 500px" required/></span>
         </div>
         <div>
           <div class="highLetters">
-                    <span>
-                        <span style=" width: 30%">z siedzibą w: </span>
-                        <span style="  width: 70% "
-                        ><input type="text" formControlName="companyLocationCity" placeholder="City" required/></span>
-                    </span>
             <span>
-                        <span style="width: 18% ">przy ul.</span>
-                        <span style="font-family: 'arialbd';width: 82%">
-                             <input type="text" formControlName="companyLocationStreet" placeholder="City"
-                                    required/></span>
-                    </span>
+              <span style=" width: 30%">z siedzibą w: </span>
+              <span style="  width: 70% "><input type="text" class="my-1 mr-1" formControlName="companyLocationCity" placeholder="City" required/></span>
+            </span>
+            <span>
+              <span style="width: 18% ">przy ul.</span>
+              <span style="font-family: 'arialbd';width: 82%">
+                <input type="text" class="my-1 mr-1" formControlName="companyLocationStreet" placeholder="City" required/>
+              </span>
+            </span>
           </div>
 
-          której reprezentantem/tką jest:
-          <div class="highLetters inline"><span style="width: auto"><input type="text"
-                                                                           formControlName="companyRepresentantName"
-                                                                           placeholder="First Name" required/><input
-            type="text" formControlName="companyRepresentantSurname" placeholder="Surname" required/></span>
+          zwaną/-ym dalej „Jednostką przyjmującą”, reprezentowaną/-ym przez:
+          <div class="highLetters inline">
+            <span style="width: auto">
+              <input type="text" class="my-1 mr-1" formControlName="companyRepresentantName" placeholder="Imię" required/>
+              <input type="text" class="my-1 mr-1" formControlName="companyRepresentantSurname" placeholder="Nazwisko" required/>
+            </span>
           </div>
-          zwanym dalej Zakładem Pracy, o następującej treści:
+          o następującej treści:
         </div>
       </div>
     </div>
 
     <div id="bottom-content">
-      <h4>§1</h4>
-
-      Uniwersytet kieruje niżej wymienionych studentów kierunku Informatyka
-      specjalności <span> <input type="text" formControlName="studentSpecialization"
-                                 placeholder="Student Specialization" required disabled/> </span>
-      na <span> <input type="number" formControlName="studentInternshipDuration" placeholder="Internship Duration"
-                       required disabled/> </span> -tygodniową praktykę zawodową:
+      <h4 class="mt-2">§1</h4>
+      Uniwersytet kieruje do Jednostki przyjmującej niżej wymienionych studentów kierunku Informatyka
+      specjalności <span><input type="text" formControlName="studentSpecialization" placeholder="Specjalizacja" required disabled/> </span>
+      na <span><input type="number" formControlName="studentInternshipDuration" placeholder="Czas trwania praktyki" required disabled/> </span> - tygodniową praktykę zawodową:
 
     <br><br>
     <table style="width: 100%; border: 1px solid black">
@@ -105,50 +105,81 @@
         <td>Okres praktyki</td>
       </tr>
       <tr>
-        <td><input type="text" formControlName="studentName" placeholder="First Name" required disabled/><input type="text" formControlName="studentSurname" placeholder="Surname" required disabled/></td>
-        <td ><input type="text" formControlName="studentStudyForm" placeholder="Study Form" required disabled/></td>
-        <td ><input type="date" formControlName="studentInternshipStart" placeholder="Internship Start" required/> - <input type="date" formControlName="studentInternshipEnd" placeholder="InternshipEnd" required/></td>
+        <td><input type="text" formControlName="studentName" placeholder="Imię" required disabled/><input type="text" formControlName="studentSurname" placeholder="Nazwisko" required disabled/></td>
+        <td><input type="text" formControlName="studentStudyForm" placeholder="Forma studiów" required disabled/></td>
+        <td><input type="date" formControlName="studentInternshipStart" placeholder="00-00-0000" required/> - <input type="date" formControlName="studentInternshipEnd" placeholder="00-00-0000" required/></td>
       </tr>
     </table>
-<div id="clause1" >
-    <h4>§2</h4>
-    Zakład pracy zobowiązuje się do:
+<div id="clause1">
+    <h4 class="mt-3">§2</h4>
 
-    <ol>
-      <li>powołania opiekuna(ów), pod kierunkiem których student będzie realizować program praktyki;</li>
-      <li>zaplanowania odpowiedniej ilości zajęć, aby umożliwić studentowi wykonanie zadań ustalonych w
-        programie praktyki;
-      </li>
-      <li>zapoznanie studentów z regulaminem pracy, przepisami o bezpieczeństwie i higienie pracy oraz o
-        ochronie tajemnicy służbowej;
-      </li>
-      <li>zapewnienia nauczycielowi akademickiemu - opiekunowi praktyki z ramienia Uniwersytetu sprawowania
-        nadzoru merytorycznego nad przebiegiem praktyki.
-      </li>
-    </ol>
 
-      <h4>§3</h4>
-      Uniwersytet zobowiązuje się do:
+  <ol>
+    <li><span style="font-size: 14px;">Jednostka przyjmująca zobowiązuje się do:</span>
+      <ol>
+        <li>zapoznania się z programem praktyki w celu zapewnienia właściwej realizacji zadań przez studenta odbywającego praktyki;</li>
+        <li>
+          powołania opiekuna/-ów, pod kierunkiem którego/-ych student b dzie realizował program
+          praktyki;
+        </li>
+        <li>zaplanowania odpowiedniej ilości zajęć, aby umożliwić studentowi wykonanie zadań ustalonych w programie praktyki;</li>
+        <li>współdziałania z opiekunem praktyk z ramienia Uniwersytetu;</li>
+        <li>
+          umożliwienia nauczycielowi akademickiemu – opiekunowi praktyki z ramienia Uniwersytetu,
+          sprawowania nadzoru merytorycznego nad przebiegiem praktyki;
+        </li>
+        <li>
+          potwierdzenia i oceny praktyki studenta w dokumentacji praktyki według zasad określonych
+          w programie praktyk;
+        </li>
+        <li>
+          zapoznania studentów z regulaminem pracy, przepisami o bezpieczeństwie i higienie pracy oraz
+          o ochronie tajemnicy służbowej;
+        </li>
+        <li>
+          zachowania w tajemnicy wszelkich informacji, danych, materiałów, dokumentów i danych
+          osobowych otrzymanych od Administratora danych UPH w Siedlcach i od współpracujących
+          z nim osób oraz danych uzyskanych w jakikolwiek inny sposób, zamierzony czy przypadkowy
+          w formie ustnej, pisemnej lub elektronicznej.
+        </li>
+      </ol>
+    </li>
+    <li>
+      <span style="font-size: 14px;">
+        Jednostka przyjmująca oświadcza, że w związku ze zobowiązaniem do zachowania w tajemnicy
+        danych osobowych nie będą one wykorzystywane, ujawniane ani udostępniane bez pisemnej
+        zgody Administratora danych w innym celu niż wykonanie Porozumienia, chyba że konieczność
+        ujawnienia posiadanych informacji wynika z obowiązujących przepisów prawa lub Porozumienia.
+      </span>
+    </li>
+  </ol>
+
+
+      <h4 class="mt-3">§3</h4>
+  <span style="font-size: 14px;">Uniwersytet zobowiązuje się do:</span>
       <ol>
         <li>opracowania programu praktyki i zapoznania z nim studentów,</li>
+        <li>współdziałania z opiekunem praktyk z ramienia jednostki przyjmującej studenta na praktykę; </li>
         <li>sprawowania nadzoru dydaktyczno-wychowawczego i organizacyjnego nad przebiegiem praktyki oraz
           kontroli i oceny praktyki.
         </li>
       </ol>
 
-      <h4>§4</h4>
-      Uniwersytet nie ponosi kosztów związanych z odbyciem praktyki.
+      <h4 class="mt-3">§4</h4>
+      <span style="font-size: 14px;">Strony zgodnie oświadczają, że Uniwersytet nie będzie ponosił żadnych kosztów związanych z
+        realizowaną w Jednostce przyjmującej praktyką studencką.</span>
 
-      <h4>§5</h4>
-      Zakład pracy może żądać od Uniwersytetu odwołania z praktyki zawodowej studenta w przypadku naruszenia
-      w sposób rażący dyscypliny pracy.
+      <h4 class="mt-3">§5</h4>
+      <span style="font-size: 14px;">Jednostka przyjmująca może żądać od Uniwersytetu odwołania z praktyki zawodowej studenta,
+        w przypadku naruszenia przez niego, w sposób rażący, dyscypliny pracy.</span>
 
-      <h4>§6</h4>
-      Sprawy nie uregulowane niniejszym Porozumieniem strony będą rozstrzygać w negocjacjach bezpośrednich.
+      <h4 class="mt-3">§6</h4>
+      <span style="font-size: 14px;">Sprawy nieuregulowane niniejszym porozumieniem strony będą rozstrzygać w ramach wzajemnych
+        negocjacji i uzgodnień.</span>
 
-      <h4>§7</h4>
-      Niniejsze porozumienie sporządzone zostało w dwóch jednobrzmiących egzemplarzach po jednym dla każdej ze
-      stron.
+      <h4 class="mt-3">§7</h4>
+      <span style="font-size: 14px;">Niniejsze porozumienie sporządzone zostało w dwóch jednobrzmiących egzemplarzach, po jednym
+        dla każdej ze stron.</span>
 </div>
   </div>
 
@@ -179,7 +210,7 @@
             ........................................................
           </div>
           <div>
-            (podpis i pieczątka Dziekana)
+            (podpis i pieczątka kierownika<br/>podstawowej jednostki organizacyjnej)
           </div>
         </div>
 
@@ -189,7 +220,7 @@
           </div>
           <div>
             (podpis i pieczątka przedstawiciela
-                     podmiotu przyjmującego na praktykę zawodową)
+                     jednostki przyjmującej)
           </div>
         </div>
       </div>

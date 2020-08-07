@@ -8,17 +8,17 @@
 
 <body>
 
-<h6>Załącznik nr 1 do Regulaminu praktyk zawodowych</h6>
-<br/>
 
 <div id="content">
+    <h6>Załącznik nr 1 do Regulaminu praktyk zawodowych</h6>
+    <br/>
     <div>
         <div class="toSignLeft">
             <div>
                 ........................................................
             </div>
             <div>
-                (Pięczeć zakładu pracy)
+                (pięczeć zakładu pracy)
             </div>
         </div>
 
@@ -27,39 +27,42 @@
                 ........................................................
             </div>
             <div>
-                (Miejscowość, data)
+                (miejscowość, data)
             </div>
         </div>
     </div>
-    <br/>
+
+    <br/><br/>
 
     <h3>OŚWIADCZENIE</h3>
+
+    <br/>
 
     <div>
         <div>
             Niniejszym wyrażam zgodę na przyjęcie studenta(ki):<br/>
             <div class="highLetters">
-                <span th:text="${dto.studentName} + ' ' + ${dto.studentSurname}">Test test</span>
+                <span th:text="${dto.studentName} + ' ' + ${dto.studentSurname} + ','"></span>
             </div>
         </div>
         <div>
             w celu odbycia praktyki zawodowej w naszym zakładzie pracy. Jednocześnie oświadczam, że
             charakter wykonywanej pracy będzie zgodny z programem praktyki i będzie obejmował
             następujące obszary działalności:
-            <ul id="activities">
-                <li><span th:text="${dto.studentDuties}"></span></li>
-            </ul>
+        </div>
+        <div id="activities">
+            <span style="white-space: pre-line;" th:text="${dto.studentDuties}"></span>
         </div>
         <div>
             Pracownikiem naszego zakładu pracy bezpośrednio nadzorującym i odpowiedzialnym za przebieg
             praktyk będzie:
             <div class="highLetters inline">
-                <span th:text="${dto.carerName} + ' ' + ${dto.carerSurname}">Imię Nazwisko</span>
+                <span th:text="${dto.carerName} + ' ' + ${dto.carerSurname}"></span>
             </div>
 
             <div class="highLetters">
-                <span th:text="'tel.: ' + ${dto.carerPhone}">tel.: 123456789</span>
-                <span th:text="'e-mail: ' + ${dto.carerEmail}">e-mail: test123@test.com</span>
+                <span th:text="'tel.: ' + ${dto.carerPhone}"></span>
+                <span th:text="'e-mail: ' + ${dto.carerEmail}"></span>
             </div>
         </div>
 

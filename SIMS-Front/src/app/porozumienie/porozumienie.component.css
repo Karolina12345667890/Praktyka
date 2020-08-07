@@ -11,7 +11,7 @@ html {
   margin-top: 0em;
   margin-left: 2em;
   margin-right: 2em;
-  /*border: 1px solid black;*/
+  text-align: justify;
 }
 
 br {
@@ -98,12 +98,12 @@ br {
 }
 
 #clause1, #clause2 {
-  font-size: 12px;
+  margin-left: 0;
+  padding-left: 0;
+  font-size: 11px;
 }
 
 #clause2 {
-  padding-left: 2em;
-  padding-right: 2em;
 }
 
 
