@@ -5,6 +5,7 @@ import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 /**
@@ -25,6 +26,7 @@ class Oswiadczenie extends Document {
     private String opiekunN;
     private String opiekunMail;
     private String opiekunTel;
+    @Lob
     private String studentDuties;
     
     Oswiadczenie(Long owner) {

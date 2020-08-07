@@ -72,6 +72,7 @@ public class DocumentFacade {
                 .carerSurname(oswiadczenieDto.getOpiekunN())
                 .carerEmail(oswiadczenieDto.getOpiekunMail())
                 .carerPhone(oswiadczenieDto.getOpiekunTel())
+                .studentDuties(oswiadczenieDto.getStudentDuties())
                 .build();
 
         return pdfBuilder.getPdfFromObject("Oswiadczenie", pdfDto);

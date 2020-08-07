@@ -2,6 +2,8 @@ package uph.ii.SIMS.DocumentModule.Dto;
 
 import lombok.*;
 
+import javax.persistence.Lob;
+
 /**
  * Klasa, zawierająca wszystkie dane potrzebne do utworzenia nowego dokumentu oswiadczenie
  */
@@ -18,6 +20,7 @@ public class OswiadczenieDto {
     private String opiekunN = "";
     private String opiekunMail = "";
     private String opiekunTel = "";
+    @Lob
     private String studentDuties = "";
     private String comment = "";
     private String status = "";
