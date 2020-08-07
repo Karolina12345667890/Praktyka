@@ -269,10 +269,12 @@ public class DocumentFacade {
 
 
         ZaswiadczenieDto zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
-        PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, zaswiadczenieDto.getGroupId());
-        if (porozumienieDto.getStatus() == StatusEnum.ACCEPTED.toString()) {
-            zaswiadczenieDto.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
-            zaswiadczenieDto.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
+        if(zaswiadczenieDto.getStatus().equals(StatusEnum.EMPTY.toString())) {
+            PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, zaswiadczenieDto.getGroupId());
+            if (porozumienieDto.getStatus() == StatusEnum.ACCEPTED.toString()) {
+                zaswiadczenieDto.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
+                zaswiadczenieDto.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
+            }
         }
         return zaswiadczenieDto;
     }
