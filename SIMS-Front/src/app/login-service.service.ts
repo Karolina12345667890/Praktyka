@@ -77,11 +77,9 @@ export class LoginServiceService {
       this.isLogged.next(false);
       return false;
     }
+
     this.isLogged.next(true);
     return true;
-
-
-
   }
 
   logout() {
@@ -93,8 +91,6 @@ export class LoginServiceService {
     //   // this.deleteResource('http://localhost:8080/oauth/token');
     //   location.reload();
     // });
-
-
   }
 
   // prosta metoda do logowania przyjmująca 2 string login i password
@@ -131,16 +127,25 @@ export class LoginServiceService {
   }
 
   getRoles() {
-    const decodedToken = jwt_decode(this.oauthService.getAccessToken());
-    const roles = decodedToken.roles;
-   return roles;
+    if (this.oauthService.getAccessToken() !== null) {
+      const decodedToken = jwt_decode(this.oauthService.getAccessToken());
+      const roles = decodedToken.roles;
+      return roles;
+    }
+    else {
+      return null;
+    }
   }
 
-  isAdmin(){
-    let tmp : string = this.getRoles();
-    if(tmp.includes("ROLE_ADMIN") || tmp.includes("ROLE_GROUP_ADMIN"))
-     return true;
-    else
-     return false;
+  isAdmin() {
+    if (this.oauthService.getAccessToken() !== null) {
+      let tmp: string = this.getRoles();
+      if (tmp.includes("ROLE_ADMIN") || tmp.includes("ROLE_GROUP_ADMIN")) return true;
+      else return false;
+    }
+    else {
+      return false;
+    }
   }
+
 }

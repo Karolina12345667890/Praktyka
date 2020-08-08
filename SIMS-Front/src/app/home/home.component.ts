@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     }
 
     this.isAdmin = this.authService.isAdmin();
-    if(this.isAdmin){
+    if (this.isAdmin) {
       this.router.navigate(['/gl']);
     }
 

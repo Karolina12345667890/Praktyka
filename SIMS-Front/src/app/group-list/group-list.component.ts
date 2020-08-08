@@ -21,7 +21,7 @@ export class GroupListComponent implements OnInit {
 
   private readonly notifier: NotifierService;
   private groupList = new Array<GroupDto>();
-  isAdmin:boolean = false;
+  isAdmin: boolean = false;
   pager: any = {};
   pagedItems = new Array<GroupDto>();
   rememberSort :string="data";
@@ -31,11 +31,8 @@ export class GroupListComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.isAdmin = this.authService.isAdmin();
     this.load();
-
   }
 
   load(){
