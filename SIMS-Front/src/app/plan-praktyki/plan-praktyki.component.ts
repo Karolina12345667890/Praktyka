@@ -46,7 +46,7 @@ export class PlanPraktykiComponent implements OnInit {
       studentInternshipStart: new FormControl('', [Validators.required]),
       studentInternshipEnd: new FormControl('', [Validators.required]),
       studentTasks: new FormControl('', [Validators.required]),
-      studentPesel: new FormControl('', [Validators.required]),
+      studentPesel: new FormControl('', [Validators.required])
     });
 
     this.load();

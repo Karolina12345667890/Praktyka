@@ -1,10 +1,19 @@
-import {AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnChanges,
+  OnInit,
+  QueryList, SimpleChanges,
+  ViewChildren
+} from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
 import {DocumentDto} from '../models/DocumentDto';
 import {isUndefined} from "util";
 import {MatDialog} from "@angular/material/dialog";
 import {ShowCommentDialogComponent} from "../show-comment-dialog/show-comment-dialog.component";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-component',
@@ -81,6 +90,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       })
     }, 100);
   }
+
 
   openDoc(id:number,docType:string) {
    this.router.navigate(['/'+docType], {queryParams: {id: id}});

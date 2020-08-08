@@ -14,6 +14,7 @@ import {DziennikPraktykComponent} from "./dziennik-praktyk/dziennik-praktyk.comp
 import {StudentListComponent} from "./student-list/student-list.component";
 import {GroupListComponent} from "./group-list/group-list.component";
 import {PlanPraktykiComponent} from "./plan-praktyki/plan-praktyki.component";
+import {ZaswiadczenieZatrudnienieComponent} from "./zaswiadczenie-zatrudnienie/zaswiadczenie-zatrudnienie.component";
 
 
 //tabele rutingu
@@ -40,6 +41,11 @@ const appRoutes: Routes = [
   {
     path: 'zaswiadczenie',
     component: ZaswiadczenieComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'zaswiadczenie-zatrudnienie',
+    component: ZaswiadczenieZatrudnienieComponent,
     canActivate: [AuthGuardService]
   },
   {

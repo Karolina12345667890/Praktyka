@@ -1,0 +1,128 @@
+<form [formGroup]="zaswZatrudnienieForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="!isAdmin">
+    <button [disabled]="zaswZatrudnienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="zaswZatrudnienieForm.invalid"><div (click)="check()"><div class="example">
+      <h3> Wypełnij wszystkie pola zaznaczone czerwoną kreską <input class="example-invalid" disabled size="4" /> aż zmienią sie na zielone <input class="example-valid" disabled size="4"/></h3>
+    </div></div></div> <div *ngIf="zaswZatrudnienieForm.valid"> Wyślij </div> </button>
+  </div>
+  <div *ngIf="isAdmin">
+    <div  class="btn-group btn-group-lg btn-block">
+
+      <button  class="btn btn-success " type="button" (click)="accept()">Akceptuj</button>
+      <button  class="btn btn-danger " type="button" (click)="decline()">Odrzuć</button>
+      <button  class="btn btn-warning " type="button" (click)="warning()">Dodaj uwage i odrzuć</button>
+
+    </div>
+
+    <div class="text-center" [ngStyle]="status == 'NEW' && {'background-color':'#2196F3'} ||
+     status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+      status == 'DECLINED' && {'background-color':'#dc3545'}">
+
+      <ng-container *ngIf="status === 'DECLINED';else NEW">
+        Odrzucony
+      </ng-container>
+      <ng-template #NEW>
+        <ng-container *ngIf="status === 'NEW';else ACCEPTED">
+          Nowy
+        </ng-container>
+      </ng-template>
+      <ng-template #ACCEPTED>
+        <ng-container *ngIf="status === 'ACCEPTED';else empty">
+          Zaakceptowany
+        </ng-container>
+      </ng-template>
+      <ng-template #empty>
+        Brak
+      </ng-template>
+    </div>
+  </div>
+
+  <body class="a4">
+
+  <div id="content">
+    <h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
+    <br/><br/>
+
+
+    <div>
+      <div class="toSignLeft">
+        <div>
+          ........................................................
+        </div>
+        <div>
+          (pięczeć zakładu pracy)
+        </div>
+      </div>
+
+      <div class="toSignRight">
+        <div>
+          ........................................................
+        </div>
+        <div>
+          (miejscowość, data)
+        </div>
+      </div>
+    </div>
+    <br/> <br/> <br/>
+
+    <h3 class="mt-2 mb-2" style="letter-spacing: 1px;">ZAŚWIADCZENIE O ZATRUDNIENIU</h3>
+    <br/><br/>
+    <div>
+
+
+      <div>
+        Zaświadcza się, że Pan(i)
+        <input type="text" formControlName="studentName" placeholder="Imię" class="m-1" required/>
+        <input type="text" formControlName="studentSurname" placeholder="Nazwisko" class="m-1" required/>,<br/>
+
+        zamieszkały(a) w <input type="text" formControlName="studentRoad" placeholder="Ulica" required class="m-1" />
+        <input type="text" formControlName="studentCity" placeholder="Miasto" required class="m-1" />
+        <input type="text" inputmode="numeric" formControlName="studentZip" placeholder="Kod pocztowy" required class="m-1" />,<br/>
+
+        nr PESEL <input type="number" formControlName="studentPesel" placeholder="Numer PESEL" required class="m-1" />,<br/>
+
+        w okresie od dnia <input type="date" formControlName="studentInternshipStart" placeholder="00.00.0000" class="m-1" required [attr.disabled]="sisInp ? 'disabled' : null"/>
+        do dnia <input type="date" formControlName="studentInternshipEnd" placeholder="00.00.0000" class="m-1" required [attr.disabled]="sieInp ? 'disabled' : null" />,<br/>
+
+        był(a) zatrudniony(a) w <input type="text" formControlName="companyName" placeholder="Nazwa jednostki" required class="m-1" /><br/>
+
+        na stanowisku <input type="text" formControlName="studentPosition" placeholder="Stanowisko" required class="m-1" />
+        w wymiarze <input type="number" formControlName="hoursPerWeek" placeholder="Godziny tygodniowo" required class="m-1" /> godzin tygodniowo.<br/><br/>
+      </div>
+
+      <div>
+        Zakres wykonywanych obowiązków:
+      </div>
+      <div>
+        <textarea class="mt-2" rows="4" cols="90" formControlName="studentTasks" required></textarea>
+      </div>
+      <br>
+
+      <br/><br/>
+      <div>
+        Zaświadczenie wydaje się na prośbę pracownika.
+      </div>
+
+      <br/><br/>
+      <div>
+        <div class="toSignLeft">
+          <div>
+            ........................................................
+          </div>
+          <div>
+            (imię i nazwisko osoby upoważnionej)
+          </div>
+        </div>
+      </div>
+      <br/><br/><br/>
+    </div>
+  </div>
+
+  </body>
+
+  <div *ngIf="!isAdmin">
+    <button [disabled]="zaswZatrudnienieForm.invalid" class="btn btn-success btn-lg btn-block" type="submit"><div *ngIf="zaswZatrudnienieForm.invalid"><div (click)="check()"><div class="example">
+      <h3> Wypełnij wszystkie pola zaznaczone czerwoną kreską <input class="example-invalid" disabled size="4" /> aż zmienią sie na zielone <input class="example-valid" disabled size="4"/></h3>
+    </div></div></div> <div *ngIf="zaswZatrudnienieForm.valid"> Wyślij </div> </button>
+  </div>
+
+</form>
