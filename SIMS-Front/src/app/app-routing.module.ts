@@ -44,7 +44,7 @@ const appRoutes: Routes = [
     canActivate: [AuthGuardService]
   },
   {
-    path: 'zaswiadczenie-zatrudnienie',
+    path: 'zaswiadczeniezatrudnienie',
     component: ZaswiadczenieZatrudnienieComponent,
     canActivate: [AuthGuardService]
   },

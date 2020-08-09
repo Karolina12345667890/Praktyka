@@ -135,7 +135,7 @@ export class StudentListComponent implements OnInit {
       },
       error => {
         console.log(error)
-        this.notifier.notify("error", "Coś poszło nietak",)
+        this.notifier.notify("error", "Coś poszło nie tak",)
       },
     );
 
@@ -151,7 +151,7 @@ export class StudentListComponent implements OnInit {
       },
       error => {
         console.log(error)
-        this.notifier.notify("error", "Coś poszło nietak",)
+        this.notifier.notify("error", "Coś poszło nie tak",)
       },
     );
 
@@ -234,11 +234,11 @@ export class StudentListComponent implements OnInit {
     this.authService.postResource('http://localhost:8080/api/group/'+this.group.id+'/users/job/'+studentId ,{}).subscribe(
       value => {
         this.load();
-        this.notifier.notify("success","Pomyślnie Zmieniono dokumenty studenta",)
+        this.notifier.notify("success","Pomyślnie zmieniono dokumenty studenta",)
       },
       error =>{
         console.log(error);
-        this.notifier.notify("error","Coś poszło nietak",)
+        this.notifier.notify("error","Coś poszło nie tak",)
       }
     );
 
@@ -250,11 +250,11 @@ export class StudentListComponent implements OnInit {
     this.authService.postResource('http://localhost:8080/api/group/'+this.group.id+'/users/drop/'+studentId ,{}).subscribe(
       value => {
         this.load();
-        this.notifier.notify("success","Pomyślnie wyżucono studenta",)
+        this.notifier.notify("success","Pomyślnie wyrzucono studenta",)
       },
       error =>{
         console.log(error);
-        this.notifier.notify("error","Coś poszło nietak",)
+        this.notifier.notify("error","Coś poszło nie tak",)
       }
     );
 

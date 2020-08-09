@@ -5,7 +5,6 @@ import {LoginServiceService} from "../login-service.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NotifierService} from "angular-notifier";
 import {MatDialog} from "@angular/material/dialog";
-import {planPraktykiDto} from "../models/planPraktykiDto";
 import {isNull, isUndefined} from "util";
 import {DatePipe} from "@angular/common";
 import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
@@ -126,46 +125,46 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
       studentTasks: this.zaswZatrudnienieForm.value.studentTasks
     };
 
-    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/' + this.id, body).subscribe(
-    //   value => {
-    //     this.notifier.notify("success","Pomyślnie wysłano dokument Zaświadczenie o zatrudnieniu",)
-    //     this.router.navigate(["/home"]);
-    //   },
-    //   error =>{
-    //     console.log(error)
-    //     this.notifier.notify("error", error.error)
-    //   }
-    // );
+    this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/' + this.id, body).subscribe(
+      value => {
+        this.notifier.notify("success","Pomyślnie wysłano dokument Zaświadczenie o zatrudnieniu",)
+        this.router.navigate(["/home"]);
+      },
+      error =>{
+        console.log(error)
+        this.notifier.notify("error", error.error)
+      }
+    );
     console.log(body)
   }
 
 
   accept() {
-    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/accept', {}).subscribe(
-    //   value => {
-    //     this.notifier.notify("success","Pomyślnie zaakceptowano dokument Zaświadczenie o zatrudnieniu",);
-    //     this.load();
-    //   },
-    //   error => {
-    //     console.log(error)
-    //     this.notifier.notify("error", error.error)
-    //   }
-    // );
+    this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/accept', {}).subscribe(
+      value => {
+        this.notifier.notify("success","Pomyślnie zaakceptowano dokument Zaświadczenie o zatrudnieniu",);
+        this.load();
+      },
+      error => {
+        console.log(error)
+        this.notifier.notify("error", error.error)
+      }
+    );
     console.log('accept action')
   }
 
 
   decline() {
-    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/decline', {}).subscribe(
-    //   value => {
-    //     this.notifier.notify("success","Pomyślnie odrzucono dokument Zaświadczenie o zatrudnieniu",);
-    //     this.load();
-    //   },
-    //   error =>{
-    //     console.log(error)
-    //     this.notifier.notify("error", error.error)
-    //   }
-    // );
+    this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/decline', {}).subscribe(
+      value => {
+        this.notifier.notify("success","Pomyślnie odrzucono dokument Zaświadczenie o zatrudnieniu",);
+        this.load();
+      },
+      error =>{
+        console.log(error)
+        this.notifier.notify("error", error.error)
+      }
+    );
     console.log('decline action')
   }
 
@@ -179,16 +178,16 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
-          // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/comment', result).subscribe(
-          //   value => {
-          //     this.notifier.notify("success","Pomyślnie dodano uwagę");
-          //     this.decline();
-          //   },
-          //   error =>{
-          //     console.log(error)
-          //     this.notifier.notify("error",error.error)
-          //   }
-          // );
+          this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/comment', result).subscribe(
+            value => {
+              this.notifier.notify("success","Pomyślnie dodano uwagę");
+              this.decline();
+            },
+            error =>{
+              console.log(error)
+              this.notifier.notify("error",error.error)
+            }
+          );
           console.log('warning action')
         }
       });
