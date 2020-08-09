@@ -16,4 +16,5 @@ public class DocumentDto {
     private Long groupId;
     private Long ownerId;
     private String groupName;
+    private Boolean visible;
 }

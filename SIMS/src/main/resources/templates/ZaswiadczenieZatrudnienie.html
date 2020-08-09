@@ -1,0 +1,87 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles/shared.css"/>
+    <title>Title</title>
+</head>
+<body>
+<div id="content">
+    <h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
+    <br/><br/>
+
+
+    <div>
+        <div class="toSignLeft">
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (pięczeć zakładu pracy)
+            </div>
+        </div>
+
+        <div class="toSignRight">
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (miejscowość, data)
+            </div>
+        </div>
+    </div>
+    <br/> <br/> <br/>
+
+    <h3 class="mt-2 mb-2" style="letter-spacing: 1px;">ZAŚWIADCZENIE O ZATRUDNIENIU</h3>
+    <br/><br/>
+    <div>
+
+
+        <div>
+            Zaświadcza się, że Pan(i)
+            <span th:text="${dto.studentName}"></span>
+            <span th:text="${dto.studentSurname}"></span>,<br/>
+
+            zamieszkały(a) w   <span th:text="${dto.studentRoad}"></span>
+            <span th:text="${dto.studentCity}"></span>
+            <span th:text="${dto.studentZip}"></span>,<br/>
+
+            nr PESEL   <span th:text="${dto.studentPesel}"></span>,<br/>
+
+            w okresie od dnia   <span th:text="${dto.studentInternshipStart}"></span>
+            do dnia <span th:text="${dto.studentInternshipEnd}"></span>,<br/>
+
+            był(a) zatrudniony(a) w <span th:text="${dto.companyName}"></span><br/>
+
+            na stanowisku <span th:text="${dto.studentPosition}"></span>
+            w wymiarze <span th:text="${dto.hoursPerWeek}"></span> godzin tygodniowo.<br/><br/>
+        </div>
+
+        <div>
+            Zakres wykonywanych obowiązków:
+        </div>
+        <div>
+            <span th:text="${dto.studentTasks}"></span>
+        </div>
+        <br>
+
+        <br/><br/>
+        <div>
+            Zaświadczenie wydaje się na prośbę pracownika.
+        </div>
+
+        <br/><br/>
+        <div>
+            <div class="toSignLeft">
+                <div>
+                    ........................................................
+                </div>
+                <div>
+                    (imię i nazwisko osoby upoważnionej)
+                </div>
+            </div>
+        </div>
+        <br/><br/><br/>
+    </div>
+</div>
+</body>
+</html>

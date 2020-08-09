@@ -129,6 +129,15 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).get().dto();
     }
 
+    public void removeGroup(Long groupId,Long studentId){
+       if(currentUserIsAdmin()) {
+            userRepository.findById(studentId).ifPresent(app -> {
+                app.getGroups().removeIf(group -> group.getId().equals(groupId));
+                userRepository.save(app);
+            });
+        }
+    }
+
 
 //    @Bean
 //    public PasswordEncoder passwordEncoder() {

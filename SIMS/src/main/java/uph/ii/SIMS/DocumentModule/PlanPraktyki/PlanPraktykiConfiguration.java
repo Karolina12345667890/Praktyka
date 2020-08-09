@@ -22,7 +22,7 @@ public class PlanPraktykiConfiguration {
      * @return Fasada podmodułu działająca na bazie danych
      */
     @Bean
-    PlanPraktykiFacade PlanPraktykiFacade(PlanPraktykiRepository planPraktykiRepository) {
+    PlanPraktykiFacade planPraktykiFacade(PlanPraktykiRepository planPraktykiRepository) {
         return new PlanPraktykiFacade(planPraktykiRepository);
     }
 
@@ -32,7 +32,7 @@ public class PlanPraktykiConfiguration {
      *
      * @return Fasada podmodułu na potrzeby testów, działająca w pamięci
      */
-    public PlanPraktykiFacade PlanPraktykiFacadeInMemoryIO() {
+    public PlanPraktykiFacade planPraktykiFacadeInMemoryIO() {
         PlanPraktykiRepository planPraktykiInMemoryRepository = new PlanPraktykiInMemoryRepository();
         return new PlanPraktykiFacade(planPraktykiInMemoryRepository);
     }

@@ -65,46 +65,46 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
       id = v.id
     );
 
-    // this.authService.getResource('http://localhost:8080/api/document/zaswiadczenie-zatrudnienie/' + id).subscribe(
-    //   value => {
-    //     this.zaswZatrudnienie = value;
-    //     this.id = value.id;
-    //     this.comment = value.comment;
-    //     this.status = value.status;
-    //     this.zaswZatrudnienieForm = new FormGroup({
-    //       studentName: new FormControl('', Validators.required),
-    //       studentSurname: new FormControl('', Validators.required),
-    //       studentRoad: new FormControl(value.studentRoad, Validators.required),
-    //       studentCity: new FormControl(value.studentCity, Validators.required),
-    //       studentZip: new FormControl(value.studentZip, Validators.required),
-    //       studentPesel: new FormControl(value.studentPesel, Validators.required),
-    //       studentInternshipStart: new FormControl('', Validators.required),
-    //       studentInternshipEnd: new FormControl('', Validators.required),
-    //       companyName: new FormControl(value.companyName, [Validators.required]),
-    //       studentPosition: new FormControl(value.studentPosition, [Validators.required]),
-    //       hoursPerWeek: new FormControl(value.hoursPerWeek, [Validators.required]),
-    //       studentTasks: new FormControl(value.studentTasks, [Validators.required])
-    //     });
-    //
-    //     if (!isNull(value.studentInternshipStart)) {
-    //       this.sisInp = true;
-    //       this.zaswZatrudnienieForm.get("studentInternshipStart").setValue(this.datePipe.transform(value.studentInternshipStart, 'yyyy-MM-dd').toString());
-    //     }
-    //     if (!isNull(value.studentInternshipEnd)) {
-    //       this.sieInp = true;
-    //       this.zaswZatrudnienieForm.get("studentInternshipEnd").setValue(this.datePipe.transform(value.studentInternshipEnd, 'yyyy-MM-dd').toString())
-    //     }
-    //
-    //     this.authService.getResource('http://localhost:8080/api/user/' + value.ownerId).subscribe(
-    //       value => {
-    //         this.zaswZatrudnienieForm.get("studentName").setValue(value.name);
-    //         this.zaswZatrudnienieForm.get("studentSurname").setValue(value.surname);
-    //       },
-    //       error => console.log(error),
-    //     );
-    //   },
-    //   error => console.log(error),
-    // );
+    this.authService.getResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/' + id).subscribe(
+      value => {
+        this.zaswZatrudnienie = value;
+        this.id = value.id;
+        this.comment = value.comment;
+        this.status = value.status;
+        this.zaswZatrudnienieForm = new FormGroup({
+          studentName: new FormControl('', Validators.required),
+          studentSurname: new FormControl('', Validators.required),
+          studentRoad: new FormControl(value.studentRoad, Validators.required),
+          studentCity: new FormControl(value.studentCity, Validators.required),
+          studentZip: new FormControl(value.studentZip, Validators.required),
+          studentPesel: new FormControl(value.studentPesel, Validators.required),
+          studentInternshipStart: new FormControl('', Validators.required),
+          studentInternshipEnd: new FormControl('', Validators.required),
+          companyName: new FormControl(value.companyName, [Validators.required]),
+          studentPosition: new FormControl(value.studentPosition, [Validators.required]),
+          hoursPerWeek: new FormControl(value.hoursPerWeek, [Validators.required]),
+          studentTasks: new FormControl(value.studentTasks, [Validators.required])
+        });
+
+        if (!isNull(value.studentInternshipStart)) {
+          this.sisInp = true;
+          this.zaswZatrudnienieForm.get("studentInternshipStart").setValue(this.datePipe.transform(value.studentInternshipStart, 'yyyy-MM-dd').toString());
+        }
+        if (!isNull(value.studentInternshipEnd)) {
+          this.sieInp = true;
+          this.zaswZatrudnienieForm.get("studentInternshipEnd").setValue(this.datePipe.transform(value.studentInternshipEnd, 'yyyy-MM-dd').toString())
+        }
+
+        this.authService.getResource('http://localhost:8080/api/user/' + value.ownerId).subscribe(
+          value => {
+            this.zaswZatrudnienieForm.get("studentName").setValue(value.name);
+            this.zaswZatrudnienieForm.get("studentSurname").setValue(value.surname);
+          },
+          error => console.log(error),
+        );
+      },
+      error => console.log(error),
+    );
   }
 
   ngOnInit() {
@@ -126,7 +126,7 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
       studentTasks: this.zaswZatrudnienieForm.value.studentTasks
     };
 
-    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczenie-zatrudnienie/' + this.id, body).subscribe(
+    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/' + this.id, body).subscribe(
     //   value => {
     //     this.notifier.notify("success","Pomyślnie wysłano dokument Zaświadczenie o zatrudnieniu",)
     //     this.router.navigate(["/home"]);
@@ -141,7 +141,7 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
 
 
   accept() {
-    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczenie-zatrudnienie/'+ this.id +'/accept', {}).subscribe(
+    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/accept', {}).subscribe(
     //   value => {
     //     this.notifier.notify("success","Pomyślnie zaakceptowano dokument Zaświadczenie o zatrudnieniu",);
     //     this.load();
@@ -156,7 +156,7 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
 
 
   decline() {
-    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczenie-zatrudnienie/'+ this.id +'/decline', {}).subscribe(
+    // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/decline', {}).subscribe(
     //   value => {
     //     this.notifier.notify("success","Pomyślnie odrzucono dokument Zaświadczenie o zatrudnieniu",);
     //     this.load();
@@ -179,7 +179,7 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
-          // this.authService.postResource('http://localhost:8080/api/document/zaswiadczenie-zatrudnienie/'+ this.id +'/comment', result).subscribe(
+          // this.authService.postResource('http://localhost:8080/api/document/zaswiadczeniezatrudnienie/'+ this.id +'/comment', result).subscribe(
           //   value => {
           //     this.notifier.notify("success","Pomyślnie dodano uwagę");
           //     this.decline();

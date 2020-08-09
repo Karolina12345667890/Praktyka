@@ -65,6 +65,13 @@ public class UserFacade {
     public void declineGroupApplication(Long groupApplicationId) {
         groupService.declineGroupApplication(groupApplicationId);
     }
+    public void dropUserFromGroup(Long groupId,Long studentId){
+        groupService.dropUserFromGroup(groupId,studentId);
+    }
+
+    public void changeUserDocuments(Long groupId,Long studentId) {
+    groupService.changeUserDocuments(groupId,studentId);
+    }
     
 
 }

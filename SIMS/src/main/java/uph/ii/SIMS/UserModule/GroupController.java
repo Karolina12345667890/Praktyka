@@ -58,4 +58,15 @@ public class GroupController {
     public void declineApplication(@PathVariable Long groupId, @PathVariable Long appId){
         userFacade.declineGroupApplication(appId);
     }
+
+    @PostMapping("/api/group/{groupId}/users/drop/{appId}")
+    public void dropUserFromGroup(@PathVariable Long groupId, @PathVariable Long appId){
+        userFacade.dropUserFromGroup(groupId,appId);
+    }
+
+    @PostMapping("/api/group/{groupId}/users/job/{appId}")
+    public void changeUserDocuments(@PathVariable Long groupId, @PathVariable Long appId){
+        userFacade.changeUserDocuments(groupId,appId);
+    }
+
 }

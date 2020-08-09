@@ -86,7 +86,7 @@ export class StudentListComponent implements OnInit {
           //do student companyName
           this.studentList.forEach(v => {
 
-            this.authService.getResource('http://localhost:8080' + v.documents[1].link).subscribe(
+            this.authService.getResource('http://localhost:8080' + v.documents[0].link).subscribe(
               value => {
                 if (!isNull(value.companyName) && value.status == "ACCEPTED") {
                   v.companyName = value.companyName;
@@ -127,7 +127,7 @@ export class StudentListComponent implements OnInit {
 
 
   onAcceptClick(path: string) {
-
+  console.log(path)
     this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();
@@ -228,4 +228,38 @@ export class StudentListComponent implements OnInit {
     );
     this.setPage(1);
   }
+
+  changeDocuments(studentId){
+
+    this.authService.postResource('http://localhost:8080/api/group/'+this.group.id+'/users/job/'+studentId ,{}).subscribe(
+      value => {
+        this.load();
+        this.notifier.notify("success","Pomyślnie Zmieniono dokumenty studenta",)
+      },
+      error =>{
+        console.log(error);
+        this.notifier.notify("error","Coś poszło nietak",)
+      }
+    );
+
+
+  }
+
+  dropStudent(studentId){
+
+    this.authService.postResource('http://localhost:8080/api/group/'+this.group.id+'/users/drop/'+studentId ,{}).subscribe(
+      value => {
+        this.load();
+        this.notifier.notify("success","Pomyślnie wyżucono studenta",)
+      },
+      error =>{
+        console.log(error);
+        this.notifier.notify("error","Coś poszło nietak",)
+      }
+    );
+
+
+  }
+
+
 }

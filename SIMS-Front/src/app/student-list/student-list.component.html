@@ -77,9 +77,17 @@
             <button type="button" class="btn btn-primary my-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">Zobacz</button>
             <button type="button" class="btn btn-warning my-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
           </td>
-
+<td>
+  <button type="button" class="btn btn-primary my-1" (click)="changeDocuments(item.id)">Change docs</button>
+  <button type="button" class="btn btn-primary my-1" (click)="dropStudent(item.id)">drop stud</button>
+  </td>
         </tr>
+
+
       </tbody>
+
+
+
     </table>
 
     <div *ngIf="pager.pages && pager.pages.length"  class="btn-group mb-1" role="group">

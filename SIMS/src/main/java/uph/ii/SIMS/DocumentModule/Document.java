@@ -29,6 +29,7 @@ abstract public class Document {
     protected String groupName = "";
     @Enumerated(EnumType.STRING)
     protected StatusEnum statusEnum = StatusEnum.EMPTY;
+    protected Boolean visible = true;
     
     protected Document(Long owner) {
         this.ownerId = owner;
@@ -47,8 +48,8 @@ abstract public class Document {
     public String getUrl() {
         return URL + getType() + "/" + id;
     }
-    
+
     public DocumentDto dto(){
-        return new DocumentDto(getId(), getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId(),getGroupName());
+        return new DocumentDto(getId(), getComment(), getStatusString(), getUrl(), getType(), getGroupId(), getOwnerId(),getGroupName(),getVisible());
     }
 }

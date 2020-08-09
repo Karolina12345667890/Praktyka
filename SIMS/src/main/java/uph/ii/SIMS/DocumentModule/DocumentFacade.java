@@ -8,10 +8,14 @@ import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.PlanPraktyki.PlanPraktykiFacade;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieFacade;
+import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienie;
+import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienieFacade;
 import uph.ii.SIMS.PdfCreationService.Dto.*;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
 import uph.ii.SIMS.UserModule.UserFacade;
+
+import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +36,7 @@ public class DocumentFacade {
     private ZaswiadczenieFacade zaswiadczenieFacade;
     private DziennikPraktykFacade dziennikPraktykFacade;
     private PlanPraktykiFacade planPraktykiFacade;
+    private ZaswiadczenieZatrudnienieFacade zaswiadczenieZatrudnienieFacade;
 
     byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
@@ -50,6 +55,10 @@ public class DocumentFacade {
     }
 
     byte[] createPdf(String templateName, PlanPraktykiPdfDto pdfDto) throws Exception {
+        return pdfBuilder.getPdfFromObject(templateName, pdfDto);
+    }
+
+    byte[] createPdf(String templateName, ZaswiadczenieZatrudnieniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
     }
 
@@ -207,6 +216,37 @@ public class DocumentFacade {
                 .build();
 
         return pdfBuilder.getPdfFromObject("PlanPraktyki", pdfDto);
+    }
+
+    /**
+     * Tworzy pdf zaswiadczenia o zatrudnieniu, wypełnia wszystkie pola wartościami pobranymi z BD
+     *
+     * @param id Id zaswiadczenia o zatrudnieniu
+     * @return Pdf zaswiadczenia o zatrudnieniu (jako tablica bajtów) z wartościami wszystkich pól pobranymi z BD
+     * @throws Exception
+     */
+
+    public byte[] printZaswiadczenieZatrudnienieToPdf(Long id) throws Exception {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        var zaswiadczenieZatrudnienieDto = zaswiadczenieZatrudnienieFacade.find(id, currentUser, isAdmin);
+        var userDto = userFacade.getUserById(zaswiadczenieZatrudnienieDto.getOwnerId());
+        var pdfDto = ZaswiadczenieZatrudnieniePdfDto.builder()
+                .studentName(userDto.getName())
+                .studentSurname(userDto.getSurname())
+                .studentInternshipStart(zaswiadczenieZatrudnienieDto.getStudentInternshipStart().toString())
+                .studentInternshipEnd(zaswiadczenieZatrudnienieDto.getStudentInternshipEnd().toString())
+                .studentTasks(zaswiadczenieZatrudnienieDto.getStudentTasks())
+                .studentPesel(zaswiadczenieZatrudnienieDto.getStudentPesel())
+                .companyName(zaswiadczenieZatrudnienieDto.getCompanyName())
+                .hoursPerWeek(zaswiadczenieZatrudnienieDto.getHoursPerWeek())
+                .studentCity(zaswiadczenieZatrudnienieDto.getStudentCity())
+                .studentPosition(zaswiadczenieZatrudnienieDto.getStudentPosition())
+                .studentRoad(zaswiadczenieZatrudnienieDto.getStudentRoad())
+                .studentZip(zaswiadczenieZatrudnienieDto.getStudentZip())
+                .build();
+
+        return pdfBuilder.getPdfFromObject("ZaswiadczenieZatrudnienie", pdfDto);
     }
 
 
@@ -367,6 +407,30 @@ public class DocumentFacade {
         planPraktykiFacade.createNew(planPraktykiDto, studentId, groupId, groupName);
     }
 
+    public ZaswiadczenieZatrudnienieDto fetchZaswiadczenieZatrudnienie(Long id) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean isAdmin = userFacade.currentUserIsAdmin();
+        return zaswiadczenieZatrudnienieFacade.find(id, currentUser, isAdmin);
+    }
+
+
+    /**
+     * Persystuje przekazany plan praktyki, jesli w bazie danych nie ma porozumienie z id takim, jak w przekazanym dto zostaje utworzony nowy plan praktyki,
+     * w przeciwnym razie aktualizowany jest już istniejący dokument
+     *
+     * @param zaswiadczenieZatrudnienieDto Plan Praktyki do zapisania
+     * @throws Exception
+     */
+
+    public void storeZaswiadczenieZatrudnienie(ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienieDto) {
+        UserDto currentUser = userFacade.getCurrentUser();
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieZatrudnienieFacade.storeChanges(zaswiadczenieZatrudnienieDto, currentUser, userIsAdmin);
+    }
+    public void storeZaswiadczenieZatrudnienie(ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienieDto, Long studentId, Long groupId, String groupName, Boolean visible) {
+        zaswiadczenieZatrudnienieFacade.createNew(zaswiadczenieZatrudnienieDto, studentId, groupId, groupName, visible);
+    }
+
 
     public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsAdmin = userFacade.currentUserIsAdmin();
@@ -420,12 +484,28 @@ public class DocumentFacade {
         planPraktykiFacade.setComment(id, newComment, userIsAdmin);
     }
 
+    public void setZaswiadczenieZatrudnienieStatus(Long id, StatusEnum statusEnum) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieZatrudnienieFacade.setStatus(id, statusEnum, userIsAdmin);
+    }
+
+    public void setZaswiadczenieZatrudnienieComment(Long id, String newComment) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieZatrudnienieFacade.setComment(id, newComment, userIsAdmin);
+    }
+
+    public void setZaswiadczenieZatrudnienieVisible(Long id, Boolean visible) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        zaswiadczenieZatrudnienieFacade.setVisible(id, userIsAdmin, visible);
+    }
 
     public List<DocumentDto> listMyDocuments() {
         UserDto currentUser = userFacade.getCurrentUser();
-        return documentRepository.getAllByOwnerId(currentUser.getId()).stream()
+        List<DocumentDto> documentDtos = documentRepository.getAllByOwnerId(currentUser.getId()).stream().filter(Document::getVisible)
                 .map(Document::dto)
                 .collect(Collectors.toList());
+
+        return documentDtos;
     }
 
     public List<DocumentDto> listStudentsDocuments(Long id) {
@@ -434,12 +514,34 @@ public class DocumentFacade {
                 .collect(Collectors.toList());
     }
 
+    public void chengeUsersDocuments(Long groupId,Long studentId) {
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        if(userIsAdmin) {
+            List<Document> documents = documentRepository.getAllByGroupIdAndAndOwnerId(groupId,studentId);
+
+            documents.forEach(documentDto -> {
+                if (documentDto.getVisible())
+                    documentDto.setVisible(false);
+                else
+                    documentDto.setVisible(true);
+                documentRepository.save(documentDto);
+            });
+
+        }
+    }
+
+
     public List<DocumentDto> listGroupDocuments(Long id) {
         return documentRepository.getAllByGroupId(id).stream()
                 .map(Document::dto)
                 .collect(Collectors.toList());
     }
 
-
+    @Transactional
+    public void deleteStudentsDocumentsInGroup(Long groupId,Long studentId){
+        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
+        if(userIsAdmin)
+        documentRepository.removeAllByGroupIdAndAndOwnerId(groupId,studentId);
+    }
 
 }

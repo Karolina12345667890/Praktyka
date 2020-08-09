@@ -14,6 +14,9 @@ import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.Zaswiadczenie;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieConfiguration;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieFacade;
+import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienie;
+import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienieConfiguration;
+import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienieFacade;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
 import uph.ii.SIMS.UserModule.UserFacade;
 
@@ -38,9 +41,10 @@ class DocumentConfiguration {
                                   ZaswiadczenieFacade zaswiadczenieFacade,
                                   DziennikPraktykFacade dziennikPraktykFacade,
                                   PlanPraktykiFacade planPraktykiFacade,
+                                  ZaswiadczenieZatrudnienieFacade zaswiadczenieZatrudnienieFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade, planPraktykiFacade );
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade, planPraktykiFacade,zaswiadczenieZatrudnienieFacade );
     }
     
     /**
@@ -62,9 +66,12 @@ class DocumentConfiguration {
                 .dziennikPraktykFacadeInMemoryIO();
 
         PlanPraktykiFacade planPraktykiFacadeInMemoryIO = new PlanPraktykiConfiguration()
-                .PlanPraktykiFacadeInMemoryIO();
+                .planPraktykiFacadeInMemoryIO();
+
+        ZaswiadczenieZatrudnienieFacade zaswiadczenieZatrudnienieFacadeInMemoryIO = new ZaswiadczenieZatrudnienieConfiguration()
+                .zaswiadczenieZatrudnienieFacadeInMemoryIO();
         
-        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO,planPraktykiFacadeInMemoryIO );
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO,planPraktykiFacadeInMemoryIO,zaswiadczenieZatrudnienieFacadeInMemoryIO );
     }
 }
     
