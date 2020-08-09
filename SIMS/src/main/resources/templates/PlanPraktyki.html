@@ -40,15 +40,15 @@
 
 
     <div style="line-height: 25px">
-        Niniejszym oświadczam, że Pan/i <span th:text="${dto.studentName}"></span> <span th:text="${dto.studentSurname}"></span>,
-        nr PESEL <span th:text="${dto.studentPesel}"></span>,
+        Niniejszym oświadczam, że Pan/i <span class="highLetters" th:text="${dto.studentName}"></span> <span class="highLetters" th:text="${dto.studentSurname}"></span>,
+        nr PESEL <span class="highLetters" th:text="${dto.studentPesel}"></span>,
         student(ka) kierunku Informatyka UPH w Siedlcach w ramach praktyki zawodowej zorganizowanej w naszym zakładzie pracy w okresie
-        od dnia <span th:text="${#dates.format(dto.studentInternshipStart, 'dd.MM.yyyy')}"></span> do dnia
-        <span th:text="${#dates.format(dto.studentInternshipEnd, 'dd.MM.yyyy')}"></span> będzie realizować następujące zadania:
+        od dnia <span class="highLetters" th:text="${#dates.format(dto.studentInternshipStart, 'dd.MM.yyyy')}"></span> do dnia
+        <span class="highLetters" th:text="${#dates.format(dto.studentInternshipEnd, 'dd.MM.yyyy')}"></span> będzie realizować następujące zadania:
     </div>
 
     <div style="margin-top: 5px;">
-        <span style="white-space: pre-line;" th:text="${dto.studentTasks}"></span>
+        <span style="white-space: pre-line;" class="highLetters" th:text="${dto.studentTasks}"></span>
     </div>
     <br/><br/><br/>
     <div class="toSignLeft">

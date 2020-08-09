@@ -40,14 +40,14 @@
 
 
         <div>
-            Pan(i) <span th:text="${dto.studentName}"></span> <span th:text="${dto.studentSurname}"></span>, student(ka)
+            Pan(i) <span class="highLetters" th:text="${dto.studentName}"></span> <span class="highLetters" th:text="${dto.studentSurname}"></span>, student(ka)
             kierunku Informatyka
 
         </div>
         <div>
             Przebywał(a) na praktyce w naszym przedsiębiorstwie w okresie
-            od <span th:text="${dto.studentInternshipStart}"></span>
-            do <span th:text="${dto.studentInternshipEnd}"></span>
+            od <span class="highLetters" th:text="${dto.studentInternshipStart}"></span>
+            do <span class="highLetters" th:text="${dto.studentInternshipEnd}"></span>
         </div>
         <br/><br/>
 
@@ -65,16 +65,16 @@
         <br/>
         <div class="toSignRight">
             <ul>
-                <li><span th:text="${dto.studentRating1}"></span></li>
-                <li><span th:text="${dto.studentRating2}"></span></li>
-                <li><span th:text="${dto.studentRating3}"></span></li>
+                <li><span class="highLetters" th:text="${dto.studentRating1}"></span></li>
+                <li><span class="highLetters" th:text="${dto.studentRating2}"></span></li>
+                <li><span class="highLetters" th:text="${dto.studentRating3}"></span></li>
             </ul>
         </div>
 
         <br/>
 
         <div>
-            Ogólna ocena praktyki:  <span th:text="${dto.studentRating}"></span>
+            Ogólna ocena praktyki:  <span class="highLetters" th:text="${dto.studentRating}"></span>
         </div>
 
         <br/>
@@ -84,7 +84,7 @@
         </div>
 
         <div>
-            <span style="white-space: pre-line;" th:text="${dto.studentWorks}"></span>
+            <span style="white-space: pre-line;" class="highLetters" th:text="${dto.studentWorks}"></span>
         </div>
 
         <br/>
@@ -93,7 +93,7 @@
             Praktykant(ka) szczególne zainteresowania/umiejętności wykazał(a) w dziedzinie:
         </div>
         <div>
-            <span style="white-space: pre-line;" th:text="${dto.studentInterests}"></span>
+            <span style="white-space: pre-line;" class="highLetters" th:text="${dto.studentInterests}"></span>
         </div>
 
         <br/> <br/> <br/>

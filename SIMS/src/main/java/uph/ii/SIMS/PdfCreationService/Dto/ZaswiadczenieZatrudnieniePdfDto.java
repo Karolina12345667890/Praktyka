@@ -3,6 +3,8 @@ package uph.ii.SIMS.PdfCreationService.Dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Date;
+
 @Getter
 @Builder
 public class ZaswiadczenieZatrudnieniePdfDto {
@@ -13,8 +15,8 @@ public class ZaswiadczenieZatrudnieniePdfDto {
     private String studentCity;
     private String studentZip;
     private String studentPesel;
-    private String studentInternshipStart;
-    private String studentInternshipEnd;
+    private Date studentInternshipStart;
+    private Date studentInternshipEnd;
     private String companyName;
     private String studentPosition;
     private String hoursPerWeek;

@@ -1,14 +1,15 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
-    <meta charset="UTF-8">
+    <title>Zaswiadczenie o Zatrudnieniu</title>
+    <meta charset="UTF-8"/>
     <link rel="stylesheet" href="styles/shared.css"/>
-    <title>Title</title>
+
 </head>
 <body>
+<h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
+<br/><br/>
 <div id="content">
-    <h6>Załącznik nr 5 do Regulaminu praktyk zawodowych</h6>
-    <br/><br/>
-
 
     <div>
         <div class="toSignLeft">
@@ -29,40 +30,63 @@
             </div>
         </div>
     </div>
-    <br/> <br/> <br/>
 
-    <h3 class="mt-2 mb-2" style="letter-spacing: 1px;">ZAŚWIADCZENIE O ZATRUDNIENIU</h3>
+    <br/> <br/> <br/> <br/>
+
+    <h3>ZASWIADCZENIE O ZATRUDNIENIU</h3>
     <br/><br/>
+
     <div>
 
 
         <div>
             Zaświadcza się, że Pan(i)
-            <span th:text="${dto.studentName}"></span>
-            <span th:text="${dto.studentSurname}"></span>,<br/>
-
-            zamieszkały(a) w   <span th:text="${dto.studentRoad}"></span>
-            <span th:text="${dto.studentCity}"></span>
-            <span th:text="${dto.studentZip}"></span>,<br/>
-
-            nr PESEL   <span th:text="${dto.studentPesel}"></span>,<br/>
-
-            w okresie od dnia   <span th:text="${dto.studentInternshipStart}"></span>
-            do dnia <span th:text="${dto.studentInternshipEnd}"></span>,<br/>
-
-            był(a) zatrudniony(a) w <span th:text="${dto.companyName}"></span><br/>
-
-            na stanowisku <span th:text="${dto.studentPosition}"></span>
-            w wymiarze <span th:text="${dto.hoursPerWeek}"></span> godzin tygodniowo.<br/><br/>
+            <div class="inline">
+                <span class="highLetters" th:text="${dto.studentName} + ' ' + ${dto.studentSurname}"></span>,<br/>
+            </div>
         </div>
-
+        <div>
+            zamieszkały(a) w
+            <div class="inline">
+            <span class="highLetters"
+                  th:text="${dto.studentRoad} + ' ' + ${dto.studentCity} + ' ' + ${dto.studentZip}"></span>,<br/>
+            </div>
+        </div>
+        <div>
+            nr PESEL
+            <div class="inline">
+                <span class="highLetters" th:text="${dto.studentPesel}"></span>,<br/>
+            </div>
+        </div>
+        <div>
+            w okresie od dnia
+            <div class="inline">
+        <span class="highLetters"
+              th:text="${#dates.format(dto.studentInternshipStart, 'dd.MM.yyyy')}"></span>
+                do dnia <span class="highLetters"
+                              th:text="${#dates.format(dto.studentInternshipStart, 'dd.MM.yyyy')}"></span>,<br/>
+            </div>
+        </div>
+        <div>
+            był(a) zatrudniony(a) w
+            <div class="inline">
+                <span class="highLetters" th:text="${dto.companyName}"></span>,<br/>
+            </div>
+        </div>
+        <div>
+            na stanowisku
+            <div class="inline">
+                <span class="highLetters" th:text="${dto.studentPosition}"></span>
+                w wymiarze <span class="highLetters" th:text="${dto.hoursPerWeek}"></span> godzin tygodniowo.<br/>
+            </div>
+        </div>
+        <br/><br/>
         <div>
             Zakres wykonywanych obowiązków:
         </div>
         <div>
-            <span th:text="${dto.studentTasks}"></span>
+            <span class="highLetters" th:text="${dto.studentTasks}"></span>
         </div>
-        <br>
 
         <br/><br/>
         <div>
@@ -81,7 +105,10 @@
             </div>
         </div>
         <br/><br/><br/>
+
     </div>
 </div>
+
 </body>
 </html>
+
