@@ -17,11 +17,14 @@ public class UserRestController {
     }
 
     @PostMapping("/api/user")
-    UserDto registerNewStudent(@RequestBody StudentRegistrationDto newStudentDto) {
+    UserDto registerNewUser(@RequestBody StudentRegistrationDto newStudentDto) {
         var userDto = newStudentDto.userDto;
         var username = newStudentDto.username;
         var password = newStudentDto.password;
-        return userService.createNewStudentUser(userDto, username, password).dto();
+        if (userService.currentUserIsAdmin())
+            return userService.createNewGroupAdminUser(userDto, username, password).dto();
+        else
+            return userService.createNewStudentUser(userDto, username, password).dto();
     }
 }
 
