@@ -50,7 +50,16 @@ public class UserService implements UserDetailsService {
         Role role_user = roleRepository.findByName("ROLE_USER");
         return createNewUser(userDto, username, password, List.of(role_user));
     }
-    
+
+    public User createNewGroupAdminUser(UserDto userDto, String username, String password){
+
+            if(currentUserIsAdmin()) {
+                Role role_user = roleRepository.findByName("ROLE_USER");
+                Role role_group_admin = roleRepository.findByName("ROLE_GROUP_ADMIN");
+                return createNewUser(userDto, username, password, List.of(role_user, role_group_admin));
+            }
+        return null;
+    }
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

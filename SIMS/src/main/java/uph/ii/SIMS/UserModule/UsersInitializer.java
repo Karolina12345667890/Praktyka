@@ -64,9 +64,9 @@ public class UsersInitializer {
         
         User user = userService.createNewUser(new UserDto(null, "332211", "Andrzej", "Aaa", "test@gmai.com"),
             "admin", "admin", rolesAdmin);
-        User guser = userService.createNewUser(new UserDto(null, "g", "gg", "Aaa", "test@gmai.com"),
+        User guser = userService.createNewUser(new UserDto(null, "g", "gg", "Aaa", "test7@gmai.com"),
                 "gadmin", "admin", rolesGAdmin);
-        User g2user = userService.createNewUser(new UserDto(null, "g2", "gg2", "Aaa2", "test@gmai.com"),
+        User g2user = userService.createNewUser(new UserDto(null, "g2", "gg2", "Aaa2", "test8@gmai.com"),
                 "gadmin2", "admin", rolesGAdmin);
         User user1 = userService.createNewUser(new UserDto(null, "221133", "Barbara", "Bbb", "test2@gmai.com"),
             "user1", "user", rolesUser);

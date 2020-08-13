@@ -30,4 +30,15 @@ public class UserDto {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", album='" + album + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
 }
