@@ -19,6 +19,7 @@
 <body>
 
 <nav class="navbar navbar-light bg-light row" style="padding-top: 0">
+    <a class="col navbar-text text-center bg-success" onclick="history.go(-1);" style="padding: 16px">Wróć</a>
         <span id="nav-login" class="col navbar-text text-center bg-primary" style="padding: 16px">
         Logowanie
         </span>
@@ -41,6 +42,17 @@
         const login_form = document.createElement("form");
         login_form.action = "/login"
         login_form.method = "post"
+
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.classList.add("bg-light");
+
+        const cardHeader = document.createElement("div");
+        cardHeader.classList.add("card-header");
+        cardHeader.innerText = "SIMS - Logowanie";
+
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
 
         const login_form_submit_button = document.createElement("button");
         login_form_submit_button.type = "submit";
@@ -71,11 +83,27 @@
         loginFieldsElements.forEach(value => login_form.appendChild(value));
         login_form.appendChild(login_form_submit_button);
 
-        return login_form;
+        cardBody.appendChild(login_form);
+
+        card.appendChild(cardHeader);
+        card.appendChild(cardBody);
+
+        return card;
     })();
 
     const register_form = (function createRegisterForm() {
         const register_form = document.createElement("form");
+
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.classList.add("bg-light");
+
+        const cardHeader = document.createElement("div");
+        cardHeader.classList.add("card-header");
+        cardHeader.innerText = "SIMS - Rejestracja";
+
+        const cardBody = document.createElement("div");
+        cardBody.classList.add("card-body");
 
         const register_form_submit_button = document.createElement("button");
         register_form_submit_button.type = "button";
@@ -153,7 +181,12 @@
         loginFieldsElements.forEach(value => register_form.appendChild(value));
         register_form.appendChild(register_form_submit_button);
 
-        return register_form;
+        cardBody.appendChild(register_form);
+
+        card.appendChild(cardHeader);
+        card.appendChild(cardBody);
+
+        return card;
     })();
 
     const switch_to_login_form = function () {

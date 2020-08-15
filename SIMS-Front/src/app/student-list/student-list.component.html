@@ -40,8 +40,12 @@
 
       <tbody>
         <tr *ngFor="let item of pagedItems  " >
-          <td>
+          <td (click)="showAction(item.id)">
             {{ item.name}}
+            <div id="{{ item.id }}" style="display: none;">
+              <button type="button" class="btn btn-primary m-1" (click)="changeDocuments(item.id)">Zmień dokumenty</button>
+              <button type="button" class="btn btn-primary m-1" (click)="dropStudent(item.id)">Usuń studenta</button>
+            </div>
           </td>
           <td>
             {{ item.surname }}
@@ -50,37 +54,36 @@
             {{item.companyName}}
           </td>
 
-          <td class="docs" *ngFor="let doc of item.documents " [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
+          <td class="docs" *ngFor="let doc of item.documents" [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
             doc.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
             doc.status == 'DECLINED' && {'background-color':'#dc3545'}">
-
-            <ng-container *ngIf="doc.status === 'DECLINED';else NEW">
-              Odrzucony
-            </ng-container>
-
-            <ng-template #NEW>
-              <ng-container *ngIf="doc.status === 'NEW';else ACCEPTED">
-                Nowy
+            <div *ngIf="doc.type == 'zaswiadczeniezatrudnienie'">
+              <span>Zaświadczenie o zatrudnieniu:</span>
+            </div>
+              <ng-container *ngIf="doc.status === 'DECLINED';else NEW">
+                Odrzucony
               </ng-container>
-            </ng-template>
 
-            <ng-template #ACCEPTED>
-              <ng-container *ngIf="doc.status === 'ACCEPTED';else empty">
-                Zaakceptowany
-              </ng-container>
-            </ng-template>
+              <ng-template #NEW>
+                <ng-container *ngIf="doc.status === 'NEW';else ACCEPTED">
+                  Nowy
+                </ng-container>
+              </ng-template>
 
-            <ng-template #empty>
-              Brak
-            </ng-template>
+              <ng-template #ACCEPTED>
+                <ng-container *ngIf="doc.status === 'ACCEPTED';else empty">
+                  Zaakceptowany
+                </ng-container>
+              </ng-template>
 
-            <button type="button" class="btn btn-primary my-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">Zobacz</button>
-            <button type="button" class="btn btn-warning my-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
+              <ng-template #empty>
+                Brak
+              </ng-template>
+
+              <button type="button" class="btn btn-primary my-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">Zobacz</button>
+              <button type="button" class="btn btn-warning my-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
+
           </td>
-<td>
-  <button type="button" class="btn btn-primary m-1" (click)="changeDocuments(item.id)">Zmień dokumenty</button>
-  <button type="button" class="btn btn-primary m-1" (click)="dropStudent(item.id)">Usuń studenta</button>
-  </td>
         </tr>
 
 
@@ -89,6 +92,7 @@
 
 
     </table>
+
 
     <div *ngIf="pager.pages && pager.pages.length"  class="btn-group mb-1" role="group">
       <button type="button" class="btn btn-outline-secondary" (click)="setPage(1)">Pierwsza</button>

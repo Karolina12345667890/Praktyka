@@ -1,17 +1,17 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { NotifierService } from 'angular-notifier';
-import {ActivatedRoute, Router} from "@angular/router";
-import {LoginServiceService} from "../login-service.service";
-import {StudentDto} from "../models/StudentDto";
-import {GroupDto} from "../models/GroupDto";
-import {GroupApplicationDto} from "../models/GroupApplicationDto";
-import {DatePipe} from "@angular/common";
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {isNull, isUndefined} from "util";
-import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
-import {isEmpty} from "rxjs/operators";
-import {PagerService} from "../pager-service.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {LoginServiceService} from '../login-service.service';
+import {StudentDto} from '../models/StudentDto';
+import {GroupDto} from '../models/GroupDto';
+import {GroupApplicationDto} from '../models/GroupApplicationDto';
+import {DatePipe} from '@angular/common';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {isNull, isUndefined} from 'util';
+import {EditCommentDialogComponent} from '../edit-comment-dialog/edit-comment-dialog.component';
+import {isEmpty} from 'rxjs/operators';
+import {PagerService} from '../pager-service.service';
 
 @Component({
   selector: 'app-student-list',
@@ -21,20 +21,29 @@ import {PagerService} from "../pager-service.service";
 })
 export class StudentListComponent implements OnInit {
 
+  constructor(private fb: FormBuilder, notifierService: NotifierService, private activatedroute: ActivatedRoute,
+              private authService: LoginServiceService, private datePipe: DatePipe, public dialog: MatDialog,
+              private router: Router, private pagerService: PagerService) {
+    this.notifier = notifierService;
+
+
+  }
+
+
   group: GroupDto = {
     id: 0,
-    groupName: "",
+    groupName: '',
     durationInWeeks: 0,
-    startDate: "",
+    startDate: '',
     isOpen: false,
-    fieldOfStudy: "",
-    formOfStudy: "",
-    speciality: "",
-    changed:false,
+    fieldOfStudy: '',
+    formOfStudy: '',
+    speciality: '',
+    changed: false,
     students: [],
     groupAdminId : 0,
-  groupAdminName : "",
-  groupAdminSurname : "",
+  groupAdminName : '',
+  groupAdminSurname: '',
 
 };
   studentList = new Array<StudentDto>();
@@ -43,18 +52,17 @@ export class StudentListComponent implements OnInit {
 
   studentApplicationList = new Array<GroupApplicationDto>();
   private readonly notifier: NotifierService;
-  isAdmin: boolean = false;
+  isAdmin = false;
   pager: any = {};
   pagedItems: any[];
-  rememberSort:string = "surname";
+  rememberSort = 'surname';
+  show: boolean;
 
-  constructor(private fb: FormBuilder, notifierService: NotifierService, private activatedroute: ActivatedRoute,
-              private authService: LoginServiceService, private datePipe: DatePipe, public dialog: MatDialog,
-              private router: Router, private pagerService: PagerService) {
-    this.notifier = notifierService;
+  sortOrderSurname = true;
 
+  sortOrderCompanyName = true;
 
-  }
+  foilterSurname = '';
 
 
   ngOnInit() {
@@ -79,30 +87,30 @@ export class StudentListComponent implements OnInit {
 
       this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
         value => {
-          //this.studentList.push(value.students);
+          // this.studentList.push(value.students);
           this.studentList = value.students;
           this.savedstudentList = value.students;
           this.setPage(this.pager.currentPage);
-          //do student companyName
+          // do student companyName
           this.studentList.forEach(v => {
 
             this.authService.getResource('http://localhost:8080' + v.documents[0].link).subscribe(
               value => {
-                if (!isNull(value.companyName) && value.status == "ACCEPTED") {
+                if (!isNull(value.companyName) && value.status == 'ACCEPTED') {
                   v.companyName = value.companyName;
-                }else{
-                  v.companyName = "";
+                } else {
+                  v.companyName = '';
                 }
-              })
+              });
           });
 
           this.group = value;
 
 
-          if(this.rememberSort == 'surname'){
+          if (this.rememberSort == 'surname') {
             this.sortOrderSurname = !this.sortOrderSurname;
             this.sortSurname();
-          }else if(this.rememberSort == 'companyname'){
+          } else if (this.rememberSort == 'companyname') {
             this.sortOrderCompanyName = ! this.sortOrderCompanyName;
             this.sortCompanyName();
           }
@@ -116,7 +124,7 @@ export class StudentListComponent implements OnInit {
           this.studentApplicationList = value;
           this.studentApplicationList.forEach(v => {
             v.date = this.datePipe.transform(v.date, 'yyyy-MM-dd').toString();
-          })
+          });
         },
         error => console.log(error),
       );
@@ -127,15 +135,15 @@ export class StudentListComponent implements OnInit {
 
 
   onAcceptClick(path: string) {
-  console.log(path)
-    this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
+  console.log(path);
+  this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify("success", "Pomyślnie zaakceptowano studenta",)
+        this.notifier.notify('success', 'Pomyślnie zaakceptowano studenta', );
       },
       error => {
-        console.log(error)
-        this.notifier.notify("error", "Coś poszło nie tak",)
+        console.log(error);
+        this.notifier.notify('error', 'Coś poszło nie tak', );
       },
     );
 
@@ -147,11 +155,11 @@ export class StudentListComponent implements OnInit {
     this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify("success", "Pomyślnie odrzucono studenta",)
+        this.notifier.notify('success', 'Pomyślnie odrzucono studenta', );
       },
       error => {
-        console.log(error)
-        this.notifier.notify("error", "Coś poszło nie tak",)
+        console.log(error);
+        this.notifier.notify('error', 'Coś poszło nie tak', );
       },
     );
 
@@ -159,7 +167,7 @@ export class StudentListComponent implements OnInit {
   }
 
   openDoc(id: number, docType: string) {
-    this.router.navigate(['/' + docType], {queryParams: {id: id}});
+    this.router.navigate(['/' + docType], {queryParams: {id}});
   }
 
 
@@ -176,12 +184,12 @@ export class StudentListComponent implements OnInit {
           this.authService.postResource('http://localhost:8080/api/document/' + docType + '/' + id + '/comment', result).subscribe(
             value => {
               console.log(value);
-              this.notifier.notify("success", "Pomyślnie zmieniono uwage",);
+              this.notifier.notify('success', 'Pomyślnie zmieniono uwage', );
               this.load();
             },
             error => {
-              console.log(error)
-              this.notifier.notify("error", error.error,)
+              console.log(error);
+              this.notifier.notify('error', error.error, );
             }
           );
         }
@@ -190,35 +198,29 @@ export class StudentListComponent implements OnInit {
 
   }
 
-  sortOrderSurname: boolean = true;
-
   sortSurname() {
     if (this.sortOrderSurname) {
-      this.studentList.sort((a: StudentDto, b: StudentDto) => b.surname.localeCompare(a.surname))
+      this.studentList.sort((a: StudentDto, b: StudentDto) => b.surname.localeCompare(a.surname));
     } else {
-      this.studentList.sort((a: StudentDto, b: StudentDto) => a.surname.localeCompare(b.surname))
+      this.studentList.sort((a: StudentDto, b: StudentDto) => a.surname.localeCompare(b.surname));
     }
     this.sortOrderSurname = !this.sortOrderSurname;
     this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    this.rememberSort = "surname";
+    this.rememberSort = 'surname';
   }
-
-  sortOrderCompanyName: boolean = true;
   sortCompanyName() {
     if (this.sortOrderCompanyName) {
-      this.studentList.sort((a: StudentDto, b: StudentDto) => b.companyName.localeCompare(a.companyName))
+      this.studentList.sort((a: StudentDto, b: StudentDto) => b.companyName.localeCompare(a.companyName));
     } else {
-      this.studentList.sort((a: StudentDto, b: StudentDto) => a.companyName.localeCompare(b.companyName))
+      this.studentList.sort((a: StudentDto, b: StudentDto) => a.companyName.localeCompare(b.companyName));
     }
     this.sortOrderCompanyName = !this.sortOrderCompanyName;
     this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
-    this.rememberSort = "companyname"
+    this.rememberSort = 'companyname';
   }
 
-  foilterSurname:string = "";
-
-  findSurname(){
-    if(this.foilterSurname == ""){
+  findSurname() {
+    if (this.foilterSurname == '') {
       this.studentList = this.savedstudentList;
       this.setPage(1);
       return;
@@ -229,36 +231,48 @@ export class StudentListComponent implements OnInit {
     this.setPage(1);
   }
 
-  changeDocuments(studentId){
+  changeDocuments(studentId) {
 
-    this.authService.postResource('http://localhost:8080/api/group/'+this.group.id+'/users/job/'+studentId ,{}).subscribe(
+    this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/job/' + studentId , {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify("success","Pomyślnie zmieniono dokumenty studenta",)
+        this.notifier.notify('success', 'Pomyślnie zmieniono dokumenty studenta', );
       },
-      error =>{
+      error => {
         console.log(error);
-        this.notifier.notify("error","Coś poszło nie tak",)
+        this.notifier.notify('error', 'Coś poszło nie tak', );
       }
     );
 
 
   }
 
-  dropStudent(studentId){
+  dropStudent(studentId) {
+    const c = confirm('Czy na pewno chcesz usunąć studenta z grupy?');
 
-    this.authService.postResource('http://localhost:8080/api/group/'+this.group.id+'/users/drop/'+studentId ,{}).subscribe(
-      value => {
-        this.load();
-        this.notifier.notify("success","Pomyślnie wyrzucono studenta",)
-      },
-      error =>{
-        console.log(error);
-        this.notifier.notify("error","Coś poszło nie tak",)
-      }
-    );
+    if (c) {
+      this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/drop/' + studentId, {}).subscribe(
+        value => {
+          this.load();
+          this.notifier.notify('success', 'Pomyślnie wyrzucono studenta',);
+        },
+        error => {
+          console.log(error);
+          this.notifier.notify('error', 'Coś poszło nie tak',);
+        }
+      );
+    }
 
 
+  }
+
+
+  showAction(studentId) {
+    if (document.getElementById(studentId).style.display === 'none') {
+      document.getElementById(studentId).removeAttribute('style');
+    } else {
+      document.getElementById(studentId).style.display = 'none';
+    }
   }
 
 
