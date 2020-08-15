@@ -40,11 +40,11 @@
 
       <tbody>
         <tr *ngFor="let item of pagedItems  " >
-          <td (click)="showAction(item.id)">
+          <td data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ item.name}}
-            <div id="{{ item.id }}" style="display: none;">
-              <button type="button" class="btn btn-primary m-1" (click)="changeDocuments(item.id)">Zmień dokumenty</button>
-              <button type="button" class="btn btn-primary m-1" (click)="dropStudent(item.id)">Usuń studenta</button>
+            <div class="dropdown-menu">
+              <button type="button" class="dropdown-item btn btn-primary m-1" (click)="changeDocuments(item.id)">Zmień dokumenty</button>
+              <button type="button" class="dropdown-item btn btn-primary m-1" (click)="dropStudent(item.id)">Usuń studenta</button>
             </div>
           </td>
           <td>

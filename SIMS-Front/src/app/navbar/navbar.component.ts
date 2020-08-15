@@ -1,18 +1,18 @@
-import {AfterContentInit, Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
-import {FormBuilder} from "@angular/forms";
-import {AuthGuardService} from "../auth-guard.service";
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, AfterViewInit {
 
 
   loggedIn: boolean;
   isAdmin: boolean = false;
+  firstname: string;
 
 
   // wstrzykuje zależności niezbedne servisy do działania componentu
@@ -23,9 +23,20 @@ export class NavbarComponent implements OnInit {
 
 
   ngOnInit() {
-    setTimeout(() => { this.isAdmin = this.auth.isAdmin(); }, 100)
+    setTimeout(() => { this.isAdmin = this.auth.isAdmin(); }, 100);
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.auth.getResource('http://localhost:8080/api/user').subscribe(
+
+      (value) => {
+          this.firstname = value.name;
+        },
+        (error) => { console.log(error); }
+      );
+    }, 200);
+  }
 
   login() {
     this.auth.obtainAccessToken();
