@@ -119,21 +119,8 @@ export class GroupListComponent implements OnInit {
       }
     };
 
-
-    var body = {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      'type': 'POST',
-      'url': 'http://localhost:8080/api/userga',
-      'data': JSON.stringify(data),
-      'dataType': 'json',
-      'success': 'http://localhost:4200'
-    }
-
     this.authService.postResource('http://localhost:8080/api/userga', data).subscribe(
-      value => console.log(value),error => console.log(error))
+      value => console.log(value),error => console.log(error.error.message));
 
 
   }

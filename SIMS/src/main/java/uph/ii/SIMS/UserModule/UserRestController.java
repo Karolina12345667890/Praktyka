@@ -11,26 +11,57 @@ public class UserRestController {
 
     private UserService userService;
 
+    @GetMapping("/api/user")
+    UserDto userDto() {
+        return userService.getCurrentUser().dto();
+    }
+
     @GetMapping("/api/user/{id}")
     UserDto userDto(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @PostMapping("/api/user")
-    UserDto registerNewStudent(@RequestBody UserRegistrationDto newStudentDto) {
+    void registerNewStudent(@RequestBody UserRegistrationDto newStudentDto) {
         var userDto = newStudentDto.userDto;
         var username = newStudentDto.username;
         var password = newStudentDto.password;
-        return userService.createNewStudentUser(userDto, username, password).dto();
+        userService.createNewStudentUser(userDto, username, password).dto();
     }
     @PostMapping("/api/userga")
-    UserDto registerNewGroupAdmin(@RequestBody UserRegistrationDto newStudentDto) {
+    void registerNewGroupAdmin(@RequestBody UserRegistrationDto newStudentDto) {
         var userDto = newStudentDto.userDto;
         var username = newStudentDto.username;
         var password = newStudentDto.password;
-        System.out.println(newStudentDto);
-        return userService.createNewGroupAdminUser(userDto, username, password).dto();
+        userService.createNewGroupAdminUser(userDto, username, password).dto();
     }
+
+    @PostMapping("/api/user/edit/name")
+    void editUsersName(@RequestBody String name) {
+        userService.editUsersName(name);
+    }
+
+    @PostMapping("/api/user/edit/surname")
+    void editUsersSurname(@RequestBody String surname) {
+        userService.editUsersSurname(surname);
+    }
+
+    @PostMapping("/api/user/edit/album")
+    void editUsersAlbum(@RequestBody String album) {
+       userService.editUsersAlbum(album);
+    }
+
+    @PostMapping("/api/user/edit/email")
+    void editUsersEmail(@RequestBody String email) {
+        userService.editUsersEmail(email);
+    }
+
+    @PostMapping("/api/user/edit/pass")
+    void editUsersPass(@RequestBody String pass) {
+        System.out.println(pass);
+        userService.editUsersPass(pass);
+    }
+
 }
 
 

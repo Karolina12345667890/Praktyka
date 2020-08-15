@@ -78,7 +78,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     this.isAdmin = this.authService.isAdmin();
     if (this.isAdmin) {
-      this.router.navigate(['/gl']);
+    //  this.router.navigate(['/gl']);
     }
 
   }
@@ -149,6 +149,25 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   }
 
+  test(){
+    this.authService.getResource('http://localhost:8080/api/user').subscribe( value => console.log(value),error => console.log(error));
+  }
+
+  test1(){
+    this.authService.postResource('http://localhost:8080/api/user/edit/name', 'ala').subscribe( value => console.log(value),error => console.log(error));
+  }
+  test2(){
+    this.authService.postResource('http://localhost:8080/api/user/edit/surname', 'kot').subscribe( value => console.log(value),error => console.log(error));
+  }
+  test3(){
+    this.authService.postResource('http://localhost:8080/api/user/edit/album', '0000').subscribe( value => console.log(value),error => console.log(error));
+  }
+  test4(){
+    this.authService.postResource('http://localhost:8080/api/user/edit/email', 'a@a.a').subscribe( value => console.log(value),error => console.log(error));
+  }
+  test5(){
+    this.authService.postResource('http://localhost:8080/api/user/edit/pass', 'aaa').subscribe( value => console.log(value),error => console.log(error));
+  }
 
 }
 
