@@ -122,15 +122,6 @@
         </div>
     </div>
   </div>
-<div *ngIf="authService.isLoggedIn()">
-  <button type="button"  class="btn btn-warning warning float-right mx-1" (click)="test()"  >get user</button>
-  <button type="button"  class="btn btn-warning warning float-right mx-1" (click)="test1()"  >change name</button>
-  <button type="button"  class="btn btn-warning warning float-right mx-1" (click)="test2()"  >change surname</button>
-  <button type="button"  class="btn btn-warning warning float-right mx-1" (click)="test3()"  >change album</button>
-  <button type="button"  class="btn btn-warning warning float-right mx-1" (click)="test4()"  >change email</button>
-  <button type="button"  class="btn btn-warning warning float-right mx-1" (click)="test5()"  >change password</button>
-</div>
-<!--<h1>{{authService.isLoggedIn()}}</h1>-->
 
   <div class="container" *ngIf="myDocumentList.length === 0">
     <h1>Brak Dokumentów</h1>

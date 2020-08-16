@@ -1,0 +1,70 @@
+<div class="container mt-4">
+  <h1>Panel użytkownika</h1>
+  <p class="lead">Zarządzanie danymi</p>
+
+  <hr class="pt-2">
+
+  <p class="alert alert-info">Poniżej widoczne są Twoje aktualne dane. Aby zatwierdzić nowe, wpisz wartość i kliknij <strong>Zmień</strong>.</p>
+
+  <hr class="mt-4 pb-2">
+
+  <div class="inputs">
+    <form [formGroup]="changeFirstnameForm" (ngSubmit)="onSubmitChangeFirstname()" class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="firstname">Imię</label>
+      </div>
+      <input id="firstname" type="text" class="form-control" formControlName="studentFirstname" placeholder="{{ firstname }}" aria-label="Imię" aria-describedby="button-addon2" />
+      <div class="input-group-append">
+        <button [disabled]="changeFirstnameForm.invalid" class="btn btn-outline-secondary" type="submit" id="button-addon2">Zmień</button>
+      </div>
+    </form>
+
+    <form [formGroup]="changeLastnameForm" (ngSubmit)="onSubmitChangeLastname()" class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="lastname">Nazwisko</label>
+      </div>
+      <input id="lastname" type="text" class="form-control" formControlName="studentLastname" placeholder="{{ lastname }}" aria-label="Nazwisko" aria-describedby="button-addon3" />
+      <div class="input-group-append">
+        <button [disabled]="changeLastnameForm.invalid" class="btn btn-outline-secondary" type="submit" id="button-addon3">Zmień</button>
+      </div>
+    </form>
+
+    <form [formGroup]="changeEmailForm" (ngSubmit)="onSubmitChangeEmail()" class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="email">Adres e-mail</label>
+      </div>
+      <input id="email" type="email" class="form-control" formControlName="studentEmail" placeholder="{{ email }}" aria-label="Adres e-mail" aria-describedby="button-addon5" />
+      <div class="input-group-append">
+        <button [disabled]="changeEmailForm.invalid" class="btn btn-outline-secondary" type="submit" id="button-addon5">Zmień</button>
+      </div>
+    </form>
+
+    <form [formGroup]="changeAlbumForm" (ngSubmit)="onSubmitChangeAlbum()" class="input-group mb-3">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="album">Nr albumu</label>
+      </div>
+      <input id="album" type="number" class="form-control" formControlName="studentAlbum" placeholder="{{ album }}" aria-label="Nr albumu" aria-describedby="button-addon6" />
+      <div class="input-group-append">
+        <button [disabled]="changeAlbumForm.invalid" class="btn btn-outline-secondary" type="submit" id="button-addon6">Zmień</button>
+      </div>
+    </form>
+  </div>
+
+  <hr class="mt-4 pb-2">
+
+  <div class="change-password">
+    <button class="btn btn-lg btn-outline-secondary mb-2 w-100" (click)="showChangePasswordForm()">Zmień hasło</button>
+
+    <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitChangePassword()" id="changePasswordForm" class="input-group mb-3" style="display: none;">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="password">Hasło</label>
+      </div>
+      <input id="password" type="password" class="form-control" formControlName="studentNewPassword" placeholder="Nowe hasło" aria-label="Nowe hasło" aria-describedby="button-addon4" />
+      <input id="repeatPassword" type="password" class="form-control" formControlName="studentNewPasswordRepeat" placeholder="Powtórz nowe hasło" aria-label="Powtórz nowe hasło" aria-describedby="button-addon44" />
+      <div class="input-group-append">
+        <button [disabled]="changePasswordForm.invalid" class="btn btn-outline-secondary" type="submit" id="button-addon4">Zapisz</button>
+      </div>
+    </form>
+  </div>
+
+</div>

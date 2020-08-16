@@ -22,15 +22,11 @@
           Witaj, {{ firstname }}!
         </a>
         <div class="dropdown-menu bg-dark">
-          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietastudent">Zmień imię</a>
-          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietaprac">Zmień nazwisko</a>
-          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietaprac">Zmień e-mail</a>
-          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietaprac">Zmień hasło</a>
-          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/ankietaprac">Zmień nr albumu</a>
+          <a class="dropdown-item" *ngIf="loggedIn" routerLink="/userpanel">Panel użytkownika</a>
+          <a class="dropdown-item" *ngIf="loggedIn" (click)="logout()" href="http://localhost:4200/home">Wyloguj</a>
         </div>
       </li>
       <li class="nav-item"><a class="nav-link" *ngIf="!loggedIn" (click)="login()">Zaloguj</a></li>
-      <li class="nav-item"><a class="nav-link" style="cursor: pointer" *ngIf="loggedIn" (click)="logout()" href="http://localhost:4200/home">Wyloguj</a></li>
     </ul>
   </div>
 </nav>

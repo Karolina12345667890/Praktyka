@@ -9,11 +9,9 @@ import {LoginServiceService} from '../login-service.service';
 })
 export class NavbarComponent implements OnInit, AfterViewInit {
 
-
   loggedIn: boolean;
   isAdmin: boolean = false;
   firstname: string;
-
 
   // wstrzykuje zależności niezbedne servisy do działania componentu
   constructor(private auth: LoginServiceService) {
@@ -26,15 +24,19 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     setTimeout(() => { this.isAdmin = this.auth.isAdmin(); }, 100);
   }
 
+
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.auth.getResource('http://localhost:8080/api/user').subscribe(
-
-      (value) => {
-          this.firstname = value.name;
-        },
-        (error) => { console.log(error); }
-      );
+      if (this.loggedIn) {
+        this.auth.getResource('http://localhost:8080/api/user').subscribe(
+          (value) => {
+            this.firstname = value.name;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     }, 200);
   }
 

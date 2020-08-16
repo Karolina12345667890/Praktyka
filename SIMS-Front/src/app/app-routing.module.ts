@@ -15,6 +15,7 @@ import {StudentListComponent} from "./student-list/student-list.component";
 import {GroupListComponent} from "./group-list/group-list.component";
 import {PlanPraktykiComponent} from "./plan-praktyki/plan-praktyki.component";
 import {ZaswiadczenieZatrudnienieComponent} from "./zaswiadczenie-zatrudnienie/zaswiadczenie-zatrudnienie.component";
+import {UserPanelComponent} from "./user-panel/user-panel.component";
 
 
 //tabele rutingu
@@ -76,6 +77,11 @@ const appRoutes: Routes = [
   {
     path: 'gl',
     component: GroupListComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'userpanel',
+    component: UserPanelComponent,
     canActivate: [AuthGuardService]
   },
   {

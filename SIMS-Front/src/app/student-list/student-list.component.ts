@@ -236,11 +236,11 @@ export class StudentListComponent implements OnInit {
     this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/job/' + studentId , {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify('success', 'Pomyślnie zmieniono dokumenty studenta', );
+        this.notifier.notify('success', 'Pomyślnie zmieniono dokumenty studenta');
       },
       error => {
         console.log(error);
-        this.notifier.notify('error', 'Coś poszło nie tak', );
+        this.notifier.notify('error', 'Coś poszło nie tak');
       }
     );
 
