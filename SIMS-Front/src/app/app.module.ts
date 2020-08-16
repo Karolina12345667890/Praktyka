@@ -32,6 +32,7 @@ import { DatePipe } from '@angular/common';
 import { PlanPraktykiComponent } from './plan-praktyki/plan-praktyki.component';
 import { ZaswiadczenieZatrudnienieComponent } from './zaswiadczenie-zatrudnienie/zaswiadczenie-zatrudnienie.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import { CreateGroupAdminDialogComponent } from './create-group-admin-dialog/create-group-admin-dialog.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -95,6 +96,7 @@ const customNotifierOptions: NotifierOptions = {
     PlanPraktykiComponent,
     ZaswiadczenieZatrudnienieComponent,
     UserPanelComponent,
+    CreateGroupAdminDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,7 +110,7 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     FormsModule,
   ],
-  entryComponents: [ GroupListComponent, EditGroupDialogComponent, StudentListComponent , EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent],
+  entryComponents: [ GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent, EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent],
   providers: [LoginServiceService, AuthGuardService, CookieService, PagerService,DatePipe],
   bootstrap: [AppComponent]
 })

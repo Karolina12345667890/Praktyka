@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import {NotifierService} from "angular-notifier";
 import {EditGroupDialogComponent} from "../edit-group-dialog/edit-group-dialog.component";
 import {PagerService} from "../pager-service.service";
+import {CreateGroupAdminDialogComponent} from "../create-group-admin-dialog/create-group-admin-dialog.component";
 
 @Component({
   selector: 'app-group-list',
@@ -22,6 +23,7 @@ export class GroupListComponent implements OnInit {
   private readonly notifier: NotifierService;
   private groupList = new Array<GroupDto>();
   isAdmin: boolean = false;
+  isGroupAdmin: boolean = false;
   pager: any = {};
   pagedItems = new Array<GroupDto>();
   rememberSort :string="data";
@@ -32,6 +34,7 @@ export class GroupListComponent implements OnInit {
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
+    this.isGroupAdmin = this.authService.isGroupAdmin();
     this.load();
   }
 
@@ -109,7 +112,7 @@ export class GroupListComponent implements OnInit {
   }
 
 
-  registerGA(){
+  registerGA() {
     var data = {
       username:'ggg', password:'ggg', userDto: {
         album:'0000',
@@ -123,6 +126,46 @@ export class GroupListComponent implements OnInit {
       value => console.log(value),error => console.log(error.error.message));
 
 
+  }
+
+  openAddGroupAdminDialog() {
+    if (this.isAdmin) {
+      const dialogRef = this.dialog.open(CreateGroupAdminDialogComponent, {
+        width: '600px',
+        data: this.fb.group({
+          username: new FormControl('', Validators.required),
+          password: new FormControl('', Validators.required),
+          name: new FormControl('', Validators.required),
+          surname: new FormControl('', Validators.required),
+          email: new FormControl('', [Validators.required, Validators.email])
+        })
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (!isUndefined(result)) {
+          let data = {
+            username: result.value.username, password: result.value.password, userDto: {
+              album: '000000',
+              name: result.value.name,
+              surname: result.value.surname,
+              email: result.value.email
+            }
+          };
+          console.log(data)
+          this.authService.postResource('http://localhost:8080/api/userga', data).subscribe(
+            value => {
+              this.load();
+              this.notifier.notify("success","Pomyślnie dodano konto administratora grupy",)
+            },
+            error =>{
+              console.log(error);
+              this.notifier.notify("error","Coś poszło nie tak",)
+            }
+          );
+
+        }
+      });
+    }
   }
 
 
