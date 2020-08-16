@@ -140,7 +140,7 @@ export class LoginServiceService {
   isAdmin() {
     if (this.oauthService.getAccessToken() !== null) {
       let tmp: string = this.getRoles();
-      if (tmp.includes("ROLE_ADMIN")) return true;
+      if (tmp.includes("ROLE_ADMIN") || tmp.includes("ROLE_GROUP_ADMIN")) return true;
       else return false;
     }
     else {
@@ -149,10 +149,10 @@ export class LoginServiceService {
   }
 
 
-  isGroupAdmin() {
+  isOnlyAdmin() {
     if (this.oauthService.getAccessToken() !== null) {
       let tmp: string = this.getRoles();
-      if (tmp.includes("ROLE_GROUP_ADMIN")) return true;
+      if (tmp.includes("ROLE_ADMIN")) return true;
       else return false;
     }
     else {

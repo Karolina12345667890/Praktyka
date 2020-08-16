@@ -1,7 +1,7 @@
 <div class="container-fluid text-center mt-4">
   <div class="display-4 my-2">Grupy</div>
-  <button *ngIf="isAdmin || isGroupAdmin" class="btn btn-success" (click)="openAddDialog()">Utwórz nową grupę</button>
-  <button *ngIf="isAdmin" class="btn btn-info ml-2" (click)="openAddGroupAdminDialog()" type="submit">Utwórz konto opiekuna grup</button>
+  <button *ngIf="isAdmin" class="btn btn-success" (click)="openAddDialog()">Utwórz nową grupę</button>
+  <button *ngIf="isAdmin && isOnlyAdmin" class="btn btn-info ml-2" (click)="openAddGroupAdminDialog()" type="submit">Utwórz konto opiekuna grup</button>
   <hr class="my-4">
 
   <div class="table-holder">
