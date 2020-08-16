@@ -71,7 +71,7 @@ public class DocumentFacade {
      */
     public byte[] printOswiadczenieToPdf(Long id) throws Exception {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         var oswiadczenieDto = oswiadczenieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(oswiadczenieDto.getOwnerId());
         var pdfDto = OswiadczeniePdfDto.builder()
@@ -96,7 +96,7 @@ public class DocumentFacade {
      */
     public byte[] printPorozumienieToPdf(Long id) throws Exception {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         var porozumienieDto = porozumienieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(porozumienieDto.getOwnerId());
         var group = userFacade.getGroupById(porozumienieDto.getGroupId());
@@ -139,7 +139,7 @@ public class DocumentFacade {
 
     public byte[] printZaswiadczenieToPdf(Long id) throws Exception {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         var zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(zaswiadczenieDto.getOwnerId());
 
@@ -176,7 +176,7 @@ public class DocumentFacade {
 
     public byte[] printDziennikPraktykToPdf(Long id) throws Exception {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         var oswiadczenieDto = dziennikPraktykFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(oswiadczenieDto.getOwnerId());
         var pdfDto = DziennikPraktykPdfDto.builder()
@@ -203,7 +203,7 @@ public class DocumentFacade {
 
     public byte[] printPlanPraktykiToPdf(Long id) throws Exception {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         var planPraktykiDto = planPraktykiFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(planPraktykiDto.getOwnerId());
         var pdfDto = PlanPraktykiPdfDto.builder()
@@ -228,7 +228,7 @@ public class DocumentFacade {
 
     public byte[] printZaswiadczenieZatrudnienieToPdf(Long id) throws Exception {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         var zaswiadczenieZatrudnienieDto = zaswiadczenieZatrudnienieFacade.find(id, currentUser, isAdmin);
         var userDto = userFacade.getUserById(zaswiadczenieZatrudnienieDto.getOwnerId());
         var pdfDto = ZaswiadczenieZatrudnieniePdfDto.builder()
@@ -252,8 +252,8 @@ public class DocumentFacade {
 
     public OswiadczenieDto fetchOswiadczenie(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
-        return oswiadczenieFacade.find(id, currentUser, isAdmin);
+        Boolean isGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        return oswiadczenieFacade.find(id, currentUser, isGroupAdmin);
     }
 
 
@@ -266,8 +266,8 @@ public class DocumentFacade {
      */
     public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        oswiadczenieFacade.storeChanges(oswiadczenieDto, currentUser, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        oswiadczenieFacade.storeChanges(oswiadczenieDto, currentUser, userIsGroupAdmin);
     }
 
     public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId, String groupName) {
@@ -282,7 +282,7 @@ public class DocumentFacade {
      */
     public PorozumienieDto fetchPorozumienie(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         return porozumienieFacade.find(id, currentUser, isAdmin);
     }
 
@@ -295,8 +295,8 @@ public class DocumentFacade {
      */
     public void storePorozumienie(PorozumienieDto porozumienieDto) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        porozumienieFacade.storeChanges(porozumienieDto, currentUser, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        porozumienieFacade.storeChanges(porozumienieDto, currentUser, userIsGroupAdmin);
     }
 
     public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId, String groupName) {
@@ -305,7 +305,7 @@ public class DocumentFacade {
 
     public ZaswiadczenieDto fetchZaswiadczenie(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
 
 
         ZaswiadczenieDto zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
@@ -329,8 +329,8 @@ public class DocumentFacade {
 
     public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieFacade.storeChanges(zaswiadczenieDto, currentUser, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieFacade.storeChanges(zaswiadczenieDto, currentUser, userIsGroupAdmin);
     }
     public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto, Long studentId, Long groupId, String groupName) {
         zaswiadczenieFacade.createNew(zaswiadczenieDto, studentId, groupId, groupName);
@@ -340,7 +340,7 @@ public class DocumentFacade {
 
     public DziennikPraktykDto fetchDziennikPraktyk(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
 
         DziennikPraktykDto dziennikPraktykDto = dziennikPraktykFacade.find(id, currentUser, isAdmin);
         dziennikPraktykDto.setStudentAlbumNumber(currentUser.getAlbum());
@@ -365,8 +365,8 @@ public class DocumentFacade {
 
     public void storeDziennikPraktyk(DziennikPraktykDto dziennikPraktykDto) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        dziennikPraktykFacade.storeChanges(dziennikPraktykDto, currentUser, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        dziennikPraktykFacade.storeChanges(dziennikPraktykDto, currentUser, userIsGroupAdmin);
     }
     public void storeDziennikPraktyk(DziennikPraktykDto dziennikPraktykDto, Long studentId, Long groupId, String groupName) {
         dziennikPraktykFacade.createNew(dziennikPraktykDto, studentId, groupId, groupName);
@@ -376,7 +376,7 @@ public class DocumentFacade {
 
     public PlanPraktykiDto fetchPlanPraktyki(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
 
         PlanPraktykiDto planPraktykiDto = planPraktykiFacade.find(id, currentUser, isAdmin);
 
@@ -400,8 +400,8 @@ public class DocumentFacade {
 
     public void storePlanPraktyki(PlanPraktykiDto planPraktykiDto) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        planPraktykiFacade.storeChanges(planPraktykiDto, currentUser, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        planPraktykiFacade.storeChanges(planPraktykiDto, currentUser, userIsGroupAdmin);
     }
     public void storePlanPraktyki(PlanPraktykiDto planPraktykiDto, Long studentId, Long groupId, String groupName) {
         planPraktykiFacade.createNew(planPraktykiDto, studentId, groupId, groupName);
@@ -409,7 +409,7 @@ public class DocumentFacade {
 
     public ZaswiadczenieZatrudnienieDto fetchZaswiadczenieZatrudnienie(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean isAdmin = userFacade.currentUserIsAdmin();
+         Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
         return zaswiadczenieZatrudnienieFacade.find(id, currentUser, isAdmin);
     }
 
@@ -424,8 +424,8 @@ public class DocumentFacade {
 
     public void storeZaswiadczenieZatrudnienie(ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienieDto) {
         UserDto currentUser = userFacade.getCurrentUser();
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieZatrudnienieFacade.storeChanges(zaswiadczenieZatrudnienieDto, currentUser, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieZatrudnienieFacade.storeChanges(zaswiadczenieZatrudnienieDto, currentUser, userIsGroupAdmin);
     }
     public void storeZaswiadczenieZatrudnienie(ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienieDto, Long studentId, Long groupId, String groupName, Boolean visible) {
         zaswiadczenieZatrudnienieFacade.createNew(zaswiadczenieZatrudnienieDto, studentId, groupId, groupName, visible);
@@ -433,70 +433,70 @@ public class DocumentFacade {
 
 
     public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        oswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        oswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
     }
 
     public void setOswiadczenieComment(Long id, String newComment) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        oswiadczenieFacade.setComment(id, newComment, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        oswiadczenieFacade.setComment(id, newComment, userIsGroupAdmin);
     }
 
     public void setPorozumienieStatus(Long id, StatusEnum statusEnum) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        porozumienieFacade.setStatus(id, statusEnum, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        porozumienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
     }
 
     public void setPorozumienieComment(Long id, String newComment) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        porozumienieFacade.setComment(id, newComment, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        porozumienieFacade.setComment(id, newComment, userIsGroupAdmin);
     }
 
 
     public void setZaswiadczenieStatus(Long id, StatusEnum statusEnum) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieFacade.setStatus(id, statusEnum, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
     }
 
     public void setZaswiadczenieComment(Long id, String newComment) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieFacade.setComment(id, newComment, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieFacade.setComment(id, newComment, userIsGroupAdmin);
     }
 
     public void setDziennikPraktykStatus(Long id, StatusEnum statusEnum) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        dziennikPraktykFacade.setStatus(id, statusEnum, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        dziennikPraktykFacade.setStatus(id, statusEnum, userIsGroupAdmin);
     }
 
     public void setDziennikPraktykComment(Long id, String newComment) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        dziennikPraktykFacade.setComment(id, newComment, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        dziennikPraktykFacade.setComment(id, newComment, userIsGroupAdmin);
     }
 
 
     public void setPlanPraktykiStatus(Long id, StatusEnum statusEnum) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        planPraktykiFacade.setStatus(id, statusEnum, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        planPraktykiFacade.setStatus(id, statusEnum, userIsGroupAdmin);
     }
 
     public void setPlanPraktykiComment(Long id, String newComment) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        planPraktykiFacade.setComment(id, newComment, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        planPraktykiFacade.setComment(id, newComment, userIsGroupAdmin);
     }
 
     public void setZaswiadczenieZatrudnienieStatus(Long id, StatusEnum statusEnum) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieZatrudnienieFacade.setStatus(id, statusEnum, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieZatrudnienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
     }
 
     public void setZaswiadczenieZatrudnienieComment(Long id, String newComment) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieZatrudnienieFacade.setComment(id, newComment, userIsAdmin);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieZatrudnienieFacade.setComment(id, newComment, userIsGroupAdmin);
     }
 
     public void setZaswiadczenieZatrudnienieVisible(Long id, Boolean visible) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        zaswiadczenieZatrudnienieFacade.setVisible(id, userIsAdmin, visible);
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        zaswiadczenieZatrudnienieFacade.setVisible(id, userIsGroupAdmin, visible);
     }
 
     public List<DocumentDto> listMyDocuments() {
@@ -515,8 +515,8 @@ public class DocumentFacade {
     }
 
     public void chengeUsersDocuments(Long groupId,Long studentId) {
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        if(userIsAdmin) {
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        if(userIsGroupAdmin) {
             List<Document> documents = documentRepository.getAllByGroupIdAndAndOwnerId(groupId,studentId);
 
             documents.forEach(documentDto -> {
@@ -539,8 +539,8 @@ public class DocumentFacade {
 
     @Transactional
     public void deleteStudentsDocumentsInGroup(Long groupId,Long studentId){
-        Boolean userIsAdmin = userFacade.currentUserIsAdmin();
-        if(userIsAdmin)
+        Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
+        if(userIsGroupAdmin)
         documentRepository.removeAllByGroupIdAndAndOwnerId(groupId,studentId);
     }
 

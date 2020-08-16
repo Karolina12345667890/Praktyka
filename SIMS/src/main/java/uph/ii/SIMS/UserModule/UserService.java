@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
         user.setEmail(userDto.getEmail());
         user.setAlbum(userDto.getAlbum());
 
-        System.out.println(user + " created!");
+        //System.out.println(user + " created!");
 
         try {
             userRepository.save(user);
@@ -154,14 +154,14 @@ public class UserService implements UserDetailsService {
     }
 
     public UserDto getUserById(Long id) {
-        if (currentUserIsAdmin())
+        if (currentUserIsGroupAdmin() || getCurrentUser().getId().equals(id))
             return userRepository.findById(id).get().dto();
         else
             return new UserDto();
     }
 
     public void removeGroup(Long groupId, Long studentId) {
-        if (currentUserIsAdmin()) {
+        if (currentUserIsGroupAdmin()) {
             userRepository.findById(studentId).ifPresent(app -> {
                 app.getGroups().removeIf(group -> group.getId().equals(groupId));
                 userRepository.save(app);

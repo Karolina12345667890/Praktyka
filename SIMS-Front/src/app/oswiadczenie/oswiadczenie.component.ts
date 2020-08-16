@@ -70,7 +70,7 @@ export class OswiadczenieComponent implements OnInit {
           opiekunTel: new FormControl(value.opiekunTel, [Validators.required,]),
           opiekunMail: new FormControl(value.opiekunMail, [Validators.required,]),
         });
-
+console.log(value)
         this.authService.getResource('http://localhost:8080/api/user/'+value.ownerId).subscribe(
           value => {
             this.oswiadczenieForm.get("studentName").setValue(value.name);

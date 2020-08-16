@@ -23,6 +23,10 @@ public class UserFacade {
     public Boolean currentUserIsAdmin(){
         return userService.currentUserIsAdmin();
     }
+
+    public Boolean currentUserIsGroupAdmin(){
+        return userService.currentUserIsGroupAdmin();
+    }
     
     public UserDto getUserById(Long id) {
         User user = userService.loadUserById(id);
