@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
 import uph.ii.SIMS.UserModule.Dto.UserRegistrationDto;
 
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 public class UserRestController {
@@ -37,29 +39,33 @@ public class UserRestController {
     }
 
     @PostMapping("/api/user/edit/name")
-    void editUsersName(@RequestBody String name) {
-        userService.editUsersName(name);
+    void editUsersName(@RequestBody Object value) {
+        Map<String, Object> obj = (Map<String, Object>) value;
+        userService.editUsersName(obj.get("name").toString());
     }
 
     @PostMapping("/api/user/edit/surname")
-    void editUsersSurname(@RequestBody String surname) {
-        userService.editUsersSurname(surname);
+    void editUsersSurname(@RequestBody Object value) {
+        Map<String, Object> obj = (Map<String, Object>) value;
+        userService.editUsersSurname(obj.get("surname").toString());
     }
 
     @PostMapping("/api/user/edit/album")
-    void editUsersAlbum(@RequestBody String album) {
-       userService.editUsersAlbum(album);
+    void editUsersAlbum(@RequestBody Object value) {
+        Map<String, Object> obj = (Map<String, Object>) value;
+       userService.editUsersAlbum(obj.get("album").toString());
     }
 
     @PostMapping("/api/user/edit/email")
-    void editUsersEmail(@RequestBody String email) {
-        userService.editUsersEmail(email);
+    void editUsersEmail(@RequestBody Object value) {
+        Map<String, Object> obj = (Map<String, Object>) value;
+        userService.editUsersEmail(obj.get("email").toString());
     }
 
     @PostMapping("/api/user/edit/pass")
-    void editUsersPass(@RequestBody String pass) {
-        System.out.println(pass);
-        userService.editUsersPass(pass);
+    void editUsersPass(@RequestBody Object value) {
+        Map<String, Object> obj = (Map<String, Object>) value;
+        userService.editUsersPass(obj.get("pass").toString());
     }
 
 }
