@@ -58,7 +58,7 @@ public class UsersInitializer {
         groupRepository.save(group2);
         
         userRepository.deleteAll();
-        List<Role> rolesAdmin = Arrays.asList(role_admin, role_user);
+        List<Role> rolesAdmin = Arrays.asList(role_admin,role_group_admin, role_user);
         List<Role> rolesGAdmin = Arrays.asList(role_group_admin, role_user);
         List<Role> rolesUser = Arrays.asList(role_user);
         
