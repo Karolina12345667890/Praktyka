@@ -45,4 +45,10 @@ class OswiadczenieInMemoryRepository implements OswiadczenieRepository {
         
         return new PageImpl<>(oswiadczenies, pageable, map.size());
     }
+
+    @Override
+    public Oswiadczenie findByOwnerIdAndGroupId(Long ownerId, Long groupId) {
+        return (Oswiadczenie) map.values().stream()
+                .filter(osw -> osw.getOwnerId().equals(ownerId) && osw.getGroupId().equals(groupId));
+    }
 }

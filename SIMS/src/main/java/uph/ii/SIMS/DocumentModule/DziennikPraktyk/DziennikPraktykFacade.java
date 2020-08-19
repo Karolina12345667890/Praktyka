@@ -46,12 +46,13 @@ public class DziennikPraktykFacade {
         DziennikPraktykRepository.save(dziennikPraktyk);
     }
 
-    public void createNew(DziennikPraktykDto DziennikPraktykDto, Long studentId, Long groupId,String groupName) {
+    public void createNew(DziennikPraktykDto DziennikPraktykDto, Long studentId, Long groupId,String groupName, Boolean visible) {
         DziennikPraktyk dziennikPraktyk = new DziennikPraktyk(studentId);
 
         dziennikPraktyk.setComment(DziennikPraktykDto.getComment());
         dziennikPraktyk.setGroupId(groupId);
         dziennikPraktyk.setGroupName(groupName);
+        dziennikPraktyk.setVisible(visible);
         DziennikPraktykRepository.save(dziennikPraktyk);
     }
 

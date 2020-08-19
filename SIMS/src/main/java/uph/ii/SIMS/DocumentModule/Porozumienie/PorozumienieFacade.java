@@ -57,13 +57,14 @@ public class PorozumienieFacade {
         porozumienieRepository.save(porozumienie);
     }
     
-    public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId,String groupName)  {
+    public void createNew(PorozumienieDto porozumienieDto, Long studentId, Long groupId,String groupName, Boolean visible)  {
         Porozumienie porozumienie = new Porozumienie(
             studentId
         );
         porozumienie.setComment(porozumienieDto.getComment());
         porozumienie.setGroupId(groupId);
         porozumienie.setGroupName(groupName);
+        porozumienie.setVisible(visible);
         porozumienieRepository.save(porozumienie);
     }
     
@@ -84,6 +85,24 @@ public class PorozumienieFacade {
             throw new AccessDeniedException("You can't access this document");
         }
         return porozumienieRepository.findById(id).porozumienieDto();
+    }
+
+    public PorozumienieDto find(Long id, Boolean userIsAdmin) {
+        Porozumienie porozumienie = porozumienieRepository.findById(id);
+        boolean userCanAccessDocument = userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return porozumienie.porozumienieDto();
+    }
+
+    public StatusEnum getStatus(Long ownerId, Long groupId, Boolean userIsAdmin) {
+        Porozumienie porozumienie = porozumienieRepository.findByOwnerIdAndGroupId(ownerId,groupId);
+        boolean userCanAccessDocument = userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return porozumienie.getStatusEnum();
     }
     
     public void setComment(Long id, String newComment, Boolean userIsAdmin) {

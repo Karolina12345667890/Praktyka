@@ -43,12 +43,13 @@ public class OswiadczenieFacade {
         oswiadczenieRepository.save(oswiadczenie);
     }
     
-    public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId,String groupName) {
+    public void createNew(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId,String groupName, Boolean visible) {
         Oswiadczenie oswiadczenie = new Oswiadczenie(studentId);
 
         oswiadczenie.setComment(oswiadczenieDto.getComment());
         oswiadczenie.setGroupId(groupId);
         oswiadczenie.setGroupName(groupName);
+        oswiadczenie.setVisible(visible);
         oswiadczenieRepository.save(oswiadczenie);
     }
     
@@ -79,7 +80,25 @@ public class OswiadczenieFacade {
         }
         return oswiadczenie.oswiadczenieDto();
     }
-    
+
+    public OswiadczenieDto find(Long id, Boolean userIsAdmin) {
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(id);
+        boolean userCanAccessDocument = userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return oswiadczenie.oswiadczenieDto();
+    }
+
+    public StatusEnum getStatus(Long ownerId, Long groupId, Boolean userIsAdmin) {
+        Oswiadczenie oswiadczenie = oswiadczenieRepository.findByOwnerIdAndGroupId(ownerId,groupId);
+        boolean userCanAccessDocument = userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return oswiadczenie.getStatusEnum();
+    }
+
     public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
         if(!userIsAdmin){
             throw new AccessDeniedException("Only admin can change status of documents");

@@ -135,7 +135,6 @@ export class StudentListComponent implements OnInit {
 
 
   onAcceptClick(path: string) {
-  console.log(path);
   this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();

@@ -1,9 +1,11 @@
 package uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie;
 
 import lombok.*;
+import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.ZaswiadczenieZatrudnienieDto;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -25,7 +27,8 @@ public class ZaswiadczenieZatrudnienie extends Document {
     private String studentRoad;
     private String studentCity;
     private String studentZip;
-    private String studentPesel;
+    @Convert(converter = AttributeEncryptor.class)
+    private String studentPesel = "";
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
     private String companyName;

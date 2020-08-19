@@ -7,6 +7,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
 
 import javax.persistence.*;
@@ -28,7 +29,9 @@ public class User implements UserDetails {
     private String login;
     @NotBlank
     private String password;
+    @Convert(converter = AttributeEncryptor.class)
     private String name;
+    @Convert(converter = AttributeEncryptor.class)
     private String surname;
     @Column(nullable = false, unique = true)
     private String email;

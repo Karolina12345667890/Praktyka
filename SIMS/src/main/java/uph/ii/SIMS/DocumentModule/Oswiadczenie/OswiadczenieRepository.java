@@ -52,4 +52,7 @@ interface OswiadczenieRepository extends Repository<Oswiadczenie, Long> {
      * @return
      */
     Page<Oswiadczenie> findAllByOwnerId(Long ownerId, Pageable pageable);
+
+    Oswiadczenie findByOwnerIdAndGroupId(Long ownerId, Long groupId);
+
 }

@@ -56,14 +56,15 @@ public class ZaswiadczenieFacade {
         ZaswiadczenieRepository.save(Zaswiadczenie);
     }
 
-    public void createNew(ZaswiadczenieDto ZaswiadczenieDto, Long studentId, Long groupId,String groupName)  {
-        Zaswiadczenie Zaswiadczenie = new Zaswiadczenie(
+    public void createNew(ZaswiadczenieDto ZaswiadczenieDto, Long studentId, Long groupId,String groupName, Boolean visible)  {
+        Zaswiadczenie zaswiadczenie = new Zaswiadczenie(
                 studentId
         );
-        Zaswiadczenie.setComment(ZaswiadczenieDto.getComment());
-        Zaswiadczenie.setGroupId(groupId);
-        Zaswiadczenie.setGroupName(groupName);
-        ZaswiadczenieRepository.save(Zaswiadczenie);
+        zaswiadczenie.setComment(ZaswiadczenieDto.getComment());
+        zaswiadczenie.setGroupId(groupId);
+        zaswiadczenie.setGroupName(groupName);
+        zaswiadczenie.setVisible(visible);
+        ZaswiadczenieRepository.save(zaswiadczenie);
     }
 
     /**

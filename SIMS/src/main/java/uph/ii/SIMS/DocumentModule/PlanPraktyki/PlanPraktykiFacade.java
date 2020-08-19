@@ -42,12 +42,13 @@ public class PlanPraktykiFacade {
         PlanPraktykiRepository.save(planPraktyki);
     }
 
-    public void createNew(PlanPraktykiDto planPraktykiDto, Long studentId, Long groupId, String groupName) {
+    public void createNew(PlanPraktykiDto planPraktykiDto, Long studentId, Long groupId, String groupName, Boolean visible) {
         PlanPraktyki planPraktyki = new PlanPraktyki(studentId);
 
         planPraktyki.setComment(planPraktykiDto.getComment());
         planPraktyki.setGroupId(groupId);
         planPraktyki.setGroupName(groupName);
+        planPraktyki.setVisible(visible);
         PlanPraktykiRepository.save(planPraktyki);
     }
 

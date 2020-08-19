@@ -2,9 +2,11 @@ package uph.ii.SIMS.DocumentModule.PlanPraktyki;
 
 
 import lombok.*;
+import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.PlanPraktykiDto;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -25,7 +27,8 @@ public class PlanPraktyki extends Document {
     private Date studentInternshipEnd;
     @Lob
     private String studentTasks;
-    private String studentPesel;
+    @Convert(converter = AttributeEncryptor.class)
+    private String studentPesel = "";
 
     PlanPraktyki(Long owner) {
         super(owner);

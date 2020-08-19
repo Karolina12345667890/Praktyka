@@ -62,8 +62,7 @@ public class GroupService {
         if (userService.currentUserIsStudent()) {
             groupDtoStream = groupDtoStream.filter(GroupDto::getIsOpen);
         }
-
-        if (userService.currentUserIsGroupAdmin()) {
+        if (userService.currentUserIsGroupAdmin() && !userService.currentUserIsAdmin()) {
             groupDtoStream = groupDtoStream.filter(GroupDto -> GroupDto.getGroupAdminId().equals(userService.getCurrentUser().getId()));
         }
 
@@ -119,36 +118,6 @@ public class GroupService {
             groups.add(group);
             user.setGroups(groups);
 
-            documentFacade.storeOswiadczenie(
-                    new OswiadczenieDto(null, groupId, studentId),
-                    studentId,
-                    groupId,
-                    group.getGroupName()
-            );
-            documentFacade.storePorozumienie(
-                    new PorozumienieDto(null, groupId, studentId, new Date(), new Date()),
-                    studentId,
-                    groupId,
-                    group.getGroupName()
-            );
-            documentFacade.storePlanPraktyki(
-                    new PlanPraktykiDto(null, groupId, studentId, new Date(), new Date()),
-                    studentId,
-                    groupId,
-                    group.getGroupName()
-            );
-            documentFacade.storeDziennikPraktyk(
-                    new DziennikPraktykDto(null, groupId, studentId),
-                    studentId,
-                    groupId,
-                    group.getGroupName()
-            );
-            documentFacade.storeZaswiadczenie(
-                    new ZaswiadczenieDto(null, groupId, studentId, new Date(), new Date()),
-                    studentId,
-                    groupId,
-                    group.getGroupName()
-            );
             documentFacade.storeZaswiadczenieZatrudnienie(
                     new ZaswiadczenieZatrudnienieDto(null, groupId, studentId, new Date(), new Date()),
                     studentId,
@@ -156,6 +125,42 @@ public class GroupService {
                     group.getGroupName(),
                     false
             );
+            documentFacade.storeOswiadczenie(
+                    new OswiadczenieDto(null, groupId, studentId),
+                    studentId,
+                    groupId,
+                    group.getGroupName(),
+                    true
+            );
+            documentFacade.storePorozumienie(
+                    new PorozumienieDto(null, groupId, studentId, new Date(), new Date()),
+                    studentId,
+                    groupId,
+                    group.getGroupName(),
+                    true
+            );
+            documentFacade.storePlanPraktyki(
+                    new PlanPraktykiDto(null, groupId, studentId, new Date(), new Date()),
+                    studentId,
+                    groupId,
+                    group.getGroupName(),
+                    false
+            );
+            documentFacade.storeDziennikPraktyk(
+                    new DziennikPraktykDto(null, groupId, studentId),
+                    studentId,
+                    groupId,
+                    group.getGroupName(),
+                    false
+            );
+            documentFacade.storeZaswiadczenie(
+                    new ZaswiadczenieDto(null, groupId, studentId, new Date(), new Date()),
+                    studentId,
+                    groupId,
+                    group.getGroupName(),
+                    false
+            );
+
 
         } else {
             throw new GroupApplicationDuplicationException("Can't have multiples of the same student in a group");
@@ -246,7 +251,7 @@ public class GroupService {
 
     public void dropUserFromGroup(Long groupId, Long studentId) {
 
-        if(userService.currentUserIsAdmin()) {
+        if (userService.currentUserIsAdmin()) {
             Optional<Group> group = groupRepository.findById(groupId);
 
             group.ifPresent(app -> {
@@ -260,7 +265,7 @@ public class GroupService {
     }
 
     public void changeUserDocuments(Long groupId, Long studentId) {
-         documentFacade.chengeUsersDocuments(groupId, studentId);
+        documentFacade.chengeUsersDocuments(groupId, studentId);
 
     }
 
