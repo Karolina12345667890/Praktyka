@@ -14,6 +14,7 @@ export interface GroupDto {
   groupAdminId : number;
   groupAdminName : string;
   groupAdminSurname : string;
+  groupAdminEmail : string;
 
   students : StudentDto [];
 }

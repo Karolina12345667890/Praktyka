@@ -602,4 +602,8 @@ public class DocumentFacade {
             documentRepository.removeAllByGroupIdAndAndOwnerId(groupId, studentId);
     }
 
+    public PorozumienieDto fetchPorozumienieDtoByGroupId(Long groupId){
+       return porozumienieFacade.find2(userFacade.getCurrentUser(),userFacade.currentUserIsAdmin(),groupId);
+    }
+
 }

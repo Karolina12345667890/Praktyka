@@ -108,25 +108,25 @@
       <div>Termin odbywania praktyki <br>
         <div class="form-row">
           <div class="form-group col-md-3">
-            <input type="date" class="form-control" formControlName="periodFrom" required/>
+            <input type="date" class="form-control" formControlName="studentInternshipStart" required/>
           </div>
           -
           <div class="form-group col-md-3">
-            <input type="date" class="form-control" formControlName="periodTo" required/>
+            <input type="date" class="form-control" formControlName="studentInternshipEnd" required/>
           </div>
         </div>
       </div>
 
       <div class=" form-row">
-        <div *ngIf="getperiodFrom.invalid && (getperiodFrom.dirty || getperiodFrom.touched)"
+        <div *ngIf="getstudentInternshipStart.invalid && (getstudentInternshipStart.dirty || getstudentInternshipStart.touched)"
              class="alert alert-danger form-group col-md-3">
-          <div *ngIf="getperiodFrom.errors.required"  class="text-center fontSize">
+          <div *ngIf="getstudentInternshipStart.errors.required"  class="text-center fontSize">
             Termin od jest wymagany!
           </div>
         </div>
-        <div  *ngIf="getperiodTo.invalid && (getperiodTo.dirty || getperiodTo.touched)"
+        <div  *ngIf="getstudentInternshipEnd.invalid && (getstudentInternshipEnd.dirty || getstudentInternshipEnd.touched)"
               class=" form-group col-md-3 alert alert-danger">
-          <div *ngIf="getperiodTo.errors.required" class="text-center fontSize">
+          <div *ngIf="getstudentInternshipEnd.errors.required" class="text-center fontSize">
             Termin do jest wymagany!
           </div>
         </div>

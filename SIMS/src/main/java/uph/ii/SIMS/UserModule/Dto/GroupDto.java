@@ -26,6 +26,7 @@ public class GroupDto {
     private Long groupAdminId;
     private String groupAdminName;
     private String groupAdminSurname;
+    private String groupAdminEmail;
 }
 
 

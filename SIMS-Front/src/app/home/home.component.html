@@ -86,6 +86,7 @@
                     <button *ngIf="myDocumentData.status != 'EMPTY'" type="button"   class="btn btn-primary float-right mx-1" (click)="onClick(myDocumentData.link,myDocumentData.type)"> Pobierz</button>
                   </td>
 
+
                   <td class="docs"
                       [ngStyle]="myDocumentData.status == 'NEW' && {'background-color':'#2196F3'} ||
                       myDocumentData.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
@@ -115,6 +116,22 @@
 
                   </td>
                 </tr>
+              <tr>
+                <td>
+                Opiekun: {{myGroup.groupAdminName + ' ' +myGroup.groupAdminSurname}}  <br>
+                Email: {{myGroup.groupAdminEmail}} <br>
+                Kierunek: {{myGroup.fieldOfStudy}}<br>
+                Specjalność: {{myGroup.speciality}} <br>
+                Czas Trwania w tygodniach {{myGroup.durationInWeeks}}<br>
+                </td>
+                <td>
+                  <div *ngIf="!myGroup.isOpen">
+                    <button class="btn btn-info float-right mx-1"  (click)="openStudentQuestionnaire(myGroup.id,myGroup.fieldOfStudy)">Ankieta Studenta</button><br><br>
+
+                    <button class="btn btn-info float-right mx-1"  (click)="openEmployerQuestionnaire(myGroup.id)">Ankieta Pracodawcy</button>
+                  </div>
+                </td>
+              </tr>
 
               </tbody>
             </table>

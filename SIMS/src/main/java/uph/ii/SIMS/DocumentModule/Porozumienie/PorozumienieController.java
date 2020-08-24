@@ -67,5 +67,9 @@ class PorozumienieController {
     void declinePorozumienie(@PathVariable Long id) {
         documentFacade.setPorozumienieStatus(id, StatusEnum.DECLINED);
     }
-    
+
+    @GetMapping(value = "/{id}/data")
+    PorozumienieDto fetchPorozumienieDtoByGroupId(@PathVariable Long id) {
+        return documentFacade.fetchPorozumienieDtoByGroupId(id);
+    }
 }

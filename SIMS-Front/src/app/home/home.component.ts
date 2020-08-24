@@ -58,19 +58,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.myGroups = Array.from(this.myGroupedDocuments.keys());
 
           this.myGroups.forEach(groupId => {
-            this.authService.getResource('http://localhost:8080/api/group/' + groupId).subscribe(
+            this.authService.getResource('http://localhost:8080/api/group/' + groupId+"/overview").subscribe(
               value => {
                 this.myGroupsStatus.push({
                   id: value.id,
                   name: value.groupName,
-                  isOpen: value.isOpen
+                  isOpen: value.isOpen,
+                  groupAdminName: value.groupAdminName,
+                  groupAdminSurname: value.groupAdminSurname,
+                  groupAdminEmail : value.groupAdminEmail,
+                  fieldOfStudy : value.fieldOfStudy,
+                  speciality : value.speciality,
+                  durationInWeeks : value.durationInWeeks
                 })
               },
               error => console.log(error),
             );
           })
-
-          console.log(this.myGroupsStatus)
         },
         error => console.log(error),
       );
@@ -117,6 +121,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
+  openStudentQuestionnaire(groupId : string,groupSpeciality : string){
+    this.router.navigate(['/ankietastudent'], {queryParams: {id: groupId, s: groupSpeciality }});
+  }
+  openEmployerQuestionnaire(groupId : string){
+    this.router.navigate(['/ankietaprac'], {queryParams: {id: groupId}});
+  }
 
   showWarning(message: string) {
       const dialogRef = this.dialog.open(ShowCommentDialogComponent, {

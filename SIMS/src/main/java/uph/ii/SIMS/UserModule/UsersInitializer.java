@@ -45,6 +45,7 @@ public class UsersInitializer {
         group.setGroupAdminId((long) 1);
         group.setGroupAdminName("Andrzej");
         group.setGroupAdminSurname("Aaa");
+        group.setGroupAdminEmail("test@gmai.com");
 
         Group group2 = new Group("grupa2_19/20", 40, new Date());
         group2.setFormOfStudy(FormOfStudyEnum.FULL_TIME);
@@ -53,6 +54,8 @@ public class UsersInitializer {
         group2.setGroupAdminId((long) 3);
         group2.setGroupAdminName("gg2");
         group2.setGroupAdminSurname("Aaa2");
+        group2.setGroupAdminEmail("test8@gmai.com");
+
 
         groupRepository.save(group);
         groupRepository.save(group2);

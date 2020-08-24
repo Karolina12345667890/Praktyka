@@ -174,6 +174,8 @@ public class GroupService {
         } else {
             group = new Group();
         }
+        User currentUser = userService.getCurrentUser();
+        System.out.println(currentUser.getEmail());
         group.setGroupName(dto.getGroupName());
         group.setDateStart(dto.getStartDate());
         group.setDurationInWeeks(dto.getDurationInWeeks());
@@ -181,9 +183,10 @@ public class GroupService {
         group.setFormOfStudy(dto.getFormOfStudy());
         group.setFieldOfStudy(dto.getFieldOfStudy());
         group.setSpeciality(dto.getSpeciality());
-        group.setGroupAdminId(userService.getCurrentUser().getId());
-        group.setGroupAdminName(userService.getCurrentUser().getName());
-        group.setGroupAdminSurname(userService.getCurrentUser().getSurname());
+        group.setGroupAdminId(currentUser.getId());
+        group.setGroupAdminName(currentUser.getName());
+        group.setGroupAdminSurname(currentUser.getSurname());
+        group.setGroupAdminEmail(currentUser.getEmail());
         groupRepository.save(group);
     }
 

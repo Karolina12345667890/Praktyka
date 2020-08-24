@@ -26,7 +26,6 @@ export class OswiadczenieComponent implements OnInit {
   private readonly notifier: NotifierService;
   oswiadczenieForm: FormGroup;
   oswiadczenie: oswiadczenieDto;
-  SERVER_URL = 'http://localhost:8080/api/document/99';
   visibility = false;
 
   // wstrzykuje zależności niezbedne servisy do działania componentu
@@ -70,12 +69,10 @@ export class OswiadczenieComponent implements OnInit {
           opiekunTel: new FormControl(value.opiekunTel, [Validators.required,]),
           opiekunMail: new FormControl(value.opiekunMail, [Validators.required,]),
         });
-console.log(value)
         this.authService.getResource('http://localhost:8080/api/user/'+value.ownerId).subscribe(
           value => {
             this.oswiadczenieForm.get("studentName").setValue(value.name);
             this.oswiadczenieForm.get("studentSurname").setValue(value.surname);
-            console.log(value);
           },
           error => console.log(error),
         );

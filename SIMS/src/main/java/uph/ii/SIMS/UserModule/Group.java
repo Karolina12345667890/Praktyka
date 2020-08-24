@@ -33,6 +33,7 @@ public class Group {
     private Long groupAdminId;
     private String groupAdminName;
     private String groupAdminSurname;
+    private String groupAdminEmail;
     
     @ManyToMany(mappedBy = "groups")
     private Collection<User> users = new ArrayList<>();
@@ -62,7 +63,8 @@ public class Group {
             "/api/group/" + id,
                 groupAdminId,
                 groupAdminName,
-                groupAdminSurname
+                groupAdminSurname,
+                groupAdminEmail
         );
     }
 }

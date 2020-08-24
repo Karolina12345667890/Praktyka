@@ -1,6 +1,6 @@
 import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import { NotifierService } from 'angular-notifier';
+import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoginServiceService} from '../login-service.service';
 import {StudentDto} from '../models/StudentDto';
@@ -41,11 +41,11 @@ export class StudentListComponent implements OnInit {
     speciality: '',
     changed: false,
     students: [],
-    groupAdminId : 0,
-  groupAdminName : '',
-  groupAdminSurname: '',
-
-};
+    groupAdminId: 0,
+    groupAdminName: '',
+    groupAdminSurname: '',
+    groupAdminEmail: ''
+  };
   studentList = new Array<StudentDto>();
   savedstudentList = new Array<StudentDto>();
 
@@ -111,7 +111,7 @@ export class StudentListComponent implements OnInit {
             this.sortOrderSurname = !this.sortOrderSurname;
             this.sortSurname();
           } else if (this.rememberSort == 'companyname') {
-            this.sortOrderCompanyName = ! this.sortOrderCompanyName;
+            this.sortOrderCompanyName = !this.sortOrderCompanyName;
             this.sortCompanyName();
           }
 
@@ -135,14 +135,14 @@ export class StudentListComponent implements OnInit {
 
 
   onAcceptClick(path: string) {
-  this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
+    this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify('success', 'Pomyślnie zaakceptowano studenta', );
+        this.notifier.notify('success', 'Pomyślnie zaakceptowano studenta',);
       },
       error => {
         console.log(error);
-        this.notifier.notify('error', 'Coś poszło nie tak', );
+        this.notifier.notify('error', 'Coś poszło nie tak',);
       },
     );
 
@@ -154,11 +154,11 @@ export class StudentListComponent implements OnInit {
     this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify('success', 'Pomyślnie odrzucono studenta', );
+        this.notifier.notify('success', 'Pomyślnie odrzucono studenta',);
       },
       error => {
         console.log(error);
-        this.notifier.notify('error', 'Coś poszło nie tak', );
+        this.notifier.notify('error', 'Coś poszło nie tak',);
       },
     );
 
@@ -183,12 +183,12 @@ export class StudentListComponent implements OnInit {
           this.authService.postResource('http://localhost:8080/api/document/' + docType + '/' + id + '/comment', result).subscribe(
             value => {
               console.log(value);
-              this.notifier.notify('success', 'Pomyślnie zmieniono uwage', );
+              this.notifier.notify('success', 'Pomyślnie zmieniono uwage',);
               this.load();
             },
             error => {
               console.log(error);
-              this.notifier.notify('error', error.error, );
+              this.notifier.notify('error', error.error,);
             }
           );
         }
@@ -207,6 +207,7 @@ export class StudentListComponent implements OnInit {
     this.pagedItems = this.studentList.slice(this.pager.startIndex, this.pager.endIndex + 1);
     this.rememberSort = 'surname';
   }
+
   sortCompanyName() {
     if (this.sortOrderCompanyName) {
       this.studentList.sort((a: StudentDto, b: StudentDto) => b.companyName.localeCompare(a.companyName));
@@ -224,7 +225,7 @@ export class StudentListComponent implements OnInit {
       this.setPage(1);
       return;
     }
-    this.studentList = this.savedstudentList.filter( v =>
+    this.studentList = this.savedstudentList.filter(v =>
       v.surname.includes(this.foilterSurname)
     );
     this.setPage(1);
@@ -232,7 +233,7 @@ export class StudentListComponent implements OnInit {
 
   changeDocuments(studentId) {
 
-    this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/job/' + studentId , {}).subscribe(
+    this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/job/' + studentId, {}).subscribe(
       value => {
         this.load();
         this.notifier.notify('success', 'Pomyślnie zmieniono dokumenty studenta');
