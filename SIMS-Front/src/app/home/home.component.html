@@ -2,7 +2,7 @@
   <h1>Witaj na Stronie "Student Internship Management System"</h1>
   <div class="fontSize"> System wspierający zarządzanie, wypełnianie oraz przesyłanie dokumentów do praktyk</div>
   <hr>
-  <div class="fontSize">  Czysta niewypełnina wersja dostępna pod linkiem:</div><br>
+  <div class="fontSize">  Czysta niewypełniona wersja dostępna pod linkiem:</div><br>
   <a class="btn btn-primary" href="https://ii.uph.edu.pl/studenci/praktyki-zawodowe">Strona Instytutu Informatyki, praktyki Zawodowe</a>
 </div>
 
@@ -20,6 +20,24 @@
         <button class="btn btn-outline-primary btn-lg mb-2" (click)="showHideGroup(myGroup.id)">{{ myGroup.name }}</button> <span class="fontSize ml-2 text-success font-weight-bold" *ngIf="myGroup.isOpen == true">(otwarta)</span><span class="fontSize ml-2 text-danger font-weight-bold" *ngIf="myGroup.isOpen == false">(zamknięta)</span>
 
           <div #groupTable id="{{ myGroup.id }}" [ngStyle]="{'display': myGroup.isOpen ? '' : 'none' }" class="table-holder">
+
+            <table class="table table-hover table-striped">
+            <tr>
+              <td>
+                Opiekun: <strong>{{myGroup.groupAdminName + ' ' +myGroup.groupAdminSurname}}</strong><br>
+                Adres e-mail: <strong>{{myGroup.groupAdminEmail}}</strong><br>
+                Kierunek: <strong>{{myGroup.fieldOfStudy}}</strong><br>
+                Specjalizacja: <strong>{{myGroup.speciality}}</strong><br>
+                Czas trwania w tygodniach: <strong>{{myGroup.durationInWeeks}}</strong><br>
+              </td>
+              <td>
+                <div *ngIf="!myGroup.isOpen">
+                  <button class="btn btn-info float-right mx-1"  (click)="openStudentQuestionnaire(myGroup.id,myGroup.fieldOfStudy)">Ankieta dla studenta</button>
+                  <button class="btn btn-info float-right mx-1"  (click)="openEmployerQuestionnaire(myGroup.id)">Ankieta dla pracodawcy</button>
+                </div>
+              </td>
+            </tr>
+            </table>
 
             <table class="table table-hover table-striped">
 
@@ -116,22 +134,6 @@
 
                   </td>
                 </tr>
-              <tr>
-                <td>
-                Opiekun: {{myGroup.groupAdminName + ' ' +myGroup.groupAdminSurname}}  <br>
-                Email: {{myGroup.groupAdminEmail}} <br>
-                Kierunek: {{myGroup.fieldOfStudy}}<br>
-                Specjalność: {{myGroup.speciality}} <br>
-                Czas Trwania w tygodniach {{myGroup.durationInWeeks}}<br>
-                </td>
-                <td>
-                  <div *ngIf="!myGroup.isOpen">
-                    <button class="btn btn-info float-right mx-1"  (click)="openStudentQuestionnaire(myGroup.id,myGroup.fieldOfStudy)">Ankieta Studenta</button><br><br>
-
-                    <button class="btn btn-info float-right mx-1"  (click)="openEmployerQuestionnaire(myGroup.id)">Ankieta Pracodawcy</button>
-                  </div>
-                </td>
-              </tr>
 
               </tbody>
             </table>
@@ -141,7 +143,7 @@
   </div>
 
   <div class="container" *ngIf="myDocumentList.length === 0">
-    <h1>Brak Dokumentów</h1>
+    <h1>Brak dokumentów</h1>
   </div>
 
 </div>

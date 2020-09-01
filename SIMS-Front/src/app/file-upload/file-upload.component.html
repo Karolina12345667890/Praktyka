@@ -7,26 +7,26 @@
 
     <div class="card-body">
         <form [formGroup] = "uploadForm" (ngSubmit)="onSubmit()">
-          <div *ngIf="selectedDocument == '' || selectedGroup == ''" class="row justify-content-center align-items-center">
-            <div class="custom-control-inline ">
-              <label class="container ">
-                <input type="radio" name="documentType" value="Oswiadczenie" formControlName="documentType"> Oświadczenie
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="documentType" value="Porozumienie" formControlName="documentType"> Porozumienie
-                <span class="checkmark"></span>
-              </label>
-              <label class="container">
-                <input type="radio" name="documentType" value="Zaswiadczenie" formControlName="documentType"> Zaświadczenie
-                <span class="checkmark"></span>
-              </label>
-            </div>
-          </div>
+<!--          <div *ngIf="selectedDocument == '' || selectedGroup == ''" class="row justify-content-center align-items-center">-->
+<!--            <div class="custom-control-inline ">-->
+<!--              <label class="container ">-->
+<!--                <input type="radio" name="documentType" value="oswiadczenie" formControlName="documentType"> Oświadczenie-->
+<!--                <span class="checkmark"></span>-->
+<!--              </label>-->
+<!--              <label class="container">-->
+<!--                <input type="radio" name="documentType" value="porozumienie" formControlName="documentType"> Porozumienie-->
+<!--                <span class="checkmark"></span>-->
+<!--              </label>-->
+<!--              <label class="container">-->
+<!--                <input type="radio" name="documentType" value="zaswiadczenie" formControlName="documentType"> Zaświadczenie-->
+<!--                <span class="checkmark"></span>-->
+<!--              </label>-->
+<!--            </div>-->
+<!--          </div>-->
 
-          <div *ngIf="selectedDocument !== '' && selectedGroup !== ''">
+          <div *ngIf="selectedDocument != '' && selectedGroup != ''">
             <div class="alert alert-info">Grupa dokumentu do wysłania: <strong>{{ selectedGroup }}</strong> <br>Rodzaj dokumentu do wysłania: <strong>{{ selectedDocument }}</strong></div>
-            <input type="hidden" name="documentType" value="{{ selectedDocument }}" formControlName="documentType" />
+            <input #docType type="hidden" name="documentType" [value]="selectedDocument" />
           </div>
 
           <div class="custom-file mb-4">

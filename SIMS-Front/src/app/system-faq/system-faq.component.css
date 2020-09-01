@@ -1,0 +1,27 @@
+.howto {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.howto-header {
+  font-size: 17px;
+}
+
+.howto-header:hover {
+  font-weight: bolder;
+  color: rgba(100,100,100,1);
+}
+
+.howto-opened {
+  font-weight: bolder;
+  color: rgba(100,100,100,1);
+}
+
+.howto-body {
+  max-height: 500px;
+  overflow-y: auto;
+}

@@ -14,6 +14,7 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
 
   @ViewChild('inputFile', { static: true }) fileInput: ElementRef;
   @ViewChild('labelFileName', { static: true }) labelFileName: ElementRef;
+  @ViewChild('docType', { static: false }) docType: ElementRef;
 
   SERVER_URL = 'http://localhost:8080/upload';
   uploadForm: FormGroup;
@@ -30,8 +31,7 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
 
   ngOnInit() {
     this.uploadForm = this.formBuilder.group({
-      file: new FormControl(Array<File>(), [Validators.required,]),
-      documentType: new FormControl('', [Validators.required,]),
+      file: new FormControl(Array<File>(), Validators.required)
     });
 
     this.currentRoute.queryParams.subscribe(params => {
@@ -54,9 +54,9 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
 
 
   onSubmit() {
-    console.log(this.uploadForm)
     const formData = new FormData();
     formData.append('file', this.uploadForm.get('file').value);
+    formData.append('documentType', this.docType.nativeElement.value);
 
     this.httpClient.post<any>(this.SERVER_URL, formData).subscribe(
       (res) => {console.log(res)

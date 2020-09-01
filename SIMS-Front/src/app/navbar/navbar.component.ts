@@ -37,7 +37,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
           }
         );
       }
-    }, 200);
+    }, 500);
   }
 
   login() {
