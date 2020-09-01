@@ -239,6 +239,12 @@ export class GroupListComponent implements OnInit {
       });
     }
   }
+  test6(){
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_studenta/2/summaryStudentSurvay').subscribe( value => console.log(value),error => console.log(error));
+  }
+  test7(){
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/2/summaryPracownikSurvay').subscribe( value => console.log(value),error => console.log(error));
+  }
 }
 
 

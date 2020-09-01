@@ -5,6 +5,7 @@ import { NotifierService } from 'angular-notifier';
 import {ActivatedRoute} from "@angular/router";
 import {LoginServiceService} from "../login-service.service";
 import {DatePipe} from "@angular/common";
+import {ankietaStudentaDto} from "../models/ankietaStudentaDto";
 
 @Component({
   selector: 'app-ankieta-dla-studenta',
@@ -17,6 +18,7 @@ export class AnkietaDlaStudentaComponent implements OnInit {
   totalQuestions = 14;
   ankietaStudentForm;
   private readonly notifier: NotifierService;
+
 
   constructor(private fb: FormBuilder, private httpClient: HttpClient,notifierService: NotifierService,private activatedroute: ActivatedRoute,private authService: LoginServiceService,private datePipe: DatePipe) {
     this.notifier = notifierService;
@@ -59,7 +61,6 @@ this.load();
   }
 
   load(){
-
     this.activatedroute.queryParams.subscribe(v => {
         this.ankietaStudentForm.get("groupId").setValue(v.id);
         this.ankietaStudentForm.get("studentSpecialization").setValue(v.s);
@@ -98,8 +99,53 @@ this.load();
   }
 
   onSubmit() {
+
+    let body: ankietaStudentaDto = {
+      studentName: this.ankietaStudentForm.value.studentName,
+      studentSurname: this.ankietaStudentForm.value.studentSurname,
+      studentSpecialization: this.ankietaStudentForm.value.studentSpecialization,
+      instytutionType: this.ankietaStudentForm.value.instytutionType,
+      companyNameAndLocation: this.ankietaStudentForm.value.companyNameAndLocation,
+      studentInternshipStart: this.ankietaStudentForm.value.studentInternshipStart,
+      studentInternshipEnd: this.ankietaStudentForm.value.studentInternshipEnd,
+      answerTo1: this.ankietaStudentForm.value.answerTo1,
+      answerTo2: this.ankietaStudentForm.value.answerTo2,
+      answerTo3: this.ankietaStudentForm.value.answerTo3,
+      answerTo4: this.ankietaStudentForm.value.answerTo4,
+      answerTo5: this.ankietaStudentForm.value.answerTo5,
+      answerTo5atext: this.ankietaStudentForm.answerTo5atext,
+      answerTo6: this.ankietaStudentForm.value.answerTo6,
+      answerTo7: this.ankietaStudentForm.value.answerTo7,
+      answerTo7atext: this.ankietaStudentForm.value.answerTo7atext,
+      answerTo8: this.ankietaStudentForm.value.answerTo8,
+      answerTo91: this.ankietaStudentForm.value.answerTo91,
+      answerTo92: this.ankietaStudentForm.value.answerTo92,
+      answerTo93: this.ankietaStudentForm.value.answerTo93,
+      answerTo10: this.ankietaStudentForm.value.answerTo10,
+      answerTo11: this.ankietaStudentForm.value.answerTo11,
+      answerTo11text: this.ankietaStudentForm.value.answerTo11text,
+      answerTo12: this.ankietaStudentForm.value.answerTo12,
+      answerTo12atext: this.ankietaStudentForm.value.answerTo12atext,
+      answerTo12btext: this.ankietaStudentForm.value.answerTo12btext,
+      answerTo13: this.ankietaStudentForm.value.answerTo13,
+      answerTo13text: this.ankietaStudentForm.value.answerTo13text,
+      answerTo14text: this.ankietaStudentForm.value.answerTo14text
+
+    };
+
+    this.authService.postResource('http://localhost:8080/api/document/ankieta_studenta/' + this.ankietaStudentForm.value.groupId , body).subscribe(
+      value => {
+        this.notifier.notify("success","Pomyślnie wysłano dokument ankieta studenta",)
+       // this.router.navigate(["/home"]);
+      },
+      error =>{
+        console.log(error)
+        this.notifier.notify("error", error.error)
+      }
+    );
+
     console.log(this.ankietaStudentForm.value);
-    this.notifier.notify( 'success', 'Pomyślnie wysłano ankiete' );
+    //this.notifier.notify( 'success', 'Pomyślnie wysłano ankiete' );
   }
 
   nextQuestion() {

@@ -1,0 +1,31 @@
+export interface ankietaStudentaDto {
+  studentName: string;
+  studentSurname: string;
+  studentSpecialization: string;
+  instytutionType: string;
+  companyNameAndLocation: string;
+  studentInternshipStart: string;
+  studentInternshipEnd: string;
+  answerTo1: string;
+  answerTo2: string;
+  answerTo3: string;
+  answerTo4: string;
+  answerTo5: string;
+  answerTo5atext: string;
+  answerTo6: string;
+  answerTo7: string;
+  answerTo7atext: string;
+  answerTo8: string;
+  answerTo91: string;
+  answerTo92: string;
+  answerTo93: string;
+  answerTo10: string;
+  answerTo11: string;
+  answerTo11text: string;
+  answerTo12: string;
+  answerTo12atext: string;
+  answerTo12btext: string;
+  answerTo13: string;
+  answerTo13text: string;
+  answerTo14text: string;
+}

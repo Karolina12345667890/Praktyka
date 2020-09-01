@@ -178,6 +178,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   test5(){
     this.authService.postResource('http://localhost:8080/api/user/edit/pass', {pass:'aaa'}).subscribe( value => console.log(value),error => console.log(error));
   }
+  test6(){
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_studenta/1/summaryStudentSurvay').subscribe( value => console.log(value),error => console.log(error));
+  }
+  test7(){
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/1/summaryPracownikSurvay').subscribe( value => console.log(value),error => console.log(error));
+  }
 
 }
 

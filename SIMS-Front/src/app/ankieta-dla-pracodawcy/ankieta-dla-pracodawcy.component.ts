@@ -4,6 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {NotifierService} from 'angular-notifier';
 import {ActivatedRoute} from "@angular/router";
 import {LoginServiceService} from "../login-service.service";
+import {ankietaPracownikDto} from "../models/ankietaPracownikDto";
 
 @Component({
   selector: 'app-ankieta-dla-pracodawcy',
@@ -24,12 +25,13 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
       groupId: '',
       answers: this.fb.array([]),
       answerTo16text: [''],
+      answerTo15text: [''],
       companyinfo: new FormControl('', [Validators.required,]),
       numberofstudents: new FormControl('', [Validators.required,]),
     });
 
     this.answers = this.ankietaPracForm.get('answers') as FormArray;
-    for (let i: number = 0; i < 17; i++) {
+    for (let i: number = 0; i < 16; i++) {
       this.answers.push(new FormControl('', [Validators.required,]));
     }
 
@@ -53,6 +55,26 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
   }
 
   onSubmit() {
+
+    let body: ankietaPracownikDto = {
+      answerTo15text: this.ankietaPracForm.value.answerTo15text,
+      answerTo16text: this.ankietaPracForm.value.answerTo16text,
+      answer: this.ankietaPracForm.value.answers,
+      companyInfo: this.ankietaPracForm.value.companyinfo,
+      numberOfStudent: this.ankietaPracForm.value.numberofstudents
+    };
+
+    this.authService.postResource('http://localhost:8080/api/document/ankieta_pracownik/' + this.ankietaPracForm.value.groupId , body).subscribe(
+      value => {
+        this.notifier.notify("success","Pomyślnie wysłano dokument ankieta pracownik",)
+        // this.router.navigate(["/home"]);
+      },
+      error =>{
+        console.log(error)
+        this.notifier.notify("error", error.error)
+      }
+    );
+
     console.log(this.ankietaPracForm.value);
     this.notifier.notify('success', 'Pomyślnie wysłano ankiete');
   }

@@ -2,6 +2,8 @@ package uph.ii.SIMS.DocumentModule;
 
 
 import lombok.AllArgsConstructor;
+import uph.ii.SIMS.DocumentModule.AnkietaPracodawcy.AnkietaPracownikFacade;
+import uph.ii.SIMS.DocumentModule.AnkietaStudenta.AnkietaStudentaFacade;
 import uph.ii.SIMS.DocumentModule.Dto.*;
 import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykFacade;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
@@ -37,6 +39,8 @@ public class DocumentFacade {
     private DziennikPraktykFacade dziennikPraktykFacade;
     private PlanPraktykiFacade planPraktykiFacade;
     private ZaswiadczenieZatrudnienieFacade zaswiadczenieZatrudnienieFacade;
+    private AnkietaStudentaFacade ankietaStudentaFacade;
+    private AnkietaPracownikFacade ankietaPracownikFacade;
 
     byte[] createPdf(String templateName, OswiadczeniePdfDto pdfDto) throws Exception {
         return pdfBuilder.getPdfFromObject(templateName, pdfDto);
@@ -431,6 +435,28 @@ public class DocumentFacade {
 
     public void storeZaswiadczenieZatrudnienie(ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienieDto, Long studentId, Long groupId, String groupName, Boolean visible) {
         zaswiadczenieZatrudnienieFacade.createNew(zaswiadczenieZatrudnienieDto, studentId, groupId, groupName, visible);
+    }
+
+    /**
+     * Persystuje przekazane ankietę, jesli w bazie danych nie ma ankiety z id takim, jak w przekazanym dto zostaje utworzone nowa ankieta
+     *
+     * @param ankietaStudentaDto ankieta studenta do zapisania
+     * @throws Exception
+     */
+
+    public void storeAnkietaStudenta(AnkietaStudentaDto ankietaStudentaDto, Long studentId, Long groupId, String groupName) {
+        ankietaStudentaFacade.createNew(ankietaStudentaDto, studentId, groupId, groupName);
+    }
+
+    /**
+     * Persystuje przekazane ankietę, jesli w bazie danych nie ma ankiety z id takim, jak w przekazanym dto zostaje utworzone nowa ankieta
+     *
+     * @param ankietaPracownikDto ankieta pracownika do zapisania
+     * @throws Exception
+     */
+
+    public void storePracownikAnkieta(AnkietaPracownikDto ankietaPracownikDto, Long studentId, Long groupId, String groupName) {
+        ankietaPracownikFacade.createNewPracownikAnkieta(ankietaPracownikDto, studentId, groupId, groupName);
     }
 
 

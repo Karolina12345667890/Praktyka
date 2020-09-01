@@ -3,6 +3,10 @@ package uph.ii.SIMS.DocumentModule;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uph.ii.SIMS.DocumentModule.AnkietaPracodawcy.AnkietaPracownikConfiguration;
+import uph.ii.SIMS.DocumentModule.AnkietaPracodawcy.AnkietaPracownikFacade;
+import uph.ii.SIMS.DocumentModule.AnkietaStudenta.AnkietaStudentaConfiguration;
+import uph.ii.SIMS.DocumentModule.AnkietaStudenta.AnkietaStudentaFacade;
 import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykConfiguration;
 import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykFacade;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieConfiguration;
@@ -36,7 +40,9 @@ class DocumentConfiguration {
      * @return Fasada modułu działająca na bazie danych
      */
     @Bean
-    DocumentFacade documentFacade(OswiadczenieFacade oswiadczenieFacade,
+    DocumentFacade documentFacade(AnkietaPracownikFacade ankietaPracownikFacade,
+                                  AnkietaStudentaFacade ankietaStudentaFacade,
+                                  OswiadczenieFacade oswiadczenieFacade,
                                   PorozumienieFacade porozumienieFacade,
                                   ZaswiadczenieFacade zaswiadczenieFacade,
                                   DziennikPraktykFacade dziennikPraktykFacade,
@@ -44,7 +50,7 @@ class DocumentConfiguration {
                                   ZaswiadczenieZatrudnienieFacade zaswiadczenieZatrudnienieFacade,
                                   PdfBuilder pdfBuilder,
                                   UserFacade userFacade) {
-        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade, planPraktykiFacade,zaswiadczenieZatrudnienieFacade );
+        return new DocumentFacade(oswiadczenieFacade, pdfBuilder, porozumienieFacade, documentRepository, userFacade,zaswiadczenieFacade,dziennikPraktykFacade, planPraktykiFacade,zaswiadczenieZatrudnienieFacade,ankietaStudentaFacade, ankietaPracownikFacade );
     }
     
     /**
@@ -70,8 +76,14 @@ class DocumentConfiguration {
 
         ZaswiadczenieZatrudnienieFacade zaswiadczenieZatrudnienieFacadeInMemoryIO = new ZaswiadczenieZatrudnienieConfiguration()
                 .zaswiadczenieZatrudnienieFacadeInMemoryIO();
-        
-        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO,planPraktykiFacadeInMemoryIO,zaswiadczenieZatrudnienieFacadeInMemoryIO );
+
+        AnkietaStudentaFacade ankietaStudentaFacadeInMemoryIO =
+                new AnkietaStudentaConfiguration().ankietaStudentaFacadeInMemoryIO();
+
+        AnkietaPracownikFacade ankietaPracownikFacadeInMemoryIO =
+                new AnkietaPracownikConfiguration().ankietaPracownikFacadeInMemoryIO();
+
+        return new DocumentFacade(oswiadczenieFacadeInMemoryIO, pdfBuilder, porozumienieFacadeInMemoryIO, documentRepository, userFacade, zaswiadczenieFacadeInMemoryIO,dziennikPraktykFacadeInMemoryIO,planPraktykiFacadeInMemoryIO,zaswiadczenieZatrudnienieFacadeInMemoryIO, ankietaStudentaFacadeInMemoryIO, ankietaPracownikFacadeInMemoryIO);
     }
 }
     
