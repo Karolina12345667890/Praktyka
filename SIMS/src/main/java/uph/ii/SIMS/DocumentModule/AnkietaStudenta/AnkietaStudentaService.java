@@ -99,8 +99,8 @@ public class AnkietaStudentaService {
         ankietaStudenta.setAnswerTo13(ankietaStudentaDto.getAnswerTo13());
         ankietaStudenta.setAnswerTo13text(ankietaStudentaDto.getAnswerTo13text());
         ankietaStudenta.setAnswerTo14text(ankietaStudentaDto.getAnswerTo14text());
-        ankietaStudenta.setStatus(StatusEnum.NEW);
-        ankietaStudenta.setVisible(false);
+        ankietaStudenta.setStatus(StatusEnum.DONE);
+        ankietaStudenta.setVisible(true);
 
         try{
            return ankietaStudentaRepository.save(ankietaStudenta);

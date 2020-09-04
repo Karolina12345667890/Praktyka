@@ -26,12 +26,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
   private myDocumentList = new Array<DocumentDto>();
 
   @ViewChildren('groupTable') groupTables: QueryList<ElementRef>;
-  myGroupedDocuments: Map<Array<any>,any> = new Map<Array<any>,any>();
+  myGroupedDocuments: Map<Array<any>, any> = new Map<Array<any>, any>();
   myGroups: Array<any> = new Array<any>();
   myGroupsStatus: Array<any> = new Array<any>();
   isAdmin: boolean = false;
 
-  constructor(private authService: LoginServiceService, public dialog: MatDialog,private router: Router) {
+  constructor(private authService: LoginServiceService, public dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit() {
@@ -159,25 +159,6 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   }
 
-  test(){
-    this.authService.getResource('http://localhost:8080/api/user').subscribe( value => console.log(value),error => console.log(error));
-  }
-
-  test1(){
-    this.authService.postResource('http://localhost:8080/api/user/edit/name', {name : 'ala'}).subscribe( value => console.log(value),error => console.log(error));
-  }
-  test2(){
-    this.authService.postResource('http://localhost:8080/api/user/edit/surname', {surname: 'kot'}).subscribe( value => console.log(value),error => console.log(error));
-  }
-  test3(){
-    this.authService.postResource('http://localhost:8080/api/user/edit/album', {album: '0000'}).subscribe( value => console.log(value),error => console.log(error));
-  }
-  test4(){
-    this.authService.postResource('http://localhost:8080/api/user/edit/email', {email :'a@a.a'}).subscribe( value => console.log(value),error => console.log(error));
-  }
-  test5(){
-    this.authService.postResource('http://localhost:8080/api/user/edit/pass', {pass:'aaa'}).subscribe( value => console.log(value),error => console.log(error));
-  }
   test6(){
     this.authService.getResource('http://localhost:8080/api/document/ankieta_studenta/1/summaryStudentSurvay').subscribe( value => console.log(value),error => console.log(error));
   }

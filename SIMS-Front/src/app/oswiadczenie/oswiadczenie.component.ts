@@ -161,11 +161,11 @@ export class OswiadczenieComponent implements OnInit {
   accept(){
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/accept', {}).subscribe(
       value => { console.log(value);
-        this.notifier.notify("success","Pomyślnie zaakceptowano dokument Oświadczenie",);
+        this.notifier.notify("success","Pomyślnie zaakceptowano dokument Oświadczenie");
         this.load();
       },
       error =>{ console.log(error)
-        this.notifier.notify("error",error.error,)
+        this.notifier.notify("error", error.error);
       }
     );
   }
@@ -176,7 +176,7 @@ export class OswiadczenieComponent implements OnInit {
         this.load();
       },
       error =>{ console.log(error)
-        this.notifier.notify("error",error.error,)
+        this.notifier.notify("error",error.error)
       }
     );
   }

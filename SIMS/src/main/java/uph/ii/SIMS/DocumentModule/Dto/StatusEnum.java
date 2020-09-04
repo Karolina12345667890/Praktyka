@@ -4,5 +4,6 @@ public enum StatusEnum {
     EMPTY,
     NEW,
     ACCEPTED,
-    DECLINED
+    DECLINED,
+    DONE
 }

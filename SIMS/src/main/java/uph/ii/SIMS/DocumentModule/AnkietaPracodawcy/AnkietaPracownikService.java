@@ -50,7 +50,6 @@ public class AnkietaPracownikService {
         }
         else
         {
-            System.out.println("jestem");
             createNewAnkietaPracownikAndAddToDocument(ankietaPracownikDto,studentId,groupId);
         }
     }
@@ -109,8 +108,8 @@ public class AnkietaPracownikService {
         ankietaPracownik.setAnswerTo15(ankietaPracownikDto.getAnswerTo15());
         ankietaPracownik.setAnswerTo15text(ankietaPracownikDto.getAnswerTo15text());
         ankietaPracownik.setAnswerTo16text(ankietaPracownikDto.getAnswerTo16text());
-        ankietaPracownik.setStatus(StatusEnum.NEW);
-        ankietaPracownik.setVisible(false);
+        ankietaPracownik.setStatus(StatusEnum.DONE);
+        ankietaPracownik.setVisible(true);
 
         try{
            return ankietaPracownikRepository.save(ankietaPracownik);

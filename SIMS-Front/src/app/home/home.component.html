@@ -86,28 +86,40 @@
                     </ng-template>
 
                     <ng-template #PLA>
-                      <ng-container *ngIf="myDocumentData.type === 'planpraktyki'">
+                      <ng-container *ngIf="myDocumentData.type === 'planpraktyki';else ZZ">
                         Plan Praktyki Zawodowej
                         <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1" (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
                         <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" [routerLink]="['/upload']" [queryParams]="{ group: myDocumentData.groupName, doc: myDocumentData.type }">Wyślij wypełniony dokument</a>
                       </ng-container>
                     </ng-template>
 
-
-                      <ng-container *ngIf="myDocumentData.type === 'zaswiadczeniezatrudnienie'">
+                    <ng-template #ZZ>
+                      <ng-container *ngIf="myDocumentData.type === 'zaswiadczeniezatrudnienie';else AS">
                         Zaświadczenie o zatrudnieniu
                         <button *ngIf="myDocumentData.status != 'ACCEPTED'" type="button" class="btn btn-success float-right mx-1"  (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
                         <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" [routerLink]="['/upload']" [queryParams]="{ group: myDocumentData.groupName, doc: myDocumentData.type }">Wyślij wypełniony dokument</a>
                       </ng-container>
+                    </ng-template>
 
+                    <ng-template #AS>
+                    <ng-container *ngIf="myDocumentData.type === 'ankieta_studenta';else AP">
+                      Ankieta Studenta wypełniona
+                    </ng-container>
+                  </ng-template>
 
-                    <button *ngIf="myDocumentData.status != 'EMPTY'" type="button"   class="btn btn-primary float-right mx-1" (click)="onClick(myDocumentData.link,myDocumentData.type)"> Pobierz</button>
+                    <ng-template #AP>
+                      <ng-container *ngIf="myDocumentData.type === 'ankieta_pracownik'">
+                        Ankieta Pracodawcy wypełniona
+                      </ng-container>
+                    </ng-template>
+                    <button *ngIf="myDocumentData.status != 'EMPTY' && myDocumentData.type != 'ankieta_pracownik' && myDocumentData.type != 'ankieta_studenta'" type="button"   class="btn btn-primary float-right mx-1" (click)="onClick(myDocumentData.link,myDocumentData.type)"> Pobierz</button>
                   </td>
 
 
                   <td class="docs"
                       [ngStyle]="myDocumentData.status == 'NEW' && {'background-color':'#2196F3'} ||
-                      myDocumentData.status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+                      myDocumentData.status== 'ACCEPTED' && {'background-color':'#006600'} ||
+                        myDocumentData.status== 'DONE' && {'background-color':'#42A948'} ||
                       myDocumentData.status == 'DECLINED' && {'background-color':'#dc3545'}">
 
                     <ng-container *ngIf="myDocumentData.status === 'DECLINED';else NEW">
@@ -121,8 +133,14 @@
                     </ng-template>
 
                     <ng-template #ACCEPTED>
-                      <ng-container *ngIf="myDocumentData.status === 'ACCEPTED';else empty">
+                      <ng-container *ngIf="myDocumentData.status === 'ACCEPTED';else DONE">
                         Zaakceptowany
+                      </ng-container>
+                    </ng-template>
+
+                    <ng-template #DONE>
+                      <ng-container *ngIf="myDocumentData.status === 'DONE';else empty">
+                        Done
                       </ng-container>
                     </ng-template>
 

@@ -93,7 +93,11 @@ export class StudentListComponent implements OnInit {
           this.savedstudentList = value.students;
           this.setPage(this.pager.currentPage);
           // do student companyName
+          console.log(value);
+
+
           this.group = value;
+
 
           if (this.rememberSort == 'surname') {
             this.sortOrderSurname = !this.sortOrderSurname;

@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {HttpClient} from "@angular/common/http";
 import {NotifierService} from 'angular-notifier';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from '@angular/router';
 import {LoginServiceService} from "../login-service.service";
 import {ankietaPracownikDto} from "../models/ankietaPracownikDto";
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-ankieta-dla-pracodawcy',
@@ -19,7 +20,7 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
   answers: FormArray;
   private readonly notifier: NotifierService;
 
-  constructor(private fb: FormBuilder, private httpClient: HttpClient, notifierService: NotifierService, private activatedroute: ActivatedRoute, private authService: LoginServiceService) {
+  constructor(private fb: FormBuilder, private httpClient: HttpClient, notifierService: NotifierService, private activatedroute: ActivatedRoute, private authService: LoginServiceService, private router: Router) {
     this.notifier = notifierService;
     this.ankietaPracForm = this.fb.group({
       groupId: '',
@@ -67,7 +68,7 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
     this.authService.postResource('http://localhost:8080/api/document/ankieta_pracownik/' + this.ankietaPracForm.value.groupId , body).subscribe(
       value => {
         this.notifier.notify("success","Pomyślnie wysłano dokument ankieta pracownik",)
-        // this.router.navigate(["/home"]);
+         this.router.navigate(["/home"]);
       },
       error =>{
         console.log(error)
@@ -75,8 +76,8 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
       }
     );
 
-    console.log(this.ankietaPracForm.value);
-    this.notifier.notify('success', 'Pomyślnie wysłano ankiete');
+
+
   }
 
   nextQuestion() {
