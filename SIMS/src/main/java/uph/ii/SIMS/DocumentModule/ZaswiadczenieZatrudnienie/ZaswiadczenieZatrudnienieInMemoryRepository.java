@@ -43,4 +43,13 @@ class ZaswiadczenieZatrudnienieInMemoryRepository implements ZaswiadczenieZatrud
 
         return new PageImpl<>(zaswiadczenieZatrudnienies, pageable, map.size());
     }
+
+    @Override
+    public ZaswiadczenieZatrudnienie findByGroupIdAndOwnerId(Long groupId, Long ownerId) {
+        ZaswiadczenieZatrudnienie zaswiadczenieZatrudnienies = (ZaswiadczenieZatrudnienie) map.values().stream()
+                .filter(zaswiadczenieZatrudnienie -> zaswiadczenieZatrudnienie.getOwnerId().equals(ownerId) && zaswiadczenieZatrudnienie.getGroupId().equals(groupId))
+                .collect(Collectors.toList());
+
+        return zaswiadczenieZatrudnienies;
+    }
 }

@@ -34,6 +34,7 @@ import { ZaswiadczenieZatrudnienieComponent } from './zaswiadczenie-zatrudnienie
 import { UserPanelComponent } from './user-panel/user-panel.component';
 import { CreateGroupAdminDialogComponent } from './create-group-admin-dialog/create-group-admin-dialog.component';
 import { SystemFaqComponent } from './system-faq/system-faq.component';
+import { PodsumowanieTrescDialogComponent } from './podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -99,6 +100,7 @@ const customNotifierOptions: NotifierOptions = {
     UserPanelComponent,
     CreateGroupAdminDialogComponent,
     SystemFaqComponent,
+    PodsumowanieTrescDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -112,7 +114,7 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     FormsModule,
   ],
-  entryComponents: [GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent, EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent],
+  entryComponents: [GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent, EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent, PodsumowanieTrescDialogComponent],
   providers: [LoginServiceService, AuthGuardService, CookieService, PagerService, DatePipe],
   bootstrap: [AppComponent]
 })

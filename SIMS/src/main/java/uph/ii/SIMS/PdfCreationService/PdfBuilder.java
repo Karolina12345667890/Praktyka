@@ -127,6 +127,20 @@ public class PdfBuilder {
         return renderPdf(processedHtml);
     }
 
+    /**
+     * Tworzy dokument pdf na podstawie szablonu i danych
+     *
+     * @param templateName nazwa szablonu
+     * @param pdfDto       dane, którymi zostanie wypełniony szablon
+     * @return
+     * @throws Exception
+     */
+    //TODO Klasa zawierajaca nazwy wszystkich uzywanych szablonow i uzywanie stalych, a nie "golych" stringow
+    public byte[] getPdfFromObject(String templateName, PodsumowanieGrupyPdfDto pdfDto) throws Exception {
+        String processedHtml = processHtmlWithObject(templateName, pdfDto);
+        return renderPdf(processedHtml);
+    }
+
 
 
     /**

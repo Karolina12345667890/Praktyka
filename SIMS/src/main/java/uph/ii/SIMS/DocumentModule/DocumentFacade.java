@@ -8,12 +8,16 @@ import uph.ii.SIMS.DocumentModule.Dto.*;
 import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DziennikPraktykFacade;
 import uph.ii.SIMS.DocumentModule.Oswiadczenie.OswiadczenieFacade;
 import uph.ii.SIMS.DocumentModule.PlanPraktyki.PlanPraktykiFacade;
+import uph.ii.SIMS.DocumentModule.Porozumienie.Porozumienie;
 import uph.ii.SIMS.DocumentModule.Porozumienie.PorozumienieFacade;
 import uph.ii.SIMS.DocumentModule.Zaswiadczenie.ZaswiadczenieFacade;
+import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienie;
 import uph.ii.SIMS.DocumentModule.ZaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienieFacade;
 import uph.ii.SIMS.PdfCreationService.Dto.*;
 import uph.ii.SIMS.PdfCreationService.PdfBuilder;
+import uph.ii.SIMS.UserModule.Dto.GroupSummaryDto;
 import uph.ii.SIMS.UserModule.Dto.UserDto;
+import uph.ii.SIMS.UserModule.User;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 import javax.transaction.Transactional;
@@ -253,6 +257,23 @@ public class DocumentFacade {
         return pdfBuilder.getPdfFromObject("ZaswiadczenieZatrudnienie", pdfDto);
     }
 
+    public byte[] printPodsumowanieGrupyToPdf(Long groupId, String documentContent, String groupAdminName, String groupAdminSurname) throws Exception {
+
+        Boolean isAdmin = userFacade.currentUserIsGroupAdmin();
+        if (isAdmin) {
+
+            var pdfDto = PodsumowanieGrupyPdfDto.builder()
+                    .documentContents(documentContent)
+                    .groupAdminName(groupAdminName)
+                    .groupAdminSurname(groupAdminSurname)
+                    .groupSummaryDtos(userFacade.summarizeGroup(groupId))
+                    .build();
+
+            return pdfBuilder.getPdfFromObject("Podsumowanie", pdfDto);
+        } else
+            return null;
+    }
+
 
     public OswiadczenieDto fetchOswiadczenie(Long id) {
         UserDto currentUser = userFacade.getCurrentUser();
@@ -275,7 +296,7 @@ public class DocumentFacade {
     }
 
     public void storeOswiadczenie(OswiadczenieDto oswiadczenieDto, Long studentId, Long groupId, String groupName, Boolean visible) {
-        oswiadczenieFacade.createNew(oswiadczenieDto, studentId, groupId, groupName,visible);
+        oswiadczenieFacade.createNew(oswiadczenieDto, studentId, groupId, groupName, visible);
     }
 
     /**
@@ -304,7 +325,7 @@ public class DocumentFacade {
     }
 
     public void storePorozumienie(PorozumienieDto porozumienieDto, Long studentId, Long groupId, String groupName, Boolean visible) {
-        porozumienieFacade.createNew(porozumienieDto, studentId, groupId, groupName,visible);
+        porozumienieFacade.createNew(porozumienieDto, studentId, groupId, groupName, visible);
     }
 
     public ZaswiadczenieDto fetchZaswiadczenie(Long id) {
@@ -338,7 +359,7 @@ public class DocumentFacade {
     }
 
     public void storeZaswiadczenie(ZaswiadczenieDto zaswiadczenieDto, Long studentId, Long groupId, String groupName, Boolean visible) {
-        zaswiadczenieFacade.createNew(zaswiadczenieDto, studentId, groupId, groupName,visible);
+        zaswiadczenieFacade.createNew(zaswiadczenieDto, studentId, groupId, groupName, visible);
     }
 
 
@@ -374,7 +395,7 @@ public class DocumentFacade {
     }
 
     public void storeDziennikPraktyk(DziennikPraktykDto dziennikPraktykDto, Long studentId, Long groupId, String groupName, Boolean visible) {
-        dziennikPraktykFacade.createNew(dziennikPraktykDto, studentId, groupId, groupName,visible);
+        dziennikPraktykFacade.createNew(dziennikPraktykDto, studentId, groupId, groupName, visible);
     }
 
 
@@ -409,7 +430,7 @@ public class DocumentFacade {
     }
 
     public void storePlanPraktyki(PlanPraktykiDto planPraktykiDto, Long studentId, Long groupId, String groupName, Boolean visible) {
-        planPraktykiFacade.createNew(planPraktykiDto, studentId, groupId, groupName,visible);
+        planPraktykiFacade.createNew(planPraktykiDto, studentId, groupId, groupName, visible);
     }
 
     public ZaswiadczenieZatrudnienieDto fetchZaswiadczenieZatrudnienie(Long id) {
@@ -463,9 +484,9 @@ public class DocumentFacade {
     public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
         oswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
-        if(statusEnum.equals(StatusEnum.ACCEPTED)){
-            OswiadczenieDto oswiadczenieDto = oswiadczenieFacade.find(id,userFacade.currentUserIsGroupAdmin());
-           checkOtherDocuments(oswiadczenieDto.getOwnerId(),oswiadczenieDto.getGroupId(),"osw");
+        if (statusEnum.equals(StatusEnum.ACCEPTED)) {
+            OswiadczenieDto oswiadczenieDto = oswiadczenieFacade.find(id, userFacade.currentUserIsGroupAdmin());
+            checkOtherDocuments(oswiadczenieDto.getOwnerId(), oswiadczenieDto.getGroupId(), "osw");
         }
     }
 
@@ -477,9 +498,9 @@ public class DocumentFacade {
     public void setPorozumienieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
         porozumienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
-        if(statusEnum.equals(StatusEnum.ACCEPTED)){
-            PorozumienieDto porozumienieDto =  porozumienieFacade.find(id,userFacade.currentUserIsGroupAdmin());
-            checkOtherDocuments(porozumienieDto.getOwnerId(),porozumienieDto.getGroupId(),"por");
+        if (statusEnum.equals(StatusEnum.ACCEPTED)) {
+            PorozumienieDto porozumienieDto = porozumienieFacade.find(id, userFacade.currentUserIsGroupAdmin());
+            checkOtherDocuments(porozumienieDto.getOwnerId(), porozumienieDto.getGroupId(), "por");
         }
     }
 
@@ -531,26 +552,26 @@ public class DocumentFacade {
     }
 
 
-    public void checkOtherDocuments(Long ownerId,Long groupId,String doc){
+    public void checkOtherDocuments(Long ownerId, Long groupId, String doc) {
         System.out.println(ownerId + " " + groupId + " " + doc);
-        System.out.println(porozumienieFacade.getStatus(ownerId,groupId,userFacade.currentUserIsGroupAdmin()));
-        System.out.println(oswiadczenieFacade.getStatus(ownerId,groupId,userFacade.currentUserIsGroupAdmin()));
-        if(doc.equals("osw")){
-            if(porozumienieFacade.getStatus(ownerId,groupId,userFacade.currentUserIsGroupAdmin()).equals(StatusEnum.ACCEPTED)){
-                setVisibleOtherDocuments(ownerId,groupId);
+        System.out.println(porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()));
+        System.out.println(oswiadczenieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()));
+        if (doc.equals("osw")) {
+            if (porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()).equals(StatusEnum.ACCEPTED)) {
+                setVisibleOtherDocuments(ownerId, groupId);
             }
-        }else if(doc.equals("por")){
-            if(oswiadczenieFacade.getStatus(ownerId,groupId,userFacade.currentUserIsGroupAdmin()).equals(StatusEnum.ACCEPTED)){
-                setVisibleOtherDocuments(ownerId,groupId);
+        } else if (doc.equals("por")) {
+            if (oswiadczenieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()).equals(StatusEnum.ACCEPTED)) {
+                setVisibleOtherDocuments(ownerId, groupId);
             }
         }
 
     }
 
-    public void setVisibleOtherDocuments(Long ownerId,Long groupId){
-        List<Document> documents = documentRepository.getAllByGroupIdAndAndOwnerId(groupId, ownerId);
+    public void setVisibleOtherDocuments(Long ownerId, Long groupId) {
+        List<Document> documents = documentRepository.getAllByGroupIdAndOwnerId(groupId, ownerId);
         documents.forEach(document -> {
-            if(!document.getType().equals("zaswiadczeniezatrudnienie")){
+            if (!document.getType().equals("zaswiadczeniezatrudnienie")) {
                 document.setVisible(true);
                 documentRepository.save(document);
             }
@@ -575,20 +596,20 @@ public class DocumentFacade {
     public void chengeUsersDocuments(Long groupId, Long studentId) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
         if (userIsGroupAdmin) {
-            List<Document> documents = documentRepository.getAllByGroupIdAndAndOwnerId(groupId, studentId);
-        boolean zzisVisible = false;
-        boolean oswStatusAccepted = false;
-        boolean porStatusAccepted = false;
+            List<Document> documents = documentRepository.getAllByGroupIdAndOwnerId(groupId, studentId);
+            boolean zzisVisible = false;
+            boolean oswStatusAccepted = false;
+            boolean porStatusAccepted = false;
             for (int i = 0; i < documents.size(); i++) {
                 if (documents.get(i).getType().equals("zaswiadczeniezatrudnienie")) {
                     Document doc = documents.get(i);
                     zzisVisible = doc.getVisible();
                     doc.setVisible(!zzisVisible);
                     documentRepository.save(doc);
-                }else if (documents.get(i).getType().equals("oswiadczenie")) {
+                } else if (documents.get(i).getType().equals("oswiadczenie")) {
                     oswStatusAccepted = documents.get(i).getStatusString().equals(StatusEnum.ACCEPTED.toString());
-                }else if (documents.get(i).getType().equals("porozumienie")) {
-                  porStatusAccepted = documents.get(i).getStatusString().equals(StatusEnum.ACCEPTED.toString());
+                } else if (documents.get(i).getType().equals("porozumienie")) {
+                    porStatusAccepted = documents.get(i).getStatusString().equals(StatusEnum.ACCEPTED.toString());
                 }
             }
 
@@ -601,14 +622,11 @@ public class DocumentFacade {
                         documentDto.setVisible(false);
                     else if (documentDto.getType().equals("oswiadczenie") || documentDto.getType().equals("porozumienie"))
                         documentDto.setVisible(true);
-                    else if(finalOswStatusAccepted && finalPorStatusAccepted)
+                    else if (finalOswStatusAccepted && finalPorStatusAccepted)
                         documentDto.setVisible(true);
 
                 documentRepository.save(documentDto);
             });
-
-
-
 
 
         }
@@ -625,11 +643,57 @@ public class DocumentFacade {
     public void deleteStudentsDocumentsInGroup(Long groupId, Long studentId) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
         if (userIsGroupAdmin)
-            documentRepository.removeAllByGroupIdAndAndOwnerId(groupId, studentId);
+            documentRepository.removeAllByGroupIdAndOwnerId(groupId, studentId);
     }
 
-    public PorozumienieDto fetchPorozumienieDtoByGroupId(Long groupId){
-       return porozumienieFacade.find2(userFacade.getCurrentUser(),userFacade.currentUserIsAdmin(),groupId);
+    public PorozumienieDto fetchPorozumienieDtoByGroupId(Long groupId) {
+        return porozumienieFacade.find2(userFacade.getCurrentUser(), userFacade.currentUserIsAdmin(), groupId);
+    }
+
+    public String fetchCompanyNameByGroupIdAndOwnerId(Long groupId, Long studId) {
+        Porozumienie porozumienie = porozumienieFacade.find2(groupId, userFacade.currentUserIsGroupAdmin(), studId);
+        ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienie = zaswiadczenieZatrudnienieFacade.find(groupId, studId, userFacade.currentUserIsGroupAdmin());
+        if (porozumienie.getVisible() && porozumienie.getStatusString().equals(StatusEnum.ACCEPTED.toString()))
+            return porozumienie.getCompanyName();
+        else if (zaswiadczenieZatrudnienie.getStatus().equals(StatusEnum.ACCEPTED.toString()))
+            return zaswiadczenieZatrudnienie.getCompanyName();
+        else
+            return "";
+    }
+
+    public GroupSummaryDto sumarizeDocuments(Long studId, Long groupId) {
+        AtomicReference<Integer> numberOfStudents = new AtomicReference<>(0);
+        AtomicReference<String> companyInfo = new AtomicReference<>("");
+        AtomicReference<Boolean> zatrudnienie = new AtomicReference<>(false);
+        documentRepository.getAllByGroupIdAndOwnerId(groupId, studId).forEach(doc -> {
+            if (doc.getType().equals("porozumienie")) {
+                PorozumienieDto porozumienieDto = fetchPorozumienie(doc.getId());
+                companyInfo.set(porozumienieDto.getCompanyName() + " " + porozumienieDto.getCompanyLocationCity());
+            }
+
+            if (doc.getType().equals("zaswiadczenie")) {
+                if (doc.getStatusString().equals(StatusEnum.ACCEPTED.toString())) {
+                    numberOfStudents.set(1);
+                }
+            } else if (doc.getType().equals("zaswiadczeniezatrudnienie")) {
+                if (doc.getStatusString().equals(StatusEnum.ACCEPTED.toString())) {
+                    zatrudnienie.set(true);
+                    numberOfStudents.set(1);
+                }
+            }
+
+        });
+
+
+        if (zatrudnienie.get())
+            return new GroupSummaryDto("Praza zawodowa", numberOfStudents.get());
+        else {
+            if (numberOfStudents.get().equals(0))
+                companyInfo.set("");
+            return new GroupSummaryDto(companyInfo.get(), numberOfStudents.get());
+        }
+
+
     }
 
 }

@@ -1,0 +1,70 @@
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Podsumowanie</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="styles/shared.css"/>
+    <link rel="stylesheet" href="styles/dziennikpraktyk.css"/>
+</head>
+<body>
+
+<div id="content">
+    <div>
+
+
+        <br/> <br/>
+        <h2>Praktyki zawodowe na kierunku Informatyka, Podsumowanie</h2>
+        <br/> <br/>
+
+
+
+        <div>
+            <div>
+                <span th:text="${dto.documentContents}"></span>
+
+            </div>
+        </div>
+
+
+        <br/><br/>
+
+        <table>
+            <tr>
+                <td style="width: 5%"> Lp.</td>
+                <td> Instytucje, w których odbywano praktyki</td>
+                <td style="width: 10%"> Liczba studentów  </td>
+            </tr>
+
+            <tbody th:each="gs,iter: ${dto.groupSummaryDtos}">
+            <tr>
+                <td th:text="${iter.index} +1"/>
+                <td class="highLetters" th:text="${gs.companyInfo}"/>
+                <td style="width: 10%" class="highLetters" th:text="${gs.NumberOfStudents}"/>
+            </tr>
+            </tbody>
+        </table>
+
+
+
+        <br/>
+        <div class="toSignRight">
+            <div style="margin-top: 5px;">
+                Opiekun praktyk zawodowych <br/>
+                na kierunku Informatyka <br/>
+                <span style="white-space: pre-line;" class="highLetters" th:text="${dto.groupAdminName} + ' ' + ${dto.groupAdminSurname}"></span>
+                <br/><br/>
+            </div>
+            <div>
+                ........................................................
+            </div>
+            <div>
+                (imię i nazwisko wraz z datą)
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -132,4 +132,14 @@ public class PorozumienieFacade {
         }
         return porozumienie.porozumienieDto();
     }
+
+    public Porozumienie find2(Long groupId, Boolean userIsAdmin, Long studId) {
+        Porozumienie porozumienie = porozumienieRepository.findByOwnerIdAndGroupId(studId,groupId);
+        boolean userOwnsDocument = studId.equals(porozumienie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return porozumienie;
+    }
 }

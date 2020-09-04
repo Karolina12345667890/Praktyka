@@ -126,6 +126,18 @@ export class LoginServiceService {
     // return this.http.get(resourceUrl);
   }
 
+  postResource2(resourceUrl: string, body, httpHeader = new HttpHeaders()): Observable<any> {
+    let newHeaders = httpHeader;
+    newHeaders.append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+    if (this.isLoggedIn()) {
+      newHeaders = newHeaders.append('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
+    }
+
+    return this.http.post(resourceUrl, body, {headers: newHeaders, responseType: 'blob'});
+    // return this.http.get(resourceUrl);
+  }
+
+
   getRoles() {
     if (this.oauthService.getAccessToken() !== null) {
       const decodedToken = jwt_decode(this.oauthService.getAccessToken());

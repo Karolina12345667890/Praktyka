@@ -12,6 +12,7 @@ import {isNull, isUndefined} from 'util';
 import {EditCommentDialogComponent} from '../edit-comment-dialog/edit-comment-dialog.component';
 import {isEmpty} from 'rxjs/operators';
 import {PagerService} from '../pager-service.service';
+import {PodsumowanieTrescDialogComponent} from '../podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
 
 @Component({
   selector: 'app-student-list',
@@ -92,20 +93,7 @@ export class StudentListComponent implements OnInit {
           this.savedstudentList = value.students;
           this.setPage(this.pager.currentPage);
           // do student companyName
-          this.studentList.forEach(v => {
-
-            this.authService.getResource('http://localhost:8080' + v.documents[0].link).subscribe(
-              value => {
-                if (!isNull(value.companyName) && value.status == 'ACCEPTED') {
-                  v.companyName = value.companyName;
-                } else {
-                  v.companyName = '';
-                }
-              });
-          });
-
           this.group = value;
-
 
           if (this.rememberSort == 'surname') {
             this.sortOrderSurname = !this.sortOrderSurname;
@@ -166,9 +154,45 @@ export class StudentListComponent implements OnInit {
   }
 
   openDoc(id: number, docType: string) {
+
+
     this.router.navigate(['/' + docType], {queryParams: {id}});
   }
 
+  groupSummaryButton() {
+
+    if (this.isAdmin) {
+
+      var message = '';
+      const dialogRef = this.dialog.open(PodsumowanieTrescDialogComponent, {
+        width: '800px',
+        data: message,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (!isUndefined(result)) {
+          this.authService.postResource2('http://localhost:8080/api/group/summary/' + this.group.id, {text: result}).subscribe(
+            value => {
+              //this.myDocumentList = value;
+             // console.log(value);
+              const objectURL = window.URL.createObjectURL(value);
+              // window.open(objectURL, '_blank');
+              //console.log(objectURL);
+              var link = document.createElement('a');
+              link.href = objectURL;
+              link.download = 'PodsumowanieGrupy ' + this.group.groupName + '.pdf'; //domyslna nazwa pliku
+              link.click();
+              setTimeout(function() {
+                // For Firefox it is necessary to delay revoking the ObjectURL
+                window.URL.revokeObjectURL(objectURL);
+              }, 100);
+            },
+            error => console.log(error),
+          );
+        }
+      });
+    }
+  }
 
   showWarning(message: string, id: number, docType: string) {
     if (this.isAdmin) {

@@ -2,17 +2,19 @@ package uph.ii.SIMS.UserModule;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import uph.ii.SIMS.UserModule.Dto.GroupApplicationDto;
-import uph.ii.SIMS.UserModule.Dto.GroupDto;
-import uph.ii.SIMS.UserModule.Dto.GroupModifyDto;
-import uph.ii.SIMS.UserModule.Dto.GroupWithStudentsDto;
+import uph.ii.SIMS.DocumentModule.DocumentFacade;
+import uph.ii.SIMS.UserModule.Dto.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class GroupController {
     @Autowired
     UserFacade userFacade;
+    @Autowired
+    DocumentFacade documentFacade;
     
     @GetMapping("/api/groups")
     public List<GroupDto> getAllGroups(){
@@ -67,6 +69,12 @@ public class GroupController {
     @PostMapping("/api/group/{groupId}/users/job/{appId}")
     public void changeUserDocuments(@PathVariable Long groupId, @PathVariable Long appId){
         userFacade.changeUserDocuments(groupId,appId);
+    }
+
+    @PostMapping("/api/group/summary/{groupId}")
+    public byte[] summarizeGroup(@PathVariable Long groupId,@RequestBody Object docContent) throws Exception {
+        Map<String, String> obj = (Map<String, String>) docContent;
+       return userFacade.createPodsumowaniePdf(groupId,obj.get("text"));
     }
 
 }

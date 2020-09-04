@@ -55,4 +55,6 @@ interface ZaswiadczenieZatrudnienieRepository extends Repository<ZaswiadczenieZa
      */
     Page<ZaswiadczenieZatrudnienie> findAllByOwnerId(Long ownerId, Pageable pageable);
 
+    ZaswiadczenieZatrudnienie findByGroupIdAndOwnerId(Long groupId, Long ownerId);
+
 }

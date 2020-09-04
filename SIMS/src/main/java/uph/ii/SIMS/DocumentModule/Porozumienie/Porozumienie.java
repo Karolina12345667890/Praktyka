@@ -20,7 +20,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-class Porozumienie extends Document {
+public class Porozumienie extends Document {
 
     public static final String DOCUMENT_TYPE = "porozumienie";
 

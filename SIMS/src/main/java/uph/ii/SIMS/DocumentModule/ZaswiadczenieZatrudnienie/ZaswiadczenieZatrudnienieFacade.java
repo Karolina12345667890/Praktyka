@@ -88,6 +88,16 @@ public class ZaswiadczenieZatrudnienieFacade {
         return ZaswiadczenieZatrudnienieRepository.findById(id).ZaswiadczenieZatrudnienieDto();
     }
 
+    public ZaswiadczenieZatrudnienieDto find(Long groupId, Long studId, Boolean userIsAdmin) {
+        ZaswiadczenieZatrudnienie zaswiadczenieZatrudnienie = ZaswiadczenieZatrudnienieRepository.findByGroupIdAndOwnerId(groupId,studId);
+        boolean userOwnsDocument = studId.equals(zaswiadczenieZatrudnienie.getOwnerId());
+        boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
+        if (!userCanAccessDocument ) {
+            throw new AccessDeniedException("You can't access this document");
+        }
+        return zaswiadczenieZatrudnienie.ZaswiadczenieZatrudnienieDto();
+    }
+
     public void setComment(Long id, String newComment, Boolean userIsAdmin) {
         if(!userIsAdmin){
             throw new AccessDeniedException("Only admin can set comments on documents");

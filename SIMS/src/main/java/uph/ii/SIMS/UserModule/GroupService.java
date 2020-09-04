@@ -85,6 +85,7 @@ public class GroupService {
                                 user.getAlbum(),
                                 user.getName(),
                                 user.getSurname(),
+                                documentFacade.fetchCompanyNameByGroupIdAndOwnerId(group.getId(),user.getId()),
                                 documentDtos.stream().filter(document -> document.getOwnerId().equals(user.getId()) && document.getVisible())
                                         .collect(Collectors.toList())
                         )
@@ -175,7 +176,6 @@ public class GroupService {
             group = new Group();
         }
         User currentUser = userService.getCurrentUser();
-        System.out.println(currentUser.getEmail());
         group.setGroupName(dto.getGroupName());
         group.setDateStart(dto.getStartDate());
         group.setDurationInWeeks(dto.getDurationInWeeks());
@@ -272,5 +272,35 @@ public class GroupService {
 
     }
 
+    public byte[] createPodsumowaniePdf(Long groupId, String docContent) throws Exception {
+        GroupDto group = getGroupById(groupId);
+        return documentFacade.printPodsumowanieGrupyToPdf(groupId,docContent,group.getGroupAdminName(),group.getGroupAdminSurname());
+    }
 
+
+   public List<GroupSummaryDto> summarizeGroup(Long groupId){
+       if(userService.currentUserIsAdmin()) {
+           Map<String, Integer> groupSummaryMap = new HashMap<String, Integer>();
+           List<GroupSummaryDto> groupSummaryDtoList = new ArrayList<>();
+       Group group = groupRepository.findById(groupId).get();
+        group.getUsers().forEach( stud -> {
+           GroupSummaryDto groupSummaryDto = documentFacade.sumarizeDocuments(stud.getId(),groupId);
+           if(groupSummaryMap.containsKey(groupSummaryDto.getCompanyInfo())){
+               groupSummaryMap.put(groupSummaryDto.getCompanyInfo(),groupSummaryMap.get(groupSummaryDto.getCompanyInfo()) + 1);
+           }else{
+               groupSummaryMap.put(groupSummaryDto.getCompanyInfo(),groupSummaryDto.getNumberOfStudents());
+           }
+
+
+        });
+           groupSummaryMap.forEach( (key,val) -> {
+               if(!key.equals("")) {
+                   groupSummaryDtoList.add(new GroupSummaryDto(key, val));
+               }
+           });
+           return groupSummaryDtoList;
+       }
+       return null;
+
+   }
 }

@@ -17,5 +17,6 @@ public class UserWithDocumentsDto {
     private String album;
     private String name;
     private String surname;
+    private String companyName;
     private List<DocumentDto> documents;
 }
