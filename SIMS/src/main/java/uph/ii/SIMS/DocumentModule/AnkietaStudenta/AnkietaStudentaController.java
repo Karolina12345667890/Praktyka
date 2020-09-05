@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Klasa odpowiedzialna za dokument ankeita studenta
+ * Klasa odpowiedzialna za dokument ankieta studenta
  */
 @RestController
 @RequestMapping(value = Document.URL + AnkietaStudenta.DOCUMENT_TYPE)
@@ -85,5 +85,16 @@ public class AnkietaStudentaController {
     public HashMap<Integer, List<Object>> survaySummary(@PathVariable Long id)
     {
         return ankietaStudentaFacade.surverySummary(id);
+    }
+
+    /**
+     * Metoda odpowiedzialna za odebranie id ankiety i jej zwrócenie
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}")
+    public AnkietaStudenta getAnkieta(@PathVariable Long id)
+    {
+        return ankietaStudentaFacade.getAnkieta(id);
     }
 }

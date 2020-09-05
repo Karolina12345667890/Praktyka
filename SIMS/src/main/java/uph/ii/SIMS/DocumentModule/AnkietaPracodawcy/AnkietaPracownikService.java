@@ -291,5 +291,23 @@ public class AnkietaPracownikService {
         return answerMap;
     }
 
+    /**
+     * Metoda sprawdzająca czy użytkownik ma uprawnienia do podejrzenia danych ankiety i zwrócenie konkretnej ankiety
+     * @param id - id ankiety
+     * @return
+     */
+    public AnkietaPracownik getAnkieta(Long id)
+    {
+        UserDto user = userFacade.getCurrentUser();
+        AnkietaPracownik ankietaPracownik = ankietaPracownikRepository.findById(id);
+        Group group = groupRepository.getOne(ankietaPracownik.getGroupId());
 
+        if(!userFacade.currentUserIsGroupAdmin() || !user.getId().equals(group.getGroupAdminId()))
+        {
+            throw new AccessDeniedException("Nie masz uprawnień do tych danych");
+        }
+        else {
+            return ankietaPracownikRepository.findById(id);
+        }
+    }
 }

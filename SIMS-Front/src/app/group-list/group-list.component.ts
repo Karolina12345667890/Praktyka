@@ -245,6 +245,9 @@ export class GroupListComponent implements OnInit {
   test7(){
     this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/2/summaryPracownikSurvay').subscribe( value => console.log(value),error => console.log(error));
   }
+  test8(){
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/31').subscribe( value => console.log(value),error => console.log(error));
+  }
 }
 
 

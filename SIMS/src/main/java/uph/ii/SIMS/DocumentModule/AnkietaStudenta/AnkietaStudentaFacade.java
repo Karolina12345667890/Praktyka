@@ -41,4 +41,14 @@ public class AnkietaStudentaFacade {
     {
         return ankietaStudentaService.makeSummary( id);
     }
+
+    /**
+     * Metoda odpowiedzialna za zwrócenie konkretnej ankiety
+     * @param id
+     * @return
+     */
+    public AnkietaStudenta getAnkieta(Long id)
+    {
+        return ankietaStudentaService.getAnkieta(id);
+    }
 }

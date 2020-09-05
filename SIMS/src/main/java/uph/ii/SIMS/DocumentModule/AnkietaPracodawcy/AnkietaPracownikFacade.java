@@ -38,4 +38,14 @@ public class AnkietaPracownikFacade {
     {
         return ankietaPracownikService.makeSummary( id);
     }
+
+    /**
+     * Metoda odpowiedzialna za zwrócenie jednej ankiety
+     * @param id
+     * @return
+     */
+    public AnkietaPracownik getAnkieta(Long id)
+    {
+        return ankietaPracownikService.getAnkieta(id);
+    }
 }

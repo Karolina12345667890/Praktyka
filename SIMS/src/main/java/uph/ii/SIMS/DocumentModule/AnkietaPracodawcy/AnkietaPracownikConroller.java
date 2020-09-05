@@ -77,4 +77,15 @@ public class AnkietaPracownikConroller {
     {
         return ankietaPracownikFacade.surverySummary(id);
     }
+
+    /**
+     * Metoda odpowiedzialna za pobranie id ankiety i zwrócenie jej obiektu
+     * @param id
+     * @return
+     */
+    @GetMapping(value = "/{id}")
+    public AnkietaPracownik getAnkieta(@PathVariable Long id)
+    {
+        return ankietaPracownikFacade.getAnkieta(id);
+    }
 }

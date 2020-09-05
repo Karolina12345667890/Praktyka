@@ -340,4 +340,25 @@ public class AnkietaStudentaService {
 
         return answerMap;
     }
+
+    /**
+     * Metoda odpowiedzialna za zwrócenie ankiety
+     * @param id
+     * @return
+     */
+    public AnkietaStudenta getAnkieta(Long id)
+    {
+        UserDto user = userFacade.getCurrentUser();
+        AnkietaStudenta ankietaStudenta = ankietaStudentaRepository.findById(id);
+        Group group = groupRepository.getOne(ankietaStudenta.getGroupId());
+
+        if(!userFacade.currentUserIsGroupAdmin() || !user.getId().equals(group.getGroupAdminId()))
+        {
+            throw new AccessDeniedException("Nie masz uprawnień do tych danych");
+        }
+        else
+        {
+            return ankietaStudentaRepository.findById(id);
+        }
+    }
 }
