@@ -64,7 +64,7 @@ public class FileDataService {
             String filename = fileDB.getFileName();
             String[] split = filename.split("\\.");
 
-            respHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filetype=" + split[split.length - 1]);
+            respHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=file" + split[split.length - 1]);
             respHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
             return new ResponseEntity<byte[]>(fileDB.getData(), respHeaders, HttpStatus.OK);
 

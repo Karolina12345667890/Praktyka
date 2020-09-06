@@ -53,7 +53,6 @@ public class PdfBuilder {
     //TODO Klasa zawierajaca nazwy wszystkich uzywanych szablonow i uzywanie stalych, a nie "golych" stringow
     public byte[] getPdfFromObject(String templateName, PorozumieniePdfDto pdfDto) throws Exception {
         String processedHtml = processHtmlWithObject(templateName, pdfDto);
-        System.out.println(pdfDto.toString());
         return renderPdf(processedHtml);
     }
 

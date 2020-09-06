@@ -58,7 +58,7 @@
                     <ng-container *ngIf="myDocumentData.type === 'oswiadczenie';else POR">
                       Oświadczenie
                       <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1" (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                      <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                      <a  role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                     </ng-container>
 
                     <ng-template #POR>

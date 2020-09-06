@@ -184,8 +184,7 @@ export class StudentListComponent implements OnInit {
     this.authService.download('http://localhost:8080/file/' + id).subscribe(
       (value) => {
 
-        var fileExtension = value.headers.get('content-disposition').slice(17);
-
+        var fileExtension = value.headers.get('content-disposition').slice(21);
         //this.myDocumentList = value;
         // console.log(value);
         const objectURL = window.URL.createObjectURL(value.body);
