@@ -1,3 +1,4 @@
+<button style="margin-left: 90%" class="btn btn-danger " mat-button [mat-dialog-close] cdkFocusInitial>Zamknij</button>
 <div class="container mt-5">
 
   <div class="card border-info mb-3">
@@ -29,8 +30,27 @@
             <input #docType type="hidden" name="documentType" [value]="selectedDocument" />
           </div>
 
+          <div *ngIf="selectedFile && message == ''" class="progress">
+            <div
+              class="progress-bar progress-bar-info progress-bar-striped"
+              role="progressbar"
+              attr.aria-valuenow="{{ progress }}"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [ngStyle]="{ width: progress + '%' }"
+            >
+              {{ progress }}%
+            </div>
+          </div>
+          <br>
+
+<div *ngIf="message != ''" class="alert alert-danger">
+            {{message}}
+</div>
+
+
           <div class="custom-file mb-4">
-            <label #labelFileName class="custom-file-label" for="customFile">Wybierz plik</label>
+            <label #labelFileName class="custom-file-label" for="customFile" >Wybierz plik</label>
             <input #inputFile type="file" formControlName="file" class="custom-file-input" id="customFile" lang="pl-Pl">
           </div>
 

@@ -10,10 +10,11 @@ import {
 } from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
 import {DocumentDto} from '../models/DocumentDto';
-import {isUndefined} from "util";
-import {MatDialog} from "@angular/material/dialog";
-import {ShowCommentDialogComponent} from "../show-comment-dialog/show-comment-dialog.component";
-import {ActivatedRoute, Router} from "@angular/router";
+import {isUndefined} from 'util';
+import {MatDialog} from '@angular/material/dialog';
+import {ShowCommentDialogComponent} from '../show-comment-dialog/show-comment-dialog.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FileUploadComponent} from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-home-component',
@@ -35,7 +36,18 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    if(this.authService.isLoggedIn()) {
+
+
+    this.isAdmin = this.authService.isAdmin();
+    if (this.isAdmin) {
+      this.router.navigate(['/gl']);
+    }
+
+    this.load();
+  }
+
+  load(){
+    if (this.authService.isLoggedIn()) {
       this.authService.getResource('http://localhost:8080/api/document/list').subscribe(
         value => {
           this.myDocumentList = value;
@@ -58,7 +70,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           this.myGroups = Array.from(this.myGroupedDocuments.keys());
 
           this.myGroups.forEach(groupId => {
-            this.authService.getResource('http://localhost:8080/api/group/' + groupId+"/overview").subscribe(
+            this.authService.getResource('http://localhost:8080/api/group/' + groupId + '/overview').subscribe(
               value => {
                 this.myGroupsStatus.push({
                   id: value.id,
@@ -66,51 +78,44 @@ export class HomeComponent implements OnInit, AfterViewInit {
                   isOpen: value.isOpen,
                   groupAdminName: value.groupAdminName,
                   groupAdminSurname: value.groupAdminSurname,
-                  groupAdminEmail : value.groupAdminEmail,
-                  fieldOfStudy : value.fieldOfStudy,
-                  speciality : value.speciality,
-                  durationInWeeks : value.durationInWeeks
-                })
+                  groupAdminEmail: value.groupAdminEmail,
+                  fieldOfStudy: value.fieldOfStudy,
+                  speciality: value.speciality,
+                  durationInWeeks: value.durationInWeeks
+                });
               },
               error => console.log(error),
             );
-          })
+          });
         },
         error => console.log(error),
       );
     }
-
-    this.isAdmin = this.authService.isAdmin();
-    if (this.isAdmin) {
-      this.router.navigate(['/gl']);
-    }
-
   }
-
   ngAfterViewInit() {
     setTimeout(() => {
       this.myGroupsStatus.sort((a, b) => {
         return b.isOpen - a.isOpen;
-      })
+      });
     }, 100);
   }
 
 
-  openDoc(id:number,docType:string) {
-   this.router.navigate(['/'+docType], {queryParams: {id: id}});
+  openDoc(id: number, docType: string) {
+    this.router.navigate(['/' + docType], {queryParams: {id: id}});
   }
 
-  onClick(path:string,documentType:string){
-    this.authService.getResource2('http://localhost:8080'+path+'/pdf').subscribe(
+  onClick(path: string, documentType: string) {
+    this.authService.getResource2('http://localhost:8080' + path + '/pdf').subscribe(
       value => {
         this.myDocumentList = value;
-        console.log(value);
+       // console.log(value);
         const objectURL = window.URL.createObjectURL(value);
         // window.open(objectURL, '_blank');
         console.log(objectURL);
         var link = document.createElement('a');
         link.href = objectURL;
-        link.download = documentType+'.pdf'; //domyslna nazwa pliku
+        link.download = documentType + '.pdf'; //domyslna nazwa pliku
         link.click();
         setTimeout(function() {
           // For Firefox it is necessary to delay revoking the ObjectURL
@@ -121,25 +126,34 @@ export class HomeComponent implements OnInit, AfterViewInit {
     );
   }
 
-  openStudentQuestionnaire(groupId : string,groupSpeciality : string){
-    this.router.navigate(['/ankietastudent'], {queryParams: {id: groupId, s: groupSpeciality }});
+  uploadDoc(id: number, docType: string, groupName: string) {
+    const dialogRef = this.dialog.open(FileUploadComponent, {
+      width: '800px',
+      data: {docId: id, doctype: docType, groupname: groupName},
+    });
+
   }
-  openEmployerQuestionnaire(groupId : string){
+
+  openStudentQuestionnaire(groupId: string, groupSpeciality: string) {
+    this.router.navigate(['/ankietastudent'], {queryParams: {id: groupId, s: groupSpeciality}});
+  }
+
+  openEmployerQuestionnaire(groupId: string) {
     this.router.navigate(['/ankietaprac'], {queryParams: {id: groupId}});
   }
 
   showWarning(message: string) {
-      const dialogRef = this.dialog.open(ShowCommentDialogComponent, {
-        width: '400px',
-        data: message,
-      });
+    const dialogRef = this.dialog.open(ShowCommentDialogComponent, {
+      width: '400px',
+      data: message,
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (!isUndefined(result)) {
-          //zmiana komentarza do dokumentu
-          alert(result);
-        }
-      });
+    dialogRef.afterClosed().subscribe(result => {
+      if (!isUndefined(result)) {
+
+        window.location.reload(true);
+      }
+    });
   }
 
   showHideGroup(element) {
@@ -149,25 +163,24 @@ export class HomeComponent implements OnInit, AfterViewInit {
       const grpTable = groupTable.nativeElement;
       if (grpTable.id == element) {
         if (grpTable.style.display === 'none') {
-          grpTable.removeAttribute("style");
-        }
-        else {
+          grpTable.removeAttribute('style');
+        } else {
           grpTable.style.display = 'none';
         }
       }
-    })
+    });
 
   }
 
-  test6(){
-    this.authService.getResource('http://localhost:8080/api/document/ankieta_studenta/1/summaryStudentSurvay').subscribe( value => console.log(value),error => console.log(error));
+  test6() {
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_studenta/1/summaryStudentSurvay').subscribe(value => console.log(value), error => console.log(error));
   }
-  test7(){
-    this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/1/summaryPracownikSurvay').subscribe( value => console.log(value),error => console.log(error));
+
+  test7() {
+    this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/1/summaryPracownikSurvay').subscribe(value => console.log(value), error => console.log(error));
   }
 
 }
-
 
 
 export class Response {

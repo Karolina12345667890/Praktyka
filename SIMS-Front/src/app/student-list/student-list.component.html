@@ -82,7 +82,8 @@
 
             <ng-template #DONE>
               <ng-container *ngIf="doc.status === 'DONE';else empty">
-
+                <button type="button" class="btn btn-info my-1" *ngIf="doc.status == 'DONE' " (click)="downloadDoc(doc.id,doc.type,item.name,item.surname)">Pobierz</button>
+                <button type="button" class="btn btn-info my-1" *ngIf="doc.status == 'DONE' " (click)="removeFile(doc.id)">Usuń</button>
               </ng-container>
             </ng-template>
 

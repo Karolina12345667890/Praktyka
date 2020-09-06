@@ -42,7 +42,7 @@ public class UsersInitializer {
         group.setFormOfStudy(FormOfStudyEnum.FULL_TIME);
         group.setFieldOfStudy("Informatyka");
         group.setSpeciality("Programowanie systemów i baz danych");
-        group.setGroupAdminId((long) 1);
+        group.setGroupAdminId((long) 2);
         group.setGroupAdminName("Andrzej");
         group.setGroupAdminSurname("Aaa");
         group.setGroupAdminEmail("test@gmai.com");

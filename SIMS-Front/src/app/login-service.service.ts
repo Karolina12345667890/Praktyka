@@ -3,7 +3,7 @@ import {Observable, Subject} from 'rxjs';
 import {Router} from '@angular/router';
 import {NotifierService} from 'angular-notifier';
 import {OAuthService} from 'angular-oauth2-oidc';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {CookieService} from 'ngx-cookie-service';
 import * as jwt_decode from 'jwt-decode';
 
@@ -137,6 +137,34 @@ export class LoginServiceService {
     // return this.http.get(resourceUrl);
   }
 
+  upload(resourceUrl: string, file: File,  httpHeader = new HttpHeaders()): Observable<any> {
+      let newHeaders = httpHeader;
+      newHeaders.append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+      if (this.isLoggedIn()) {
+        newHeaders = newHeaders.append('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
+      }
+      const formData: FormData = new FormData();
+
+      formData.append('file', file);
+
+      const req = new HttpRequest('POST', resourceUrl, formData, {
+        reportProgress: true,
+        responseType: 'json'
+      });
+
+      return this.http.post(resourceUrl, formData, {reportProgress: true, observe: 'events', headers: newHeaders, responseType: 'blob'});
+  }
+
+  download(resourceUrl: string, httpHeader = new HttpHeaders()): Observable<any> {
+    let newHeaders = httpHeader;
+    newHeaders.append('Content-type', 'application/x-www-form-urlencoded; charset=utf-8');
+    if (this.isLoggedIn()) {
+      newHeaders = newHeaders.append('Authorization', 'Bearer ' + this.oauthService.getAccessToken());
+    }
+
+    return this.http.get(resourceUrl, {headers: newHeaders, observe: 'response', responseType: 'blob' as 'json' });
+    // return this.http.get(resourceUrl);
+  }
 
   getRoles() {
     if (this.oauthService.getAccessToken() !== null) {

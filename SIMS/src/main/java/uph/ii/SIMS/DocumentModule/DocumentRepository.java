@@ -11,4 +11,5 @@ public interface DocumentRepository extends Repository<Document, Long> {
     List<Document> removeAllByGroupIdAndOwnerId(Long groupId,Long ownerId);
     Boolean existsByGroupIdAndOwnerId(Long groupId, Long ownerId);
    Document save(Document document);
+   Document getById(Long id);
 }

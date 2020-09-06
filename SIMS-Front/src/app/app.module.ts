@@ -114,7 +114,7 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     FormsModule,
   ],
-  entryComponents: [GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent, EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent, PodsumowanieTrescDialogComponent],
+  entryComponents: [GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent, EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent, PodsumowanieTrescDialogComponent, FileUploadComponent],
   providers: [LoginServiceService, AuthGuardService, CookieService, PagerService, DatePipe],
   bootstrap: [AppComponent]
 })

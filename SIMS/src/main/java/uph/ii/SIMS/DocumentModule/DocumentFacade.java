@@ -593,6 +593,30 @@ public class DocumentFacade {
                 .collect(Collectors.toList());
     }
 
+    public Long getDocumentOwnerIdByDocumentId(Long id){
+        return documentRepository.getById(id).getOwnerId();
+    }
+
+    public String getDocumentTypeByDocumentId(Long id){
+        return documentRepository.getById(id).getType();
+    }
+
+    public String getDocumentGroupNameByDocumentId(Long id){
+        return documentRepository.getById(id).getGroupName();
+    }
+
+    public void setDocumentStatusDone(Long id){
+        Document doc = documentRepository.getById(id);
+        doc.setStatus(StatusEnum.DONE);
+        documentRepository.save(doc);
+    }
+
+    public void setDocumentStatusAccepted(Long id){
+        Document doc = documentRepository.getById(id);
+        doc.setStatus(StatusEnum.ACCEPTED);
+        documentRepository.save(doc);
+    }
+
     public void chengeUsersDocuments(Long groupId, Long studentId) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
         if (userIsGroupAdmin) {
@@ -672,11 +696,11 @@ public class DocumentFacade {
             }
 
             if (doc.getType().equals("zaswiadczenie")) {
-                if (doc.getStatusString().equals(StatusEnum.ACCEPTED.toString())) {
+                if (doc.getStatusString().equals(StatusEnum.ACCEPTED.toString()) || doc.getStatusString().equals(StatusEnum.DONE.toString())) {
                     numberOfStudents.set(1);
                 }
             } else if (doc.getType().equals("zaswiadczeniezatrudnienie")) {
-                if (doc.getStatusString().equals(StatusEnum.ACCEPTED.toString())) {
+                if (doc.getStatusString().equals(doc.getStatusString().equals(StatusEnum.ACCEPTED.toString()) || doc.getStatusString().equals(StatusEnum.DONE.toString()))) {
                     zatrudnienie.set(true);
                     numberOfStudents.set(1);
                 }

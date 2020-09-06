@@ -13,6 +13,7 @@ import {EditCommentDialogComponent} from '../edit-comment-dialog/edit-comment-di
 import {isEmpty} from 'rxjs/operators';
 import {PagerService} from '../pager-service.service';
 import {PodsumowanieTrescDialogComponent} from '../podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
+import {HttpResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-student-list',
@@ -146,11 +147,11 @@ export class StudentListComponent implements OnInit {
     this.authService.postResource('http://localhost:8080' + path, {}).subscribe(
       value => {
         this.load();
-        this.notifier.notify('success', 'Pomyślnie odrzucono studenta',);
+        this.notifier.notify('success', 'Pomyślnie odrzucono studenta');
       },
       error => {
         console.log(error);
-        this.notifier.notify('error', 'Coś poszło nie tak',);
+        this.notifier.notify('error', 'Coś poszło nie tak');
       },
     );
 
@@ -158,9 +159,50 @@ export class StudentListComponent implements OnInit {
   }
 
   openDoc(id: number, docType: string) {
-
-
     this.router.navigate(['/' + docType], {queryParams: {id}});
+  }
+
+  removeFile(id: number) {
+    const c = confirm('Czy na pewno chcesz usunąć ten dokument?');
+
+    if (c) {
+      this.authService.postResource('http://localhost:8080/delete/' + id, {}).subscribe(
+        value => {
+          this.notifier.notify('success', 'Pomyślnie usunięto plik');
+          this.load();
+        },
+        error => {
+          console.log(error);
+          this.notifier.notify('error', error.error,);
+        }
+      );
+    }
+  }
+
+  downloadDoc(id: number, docType: string, name: string, surname: string) {
+
+    this.authService.download('http://localhost:8080/file/' + id).subscribe(
+      (value) => {
+
+        var fileExtension = value.headers.get('content-disposition').slice(17);
+
+        //this.myDocumentList = value;
+        // console.log(value);
+        const objectURL = window.URL.createObjectURL(value.body);
+        // window.open(objectURL, '_blank');
+        // console.log(objectURL);
+        var link = document.createElement('a');
+        link.href = objectURL;
+        link.download = docType + '_' + name + '_' + surname + '_' + this.group.groupName + '.' + fileExtension; //domyslna nazwa pliku
+        link.click();
+        setTimeout(function() {
+          // For Firefox it is necessary to delay revoking the ObjectURL
+          window.URL.revokeObjectURL(objectURL);
+        }, 100);
+      },
+
+      error => console.log(error),
+    );
   }
 
   groupSummaryButton() {
@@ -178,7 +220,7 @@ export class StudentListComponent implements OnInit {
           this.authService.postResource2('http://localhost:8080/api/group/summary/' + this.group.id, {text: result}).subscribe(
             value => {
               //this.myDocumentList = value;
-             // console.log(value);
+              // console.log(value);
               const objectURL = window.URL.createObjectURL(value);
               // window.open(objectURL, '_blank');
               //console.log(objectURL);
@@ -207,7 +249,6 @@ export class StudentListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
-          console.log(result);
           this.authService.postResource('http://localhost:8080/api/document/' + docType + '/' + id + '/comment', result).subscribe(
             value => {
               console.log(value);
