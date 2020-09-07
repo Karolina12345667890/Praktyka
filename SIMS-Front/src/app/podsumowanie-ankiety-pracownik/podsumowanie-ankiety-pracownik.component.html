@@ -17,11 +17,11 @@
             <table class="table">
               <thead class="thead-light">
               <tr>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-                <th>D</th>
-                <th>E</th>
+                <th *ngIf="answer.length > 0">A</th>
+                <th *ngIf="answer.length > 1">B</th>
+                <th *ngIf="answer.length > 2">C</th>
+                <th *ngIf="answer.length > 3">D</th>
+                <th *ngIf="answer.length > 4">E</th>
               </tr>
               </thead>
 
