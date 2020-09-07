@@ -3,6 +3,7 @@ package uph.ii.SIMS.FileSendingModule;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import uph.ii.SIMS.AttributeEncryptor;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ public class FileData {
 
     @Id
     protected Long id;
+    @Convert(converter = AttributeEncryptor.class)
     private String fileName;
     private String type;
     @Lob

@@ -25,6 +25,9 @@ public class OswiadczenieFacade {
     
     public void storeChanges(OswiadczenieDto oswiadczenieDto, UserDto userDto, Boolean userIsAdmin) {
         Oswiadczenie oswiadczenie = oswiadczenieRepository.findById(oswiadczenieDto.getId());
+        if(oswiadczenie.getStatusEnum().equals(StatusEnum.ACCEPTED) || oswiadczenie.getStatusEnum().equals(StatusEnum.DONE)){
+            throw new AccessDeniedException("Document already Accepted");
+        }
         boolean userOwnsDocument = userDto.getId().equals(oswiadczenie.getOwnerId());
         boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
         if (!userCanAccessDocument ) {

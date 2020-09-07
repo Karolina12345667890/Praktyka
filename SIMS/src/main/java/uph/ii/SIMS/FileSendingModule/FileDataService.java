@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.Dto.AccessDeniedException;
+import uph.ii.SIMS.DocumentModule.Dto.StatusEnum;
 import uph.ii.SIMS.UserModule.UserFacade;
 
 import java.io.IOException;
@@ -33,16 +34,19 @@ public class FileDataService {
         try {
             if (userFacade.getCurrentUser().getId().equals(documentFacade.getDocumentOwnerIdByDocumentId(docId)) || userFacade.currentUserIsAdmin()) {
                 if (!fileDBRepository.existsById(docId)) {
-                    String fileNewName = documentFacade.getDocumentTypeByDocumentId(docId) + "_" + userFacade.getCurrentUser().getName() + "_" + userFacade.getCurrentUser().getSurname() + "_" + documentFacade.getDocumentGroupNameByDocumentId(docId);
-                    String[] split = StringUtils.cleanPath(file.getOriginalFilename()).split("\\.");
-                    String newFileName = fileNewName + "." + split[split.length - 1];
-                    FileData File = new FileData(docId, newFileName, file.getContentType(), file.getBytes());
-                    System.out.println(File);
+                    if(documentFacade.getDocumentStatusByDocumentId(docId).equals(StatusEnum.ACCEPTED.toString())) {
+                        String fileNewName = documentFacade.getDocumentTypeByDocumentId(docId) + "_" + userFacade.getCurrentUser().getName() + "_" + userFacade.getCurrentUser().getSurname() + "_" + documentFacade.getDocumentGroupNameByDocumentId(docId);
+                        String[] split = StringUtils.cleanPath(file.getOriginalFilename()).split("\\.");
+                        String newFileName = fileNewName + "." + split[split.length - 1];
+                        FileData File = new FileData(docId, newFileName, file.getContentType(), file.getBytes());
+                        System.out.println(File);
 
-                    fileDBRepository.saveAndFlush(File);
-                } else {
+                        fileDBRepository.saveAndFlush(File);
+                    }else
+                        throw new AccessDeniedException("Document status is different then ACCEPTED");
+                } else
                     throw new AccessDeniedException("File already in database!");
-                }
+
                 documentFacade.setDocumentStatusDone(docId);
 
                 message = "Uploaded the file successfully: " + file.getOriginalFilename();
@@ -50,29 +54,31 @@ public class FileDataService {
             } else
                 throw new AccessDeniedException("You dont have access to this document");
         } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(e.getMessage()));
         }
     }
 
     public ResponseEntity<byte[]> getFile(Long id) {
         if (userFacade.currentUserIsGroupAdmin()) {
-            FileData fileDB = fileDBRepository.findById(id).get();
+            if (fileDBRepository.existsById(id)) {
+                FileData fileDB = fileDBRepository.findById(id).get();
 
-            HttpHeaders respHeaders = new HttpHeaders();
+                HttpHeaders respHeaders = new HttpHeaders();
 
-            String filename = fileDB.getFileName();
-            String[] split = filename.split("\\.");
+                String filename = fileDB.getFileName();
+                String[] split = filename.split("\\.");
 
-            respHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=file" + split[split.length - 1]);
-            respHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
-            return new ResponseEntity<byte[]>(fileDB.getData(), respHeaders, HttpStatus.OK);
+                respHeaders.set(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=file" + split[split.length - 1]);
+                respHeaders.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
+                return new ResponseEntity<byte[]>(fileDB.getData(), respHeaders, HttpStatus.OK);
 
 //            return ResponseEntity.ok()
 //                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getFileName() + "\"")
 //                    .body(fileDB.getData());
-
-        }
+            }else
+            throw new AccessDeniedException("Document does not exists in database");
+        }else
         throw new AccessDeniedException("You dont have access to this document");
 
 

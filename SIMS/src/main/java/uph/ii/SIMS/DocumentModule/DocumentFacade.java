@@ -483,11 +483,14 @@ public class DocumentFacade {
 
     public void setOswiadczenieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
-        oswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
-        if (statusEnum.equals(StatusEnum.ACCEPTED)) {
-            OswiadczenieDto oswiadczenieDto = oswiadczenieFacade.find(id, userFacade.currentUserIsGroupAdmin());
-            checkOtherDocuments(oswiadczenieDto.getOwnerId(), oswiadczenieDto.getGroupId(), "osw");
-        }
+        if (!getDocumentStatusByDocumentId(id).equals(StatusEnum.DONE.toString())) {
+            oswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+            if (statusEnum.equals(StatusEnum.ACCEPTED)) {
+                OswiadczenieDto oswiadczenieDto = oswiadczenieFacade.find(id, userFacade.currentUserIsGroupAdmin());
+                checkOtherDocuments(oswiadczenieDto.getOwnerId(), oswiadczenieDto.getGroupId(), "osw");
+            }
+        }else
+        throw new AccessDeniedException("Cant change document status, document already have status Done");
     }
 
     public void setOswiadczenieComment(Long id, String newComment) {
@@ -497,11 +500,14 @@ public class DocumentFacade {
 
     public void setPorozumienieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
-        porozumienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
-        if (statusEnum.equals(StatusEnum.ACCEPTED)) {
-            PorozumienieDto porozumienieDto = porozumienieFacade.find(id, userFacade.currentUserIsGroupAdmin());
-            checkOtherDocuments(porozumienieDto.getOwnerId(), porozumienieDto.getGroupId(), "por");
-        }
+        if (!getDocumentStatusByDocumentId(id).equals(StatusEnum.DONE.toString())) {
+            porozumienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+            if (statusEnum.equals(StatusEnum.ACCEPTED)) {
+                PorozumienieDto porozumienieDto = porozumienieFacade.find(id, userFacade.currentUserIsGroupAdmin());
+                checkOtherDocuments(porozumienieDto.getOwnerId(), porozumienieDto.getGroupId(), "por");
+            }
+        }else
+        throw new AccessDeniedException("Cant change document status, document already have status Done");
     }
 
     public void setPorozumienieComment(Long id, String newComment) {
@@ -512,7 +518,10 @@ public class DocumentFacade {
 
     public void setZaswiadczenieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
-        zaswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        if (!getDocumentStatusByDocumentId(id).equals(StatusEnum.DONE.toString())) {
+            zaswiadczenieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        }else
+        throw new AccessDeniedException("Cant change document status, document already have status Done");
     }
 
     public void setZaswiadczenieComment(Long id, String newComment) {
@@ -522,7 +531,10 @@ public class DocumentFacade {
 
     public void setDziennikPraktykStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
-        dziennikPraktykFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        if (!getDocumentStatusByDocumentId(id).equals(StatusEnum.DONE.toString())) {
+            dziennikPraktykFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        }else
+        throw new AccessDeniedException("Cant change document status, document already have status Done");
     }
 
     public void setDziennikPraktykComment(Long id, String newComment) {
@@ -533,7 +545,11 @@ public class DocumentFacade {
 
     public void setPlanPraktykiStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
-        planPraktykiFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        if (!getDocumentStatusByDocumentId(id).equals(StatusEnum.DONE.toString())) {
+            planPraktykiFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        }else
+        throw new AccessDeniedException("Cant change document status, document already have status Done");
+
     }
 
     public void setPlanPraktykiComment(Long id, String newComment) {
@@ -543,7 +559,11 @@ public class DocumentFacade {
 
     public void setZaswiadczenieZatrudnienieStatus(Long id, StatusEnum statusEnum) {
         Boolean userIsGroupAdmin = userFacade.currentUserIsGroupAdmin();
-        zaswiadczenieZatrudnienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        if (!getDocumentStatusByDocumentId(id).equals(StatusEnum.DONE.toString())) {
+            zaswiadczenieZatrudnienieFacade.setStatus(id, statusEnum, userIsGroupAdmin);
+        }else
+        throw new AccessDeniedException("Cant change document status, document already have status Done");
+
     }
 
     public void setZaswiadczenieZatrudnienieComment(Long id, String newComment) {
@@ -595,25 +615,29 @@ public class DocumentFacade {
                 .collect(Collectors.toList());
     }
 
-    public Long getDocumentOwnerIdByDocumentId(Long id){
+    public Long getDocumentOwnerIdByDocumentId(Long id) {
         return documentRepository.getById(id).getOwnerId();
     }
 
-    public String getDocumentTypeByDocumentId(Long id){
+    public String getDocumentTypeByDocumentId(Long id) {
         return documentRepository.getById(id).getType();
     }
 
-    public String getDocumentGroupNameByDocumentId(Long id){
+    public String getDocumentGroupNameByDocumentId(Long id) {
         return documentRepository.getById(id).getGroupName();
     }
 
-    public void setDocumentStatusDone(Long id){
+    public String getDocumentStatusByDocumentId(Long id) {
+        return documentRepository.getById(id).getStatusString();
+    }
+
+    public void setDocumentStatusDone(Long id) {
         Document doc = documentRepository.getById(id);
         doc.setStatus(StatusEnum.DONE);
         documentRepository.save(doc);
     }
 
-    public void setDocumentStatusAccepted(Long id){
+    public void setDocumentStatusAccepted(Long id) {
         Document doc = documentRepository.getById(id);
         doc.setStatus(StatusEnum.ACCEPTED);
         documentRepository.save(doc);
@@ -681,7 +705,7 @@ public class DocumentFacade {
     public String fetchCompanyNameByGroupIdAndOwnerId(Long groupId, Long studId) {
         Porozumienie porozumienie = porozumienieFacade.find2(groupId, userFacade.currentUserIsGroupAdmin(), studId);
         ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienie = zaswiadczenieZatrudnienieFacade.find(groupId, studId, userFacade.currentUserIsGroupAdmin());
-        if (porozumienie.getVisible() && ( porozumienie.getStatusString().equals(StatusEnum.ACCEPTED.toString()) || porozumienie.getStatusString().equals(StatusEnum.DONE.toString())))
+        if (porozumienie.getVisible() && (porozumienie.getStatusString().equals(StatusEnum.ACCEPTED.toString()) || porozumienie.getStatusString().equals(StatusEnum.DONE.toString())))
             return porozumienie.getCompanyName();
         else if (zaswiadczenieZatrudnienie.getStatus().equals(StatusEnum.ACCEPTED.toString()) || zaswiadczenieZatrudnienie.getStatus().equals(StatusEnum.DONE.toString()))
             return zaswiadczenieZatrudnienie.getCompanyName();

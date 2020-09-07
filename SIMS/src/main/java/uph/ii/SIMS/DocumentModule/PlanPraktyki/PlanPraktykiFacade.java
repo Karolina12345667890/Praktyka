@@ -25,12 +25,15 @@ public class PlanPraktykiFacade {
 
     public void storeChanges(PlanPraktykiDto planPraktykiDto, UserDto userDto, Boolean userIsAdmin) {
         PlanPraktyki planPraktyki = PlanPraktykiRepository.findById(planPraktykiDto.getId());
+        if (planPraktyki.getStatusEnum().equals(StatusEnum.ACCEPTED) || planPraktyki.getStatusEnum().equals(StatusEnum.DONE)) {
+            throw new AccessDeniedException("Document already Accepted");
+        }
         boolean userOwnsDocument = userDto.getId().equals(planPraktyki.getOwnerId());
         boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
-        if (!userCanAccessDocument ) {
+        if (!userCanAccessDocument) {
             throw new AccessDeniedException("You can't access this document");
         }
-        if(planPraktyki.getStatusEnum().equals(StatusEnum.ACCEPTED)){
+        if (planPraktyki.getStatusEnum().equals(StatusEnum.ACCEPTED)) {
             throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
         }
         planPraktyki.setStudentInternshipStart(planPraktykiDto.getStudentInternshipStart());
@@ -54,7 +57,7 @@ public class PlanPraktykiFacade {
 
 
     public void setComment(Long id, String newComment, Boolean userIsAdmin) {
-        if(!userIsAdmin){
+        if (!userIsAdmin) {
             throw new AccessDeniedException("Only admin can set comments on documents");
         }
 
@@ -74,14 +77,14 @@ public class PlanPraktykiFacade {
         PlanPraktyki planPraktyki = PlanPraktykiRepository.findById(id);
         boolean userOwnsDocument = userDto.getId().equals(planPraktyki.getOwnerId());
         boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
-        if (!userCanAccessDocument ) {
+        if (!userCanAccessDocument) {
             throw new AccessDeniedException("You can't access this document");
         }
         return planPraktyki.PlanPraktykiDto();
     }
 
-    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
-        if(!userIsAdmin){
+    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin) {
+        if (!userIsAdmin) {
             throw new AccessDeniedException("Only admin can change status of documents");
         }
 

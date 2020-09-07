@@ -33,6 +33,9 @@ public class PorozumienieFacade {
      */
     public void storeChanges(PorozumienieDto porozumienieDto, UserDto userDto, Boolean userIsAdmin) {
         Porozumienie porozumienie = porozumienieRepository.findById(porozumienieDto.getId());
+        if (porozumienie.getStatusEnum().equals(StatusEnum.ACCEPTED) || porozumienie.getStatusEnum().equals(StatusEnum.DONE)) {
+            throw new AccessDeniedException("Document already Accepted");
+        }
         boolean userOwnsDocument = userDto.getId().equals(porozumienie.getOwnerId());
         boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
         if (!userCanAccessDocument ) {

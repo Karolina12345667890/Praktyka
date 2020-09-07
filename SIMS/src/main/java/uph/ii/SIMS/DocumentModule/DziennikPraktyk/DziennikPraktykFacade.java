@@ -26,12 +26,15 @@ public class DziennikPraktykFacade {
 
     public void storeChanges(DziennikPraktykDto dziennikPraktykDto, UserDto userDto, Boolean userIsAdmin) {
         DziennikPraktyk dziennikPraktyk = DziennikPraktykRepository.findById(dziennikPraktykDto.getId());
+        if (dziennikPraktyk.getStatusEnum().equals(StatusEnum.ACCEPTED) || dziennikPraktyk.getStatusEnum().equals(StatusEnum.DONE)) {
+            throw new AccessDeniedException("Document already Accepted");
+        }
         boolean userOwnsDocument = userDto.getId().equals(dziennikPraktyk.getOwnerId());
         boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
-        if (!userCanAccessDocument ) {
+        if (!userCanAccessDocument) {
             throw new AccessDeniedException("You can't access this document");
         }
-        if(dziennikPraktyk.getStatusEnum().equals(StatusEnum.ACCEPTED)){
+        if (dziennikPraktyk.getStatusEnum().equals(StatusEnum.ACCEPTED)) {
             throw new CantModifyAcceptedDocumentException("You can't modify accepted document");
         }
         dziennikPraktyk.setCompanyName(dziennikPraktykDto.getCompanyName());
@@ -46,7 +49,7 @@ public class DziennikPraktykFacade {
         DziennikPraktykRepository.save(dziennikPraktyk);
     }
 
-    public void createNew(DziennikPraktykDto DziennikPraktykDto, Long studentId, Long groupId,String groupName, Boolean visible) {
+    public void createNew(DziennikPraktykDto DziennikPraktykDto, Long studentId, Long groupId, String groupName, Boolean visible) {
         DziennikPraktyk dziennikPraktyk = new DziennikPraktyk(studentId);
 
         dziennikPraktyk.setComment(DziennikPraktykDto.getComment());
@@ -58,7 +61,7 @@ public class DziennikPraktykFacade {
 
 
     public void setComment(Long id, String newComment, Boolean userIsAdmin) {
-        if(!userIsAdmin){
+        if (!userIsAdmin) {
             throw new AccessDeniedException("Only admin can set comments on documents");
         }
 
@@ -78,14 +81,14 @@ public class DziennikPraktykFacade {
         DziennikPraktyk DziennikPraktyk = DziennikPraktykRepository.findById(id);
         boolean userOwnsDocument = userDto.getId().equals(DziennikPraktyk.getOwnerId());
         boolean userCanAccessDocument = userOwnsDocument || userIsAdmin;
-        if (!userCanAccessDocument ) {
+        if (!userCanAccessDocument) {
             throw new AccessDeniedException("You can't access this document");
         }
         return DziennikPraktyk.DziennikPraktykDto();
     }
 
-    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin){
-        if(!userIsAdmin){
+    public void setStatus(Long id, StatusEnum status, Boolean userIsAdmin) {
+        if (!userIsAdmin) {
             throw new AccessDeniedException("Only admin can change status of documents");
         }
 
