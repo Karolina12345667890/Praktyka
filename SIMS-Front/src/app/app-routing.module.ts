@@ -17,6 +17,8 @@ import {PlanPraktykiComponent} from "./plan-praktyki/plan-praktyki.component";
 import {ZaswiadczenieZatrudnienieComponent} from "./zaswiadczenie-zatrudnienie/zaswiadczenie-zatrudnienie.component";
 import {UserPanelComponent} from "./user-panel/user-panel.component";
 import {SystemFaqComponent} from "./system-faq/system-faq.component";
+import {PodsumowanieAnkietyStudentComponent} from "./podsumowanie-ankiety-student/podsumowanie-ankiety-student.component";
+import {PodsumowanieAnkietyPracownikComponent} from "./podsumowanie-ankiety-pracownik/podsumowanie-ankiety-pracownik.component";
 
 
 //tabele rutingu
@@ -83,6 +85,16 @@ const appRoutes: Routes = [
   {
     path: 'userPanel',
     component: UserPanelComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'podsumowanieAnkietStudent',
+    component: PodsumowanieAnkietyStudentComponent,
+    canActivate: [AuthGuardService]
+  },
+  {
+    path: 'podsumowanieAnkietPracownik',
+    component: PodsumowanieAnkietyPracownikComponent,
     canActivate: [AuthGuardService]
   },
   {

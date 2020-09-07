@@ -36,8 +36,8 @@
           <th class="docs">Plan Praktyki Zawodowej</th>
           <th class="docs">Dziennik Praktyk</th>
           <th class="docs">Zaświadczenie</th>
-          <th style="width: 3%;"> Ankiety</th>
-          <th style="width: 3%;"> Ankiety</th>
+          <th class="docs"> Ankiety</th>
+          <th class="docs"> Ankiety</th>
         </tr>
       </thead>
 
@@ -80,18 +80,19 @@
                 </ng-container>
               </ng-template>
 
-            <ng-template #DONE>
-              <ng-container *ngIf="doc.status === 'DONE';else empty">
-                <button type="button" class="btn btn-info my-1" *ngIf="doc.status == 'DONE' " (click)="downloadDoc(doc.id,doc.type,item.name,item.surname)">Pobierz</button>
-                <button type="button" class="btn btn-info my-1" *ngIf="doc.status == 'DONE' " (click)="removeFile(doc.id)">Usuń</button>
-              </ng-container>
-            </ng-template>
+              <ng-template #DONE>
+                <ng-container *ngIf="doc.status === 'DONE';else empty">
+                  Wysłano
+                  <button type="button" class="btn btn-warning m-1" (click)="downloadDoc(doc.id,doc.type,item.name,item.surname)">Pobierz</button>
+                  <button type="button" class="btn btn-danger m-1" (click)="removeFile(doc.id)">Usuń</button>
+                </ng-container>
+              </ng-template>
 
             <ng-template #empty>
                 Brak
               </ng-template>
 
-              <button type="button" class="btn btn-primary my-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">
+              <button type="button" class="btn btn-primary m-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">
                 <div *ngIf="doc.type == 'ankieta_studenta';else prac">
                   Student
                 </div>
@@ -100,12 +101,14 @@
                  Pracodawca
                 </div>
                 </ng-template>
+
+
                 <ng-template #zobacz>
                   Zobacz
                 </ng-template>
 
               </button>
-              <button type="button" class="btn btn-warning my-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
+              <button type="button" class="btn btn-warning m-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
 
           </td>
         </tr>

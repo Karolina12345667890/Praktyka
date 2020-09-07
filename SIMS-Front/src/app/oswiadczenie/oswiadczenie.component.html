@@ -6,14 +6,14 @@
     </div></div></div><div *ngIf="oswiadczenieForm.valid">Wyślij</div></button>
   </div>
 
-  <div *ngIf="isAdmin">
+  <div *ngIf="isAdmin && status != 'DONE'">
     <div  class="btn-group btn-group-lg btn-block">
       <button  class="btn btn-success " type="button" (click)="accept()">Akceptuj</button>
       <button  class="btn btn-danger " type="button" (click)="decline()">Odrzuć</button>
       <button  class="btn btn-warning " type="button" (click)="warning()">Dodaj uwage i odrzuć</button>
     </div>
 
-    <div class="text-center" [ngStyle]="status == 'NEW' && {'background-color':'#2196F3'} || status== 'ACCEPTED' && {'background-color':'#42A948'} || status == 'DECLINED' && {'background-color':'#dc3545'}">
+    <div class="text-center" [ngStyle]="status == 'NEW' && {'background-color':'#2196F3'} || status== 'ACCEPTED' && {'background-color':'#006600'} || status == 'DECLINED' && {'background-color':'#dc3545'}">
       <ng-container *ngIf="status === 'DECLINED';else NEW">
         Odrzucony
       </ng-container>
@@ -34,6 +34,12 @@
         Brak
       </ng-template>
     </div>
+  </div>
+
+  <div class="text-center" [ngStyle]="status == 'DONE' && {'background-color':'#42A948'}">
+    <ng-container *ngIf="status === 'DONE'">
+      Dokument zaakceptowany, wysłany
+    </ng-container>
   </div>
 
   <body class="a4">

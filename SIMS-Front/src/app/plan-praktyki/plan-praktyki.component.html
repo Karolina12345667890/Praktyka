@@ -4,7 +4,7 @@
       <h3> Wypełnij wszystkie pola zaznaczone czerwoną kreską <input class="example-invalid" disabled size="4" /> aż zmienią sie na zielone <input class="example-valid" disabled size="4"/></h3>
     </div></div></div> <div *ngIf="planPraktykiForm.valid"> Wyślij </div> </button>
   </div>
-  <div *ngIf="isAdmin">
+  <div *ngIf="isAdmin && status != 'DONE'" >
     <div  class="btn-group btn-group-lg btn-block">
 
       <button  class="btn btn-success " type="button" (click)="accept()">Akceptuj</button>
@@ -14,7 +14,7 @@
     </div>
 
     <div class="text-center" [ngStyle]="status == 'NEW' && {'background-color':'#2196F3'} ||
-     status== 'ACCEPTED' && {'background-color':'#42A948'} ||
+     status== 'ACCEPTED' && {'background-color':'#006600'} ||
       status == 'DECLINED' && {'background-color':'#dc3545'}">
 
       <ng-container *ngIf="status === 'DECLINED';else NEW">
@@ -34,6 +34,12 @@
         Brak
       </ng-template>
     </div>
+  </div>
+
+  <div class="text-center" [ngStyle]="status == 'DONE' && {'background-color':'#42A948'}">
+    <ng-container *ngIf="status === 'DONE'">
+      Dokument zaakceptowany, wysłany
+    </ng-container>
   </div>
 
   <body class="a4">

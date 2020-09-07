@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h1>Podsumowanie</h1>
+  <p class="lead">Ankiety studentów</p>
+
+  <hr class="mt-2 mb-4">
+
+  <div class="alert alert-danger" *ngIf="err != null">
+    {{ err }}
+  </div>
+
+  <div *ngIf="err == null">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="card my-2" *ngFor="let answer of answers; let i = index">
+          <div class="card-header">Pytanie {{ i+1 }}</div>
+          <div class="card-body">
+            <table class="table">
+              <thead class="thead-light">
+              <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+              </tr>
+              </thead>
+
+              <tbody>
+              <td *ngFor="let ansVal of answer">
+                <tr>
+                  {{ ansVal }}
+                </tr>
+              </td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <div class="card my-2 pb-0">
+          <div class="card-header">Pytanie 16 - sugestie</div>
+          <div class="card-body">
+            <div *ngIf="suggestions != null">
+              <div *ngFor="let suggestion of suggestions">
+                <div class="alert alert-info mb-2">{{ suggestion }}</div>
+              </div>
+            </div>
+            <div *ngIf="suggestions == null">
+              <div class="alert alert-warning">Brak</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+

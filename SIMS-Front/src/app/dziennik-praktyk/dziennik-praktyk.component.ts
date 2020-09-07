@@ -28,6 +28,7 @@ export class DziennikPraktykComponent implements OnInit {
   diary: FormArray;
   dateFrom: boolean = false;
   dateTo: boolean = false;
+  status: string = "";
   private readonly notifier: NotifierService;
 
   daysName: Array<{ id: number, text: string }> = [
@@ -60,7 +61,7 @@ export class DziennikPraktykComponent implements OnInit {
 
     this.authService.getResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id).subscribe(
       value => {
-
+        this.status = value.status
         this.diaryGroup = this.fb.group({
           studentName: '',
           studentSurname: '',

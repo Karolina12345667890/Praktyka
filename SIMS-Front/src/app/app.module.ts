@@ -35,6 +35,8 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { CreateGroupAdminDialogComponent } from './create-group-admin-dialog/create-group-admin-dialog.component';
 import { SystemFaqComponent } from './system-faq/system-faq.component';
 import { PodsumowanieTrescDialogComponent } from './podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
+import { PodsumowanieAnkietyStudentComponent } from './podsumowanie-ankiety-student/podsumowanie-ankiety-student.component';
+import { PodsumowanieAnkietyPracownikComponent } from './podsumowanie-ankiety-pracownik/podsumowanie-ankiety-pracownik.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -101,6 +103,8 @@ const customNotifierOptions: NotifierOptions = {
     CreateGroupAdminDialogComponent,
     SystemFaqComponent,
     PodsumowanieTrescDialogComponent,
+    PodsumowanieAnkietyStudentComponent,
+    PodsumowanieAnkietyPracownikComponent,
   ],
   imports: [
     BrowserModule,

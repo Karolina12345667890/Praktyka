@@ -58,14 +58,14 @@
                     <ng-container *ngIf="myDocumentData.type === 'oswiadczenie';else POR">
                       Oświadczenie
                       <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1" (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                      <a  role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                      <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-warning float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                     </ng-container>
 
                     <ng-template #POR>
                       <ng-container *ngIf="myDocumentData.type === 'porozumienie';else ZAS">
                         Porozumienie
                         <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1"  (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-warning float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                       </ng-container>
                     </ng-template>
 
@@ -73,7 +73,7 @@
                       <ng-container *ngIf="myDocumentData.type === 'zaswiadczenie';else DZI">
                         Zaświadczenie
                         <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-warning float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                       </ng-container>
                     </ng-template>
 
@@ -81,7 +81,7 @@
                       <ng-container *ngIf="myDocumentData.type === 'dziennikpraktyk';else PLA">
                         Dziennik Praktyk
                         <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1"   (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-warning float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                       </ng-container>
                     </ng-template>
 
@@ -89,7 +89,7 @@
                       <ng-container *ngIf="myDocumentData.type === 'planpraktyki';else ZZ">
                         Plan Praktyki Zawodowej
                         <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1" (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-warning float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                       </ng-container>
                     </ng-template>
 
@@ -97,7 +97,7 @@
                       <ng-container *ngIf="myDocumentData.type === 'zaswiadczeniezatrudnienie';else AS">
                         Zaświadczenie o zatrudnieniu
                         <button *ngIf="myDocumentData.status != 'ACCEPTED' && myDocumentData.status != 'DONE'" type="button" class="btn btn-success float-right mx-1"  (click)="openDoc(myDocumentData.id,myDocumentData.type)">Wypełnij</button>
-                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-secondary float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
+                        <a *ngIf="myDocumentData.status == 'ACCEPTED'" role="button" class="btn btn-warning float-right mx-1" (click)="uploadDoc(myDocumentData.id,myDocumentData.type,myGroup.name)">Wyślij wypełniony dokument</a>
                       </ng-container>
                     </ng-template>
 
