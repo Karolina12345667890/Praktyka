@@ -336,7 +336,7 @@ public class DocumentFacade {
         ZaswiadczenieDto zaswiadczenieDto = zaswiadczenieFacade.find(id, currentUser, isAdmin);
         if (zaswiadczenieDto.getStatus().equals(StatusEnum.EMPTY.toString())) {
             PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, zaswiadczenieDto.getGroupId());
-            if (porozumienieDto.getStatus() == StatusEnum.ACCEPTED.toString()) {
+            if (porozumienieDto.getStatus().equals(StatusEnum.ACCEPTED.toString()) || porozumienieDto.getStatus().equals(StatusEnum.DONE.toString())) {
                 zaswiadczenieDto.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
                 zaswiadczenieDto.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
             }
@@ -371,7 +371,7 @@ public class DocumentFacade {
         dziennikPraktykDto.setStudentAlbumNumber(currentUser.getAlbum());
         if (dziennikPraktykDto.getStatus().equals(StatusEnum.EMPTY.toString())) {
             PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, dziennikPraktykDto.getGroupId());
-            if (porozumienieDto.getStatus().equals(StatusEnum.ACCEPTED.toString())) {
+            if (porozumienieDto.getStatus().equals(StatusEnum.ACCEPTED.toString()) || porozumienieDto.getStatus().equals(StatusEnum.DONE.toString())) {
                 dziennikPraktykDto.setCompanyName(porozumienieDto.getCompanyName());
                 dziennikPraktykDto.setPeriodFrom(porozumienieDto.getStudentInternshipStart());
                 dziennikPraktykDto.setPeriodTo(porozumienieDto.getStudentInternshipEnd());
@@ -407,7 +407,7 @@ public class DocumentFacade {
 
         if (planPraktykiDto.getStatus().equals(StatusEnum.EMPTY.toString())) {
             PorozumienieDto porozumienieDto = porozumienieFacade.find2(currentUser, isAdmin, planPraktykiDto.getGroupId());
-            if (porozumienieDto.getStatus().equals(StatusEnum.ACCEPTED.toString())) {
+            if (porozumienieDto.getStatus().equals(StatusEnum.ACCEPTED.toString()) || porozumienieDto.getStatus().equals(StatusEnum.DONE.toString())) {
                 planPraktykiDto.setStudentInternshipStart(porozumienieDto.getStudentInternshipStart());
                 planPraktykiDto.setStudentInternshipEnd(porozumienieDto.getStudentInternshipEnd());
             }
@@ -557,11 +557,13 @@ public class DocumentFacade {
         System.out.println(porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()));
         System.out.println(oswiadczenieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()));
         if (doc.equals("osw")) {
-            if (porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()).equals(StatusEnum.ACCEPTED)) {
+            StatusEnum statuspor = porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin());
+            if ((statuspor).equals(StatusEnum.ACCEPTED) || (statuspor).equals(StatusEnum.DONE)) {
                 setVisibleOtherDocuments(ownerId, groupId);
             }
         } else if (doc.equals("por")) {
-            if (oswiadczenieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()).equals(StatusEnum.ACCEPTED)) {
+            StatusEnum statusosw = oswiadczenieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin());
+            if ((statusosw).equals(StatusEnum.ACCEPTED) || (statusosw).equals(StatusEnum.DONE)) {
                 setVisibleOtherDocuments(ownerId, groupId);
             }
         }
@@ -631,9 +633,11 @@ public class DocumentFacade {
                     doc.setVisible(!zzisVisible);
                     documentRepository.save(doc);
                 } else if (documents.get(i).getType().equals("oswiadczenie")) {
-                    oswStatusAccepted = documents.get(i).getStatusString().equals(StatusEnum.ACCEPTED.toString());
+                    String docStstusOsw = documents.get(i).getStatusString();
+                    oswStatusAccepted = docStstusOsw.equals(StatusEnum.ACCEPTED.toString()) || docStstusOsw.equals(StatusEnum.DONE.toString());
                 } else if (documents.get(i).getType().equals("porozumienie")) {
-                    porStatusAccepted = documents.get(i).getStatusString().equals(StatusEnum.ACCEPTED.toString());
+                    String docStstusPor = documents.get(i).getStatusString();
+                    porStatusAccepted = docStstusPor.equals(StatusEnum.ACCEPTED.toString()) || docStstusPor.equals(StatusEnum.DONE.toString());
                 }
             }
 
@@ -677,9 +681,9 @@ public class DocumentFacade {
     public String fetchCompanyNameByGroupIdAndOwnerId(Long groupId, Long studId) {
         Porozumienie porozumienie = porozumienieFacade.find2(groupId, userFacade.currentUserIsGroupAdmin(), studId);
         ZaswiadczenieZatrudnienieDto zaswiadczenieZatrudnienie = zaswiadczenieZatrudnienieFacade.find(groupId, studId, userFacade.currentUserIsGroupAdmin());
-        if (porozumienie.getVisible() && porozumienie.getStatusString().equals(StatusEnum.ACCEPTED.toString()))
+        if (porozumienie.getVisible() && ( porozumienie.getStatusString().equals(StatusEnum.ACCEPTED.toString()) || porozumienie.getStatusString().equals(StatusEnum.DONE.toString())))
             return porozumienie.getCompanyName();
-        else if (zaswiadczenieZatrudnienie.getStatus().equals(StatusEnum.ACCEPTED.toString()))
+        else if (zaswiadczenieZatrudnienie.getStatus().equals(StatusEnum.ACCEPTED.toString()) || zaswiadczenieZatrudnienie.getStatus().equals(StatusEnum.DONE.toString()))
             return zaswiadczenieZatrudnienie.getCompanyName();
         else
             return "";
