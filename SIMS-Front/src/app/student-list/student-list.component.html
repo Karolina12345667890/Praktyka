@@ -14,7 +14,9 @@
   </div>
 
   <hr class="my-2">
-  <button class="btn btn-danger" *ngIf="!group.isOpen" (click)="groupSummaryButton()" >Podsumuj grupe</button>
+  <button class="btn btn-danger m-1" *ngIf="!group.isOpen" (click)="groupSummaryButton()">Podsumuj grupe</button>
+  <a role="button" class="btn btn-secondary m-1" *ngIf="!group.isOpen" [routerLink]="['/podsumowanieAnkietStudent']" [queryParams]="{ id: group.id }">Podsumowanie ankiet studentów</a>
+  <a role="button" class="btn btn-warning m-1" *ngIf="!group.isOpen" [routerLink]="['/podsumowanieAnkietPracownik']" [queryParams]="{ id: group.id }">Podsumowanie ankiet pracowników</a>
 
   <div class="table-holder">
     <div *ngIf="pager.pages && pager.pages.length"  class="btn-group my-2 pb-2" role="group">
