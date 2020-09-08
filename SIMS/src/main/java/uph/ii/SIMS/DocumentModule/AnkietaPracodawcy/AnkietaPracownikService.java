@@ -129,8 +129,7 @@ public class AnkietaPracownikService {
     {
         UserDto user = userFacade.getCurrentUser();
         Group group = groupRepository.getOne(groupId);
-        if(!userFacade.currentUserIsAdmin() && !group.getGroupAdminId().equals(user.getId())
-                || !userFacade.currentUserIsGroupAdmin())
+        if(!userFacade.currentUserIsAdmin() || !userFacade.currentUserIsGroupAdmin())
         {
             throw new AccessDeniedException("Nie masz uprawnień do tych danych");
         }
@@ -317,8 +316,7 @@ public class AnkietaPracownikService {
         AnkietaPracownik ankietaPracownik = ankietaPracownikRepository.findById(id);
         Group group = groupRepository.getOne(ankietaPracownik.getGroupId());
 
-        if(!userFacade.currentUserIsAdmin() && !group.getGroupAdminId().equals(user.getId())
-                || !userFacade.currentUserIsGroupAdmin())
+        if(!userFacade.currentUserIsAdmin() || !userFacade.currentUserIsGroupAdmin())
         {
             throw new AccessDeniedException("Nie masz uprawnień do tych danych");
         }
