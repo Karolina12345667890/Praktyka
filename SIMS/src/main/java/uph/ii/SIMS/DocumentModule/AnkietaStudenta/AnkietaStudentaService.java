@@ -142,6 +142,7 @@ public class AnkietaStudentaService {
         for(int i = 0; i < list.size(); i++)
         {
             answer = new ArrayList<>();
+
             answer.add(list.get(i).getAnswerTo1());
             answer.add(list.get(i).getAnswerTo2());
             answer.add(list.get(i).getAnswerTo3());
@@ -195,30 +196,20 @@ public class AnkietaStudentaService {
         {{add(0);
             add(0);
         }});
-        structureMap.put(5,new ArrayList<>()
-        {{add(0);
-            add(0);
-            add(0);
-            add(0);
-        }});
+
         structureMap.put(6,new ArrayList<>()
         {{add(0);
+            add(0);
+            add(0);
             add(0);
         }});
         structureMap.put(7,new ArrayList<>()
         {{add(0);
             add(0);
-            add(0);
         }});
-        structureMap.put(8,new ArrayList<>()
-        {{add(0);
-            add(0);
-            add(0);
-            add(0);
-        }});
+
         structureMap.put(9,new ArrayList<>()
         {{add(0);
-            add(0);
             add(0);
             add(0);
         }});
@@ -232,6 +223,7 @@ public class AnkietaStudentaService {
         {{add(0);
             add(0);
             add(0);
+            add(0);
         }});
         structureMap.put(12,new ArrayList<>()
         {{add(0);
@@ -242,32 +234,26 @@ public class AnkietaStudentaService {
         structureMap.put(13,new ArrayList<>()
         {{add(0);
             add(0);
+            add(0);
         }});
         structureMap.put(14,new ArrayList<>()
+        {{add(0);
+            add(0);
+            add(0);
+            add(0);
+        }});
+
+        structureMap.put(16,new ArrayList<>()
+        {{add(0);
+            add(0);
+        }});
+        structureMap.put(19,new ArrayList<>()
         {{add(0);
             add(0);
             add(0);
         }});
 
         return structureMap;
-    }
-
-    /**
-     * Metoda odpowiedzialana za utworzenie listy z uwagami zawartymi w ankietach pracownik
-     * @param list
-     * @return
-     */
-    public List<Object> findAllComments(List<AnkietaStudenta> list)
-    {
-        List<Object> commentsList = new ArrayList<>();
-        for(int i = 0; i < list.size(); i++)
-        {
-            if(!list.get(i).getAnswerTo14text().equals("....") & !list.get(i).getAnswerTo14text().equals(""))
-            {
-                commentsList.add(list.get(i).getAnswerTo14text());
-            }
-        }
-        return commentsList;
     }
 
     /**
@@ -279,13 +265,74 @@ public class AnkietaStudentaService {
     {
         UserDto user = userFacade.getCurrentUser();
         Group group = groupRepository.getOne(groupId);
-        if(!userFacade.currentUserIsGroupAdmin())
+        if(!userFacade.currentUserIsAdmin() && !group.getGroupAdminId().equals(user.getId())
+            || !userFacade.currentUserIsGroupAdmin())
         {
             throw new AccessDeniedException("Nie masz uprawnień do tych danych");
         }
         else {
             return ankiety(groupId);
         }
+    }
+
+    /**
+     * Metoda odpowiedzialna za pobranie wszystkich danych z wszystkich pól tekstowych w ankiecie
+     * @param list
+     * @return
+     */
+    public HashMap<Integer, List<Object>> findAllTextField(List<AnkietaStudenta> list)
+    {
+        List<Object> answerList5 = new ArrayList<>();
+        List<Object> answerList8 = new ArrayList<>();
+        List<Object> answerList15 = new ArrayList<>();
+        List<Object> answerList17 = new ArrayList<>();
+        List<Object> answerList18 = new ArrayList<>();
+        List<Object> answerList20 = new ArrayList<>();
+        List<Object> answerList21 = new ArrayList<>();
+        HashMap<Integer, List<Object>> map = new HashMap<>();
+
+        for(int i = 0; i < list.size(); i++)
+        {
+            if(!list.get(i).getAnswerTo5atext().equals("....") & !list.get(i).getAnswerTo5atext().equals(""))
+            {
+                answerList5.add(list.get(i).getAnswerTo5atext());
+                map.put(5,answerList5);
+
+            }
+            if(!list.get(i).getAnswerTo7atext().equals("....") & !list.get(i).getAnswerTo7atext().equals(""))
+            {
+                answerList8.add(list.get(i).getAnswerTo7atext());
+                map.put(8,answerList8);
+            }
+            if(!list.get(i).getAnswerTo11text().equals("....") & !list.get(i).getAnswerTo11text().equals(""))
+            {
+                answerList15.add(list.get(i).getAnswerTo11text());
+                map.put(15,answerList15);
+
+            }
+            if(!list.get(i).getAnswerTo12atext().equals("....") & !list.get(i).getAnswerTo12atext().equals(""))
+            {
+                answerList17.add(list.get(i).getAnswerTo12atext());
+                map.put(17,answerList17);
+            }
+            if(!list.get(i).getAnswerTo12btext().equals("....") & !list.get(i).getAnswerTo12btext().equals(""))
+            {
+                answerList18.add(list.get(i).getAnswerTo12btext());
+                map.put(18,answerList18);
+            }
+            if(!list.get(i).getAnswerTo13text().equals("....") & !list.get(i).getAnswerTo13text().equals(""))
+            {
+                answerList20.add(list.get(i).getAnswerTo13text());
+                map.put(20,answerList20);
+            }
+            if(!list.get(i).getAnswerTo14text().equals("....") & !list.get(i).getAnswerTo14text().equals(""))
+            {
+                answerList21.add(list.get(i).getAnswerTo14text());
+                map.put(21,answerList21);
+            }
+
+        }
+        return map;
     }
 
     /**
@@ -296,47 +343,67 @@ public class AnkietaStudentaService {
     public HashMap<Integer, List<Object>> ankiety(Long id)
     {
         List<AnkietaStudenta> allForm =  ankietaStudentaRepository.findAllByGroupId(id);
-        List<Object> commentList = findAllComments(allForm);
         HashMap<Integer, List<String>> allFormMap = changeObjectToList(allForm);
         HashMap<Integer, List<Object>> answerMap = createStructure();
+
+        HashMap<Integer, List<Object>> allTextField = findAllTextField(allForm);
 
         int a= 0;
         int b = 0;
         int c = 0;
         int d = 0;
+        int temp = 0;
 
         for(int i = 0; i < allFormMap.size(); i++)
         {
+            temp = 0;
             for(int j = 0; j < allFormMap.get(i).size(); j++)
             {
+                if(temp == 5 || temp == 8 || temp == 15 || temp == 17  )
+                {
+                    temp++;
+                    if(temp == 18)
+                    {
+                        temp++;
+                    }
+                }
                 if(allFormMap.get(i).get(j).equals("a"))
                 {
-                    a = Integer.parseInt(answerMap.get(j).get(0).toString());
+                    a = Integer.parseInt(answerMap.get(temp).get(0).toString());
                     a++;
-                    answerMap.get(j).set(0,a);
+                    answerMap.get(temp).set(0,a);
                 }
                 else if(allFormMap.get(i).get(j).equals("b"))
                 {
-                    b = Integer.parseInt(answerMap.get(j).get(1).toString());
+                    b = Integer.parseInt(answerMap.get(temp).get(1).toString());
                     b++;
-                    answerMap.get(j).set(1,b);
+                    answerMap.get(temp).set(1,b);
                 }
                 else if(allFormMap.get(i).get(j).equals("c"))
                 {
-                    c = Integer.parseInt(answerMap.get(j).get(2).toString());
+                    c = Integer.parseInt(answerMap.get(temp).get(2).toString());
                     c++;
-                    answerMap.get(j).set(2,c);
+                    answerMap.get(temp).set(2,c);
                 }
                 else if(allFormMap.get(i).get(j).equals("d"))
                 {
-                    d = Integer.parseInt(answerMap.get(j).get(3).toString());
+                    d = Integer.parseInt(answerMap.get(temp).get(3).toString());
                     d++;
-                    answerMap.get(j).set(3,d);
+                    answerMap.get(temp).set(3,d);
                 }
+
+                temp++;
             }
         }
 
-        answerMap.put(15,commentList);
+        answerMap.put(5,allTextField.get(5));
+        answerMap.put(8,allTextField.get(8));
+        answerMap.put(15,allTextField.get(15));
+        answerMap.put(17,allTextField.get(17));
+        answerMap.put(18,allTextField.get(18));
+        answerMap.put(20,allTextField.get(20));
+        answerMap.put(21,allTextField.get(21));
+
 
         return answerMap;
     }
@@ -352,7 +419,8 @@ public class AnkietaStudentaService {
         AnkietaStudenta ankietaStudenta = ankietaStudentaRepository.findById(id);
         Group group = groupRepository.getOne(ankietaStudenta.getGroupId());
 
-        if(!userFacade.currentUserIsGroupAdmin())
+        if(!userFacade.currentUserIsAdmin() &&  !group.getGroupAdminId().equals(user.getId())
+                || !userFacade.currentUserIsGroupAdmin())
         {
             throw new AccessDeniedException("Nie masz uprawnień do tych danych");
         }

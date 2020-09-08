@@ -114,7 +114,7 @@ this.load();
       answerTo3: this.ankietaStudentForm.value.answerTo3,
       answerTo4: this.ankietaStudentForm.value.answerTo4,
       answerTo5: this.ankietaStudentForm.value.answerTo5,
-      answerTo5atext: this.ankietaStudentForm.answerTo5atext,
+      answerTo5atext: this.ankietaStudentForm.value.answerTo5atext,
       answerTo6: this.ankietaStudentForm.value.answerTo6,
       answerTo7: this.ankietaStudentForm.value.answerTo7,
       answerTo7atext: this.ankietaStudentForm.value.answerTo7atext,
