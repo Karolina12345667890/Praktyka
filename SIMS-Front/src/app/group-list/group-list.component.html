@@ -51,7 +51,7 @@
             {{ item.groupName}}
           </td>
           <td>
-            <div *ngIf="item.formOfStudy === 'FdivL_TIME'; then ft else pt"></div>
+            <div *ngIf="item.formOfStudy === 'FULL_TIME'; then ft else pt"></div>
             <ng-template #ft>  Stacjonarne </ng-template>
             <ng-template #pt>  Niestacjonarne </ng-template>
 
