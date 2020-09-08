@@ -1,23 +1,29 @@
-<div class="container" style="margin-top: 100px">
+<div *ngIf="isAdmin" class="text-center" style="background-color: #42A948;">
+  Ankieta wypełniona przez studenta
+</div>
+
+<div class="container mt-5">
 
   <h3 class="text-center">Wydziałowa ankieta oceny efektów praktyk przez studentów</h3>
   {{questionNumber}}/{{totalQuestions}} <br><br>
 
   <button *ngIf="questionNumber!=totalQuestions" (click)="nextQuestion()" class="btn btn-primary ">Następne</button>
   <div class="float-right">
-    <button (click)="peviousQuestion()" class="btn btn-warning ">Wstecz</button>
+    <button *ngIf="isAdmin" type="submit" class="btn btn-danger mr-1" [routerLink]="['/sl']" [queryParams]="{ groupId: groupId }">Zamknij podgląd</button>
+    <button (click)="previousQuestion()" class="btn btn-warning ">Wstecz</button>
   </div>
 
-  <form [formGroup]="ankietaStudentForm" (ngSubmit)="onSubmit()">
 
-    <div class="toLeft " *ngIf="questionNumber==totalQuestions">
-      <button type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
+
+  <form [formGroup]="ankietaStudentForm" (ngSubmit)="onSubmit()">
+    <div class="toLeft" *ngIf="questionNumber==totalQuestions">
+      <button *ngIf="!isAdmin" type="submit" class="btn btn-success" [disabled]="ankietaStudentForm.invalid">Wyślij</button>
 
     </div>
     <br *ngIf="questionNumber==totalQuestions">
     <hr>
     <div id="question1" *ngIf="questionNumber==0" class="cross-validation">
-      <div class="example text-center" >
+      <div *ngIf="!isAdmin" class="example text-center" >
         <h3> Wypełnij wszystkie pola zaznaczone czerwoną kreską <input class="example-invalid" disabled size="4" /> aż zmienią sie na zielone <input class="example-valid" disabled size="4"/></h3>
       </div>
 

@@ -83,7 +83,7 @@
               </ng-template>
 
               <ng-template #DONE>
-                <ng-container *ngIf="doc.status === 'DONE';else empty">
+                <ng-container *ngIf="doc.status === 'DONE' && doc.type != 'ankieta_studenta' && doc.type != 'ankieta_pracownik'; else empty">
                   Wysłano
                   <button type="button" class="btn btn-warning m-1" (click)="downloadDoc(doc.id,doc.type,item.name,item.surname)">Pobierz</button>
                   <button type="button" class="btn btn-danger m-1" (click)="removeFile(doc.id)">Usuń</button>
@@ -91,16 +91,16 @@
               </ng-template>
 
             <ng-template #empty>
-                Brak
+              <div *ngIf="doc.type != 'ankieta_studenta' && doc.type != 'ankieta_pracownik'">Brak</div>
               </ng-template>
 
               <button type="button" class="btn btn-primary m-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">
-                <div *ngIf="doc.type == 'ankieta_studenta';else prac">
-                  Student
+                <div *ngIf="doc.type == 'ankieta_studenta'; else prac">
+                  Zobacz ankietę studenta
                 </div>
                 <ng-template #prac>
-                <div *ngIf="doc.type == 'ankieta_pracownik';else zobacz">
-                 Pracodawca
+                <div *ngIf="doc.type == 'ankieta_pracownik'; else zobacz">
+                 Zobacz ankietę pracodawcy
                 </div>
                 </ng-template>
 

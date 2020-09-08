@@ -1,4 +1,9 @@
-<div class="container" style="margin-top: 100px">
+<div *ngIf="isAdmin" class="text-center" style="background-color: #42A948;">
+  Ankieta wypełniona przez pracodawcę
+</div>
+
+
+<div class="container mt-5">
 
   <h3 class="text-center">Wydziałowa ankieta oceny studenckich praktyk przez pracodawców</h3>
 
@@ -7,12 +12,13 @@
   {{questionNumber}}/{{totalQuestions }} <br><br>
   <button *ngIf="questionNumber!=totalQuestions " (click)="nextQuestion()" class="btn btn-primary ">Następne</button>
   <div class="float-right">
-    <button (click)="peviousQuestion()" class="btn btn-warning ">Wstecz</button>
+    <button *ngIf="isAdmin" type="submit" class="btn btn-danger mr-1" [routerLink]="['/sl']" [queryParams]="{ groupId: groupId }">Zamknij podgląd</button>
+    <button (click)="previousQuestion()" class="btn btn-warning ">Wstecz</button>
   </div>
 
   <form [formGroup]="ankietaPracForm" (ngSubmit)="onSubmit()">
     <div class="toLeft" *ngIf="questionNumber==totalQuestions ">
-      <button type="submit" class="btn btn-success" [disabled]="ankietaPracForm.invalid">Wyślij</button>
+      <button *ngIf="!isAdmin" type="submit" class="btn btn-success" [disabled]="ankietaPracForm.invalid">Wyślij</button>
 
     </div>
     <br *ngIf="questionNumber==totalQuestions ">

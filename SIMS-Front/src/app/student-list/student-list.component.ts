@@ -159,6 +159,13 @@ export class StudentListComponent implements OnInit {
   }
 
   openDoc(id: number, docType: string) {
+    if (docType == 'ankieta_studenta') {
+      docType = 'ankietastudent';
+    }
+    else if (docType == 'ankieta_pracownik') {
+      docType = 'ankietaprac';
+    }
+
     this.router.navigate(['/' + docType], {queryParams: {id}});
   }
 
