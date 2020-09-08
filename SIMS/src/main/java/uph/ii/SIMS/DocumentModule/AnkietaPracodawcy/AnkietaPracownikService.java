@@ -129,7 +129,8 @@ public class AnkietaPracownikService {
     {
         UserDto user = userFacade.getCurrentUser();
         Group group = groupRepository.getOne(groupId);
-        if(!userFacade.currentUserIsGroupAdmin())
+        if(!userFacade.currentUserIsAdmin() && !group.getGroupAdminId().equals(user.getId())
+                || !userFacade.currentUserIsGroupAdmin())
         {
             throw new AccessDeniedException("Nie masz uprawnień do tych danych");
         }
@@ -184,13 +185,6 @@ public class AnkietaPracownikService {
             add(0);
             add(0);
         }});
-        structureMap.put(1,new ArrayList<>()
-        {{add(0);
-            add(0);
-            add(0);
-            add(0);
-            add(0);
-        }});
 
         for(int i = 1; i <= 8; i++)
         {
@@ -212,6 +206,24 @@ public class AnkietaPracownikService {
             }});
         }
         return structureMap;
+    }
+
+    /**
+     * Metoda odpowiedzialna za utworzenie listy z odpowiedzi z pola tekstowego z pytania 15
+     * @param list
+     * @return
+     */
+    public List<Object> findAllOpinion(List<AnkietaPracownik> list)
+    {
+        List<Object> opinionList = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++)
+        {
+            if(!list.get(i).getAnswerTo15text().equals("....") & !list.get(i).getAnswerTo15text().equals(""))
+            {
+                opinionList.add(list.get(i).getAnswerTo15text());
+            }
+        }
+        return opinionList;
     }
 
     /**
@@ -243,6 +255,7 @@ public class AnkietaPracownikService {
         HashMap<Integer, List<String>> allFormMap = changeObjectToList(allForm);
         HashMap<Integer, List<Object>> answerMap = createStructure();
         List<Object> commentList = findAllComments(allForm);
+        List<Object> opinionList = findAllOpinion(allForm);
 
         int a= 0;
         int b = 0;
@@ -286,6 +299,8 @@ public class AnkietaPracownikService {
                 }
             }
         }
+
+        answerMap.put(16,opinionList);
         answerMap.put(17,commentList);
 
         return answerMap;
@@ -302,7 +317,8 @@ public class AnkietaPracownikService {
         AnkietaPracownik ankietaPracownik = ankietaPracownikRepository.findById(id);
         Group group = groupRepository.getOne(ankietaPracownik.getGroupId());
 
-        if(!userFacade.currentUserIsGroupAdmin())
+        if(!userFacade.currentUserIsAdmin() && !group.getGroupAdminId().equals(user.getId())
+                || !userFacade.currentUserIsGroupAdmin())
         {
             throw new AccessDeniedException("Nie masz uprawnień do tych danych");
         }
