@@ -37,6 +37,7 @@ import { SystemFaqComponent } from './system-faq/system-faq.component';
 import { PodsumowanieTrescDialogComponent } from './podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
 import { PodsumowanieAnkietyStudentComponent } from './podsumowanie-ankiety-student/podsumowanie-ankiety-student.component';
 import { PodsumowanieAnkietyPracownikComponent } from './podsumowanie-ankiety-pracownik/podsumowanie-ankiety-pracownik.component';
+import { FooterComponent } from './footer/footer.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -105,6 +106,7 @@ const customNotifierOptions: NotifierOptions = {
     PodsumowanieTrescDialogComponent,
     PodsumowanieAnkietyStudentComponent,
     PodsumowanieAnkietyPracownikComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
