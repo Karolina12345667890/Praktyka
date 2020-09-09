@@ -11,22 +11,22 @@
   <div *ngIf="err == null">
     <div class="row">
       <div class="col-12 col-md-6">
-        <div class="card my-2" *ngFor="let answer of answers; let i = index">
-          <div class="card-header">Pytanie {{ i+1 }}</div>
+        <div class="card my-2" *ngFor="let answer of answers">
+          <div class="card-header">{{ answer[0] }}</div>
           <div class="card-body">
             <table class="table">
               <thead class="thead-light">
               <tr>
-                <th *ngIf="answer.length > 0">A</th>
-                <th *ngIf="answer.length > 1">B</th>
-                <th *ngIf="answer.length > 2">C</th>
-                <th *ngIf="answer.length > 3">D</th>
-                <th *ngIf="answer.length > 4">E</th>
+                <th *ngIf="answer[1].length > 0">A</th>
+                <th *ngIf="answer[1].length > 1">B</th>
+                <th *ngIf="answer[1].length > 2">C</th>
+                <th *ngIf="answer[1].length > 3">D</th>
+                <th *ngIf="answer[1].length > 4">E</th>
               </tr>
               </thead>
 
               <tbody>
-              <td *ngFor="let ansVal of answer">
+              <td *ngFor="let ansVal of answer[1]">
                 <tr>
                   {{ ansVal }}
                 </tr>
@@ -39,10 +39,24 @@
 
       <div class="col-12 col-md-6">
         <div class="card my-2 pb-0">
-          <div class="card-header">Pytanie 16 - sugestie</div>
-          <div class="card-body">
+          <div class="card-header">Pytanie 16 - uzasadnienie</div>
+          <div class="card-body" style="max-height: 200px; overflow: auto;">
+            <div *ngIf="questionSixteenTexts.length > 0">
+              <div *ngFor="let questionSixteenText of questionSixteenTexts[0]">
+                <div class="alert alert-info mb-2">{{ questionSixteenText }}</div>
+              </div>
+            </div>
+            <div *ngIf="questionSixteenTexts.length == 0">
+              <div class="alert alert-warning">Brak</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card my-2 pb-0">
+          <div class="card-header">Pytanie 17 - Inne uwagi i opinie</div>
+          <div class="card-body" style="max-height: 200px; overflow: auto;">
             <div *ngIf="suggestions.length > 0">
-              <div *ngFor="let suggestion of suggestions">
+              <div *ngFor="let suggestion of suggestions[0]">
                 <div class="alert alert-info mb-2">{{ suggestion }}</div>
               </div>
             </div>

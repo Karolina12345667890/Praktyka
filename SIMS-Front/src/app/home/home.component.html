@@ -32,8 +32,8 @@
               </td>
               <td>
                 <div *ngIf="!myGroup.isOpen">
-                  <button class="btn btn-info float-right mx-1"  (click)="openStudentQuestionnaire(myGroup.id,myGroup.fieldOfStudy)">Ankieta dla studenta</button>
-                  <button class="btn btn-info float-right mx-1"  (click)="openEmployerQuestionnaire(myGroup.id)">Ankieta dla pracodawcy</button>
+                  <button class="btn btn-info float-right mx-1"  *ngIf="!checkIfStudentSurveyIsComplete(myGroup.id)" (click)="openStudentQuestionnaire(myGroup.id,myGroup.fieldOfStudy)">Ankieta dla studenta</button>
+                  <button class="btn btn-info float-right mx-1" *ngIf="!checkIfEmployerSurveyIsComplete(myGroup.id)" (click)="openEmployerQuestionnaire(myGroup.id)">Ankieta dla pracodawcy</button>
                 </div>
               </td>
             </tr>
@@ -103,13 +103,13 @@
 
                     <ng-template #AS>
                     <ng-container *ngIf="myDocumentData.type === 'ankieta_studenta';else AP">
-                      Ankieta Studenta wypełniona
+                      Ankieta dla studenta wypełniona
                     </ng-container>
                   </ng-template>
 
                     <ng-template #AP>
                       <ng-container *ngIf="myDocumentData.type === 'ankieta_pracownik'">
-                        Ankieta Pracodawcy wypełniona
+                        Ankieta dla pracodawcy wypełniona
                       </ng-container>
                     </ng-template>
                     <button *ngIf="myDocumentData.status != 'EMPTY' && myDocumentData.type != 'ankieta_pracownik' && myDocumentData.type != 'ankieta_studenta'" type="button"   class="btn btn-primary float-right mx-1" (click)="onClick(myDocumentData.link,myDocumentData.type)"> Pobierz</button>

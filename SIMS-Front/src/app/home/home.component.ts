@@ -25,6 +25,8 @@ import {FileUploadComponent} from '../file-upload/file-upload.component';
 export class HomeComponent implements OnInit, AfterViewInit {
 
   private myDocumentList = new Array<DocumentDto>();
+  employerSurveyCompletedGroupIds: Array<number> = new Array<number>();
+  studentSurveyCompletedGroupIds: Array<number> = new Array<number>();
 
   @ViewChildren('groupTable') groupTables: QueryList<ElementRef>;
   myGroupedDocuments: Map<Array<any>, any> = new Map<Array<any>, any>();
@@ -51,6 +53,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
       this.authService.getResource('http://localhost:8080/api/document/list').subscribe(
         value => {
           this.myDocumentList = value;
+          value.forEach(val => {
+            if (val.type == 'ankieta_studenta' && val.status == 'DONE') {
+              this.studentSurveyCompletedGroupIds.push(val.groupId);
+            }
+            if (val.type == 'ankieta_pracownik' && val.status == 'DONE') {
+              this.employerSurveyCompletedGroupIds.push(val.groupId);
+            }
+          })
 
           function groupBy(list, keyGetter) {
             const map = new Map();
@@ -172,14 +182,21 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   }
 
-  test6() {
-    this.authService.getResource('http://localhost:8080/api/document/ankieta_studenta/1/summaryStudentSurvay').subscribe(value => console.log(value), error => console.log(error));
+  checkIfStudentSurveyIsComplete(groupId) {
+    if (this.studentSurveyCompletedGroupIds.includes(groupId)) {
+      return true;
+    }
+
+    return false;
   }
 
-  test7() {
-    this.authService.getResource('http://localhost:8080/api/document/ankieta_pracownik/1/summaryPracownikSurvay').subscribe(value => console.log(value), error => console.log(error));
-  }
+  checkIfEmployerSurveyIsComplete(groupId) {
+    if (this.employerSurveyCompletedGroupIds.includes(groupId)) {
+      return true;
+    }
 
+    return false;
+  }
 }
 
 

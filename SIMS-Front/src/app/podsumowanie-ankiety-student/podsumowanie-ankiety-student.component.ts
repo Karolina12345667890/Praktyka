@@ -46,8 +46,7 @@ export class PodsumowanieAnkietyStudentComponent implements OnInit {
         `http://localhost:8080/api/document/ankieta_studenta/${this.id}/summaryStudentSurvay`
       ).subscribe(
         value => {
-          console.log(value)
-          this.answers.push(['Pytanie 1 - Praktykę odbywał(a) Pan(i) w miejscu zamieszkania?',value[0] ]);
+          this.answers.push(['Pytanie 1 - Praktykę odbywał(a) Pan(i) w miejscu zamieszkania?', value[0] ]);
           this.answers.push(['Pytanie 2 - Atmosferę w miejscu odbywania praktyki ocenia Pan(i) jako?', value[1] ]);
           this.answers.push(['Pytanie 3 - Czy Zakładowy Opiekun Praktyk służył Panu(i) pomocą?', value[2] ]);
           this.answers.push(['Pytanie 4 - Czy program praktyki był zrealizowany?', value[3] ]);
