@@ -128,17 +128,17 @@ export class DziennikPraktykComponent implements OnInit {
   }
 
   createItem(date: string, dayName: string) {
-    const dateElements = date.split('.');
-    const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
+
 
     return this.fb.group({
-      date: this.datePipe.transform(new Date(Date.parse(correctDate)), 'yyyy-MM-dd').toString(),
+      date: this.datePipe.transform(new Date(Date.parse(date)), 'yyyy-MM-dd').toString(),
       text: '',
       dayName: new FormControl({value: dayName, disabled: true}, Validators.required),
     });
   }
 
   loadItem(date: string, text: string) {
+    console.log(date);
     const dateElements = date.split('.');
     const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
     const usedDate = new Date(Date.parse(correctDate));

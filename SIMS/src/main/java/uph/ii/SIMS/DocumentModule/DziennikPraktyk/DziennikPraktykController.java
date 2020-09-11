@@ -44,7 +44,6 @@ class DziennikPraktykController {
                 null,
                 null
         );
-        System.out.println(dziennikPraktykDto);
         documentFacade.storeDziennikPraktyk(dziennikPraktykDto);
 
     }
