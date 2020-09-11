@@ -148,6 +148,22 @@
                 console.log(data)
                 console.log(status)
             });
+            // $.postJSON("/api/user", body, function(data, status, jqxhr) {
+            //     alert(status);
+            // }).done(function() { alert('Request done!'); })
+            //     .fail(function(jqxhr, settings, ex) {
+            //         alert('failed, ' + ex);
+            //         if(jqxhr.responseText === "")
+            //         {
+            //             alert("rejestracja powiodla sie");
+            //             switch_to_login_form();
+            //             document.getElementById("username").value = username;
+            //         }
+            //
+            //         console.log(jqxhr);
+            //         alert(jqxhr);
+            //         console.log(jqxhr.responseData);
+            //     });;
         }
 
         register_form_submit_button.onclick = ajax_register;

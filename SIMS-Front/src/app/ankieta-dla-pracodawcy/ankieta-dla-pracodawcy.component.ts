@@ -63,7 +63,8 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
           value => {
             this.ankietaPracForm.get("companyinfo").setValue(value.companyName + ' ' + value.companyLocationCity + ' ' + value.companyLocationStreet);
           },
-          error => console.log(error),
+          error => {console.log(error);
+            this.notifier.notify('error', error.error);},
         );
       });
     }
@@ -124,8 +125,8 @@ export class AnkietaDlaPracodawcyComponent implements OnInit {
          this.router.navigate(["/home"]);
       },
       error =>{
-        console.log(error)
-        this.notifier.notify("error", error.error)
+        console.log(error);
+        this.notifier.notify('error', error.error);
       }
     );
   }

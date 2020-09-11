@@ -9,6 +9,7 @@ import {DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
 import {isUndefined} from "util";
+import {getErrorMessage} from "codelyzer/templateAccessibilityElementsContentRule";
 // import {OAuthService} from
 
 @Component({
@@ -106,8 +107,8 @@ export class OswiadczenieComponent implements OnInit {
         this.notifier.notify("success","Pomyślnie wysłano dokument Oświadczenie",)
         this.router.navigate(["/home"]);
       },
-      error =>{ console.log(error)
-        this.notifier.notify("error",error.error,)
+      error =>{ console.log(error);
+        this.notifier.notify('error', error.error);
       }
     );
 
@@ -164,7 +165,7 @@ export class OswiadczenieComponent implements OnInit {
         this.notifier.notify("success","Pomyślnie zaakceptowano dokument Oświadczenie");
         this.load();
       },
-      error =>{ console.log(error)
+      error =>{ console.log(error);
         this.notifier.notify("error", error.error);
       }
     );
@@ -175,8 +176,8 @@ export class OswiadczenieComponent implements OnInit {
         this.notifier.notify("success","Pomyślnie odrzucono dokument Oświadczenie",);
         this.load();
       },
-      error =>{ console.log(error)
-        this.notifier.notify("error",error.error)
+      error =>{ console.log(error);
+        this.notifier.notify("error",error.error);
       }
     );
   }
@@ -196,8 +197,8 @@ export class OswiadczenieComponent implements OnInit {
               this.notifier.notify("success","Pomyślnie dodano uwagę",);
               this.decline();
             },
-            error =>{ console.log(error)
-              this.notifier.notify("error",error.error,)
+            error =>{ console.log(error);
+              this.notifier.notify("error",error.error);
             }
           );
         }
