@@ -4,6 +4,7 @@ import lombok.*;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.DziennikPraktykDto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.Table;
@@ -26,7 +27,8 @@ public class DziennikPraktyk extends Document {
     private Date periodTo;
     private String studentAlbumNumber;
     private String companyName;
-    @Lob
+    //@Lob
+    @Column(length =  100000)
     private ArrayList<DiaryLog> diary = new ArrayList<DiaryLog>();
 
     DziennikPraktyk(Long owner) {

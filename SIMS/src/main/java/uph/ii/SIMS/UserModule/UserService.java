@@ -52,9 +52,9 @@ public class UserService implements UserDetailsService {
     public User createNewStudentUser(UserDto userDto, String username, String password) {
         Role role_user = roleRepository.findByName("ROLE_USER");
             if(userRepository.existsByLogin(username)){
-                throw new UserDuplicateLoginException("Username already exists") ;
+                throw new UserDuplicateLoginException("Login już zajęty!") ;
             }else if(userRepository.existsByEmail(userDto.getEmail())){
-                throw new UserDuplicateEmailException("Email already exists") ;
+                throw new UserDuplicateEmailException("Email już zajęty!") ;
             } else {
                return createNewUser(userDto, username, password, List.of(role_user));
             }
@@ -66,9 +66,9 @@ public class UserService implements UserDetailsService {
             Role role_user = roleRepository.findByName("ROLE_USER");
             Role role_group_admin = roleRepository.findByName("ROLE_GROUP_ADMIN");
             if(userRepository.existsByLogin(username)){
-                throw new UserDuplicateLoginException("Username already exists") ;
+                throw new UserDuplicateLoginException("Login już zajęty!") ;
             }else if(userRepository.existsByEmail(userDto.getEmail())){
-                throw new UserDuplicateEmailException("Email already exists") ;
+                throw new UserDuplicateEmailException("Email już zajęty!") ;
             } else {
                 return createNewUser(userDto, username, password, List.of(role_user,role_group_admin));
             }
@@ -78,7 +78,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findUserByLogin(username).orElseThrow(() -> new UsernameNotFoundException("invalid username or password"));
+        return userRepository.findUserByLogin(username).orElseThrow(() -> new UsernameNotFoundException("Zły login lub hasło!"));
     }
 
     public User getCurrentUser() throws UsernameNotFoundException {
