@@ -61,18 +61,18 @@ public class UsersInitializer {
 //        groupRepository.save(group2);
 //
   //      userRepository.deleteAll();
-    //    List<Role> rolesAdmin = Arrays.asList(role_admin,role_group_admin, role_user);
+     //   List<Role> rolesAdmin = Arrays.asList(role_admin,role_group_admin, role_user);
  //       List<Role> rolesGAdmin = Arrays.asList(role_group_admin, role_user);
-    //    List<Role> rolesUser = Arrays.asList(role_user);
+//        List<Role> rolesUser = Arrays.asList(role_user);
         
- //       User user = userService.createNewUser(new UserDto(null, "332211", "Andrzej", "Aaa", "test@gmai.com"),
-    //        "SuperAdmin", "admin", rolesAdmin);
+      //  User user = userService.createNewUser(new UserDto(null, "332211", "Andrzej", "Aaa", "test@gmai.com"),
+     //       "SuperAdmin", "admin", rolesAdmin);
 //        User guser = userService.createNewUser(new UserDto(null, "g", "gg", "Aaa", "test7@gmai.com"),
 //                "gadmin", "admin", rolesGAdmin);
 //        User g2user = userService.createNewUser(new UserDto(null, "g2", "gg2", "Aaa2", "test8@gmai.com"),
 //                "gadmin2", "admin", rolesGAdmin);
 //        User user1 = userService.createNewUser(new UserDto(null, "221133", "Barbara", "Bbb", "test2@gmai.com"),
-//            "user1", "user", rolesUser);
+  //          "user1", "user", rolesUser);
 //        User user2 = userService.createNewUser(new UserDto(null, "54321", "Cezary", "Ccc", "test3@gmai.com"),
 //            "user2", "user", rolesUser);
 //        User user3 = userService.createNewUser(new UserDto(null, "12345", "Danuta", "Dddd", "test4@gmai.com"),

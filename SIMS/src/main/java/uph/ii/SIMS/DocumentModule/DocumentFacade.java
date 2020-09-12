@@ -573,9 +573,6 @@ public class DocumentFacade {
 
 
     public void checkOtherDocuments(Long ownerId, Long groupId, String doc) {
-        System.out.println(ownerId + " " + groupId + " " + doc);
-        System.out.println(porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()));
-        System.out.println(oswiadczenieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin()));
         if (doc.equals("osw")) {
             StatusEnum statuspor = porozumienieFacade.getStatus(ownerId, groupId, userFacade.currentUserIsGroupAdmin());
             if ((statuspor).equals(StatusEnum.ACCEPTED) || (statuspor).equals(StatusEnum.DONE)) {

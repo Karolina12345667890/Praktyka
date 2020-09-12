@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import uph.ii.SIMS.AttributeEncryptor;
 
 import javax.persistence.*;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 @Entity
@@ -17,14 +20,16 @@ public class FileData {
     @Convert(converter = AttributeEncryptor.class)
     private String fileName;
     private String type;
+    @Convert(converter = AttributeEncryptor.class)
     @Lob
-    private byte[] data;
+    private String data;
 
     public FileData(Long docId, String fileName, String type, byte[] data) {
         this.id = docId;
         this.fileName = fileName;
         this.type = type;
-        this.data = data;
+        this.data = StandardCharsets.ISO_8859_1.decode(ByteBuffer.wrap(data))
+                .toString();
     }
 
     public FileData() {
@@ -56,20 +61,13 @@ public class FileData {
     }
 
     public byte[] getData() {
-        return data;
+
+        return StandardCharsets.ISO_8859_1.encode(data).array();
     }
 
     public void setData(byte[] data) {
-        this.data = data;
+
+        this.data = new String(data);
     }
 
-    @Override
-    public String toString() {
-        return "FileData{" +
-                "id=" + id +
-                ", fileName='" + fileName + '\'' +
-                ", type='" + type + '\'' +
-                ", data=" + Arrays.toString(data) +
-                '}';
-    }
 }
