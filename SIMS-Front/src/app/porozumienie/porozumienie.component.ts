@@ -61,7 +61,7 @@ export class PorozumienieComponent implements OnInit {
 
     this.authService.getResource('http://localhost:8080/api/document/porozumienie/' + id).subscribe(
       value => {
-        console.log(value);
+
         this.id = value.id;
         this.comment = value.comment;
         this.status = value.status;
@@ -89,7 +89,7 @@ export class PorozumienieComponent implements OnInit {
 
         this.authService.getResource('http://localhost:8080/api/group/'+value.groupId+'/overview').subscribe(
           value => {
-            console.log(value);
+
             this.porozumienieForm.get("studentInternshipDuration").setValue(value.durationInWeeks);
             this.porozumienieForm.get("studentSpecialization").setValue(value.speciality);
             if(value.formOfStudy == "FULL_TIME")
@@ -137,7 +137,7 @@ export class PorozumienieComponent implements OnInit {
 
     console.log(body);
     this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id, body).subscribe(
-      value => {console.log(value)
+      value => {
         this.notifier.notify("success","Pomyślnie wysłano dokument Porozumienie",)
         this.router.navigate(["/home"]);
       },
@@ -150,7 +150,7 @@ export class PorozumienieComponent implements OnInit {
 
   accept() {
     this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id+'/accept', {}).subscribe(
-      value => { console.log(value);
+      value => {
         this.notifier.notify("success","Pomyślnie zaakceptowano dokument Porozumienie",);
         this.load();
       },
@@ -163,7 +163,7 @@ export class PorozumienieComponent implements OnInit {
 
   decline(){
     this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id+'/decline', {}).subscribe(
-      value => { console.log(value)
+      value => {
         this.notifier.notify("success","Pomyślnie odrzucono dokument Porozumienie",);
         this.load();
       },
@@ -184,7 +184,7 @@ export class PorozumienieComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/porozumienie/'+this.id+'/comment', result).subscribe(
-            value => { console.log(value);
+            value => {
               this.notifier.notify("success","Pomyślnie dodano uwagę",);
               this.decline();
             },

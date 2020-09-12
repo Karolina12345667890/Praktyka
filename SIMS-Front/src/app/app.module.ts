@@ -38,6 +38,7 @@ import { PodsumowanieTrescDialogComponent } from './podsumowanie-tresc-dialog/po
 import { PodsumowanieAnkietyStudentComponent } from './podsumowanie-ankiety-student/podsumowanie-ankiety-student.component';
 import { PodsumowanieAnkietyPracownikComponent } from './podsumowanie-ankiety-pracownik/podsumowanie-ankiety-pracownik.component';
 import { FooterComponent } from './footer/footer.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -107,6 +108,7 @@ const customNotifierOptions: NotifierOptions = {
     PodsumowanieAnkietyStudentComponent,
     PodsumowanieAnkietyPracownikComponent,
     FooterComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,7 +122,9 @@ const customNotifierOptions: NotifierOptions = {
     BrowserAnimationsModule,
     FormsModule,
   ],
-  entryComponents: [GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent, EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent, PodsumowanieTrescDialogComponent, FileUploadComponent],
+  entryComponents: [GroupListComponent, EditGroupDialogComponent, StudentListComponent, CreateGroupAdminDialogComponent,
+    EditCommentDialogComponent, HomeComponent , ShowCommentDialogComponent, PodsumowanieTrescDialogComponent, FileUploadComponent
+  , ConfirmationDialogComponent],
   providers: [LoginServiceService, AuthGuardService, CookieService, PagerService, DatePipe],
   bootstrap: [AppComponent]
 })

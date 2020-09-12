@@ -41,7 +41,6 @@ export class PodsumowanieAnkietyPracownikComponent implements OnInit {
         `http://localhost:8080/api/document/ankieta_pracownik/${this.id}/summaryPracownikSurvay`
       ).subscribe(
         value => {
-          console.log(value)
           this.answers.push(['Pytanie 1 - Kierunek studiów studentów odbywających praktyki w Państwa zakładzie pracy', value[0]]);
           this.answers.push(['Pytanie 2 - Wiedza niezbędna do szybkiego opanowania umiejętności wykonywania zadań realizowanych w Państwa instytucji', value[1]]);
           this.answers.push(['Pytanie 3 - Ogólne przygotowanie zawodowe', value[2]]);

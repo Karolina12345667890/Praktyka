@@ -80,7 +80,7 @@ export class GroupListComponent implements OnInit {
 
   joinGroup(id:number){
     this.authService.postResource('http://localhost:8080/api/group/'+id+'/applications/new', {}).subscribe(
-      value => {console.log(value)
+      value => {
         this.notifier.notify("success","Pomyślnie dołączono do grupy",)
       },
       error =>{ console.log(error)
@@ -123,7 +123,7 @@ export class GroupListComponent implements OnInit {
     };
 
     this.authService.postResource('http://localhost:8080/api/userga', data).subscribe(
-      value => console.log(value),error => console.log(error.error.message));
+      value => console.log(true),error => console.log(error.error.message));
 
 
   }
@@ -151,7 +151,7 @@ export class GroupListComponent implements OnInit {
               email: result.value.email
             }
           };
-          console.log(data)
+
           this.authService.postResource('http://localhost:8080/api/userga', data).subscribe(
             value => {
               this.load();

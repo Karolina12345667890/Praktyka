@@ -63,7 +63,7 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
   onSubmit() {
 
     this.progress = 0;
-    console.log(this.id)
+
     this.authService.upload(this.SERVER_URL + '/' + this.id, this.selectedFile).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress) {

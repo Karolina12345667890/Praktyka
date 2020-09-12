@@ -14,6 +14,7 @@ import {isEmpty} from 'rxjs/operators';
 import {PagerService} from '../pager-service.service';
 import {PodsumowanieTrescDialogComponent} from '../podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
 import {HttpResponse} from '@angular/common/http';
+import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-student-list',
@@ -94,8 +95,6 @@ export class StudentListComponent implements OnInit {
           this.savedstudentList = value.students;
           this.setPage(this.pager.currentPage);
           // do student companyName
-          console.log(value);
-
 
           this.group = value;
 
@@ -161,8 +160,7 @@ export class StudentListComponent implements OnInit {
   openDoc(id: number, docType: string) {
     if (docType == 'ankieta_studenta') {
       docType = 'ankietastudent';
-    }
-    else if (docType == 'ankieta_pracownik') {
+    } else if (docType == 'ankieta_pracownik') {
       docType = 'ankietaprac';
     }
 
@@ -170,20 +168,25 @@ export class StudentListComponent implements OnInit {
   }
 
   removeFile(id: number) {
-    const c = confirm('Czy na pewno chcesz usunąć ten dokument?');
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: 'Czy na pewno chcesz usunąć ten dokument?',
+    });
 
-    if (c) {
-      this.authService.postResource('http://localhost:8080/delete/' + id, {}).subscribe(
-        value => {
-          this.notifier.notify('success', 'Pomyślnie usunięto plik');
-          this.load();
-        },
-        error => {
-          console.log(error);
-          this.notifier.notify('error', error.error,);
-        }
-      );
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (!isUndefined(result)) {
+        this.authService.postResource('http://localhost:8080/delete/' + id, {}).subscribe(
+          value => {
+            this.notifier.notify('success', 'Pomyślnie usunięto plik');
+            this.load();
+          },
+          error => {
+            console.log(error);
+            this.notifier.notify('error', error.error);
+          }
+        );
+      }
+    });
   }
 
   downloadDoc(id: number, docType: string, name: string, surname: string) {
@@ -257,8 +260,8 @@ export class StudentListComponent implements OnInit {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/' + docType + '/' + id + '/comment', result).subscribe(
             value => {
-              console.log(value);
-              this.notifier.notify('success', 'Pomyślnie zmieniono uwage',);
+
+              this.notifier.notify('success', 'Pomyślnie zmieniono uwage');
               this.load();
             },
             error => {
@@ -323,24 +326,27 @@ export class StudentListComponent implements OnInit {
   }
 
   dropStudent(studentId) {
-    const c = confirm('Czy na pewno chcesz usunąć studenta z grupy?');
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '400px',
+      data: 'Czy na pewno chcesz usunąć studenta z grupy?',
+    });
 
-    if (c) {
-      this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/drop/' + studentId, {}).subscribe(
-        value => {
-          this.load();
-          this.notifier.notify('success', 'Pomyślnie wyrzucono studenta',);
-        },
-        error => {
-          console.log(error);
-          this.notifier.notify('error', 'Coś poszło nie tak',);
-        }
-      );
-    }
-
+    dialogRef.afterClosed().subscribe(result => {
+      if (!isUndefined(result)) {
+        this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/drop/' + studentId, {}).subscribe(
+          value => {
+            this.load();
+            this.notifier.notify('success', 'Pomyślnie wyrzucono studenta',);
+          },
+          error => {
+            console.log(error);
+            this.notifier.notify('error', 'Coś poszło nie tak',);
+          }
+        );
+      }
+    });
 
   }
-
 
   showAction(studentId) {
     if (document.getElementById(studentId).style.display === 'none') {

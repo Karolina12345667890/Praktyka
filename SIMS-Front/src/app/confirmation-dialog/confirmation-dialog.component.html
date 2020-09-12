@@ -1,0 +1,15 @@
+
+
+
+<h1  mat-dialog-title class="text-center" >Uwaga!</h1>
+<hr>
+{{data}}
+<hr>
+<div mat-dialog-content>
+
+
+  <div mat-dialog-actions class="d-inline">
+    <button  class="btn btn-danger float-left" mat-button [mat-dialog-close] cdkFocusInitial>Anuluj</button>
+    <button class="btn btn-success float-right" [mat-dialog-close]="true">Tak</button>
+  </div>
+</div>
