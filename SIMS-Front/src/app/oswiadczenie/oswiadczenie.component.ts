@@ -101,7 +101,7 @@ export class OswiadczenieComponent implements OnInit {
     };
 
 
-    console.log(body);
+
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id, body).subscribe(
       value => {console.log(value)
         this.notifier.notify("success","Pomyślnie wysłano dokument Oświadczenie",)

@@ -1,6 +1,7 @@
 package uph.ii.SIMS.DocumentModule.AnkietaStudenta;
 
 import lombok.*;
+import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.AnkietaStudentaDto;
 
@@ -24,9 +25,12 @@ public class AnkietaStudenta extends Document {
     protected Long id;
 
     public static final String DOCUMENT_TYPE = "ankieta_studenta";
-    private String studentName;
-    private String studentSurname;
-    private String studentSpecialization;
+    @Convert(converter = AttributeEncryptor.class)
+    private String studentName = "";
+    @Convert(converter = AttributeEncryptor.class)
+    private String studentSurname = "";
+    @Convert(converter = AttributeEncryptor.class)
+    private String studentSpecialization= "";
     private String instytutionType;
     private String companyNameAndLocation;
     private String studentInternshipStart;

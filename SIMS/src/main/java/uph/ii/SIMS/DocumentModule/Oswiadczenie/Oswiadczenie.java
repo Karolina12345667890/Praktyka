@@ -1,13 +1,11 @@
 package uph.ii.SIMS.DocumentModule.Oswiadczenie;
 
 import lombok.*;
+import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Klasa reprezentująca oswiadczenie. Posiada adnotację {@link javax.persistence.Entity}, przez co posiada również reprezentację w bazie danych
@@ -23,10 +21,14 @@ import javax.persistence.Table;
 class Oswiadczenie extends Document {
     
     public static final String DOCUMENT_TYPE = "oswiadczenie";
-    private String opiekunI;
-    private String opiekunN;
-    private String opiekunMail;
-    private String opiekunTel;
+    @Convert(converter = AttributeEncryptor.class)
+    private String opiekunI = "";
+    @Convert(converter = AttributeEncryptor.class)
+    private String opiekunN = "";
+    @Convert(converter = AttributeEncryptor.class)
+    private String opiekunMail = "";
+    @Convert(converter = AttributeEncryptor.class)
+    private String opiekunTel = "";
     //@Lob
     @Column(length = 2048)
     private String studentDuties;

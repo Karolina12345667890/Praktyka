@@ -27,7 +27,6 @@ public class PdfBuilder {
 //        return renderPdf(processedHtml);
 //    }
     
-    
     /**
      * Tworzy dokument pdf na podstawie szablonu i danych
      *

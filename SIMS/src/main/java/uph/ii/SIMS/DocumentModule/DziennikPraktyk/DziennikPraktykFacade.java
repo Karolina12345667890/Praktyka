@@ -45,7 +45,6 @@ public class DziennikPraktykFacade {
 
         dziennikPraktyk.setStatus(StatusEnum.NEW);
 
-        System.out.println(dziennikPraktyk);
         DziennikPraktykRepository.save(dziennikPraktyk);
     }
 
