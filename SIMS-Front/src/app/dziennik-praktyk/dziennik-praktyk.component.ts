@@ -128,11 +128,12 @@ export class DziennikPraktykComponent implements OnInit {
   }
 
   createItem(date: string, dayName: string) {
-
+    const dateElements = date.split('.');
+    const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
     const usedDate = new Date(Date.parse(date));
 
     return this.fb.group({
-      date: this.datePipe.transform(new Date(usedDate), 'yyyy-MM-dd').toString(),
+      date: this.datePipe.transform(usedDate, 'yyyy-MM-dd').toString(),
       text: '',
       dayName: new FormControl({value: dayName, disabled: true}, Validators.required),
     });
@@ -141,7 +142,7 @@ export class DziennikPraktykComponent implements OnInit {
   loadItem(date: string, text: string) {
     const dateElements = date.split('.');
     const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
-    const usedDate = new Date(Date.parse(correctDate));
+    const usedDate = new Date(Date.parse(date));
 
     return this.fb.group({
       date: this.datePipe.transform(usedDate, 'yyyy-MM-dd').toString(),
@@ -150,11 +151,9 @@ export class DziennikPraktykComponent implements OnInit {
     });
   }
 
-  addExistingItem(date: Date, text: string) {
-    const existingDate = new Date(date).getUTCDate() + '.' + Number(new Date(date).getUTCMonth()+1) + '.' + new Date(date).getUTCFullYear();
-
+  addExistingItem(date: string, text: string) {
     this.diary = this.diaryGroup.get('diary') as FormArray;
-    this.diary.push(this.loadItem(existingDate, text));
+    this.diary.push(this.loadItem(date, text));
   }
 
   addItem(date: string, dayName: string) {
@@ -180,7 +179,7 @@ export class DziennikPraktykComponent implements OnInit {
 
           for (let i: number = 0; i < newDays; i++) {
             this.periodFrom = new Date(this.periodFrom.getTime() - (1000 * 3600 * 24));
-            this.diary.insert(0, this.createItem(this.periodFrom.toLocaleDateString(), this.daysName[this.periodFrom.getDay()].text));
+            this.diary.insert(0, this.createItem(this.periodFrom.toDateString(), this.daysName[this.periodFrom.getDay()].text));
           }
 
           this.notifier.notify('info', 'Tabela zmieniona');
@@ -205,7 +204,7 @@ export class DziennikPraktykComponent implements OnInit {
         let newDays = (new Date(value).getTime() - this.periodTo.getTime()) / (1000 * 3600 * 24);
 
         for (let i: number = 0; i < newDays; i++) {
-          this.addItem(this.days.toLocaleDateString(), this.daysName[this.days.getDay()].text);
+          this.addItem(this.days.toDateString(), this.daysName[this.days.getDay()].text);
           this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
         }
 
@@ -240,8 +239,9 @@ export class DziennikPraktykComponent implements OnInit {
       this.notifier.notify('info', 'Tabela stworzona');
       let daysNumber = (this.periodTo.getTime() - this.periodFrom.getTime()) / (1000 * 3600 * 24) + 1;
       for (let i: number = daysNumber; i > 0; i--) {
+        console.log(this.days.toDateString())
         if(additems)
-        this.addItem(this.days.toLocaleDateString(), this.daysName[this.days.getDay()].text);
+        this.addItem(this.days.toDateString(), this.daysName[this.days.getDay()].text);
         this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
       }
     }
