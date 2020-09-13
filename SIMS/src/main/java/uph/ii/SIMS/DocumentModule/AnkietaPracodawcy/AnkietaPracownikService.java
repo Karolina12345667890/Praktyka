@@ -3,7 +3,6 @@ package uph.ii.SIMS.DocumentModule.AnkietaPracodawcy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import uph.ii.SIMS.DocumentModule.AnkietaStudenta.AnkietaStudenta;
 import uph.ii.SIMS.DocumentModule.DocumentFacade;
 import uph.ii.SIMS.DocumentModule.DocumentRepository;
 import uph.ii.SIMS.DocumentModule.Dto.*;

@@ -138,16 +138,29 @@
                     'success': callback
                 });
             };
-            $.postJSON("/api/user", body, (data, status) => {
+            // $.postJSON("/api/user", body, (data, status) => {
+            //     if (status === "success") {
+            //         alert("rejestracja powiodla sie");
+            //         switch_to_login_form();
+            //         document.getElementById("username").value = username;
+            //     }
+            //     console.log(data)
+            //     console.log(status)
+            // });
+            $.postJSON("/api/user", body, function(data, status, jqxhr) {
                 alert(status);
-                if (status === "success") {
-                    alert("rejestracja powiodla sie");
-                    switch_to_login_form();
-                    document.getElementById("username").value = username;
-                }
-                console.log(data)
-                console.log(status)
-            });
+            }).done(function() { alert('Request done!'); })
+                .fail(function(jqxhr, settings, ex) {
+
+                    if(jqxhr.responseText === "")
+                    {
+                        alert("rejestracja powiodla sie");
+                        switch_to_login_form();
+                        document.getElementById("username").value = username;
+                    }else
+                        alert(jqxhr.responseJSON.message)
+
+                });
         }
 
         register_form_submit_button.onclick = ajax_register;

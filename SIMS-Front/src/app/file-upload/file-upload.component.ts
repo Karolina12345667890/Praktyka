@@ -52,7 +52,7 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
       this.selectedFile = this.fileInput.nativeElement.files[0];
       if (this.fileInput.nativeElement.files[0].size >= 1048576) {
         this.uploadForm.controls['file'].setErrors({ 'invalid': true});
-        this.message = 'Plik jest za duży!';
+        this.message = 'Plik jest za duży, 1MB max!';
       } else {
         this.message = '';
       }
@@ -63,7 +63,7 @@ export class FileUploadComponent implements OnInit, AfterContentInit {
   onSubmit() {
 
     this.progress = 0;
-    console.log(this.id)
+
     this.authService.upload(this.SERVER_URL + '/' + this.id, this.selectedFile).subscribe(
       event => {
         if (event.type === HttpEventType.UploadProgress) {

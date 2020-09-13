@@ -64,7 +64,7 @@ export class ZaswiadczenieComponent implements OnInit {
 
     this.authService.getResource('http://localhost:8080/api/document/zaswiadczenie/' + id).subscribe(
       value => {
-        console.log(value)
+
         this.zaswiadczenieForm = value;
         this.id = value.id;
         this.comment = value.comment;

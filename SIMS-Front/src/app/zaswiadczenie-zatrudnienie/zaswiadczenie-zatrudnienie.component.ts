@@ -135,7 +135,6 @@ export class ZaswiadczenieZatrudnienieComponent implements OnInit {
         this.notifier.notify("error", error.error)
       }
     );
-    console.log(body)
   }
 
 

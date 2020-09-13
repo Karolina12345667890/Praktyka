@@ -43,7 +43,6 @@ class PlanPraktykiController {
                 null,
                 null
         );
-        System.out.println(planPraktykiDto.getStudentPesel());
         documentFacade.storePlanPraktyki(planPraktykiDto);
 
     }

@@ -128,17 +128,17 @@ export class DziennikPraktykComponent implements OnInit {
   }
 
   createItem(date: string, dayName: string) {
-    const dateElements = date.split('.');
-    const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
+
 
     return this.fb.group({
-      date: this.datePipe.transform(new Date(Date.parse(correctDate)), 'yyyy-MM-dd').toString(),
+      date: this.datePipe.transform(new Date(Date.parse(date)), 'yyyy-MM-dd').toString(),
       text: '',
       dayName: new FormControl({value: dayName, disabled: true}, Validators.required),
     });
   }
 
   loadItem(date: string, text: string) {
+    console.log(date);
     const dateElements = date.split('.');
     const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
     const usedDate = new Date(Date.parse(correctDate));
@@ -259,7 +259,7 @@ export class DziennikPraktykComponent implements OnInit {
 
     this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id, body).subscribe(
       value => {
-        console.log(value)
+
         this.notifier.notify("success", "Pomyślnie wysłano dokument Dziennik Praktyk")
         this.router.navigate(["/home"]);
       },
@@ -274,7 +274,7 @@ export class DziennikPraktykComponent implements OnInit {
   accept() {
     this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/accept', {}).subscribe(
       value => {
-        console.log(value);
+
         this.notifier.notify("success", "Pomyślnie zaakceptowano dokument Dziennik Praktyk");
       },
       error => {
@@ -287,7 +287,7 @@ export class DziennikPraktykComponent implements OnInit {
   decline() {
     this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/decline', {}).subscribe(
       value => {
-        console.log(value)
+
         this.notifier.notify("success", "Pomyślnie odrzucono dokument Dziennik Praktyk");
       },
       error => {
@@ -309,7 +309,7 @@ export class DziennikPraktykComponent implements OnInit {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id + '/comment', result).subscribe(
             value => {
-              console.log(value);
+
               this.notifier.notify("success", "Pomyślnie dodano uwagę");
               this.decline();
             },

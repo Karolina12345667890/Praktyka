@@ -54,7 +54,6 @@ export class LoginServiceService {
   }
 
   postResource(resourceUrl: string, body: any, httpHeader = new HttpHeaders()): Observable<any> {
-    console.log('1234');
     const newHeaders = httpHeader
       .append('Content-type', 'application/json')
       .append('Accept', 'application/json')

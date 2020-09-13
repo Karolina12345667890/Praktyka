@@ -9,6 +9,7 @@ import {DatePipe} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {EditCommentDialogComponent} from "../edit-comment-dialog/edit-comment-dialog.component";
 import {isUndefined} from "util";
+import {getErrorMessage} from "codelyzer/templateAccessibilityElementsContentRule";
 // import {OAuthService} from
 
 @Component({
@@ -100,14 +101,14 @@ export class OswiadczenieComponent implements OnInit {
     };
 
 
-    console.log(body);
+
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id, body).subscribe(
       value => {console.log(value)
         this.notifier.notify("success","Pomyślnie wysłano dokument Oświadczenie",)
         this.router.navigate(["/home"]);
       },
-      error =>{ console.log(error)
-        this.notifier.notify("error",error.error,)
+      error =>{ console.log(error);
+        this.notifier.notify('error', error.error);
       }
     );
 
@@ -160,23 +161,23 @@ export class OswiadczenieComponent implements OnInit {
 
   accept(){
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/accept', {}).subscribe(
-      value => { console.log(value);
+      value => {
         this.notifier.notify("success","Pomyślnie zaakceptowano dokument Oświadczenie");
         this.load();
       },
-      error =>{ console.log(error)
+      error =>{ console.log(error);
         this.notifier.notify("error", error.error);
       }
     );
   }
   decline(){
     this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/decline', {}).subscribe(
-      value => { console.log(value)
+      value => {
         this.notifier.notify("success","Pomyślnie odrzucono dokument Oświadczenie",);
         this.load();
       },
-      error =>{ console.log(error)
-        this.notifier.notify("error",error.error)
+      error =>{ console.log(error);
+        this.notifier.notify("error",error.error);
       }
     );
   }
@@ -192,12 +193,12 @@ export class OswiadczenieComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (!isUndefined(result)) {
           this.authService.postResource('http://localhost:8080/api/document/oswiadczenie/'+this.id+'/comment', result).subscribe(
-            value => { console.log(value);
+            value => {
               this.notifier.notify("success","Pomyślnie dodano uwagę",);
               this.decline();
             },
-            error =>{ console.log(error)
-              this.notifier.notify("error",error.error,)
+            error =>{ console.log(error);
+              this.notifier.notify("error",error.error);
             }
           );
         }

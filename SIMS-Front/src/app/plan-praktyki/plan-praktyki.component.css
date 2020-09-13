@@ -11,6 +11,7 @@ html {
   margin-top: 0em;
   margin-left: 2em;
   margin-right: 2em;
+  text-align: justify;
   /*border: 1px solid black;*/
 }
 
@@ -119,9 +120,9 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0;
 }
 
-
+/*0.7rem*/
 h6 {
-  font-size: 0.7rem;
+  font-size: 10px;
 }
 
 .a4 {

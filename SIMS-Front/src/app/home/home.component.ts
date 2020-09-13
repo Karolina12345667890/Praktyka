@@ -122,7 +122,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
        // console.log(value);
         const objectURL = window.URL.createObjectURL(value);
         // window.open(objectURL, '_blank');
-        console.log(objectURL);
+        //console.log(objectURL);
         var link = document.createElement('a');
         link.href = objectURL;
         link.download = documentType + '.pdf'; //domyslna nazwa pliku

@@ -39,7 +39,7 @@ public class FileDataService {
                         String[] split = StringUtils.cleanPath(file.getOriginalFilename()).split("\\.");
                         String newFileName = fileNewName + "." + split[split.length - 1];
                         FileData File = new FileData(docId, newFileName, file.getContentType(), file.getBytes());
-                        System.out.println(File);
+
 
                         fileDBRepository.saveAndFlush(File);
                     }else

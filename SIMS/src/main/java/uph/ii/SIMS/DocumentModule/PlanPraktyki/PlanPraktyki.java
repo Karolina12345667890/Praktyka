@@ -6,10 +6,7 @@ import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.PlanPraktykiDto;
 
-import javax.persistence.Convert;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -25,7 +22,8 @@ public class PlanPraktyki extends Document {
     public static final String DOCUMENT_TYPE = "planpraktyki";
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
-    @Lob
+   // @Lob
+   @Column(length = 2048)
     private String studentTasks;
     @Convert(converter = AttributeEncryptor.class)
     private String studentPesel = "";

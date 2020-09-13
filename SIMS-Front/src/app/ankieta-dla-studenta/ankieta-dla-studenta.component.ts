@@ -216,8 +216,8 @@ export class AnkietaDlaStudentaComponent implements OnInit {
         this.router.navigate(["/home"]);
       },
       error =>{
-        console.log(error)
-        this.notifier.notify("error", error.error)
+        console.log(error);
+        this.notifier.notify('error', error.error);
       }
     );
 

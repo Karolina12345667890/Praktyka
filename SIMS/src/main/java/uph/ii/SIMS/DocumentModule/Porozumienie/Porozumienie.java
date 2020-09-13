@@ -2,10 +2,12 @@ package uph.ii.SIMS.DocumentModule.Porozumienie;
 
 
 import lombok.*;
+import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
 import uph.ii.SIMS.DocumentModule.Dto.OswiadczenieDto;
 import uph.ii.SIMS.DocumentModule.Dto.PorozumienieDto;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -27,8 +29,10 @@ public class Porozumienie extends Document {
     private String companyName;
     private String companyLocationCity;
     private String companyLocationStreet;
-    private String companyRepresentantName;
-    private String companyRepresentantSurname;
+    @Convert(converter = AttributeEncryptor.class)
+    private String companyRepresentantName = "";
+    @Convert(converter = AttributeEncryptor.class)
+    private String companyRepresentantSurname = "";
     private Date studentInternshipStart;
     private Date studentInternshipEnd;
     private String studentStudyForm;

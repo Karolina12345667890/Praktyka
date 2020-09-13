@@ -10,8 +10,6 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class EditGroupDialogComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<EditGroupDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: FormGroup, private fb: FormBuilder) {
-
-
   }
 
   onNoClick() {
