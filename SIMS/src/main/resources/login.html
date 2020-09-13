@@ -87,6 +87,11 @@
         card.appendChild(cardHeader);
         card.appendChild(cardBody);
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('error');
+        if(myParam != null)
+        alert("Error, Zły login lub hasło!")
+
         return card;
     })();
 
