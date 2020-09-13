@@ -81,10 +81,10 @@ export class PorozumienieComponent implements OnInit {
         });
 
         if (!isNull(value.studentInternshipStart)) {
-          this.porozumienieForm.get("studentInternshipStart").setValue(this.datePipe.transform(value.studentInternshipStart, 'yyyy-MM-dd').toString());
+          this.porozumienieForm.get("studentInternshipStart").setValue(value.studentInternshipStart.toString());
         }
         if (!isNull(value.studentInternshipEnd)) {
-          this.porozumienieForm.get("studentInternshipEnd").setValue(this.datePipe.transform(value.studentInternshipEnd, 'yyyy-MM-dd').toString());
+          this.porozumienieForm.get("studentInternshipEnd").setValue(value.studentInternshipEnd.toString());
         }
 
         this.authService.getResource('http://localhost:8080/api/group/'+value.groupId+'/overview').subscribe(

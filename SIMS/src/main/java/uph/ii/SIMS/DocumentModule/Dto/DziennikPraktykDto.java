@@ -1,5 +1,6 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import uph.ii.SIMS.DocumentModule.DziennikPraktyk.DiaryLog;
 
@@ -21,8 +22,9 @@ public class DziennikPraktykDto {
     private Long ownerId;
 
     public static final String DOCUMENT_TYPE = "dziennikpraktyk";
-
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date periodFrom;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date periodTo;
     private String studentAlbumNumber;
     private String companyName;

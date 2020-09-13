@@ -159,8 +159,7 @@ export class StudentListComponent implements OnInit {
 
           })
 
-          console.log(this.zaswiadczenieZatrudnienieStudents)
-          console.log(this.classicDocumentsStudents)
+
 
 
           if (this.rememberSort == 'surname') {
@@ -437,8 +436,6 @@ export class StudentListComponent implements OnInit {
         }
       })
     }
-console.log(documents)
-    console.log(this.studentList)
     return documents;
   }
 

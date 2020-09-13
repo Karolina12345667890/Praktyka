@@ -1,5 +1,6 @@
 package uph.ii.SIMS.DocumentModule.Dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.Date;
@@ -22,7 +23,9 @@ public class PorozumienieDto {
     private String companyLocationStreet = "";
     private String companyRepresentantName = "";
     private String companyRepresentantSurname = "";
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date studentInternshipStart;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date studentInternshipEnd;
     private String studentStudyForm;
     private String studentSpecialization;

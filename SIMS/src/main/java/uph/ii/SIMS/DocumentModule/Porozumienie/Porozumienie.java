@@ -1,6 +1,7 @@
 package uph.ii.SIMS.DocumentModule.Porozumienie;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import uph.ii.SIMS.AttributeEncryptor;
 import uph.ii.SIMS.DocumentModule.Document;
@@ -33,7 +34,9 @@ public class Porozumienie extends Document {
     private String companyRepresentantName = "";
     @Convert(converter = AttributeEncryptor.class)
     private String companyRepresentantSurname = "";
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date studentInternshipStart;
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date studentInternshipEnd;
     private String studentStudyForm;
     private String studentSpecialization;

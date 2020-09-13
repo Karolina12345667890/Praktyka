@@ -30,8 +30,6 @@ class DziennikPraktykController {
 
     @PostMapping(value = "/{id}")
     void storeDziennikPraktyk(@PathVariable Long id, @RequestBody DziennikPraktykFillDto fillDto) {
-
-
         DziennikPraktykDto dziennikPraktykDto = new DziennikPraktykDto(
                 id,
                 null,
