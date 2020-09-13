@@ -1,2 +1,2 @@
 Student Internship Management System created for Siedlce UPH University
-by Maciej Nazarczuk & Mateusz Matusik
+by Maciej Nazarczuk, Mateusz Matusik, Kała Jakub, Kieczka Karolina
