@@ -61,6 +61,7 @@ export class DziennikPraktykComponent implements OnInit {
 
     this.authService.getResource('http://localhost:8080/api/document/dziennikpraktyk/' + this.id).subscribe(
       value => {
+        console.log(value)
         this.status = value.status
         this.diaryGroup = this.fb.group({
           studentName: '',
@@ -76,7 +77,7 @@ export class DziennikPraktykComponent implements OnInit {
           this.addExistingItem(d.date, d.text);
         });
 
-        this.periodFrom = new Date(value.periodFrom );
+        this.periodFrom = new Date(value.periodFrom);
         this.periodTo = new Date(value.periodTo);
         this.days = this.periodFrom;
         this.dateFrom = true;
@@ -128,17 +129,18 @@ export class DziennikPraktykComponent implements OnInit {
   }
 
   createItem(date: string, dayName: string) {
-
+    const dateElements = date.split('.');
+    const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
+    const usedDate = new Date(Date.parse(correctDate));
 
     return this.fb.group({
-      date: this.datePipe.transform(new Date(Date.parse(date)), 'yyyy-MM-dd').toString(),
+      date: this.datePipe.transform(new Date(usedDate), 'yyyy-MM-dd').toString(),
       text: '',
       dayName: new FormControl({value: dayName, disabled: true}, Validators.required),
     });
   }
 
   loadItem(date: string, text: string) {
-    console.log(date);
     const dateElements = date.split('.');
     const correctDate = dateElements[1] + "-" + dateElements[0] + "-" + dateElements[2];
     const usedDate = new Date(Date.parse(correctDate));
@@ -158,6 +160,7 @@ export class DziennikPraktykComponent implements OnInit {
   }
 
   addItem(date: string, dayName: string) {
+    console.log(date)
     this.diary = this.diaryGroup.get('diary') as FormArray;
     this.diary.push(this.createItem(date, dayName));
   }

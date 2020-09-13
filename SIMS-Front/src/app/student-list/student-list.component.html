@@ -38,13 +38,13 @@
           <th class="docs">Plan Praktyki Zawodowej</th>
           <th class="docs">Dziennik Praktyk</th>
           <th class="docs">Zaświadczenie</th>
-          <th class="docs"> Ankiety</th>
-          <th class="docs"> Ankiety</th>
+          <th class="docs">Ankieta studenta</th>
+          <th class="docs">Ankieta pracodawcy</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr *ngFor="let item of pagedItems  " >
+        <tr *ngFor="let item of pagedItems">
           <td data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ item.name}}
             <div class="dropdown-menu">
@@ -56,63 +56,140 @@
             {{ item.surname }}
           </td>
           <td>
-            {{item.companyName}}
+            <span *ngIf="item.companyName != ''">{{item.companyName}}</span>
+            <span class="text-danger" *ngIf="item.companyName == ''">Nie podano</span>
           </td>
 
-          <td class="docs" *ngFor="let doc of item.documents" [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
-            doc.status== 'ACCEPTED' && {'background-color':'#006600'} ||
-            doc.status== 'DONE' && {'background-color':'#42A948'} ||
-            doc.status == 'DECLINED' && {'background-color':'#dc3545'}">
-            <div *ngIf="doc.type == 'zaswiadczeniezatrudnienie'">
-              <span>Zaświadczenie o zatrudnieniu:</span>
-            </div>
-              <ng-container *ngIf="doc.status === 'DECLINED';else NEW">
-                Odrzucony
+          <!-- ZASWIADCZENIE O ZATRUDNIENIU STATYCZNE Z ANKIETAMI -->
+          <td class="docs" *ngIf="isStudentInExternalCompany(item.id)" colspan="5" [ngStyle]="getStudentsDocuments(item.id)[0].status == 'NEW' &&
+          {'background-color':'#2196F3'} ||
+            getStudentsDocuments(item.id)[0].status== 'ACCEPTED' && {'background-color':'#006600'} ||
+            getStudentsDocuments(item.id)[0].status== 'DONE' && {'background-color':'#42A948'} ||
+            getStudentsDocuments(item.id)[0].status == 'DECLINED' && {'background-color':'#dc3545'}"
+          >
+            <span>Zaświadczenie o zatrudnieniu: </span>
+            <ng-container *ngIf="getStudentsDocuments(item.id)[0].status === 'DECLINED';else NEW">
+              Odrzucony
+            </ng-container>
+
+            <ng-template #NEW>
+              <ng-container *ngIf="getStudentsDocuments(item.id)[0].status === 'NEW';else ACCEPTED">
+                Nowy
               </ng-container>
+            </ng-template>
 
-              <ng-template #NEW>
-                <ng-container *ngIf="doc.status === 'NEW';else ACCEPTED">
-                  Nowy
-                </ng-container>
-              </ng-template>
+            <ng-template #ACCEPTED>
+              <ng-container *ngIf="getStudentsDocuments(item.id)[0].status === 'ACCEPTED';else DONE">
+                Zaakceptowany
+              </ng-container>
+            </ng-template>
 
-              <ng-template #ACCEPTED>
-                <ng-container *ngIf="doc.status === 'ACCEPTED';else DONE">
-                  Zaakceptowany
-                </ng-container>
-              </ng-template>
+            <ng-template #DONE>
+              <ng-container *ngIf="getStudentsDocuments(item.id)[0].status === 'DONE'; else notDone">
+                Wysłano
+                <button type="button" class="btn btn-warning m-1" (click)="downloadDoc(getStudentsDocuments(item.id)[0].id,getStudentsDocuments(item.id)[0].type,item.name,item.surname)">Pobierz</button>
+                <button type="button" class="btn btn-danger m-1" (click)="removeFile(getStudentsDocuments(item.id)[0].id)">Usuń</button>
+              </ng-container>
+            </ng-template>
 
-              <ng-template #DONE>
-                <ng-container *ngIf="doc.status === 'DONE' && doc.type != 'ankieta_studenta' && doc.type != 'ankieta_pracownik'; else empty">
-                  Wysłano
-                  <button type="button" class="btn btn-warning m-1" (click)="downloadDoc(doc.id,doc.type,item.name,item.surname)">Pobierz</button>
-                  <button type="button" class="btn btn-danger m-1" (click)="removeFile(doc.id)">Usuń</button>
-                </ng-container>
-              </ng-template>
+            <ng-template #notDone>
+              <strong>Nie wypełniono</strong>
+            </ng-template>
 
-            <ng-template #empty>
-              <div *ngIf="doc.type != 'ankieta_studenta' && doc.type != 'ankieta_pracownik'">Brak</div>
-              </ng-template>
-
-              <button type="button" class="btn btn-primary m-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">
-                <div *ngIf="doc.type == 'ankieta_studenta'; else prac">
-                  Zobacz ankietę studenta
-                </div>
-                <ng-template #prac>
-                <div *ngIf="doc.type == 'ankieta_pracownik'; else zobacz">
-                 Zobacz ankietę pracodawcy
-                </div>
-                </ng-template>
-
-
-                <ng-template #zobacz>
-                  Zobacz
-                </ng-template>
-
-              </button>
-              <button type="button" class="btn btn-warning m-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
-
+            <button type="button" class="btn btn-primary m-1" *ngIf="getStudentsDocuments(item.id)[0].status != 'EMPTY' " (click)="openDoc(getStudentsDocuments(item.id)[0].id,getStudentsDocuments(item.id)[0].type)">
+              Zobacz
+            </button>
+            <button type="button" class="btn btn-warning m-1" *ngIf="getStudentsDocuments(item.id)[0].comment != '' && getStudentsDocuments(item.id)[0].comment != null" (click)="showWarning(getStudentsDocuments(item.id)[0].comment,getStudentsDocuments(item.id)[0].id,getStudentsDocuments(item.id)[0].type)">Uwaga!</button>
           </td>
+
+          <ng-container *ngIf="isStudentInExternalCompany(item.id)">
+            <td class="docs" *ngIf="getStudentsDocuments(item.id)[1] != null; else notDone" [ngStyle]="getStudentsDocuments(item.id)[1].status == 'NEW' &&
+            {'background-color':'#2196F3'} ||
+              getStudentsDocuments(item.id)[1].status== 'ACCEPTED' && {'background-color':'#006600'} ||
+              getStudentsDocuments(item.id)[1].status== 'DONE' && {'background-color':'#42A948'} ||
+              getStudentsDocuments(item.id)[1].status == 'DECLINED' && {'background-color':'#dc3545'}"
+            >
+              <button type="button" class="btn btn-primary m-1" *ngIf="getStudentsDocuments(item.id)[1].status != 'EMPTY' " (click)="openDoc(getStudentsDocuments(item.id)[1].id,getStudentsDocuments(item.id)[1].type)">
+                <div *ngIf="getStudentsDocuments(item.id)[1].type == 'ankieta_studenta'">
+                  Zobacz
+                </div>
+              </button>
+            </td>
+
+            <ng-template #notDone>
+              <td><strong>Nie wypełniono</strong></td>
+            </ng-template>
+          </ng-container>
+
+          <ng-container *ngIf="isStudentInExternalCompany(item.id)">
+            <td class="docs" *ngIf="isStudentInExternalCompany(item.id) && getStudentsDocuments(item.id)[2] != null; else notDone" [ngStyle]="getStudentsDocuments(item.id)[2].status == 'NEW' &&
+          {'background-color':'#2196F3'} ||
+            getStudentsDocuments(item.id)[2].status== 'ACCEPTED' && {'background-color':'#006600'} ||
+            getStudentsDocuments(item.id)[2].status== 'DONE' && {'background-color':'#42A948'} ||
+            getStudentsDocuments(item.id)[2].status == 'DECLINED' && {'background-color':'#dc3545'}"
+            >
+              <button type="button" class="btn btn-primary m-1" *ngIf="getStudentsDocuments(item.id)[2].status != 'EMPTY' " (click)="openDoc(getStudentsDocuments(item.id)[2].id,getStudentsDocuments(item.id)[2].type)">
+                <div *ngIf="getStudentsDocuments(item.id)[2].type == 'ankieta_pracownik'">
+                  Zobacz
+                </div>
+              </button>
+            </td>
+
+            <ng-template #notDone>
+              <td><strong>Nie wypełniono</strong></td>
+            </ng-template>
+          </ng-container>
+          <!-- ZASWIADCZENIE O ZATRUDNIENIU STATYCZNE Z ANKIETAMI KONIEC -->
+
+
+          <!-- KLASYCZNE DOKUMENTY Z ANKIETAMI -->
+          <ng-container *ngIf="!isStudentInExternalCompany(item.id)">
+            <ng-container *ngFor="let doc of getStudentsDocuments(item.id)">
+              <td class="docs" *ngIf="doc !== undefined; else notDone" [ngStyle]="doc.status == 'NEW' && {'background-color':'#2196F3'} ||
+                doc.status== 'ACCEPTED' && {'background-color':'#006600'} ||
+                doc.status== 'DONE' && {'background-color':'#42A948'} ||
+                doc.status == 'DECLINED' && {'background-color':'#dc3545'}">
+                  <ng-container *ngIf="doc.status === 'DECLINED';else NEW">
+                    Odrzucony
+                  </ng-container>
+
+                  <ng-template #NEW>
+                    <ng-container *ngIf="doc.status === 'NEW';else ACCEPTED">
+                      Nowy
+                    </ng-container>
+                  </ng-template>
+
+                  <ng-template #ACCEPTED>
+                    <ng-container *ngIf="doc.status === 'ACCEPTED';else DONE">
+                      Zaakceptowany
+                    </ng-container>
+                  </ng-template>
+
+                  <ng-template #DONE>
+                    <ng-container *ngIf="doc.status === 'DONE' && doc.type !== 'ankieta_studenta' && doc.type !== 'ankieta_pracownik'; else notCompleted">
+                      Wysłano
+                      <button type="button" class="btn btn-warning m-1" (click)="downloadDoc(doc.id,doc.type,item.name,item.surname)">Pobierz</button>
+                      <button type="button" class="btn btn-danger m-1" (click)="removeFile(doc.id)">Usuń</button>
+                    </ng-container>
+                  </ng-template>
+
+                  <button type="button" class="btn btn-primary m-1" *ngIf="doc.status != 'EMPTY' " (click)="openDoc(doc.id,doc.type)">
+                    Zobacz
+                  </button>
+                  <button type="button" class="btn btn-warning m-1" *ngIf="doc.comment != '' && doc.comment != null" (click)="showWarning(doc.comment,doc.id,doc.type)">Uwaga!</button>
+              </td>
+
+              <ng-template #notCompleted>
+                <strong *ngIf="doc.type !== 'ankieta_studenta' && doc.type !== 'ankieta_pracownika'">Nie wypełniono</strong>
+              </ng-template>
+            </ng-container>
+          </ng-container>
+          <!-- KLASYCZNE DOKUMENTY Z ANKIETAMI KONIEC -->
+
+          <ng-template #notDone>
+            <td><strong>Nie wypełniono</strong></td>
+          </ng-template>
+
         </tr>
 
 

@@ -15,6 +15,7 @@ import {PagerService} from '../pager-service.service';
 import {PodsumowanieTrescDialogComponent} from '../podsumowanie-tresc-dialog/podsumowanie-tresc-dialog.component';
 import {HttpResponse} from '@angular/common/http';
 import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-dialog.component';
+import {DocumentDto} from "../models/DocumentDto";
 
 @Component({
   selector: 'app-student-list',
@@ -24,13 +25,8 @@ import {ConfirmationDialogComponent} from '../confirmation-dialog/confirmation-d
 })
 export class StudentListComponent implements OnInit {
 
-  constructor(private fb: FormBuilder, notifierService: NotifierService, private activatedroute: ActivatedRoute,
-              private authService: LoginServiceService, private datePipe: DatePipe, public dialog: MatDialog,
-              private router: Router, private pagerService: PagerService) {
-    this.notifier = notifierService;
-
-
-  }
+  zaswiadczenieZatrudnienieStudents: Array<any> = new Array<any>();
+  classicDocumentsStudents: Array<any> = new Array<any>();
 
 
   group: GroupDto = {
@@ -68,6 +64,13 @@ export class StudentListComponent implements OnInit {
   foilterSurname = '';
 
 
+  constructor(private fb: FormBuilder, notifierService: NotifierService, private activatedroute: ActivatedRoute,
+              private authService: LoginServiceService, private datePipe: DatePipe, public dialog: MatDialog,
+              private router: Router, private pagerService: PagerService) {
+    this.notifier = notifierService;
+  }
+
+
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
     this.load();
@@ -98,6 +101,67 @@ export class StudentListComponent implements OnInit {
 
           this.group = value;
 
+          this.studentList.forEach(student => {
+            if (student.documents[0].type == 'zaswiadczeniezatrudnienie') {
+              const studentDocuments = new Array<DocumentDto>(3);
+
+              student.documents.forEach(document => {
+                if (document.type == 'zaswiadczeniezatrudnienie') {
+                  studentDocuments[0] = document;
+                }
+
+                if (document.type == 'ankieta_studenta') {
+                  studentDocuments[1] = document;
+                }
+
+                if (document.type == 'ankieta_pracownika') {
+                  studentDocuments[2] = document;
+                }
+              });
+
+              this.zaswiadczenieZatrudnienieStudents.push([student.id, studentDocuments]);
+            }
+            else {
+              const studentDocuments = new Array<DocumentDto>(7);
+
+              student.documents.forEach(document => {
+                if (document.type == 'oswiadczenie') {
+                  studentDocuments[0] = document;
+                }
+
+                if (document.type == 'porozumienie') {
+                  studentDocuments[1] = document;
+                }
+
+                if (document.type == 'planpraktyki') {
+                  studentDocuments[2] = document;
+                }
+
+                if (document.type == 'dziennikpraktyk') {
+                  studentDocuments[3] = document;
+                }
+
+                if (document.type == 'zaswiadczenie') {
+                  studentDocuments[4] = document;
+                }
+
+                if (document.type == 'ankieta_studenta') {
+                  studentDocuments[5] = document;
+                }
+
+                if (document.type == 'ankieta_pracownik') {
+                  studentDocuments[6] = document;
+                }
+              });
+
+              this.classicDocumentsStudents.push([student.id, studentDocuments]);
+            }
+
+          })
+
+          console.log(this.zaswiadczenieZatrudnienieStudents)
+          console.log(this.classicDocumentsStudents)
+
 
           if (this.rememberSort == 'surname') {
             this.sortOrderSurname = !this.sortOrderSurname;
@@ -120,7 +184,6 @@ export class StudentListComponent implements OnInit {
         },
         error => console.log(error),
       );
-
 
     }
   }
@@ -313,7 +376,7 @@ export class StudentListComponent implements OnInit {
 
     this.authService.postResource('http://localhost:8080/api/group/' + this.group.id + '/users/job/' + studentId, {}).subscribe(
       value => {
-        this.load();
+        window.location.reload();
         this.notifier.notify('success', 'Pomyślnie zmieniono dokumenty studenta');
       },
       error => {
@@ -356,5 +419,38 @@ export class StudentListComponent implements OnInit {
     }
   }
 
+
+  getStudentsDocuments(studentId): Array<DocumentDto> {
+    let documents = null;
+
+    if (this.isStudentInExternalCompany(studentId)) {
+      this.zaswiadczenieZatrudnienieStudents.forEach(student => {
+        if (student[0] == studentId) {
+          documents = student[1];
+        }
+      });
+    }
+    else {
+      this.classicDocumentsStudents.forEach(student => {
+        if (student[0] == studentId) {
+          documents = student[1];
+        }
+      })
+    }
+console.log(documents)
+    console.log(this.studentList)
+    return documents;
+  }
+
+
+  private isStudentInExternalCompany(studentId) {
+    if (this.zaswiadczenieZatrudnienieStudents.length > 0) {
+      if (this.zaswiadczenieZatrudnienieStudents[0].includes(studentId)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
 
 }
