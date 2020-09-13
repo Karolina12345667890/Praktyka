@@ -239,7 +239,6 @@ export class DziennikPraktykComponent implements OnInit {
       this.notifier.notify('info', 'Tabela stworzona');
       let daysNumber = (this.periodTo.getTime() - this.periodFrom.getTime()) / (1000 * 3600 * 24) + 1;
       for (let i: number = daysNumber; i > 0; i--) {
-        console.log(this.days.toDateString())
         if(additems)
         this.addItem(this.days.toDateString(), this.daysName[this.days.getDay()].text);
         this.days = new Date(this.days.getTime() + (1000 * 3600 * 24));
